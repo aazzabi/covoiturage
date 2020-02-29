@@ -1,0 +1,27 @@
+#For Server project (node/express)
+/server/node_modules/
+/server/coverage
+/server/build
+.idea
+
+#For client project (React)
+/client/node_modules
+# testing
+/client/coverage
+
+# production
+/client/build
+
+# misc
+/client/.DS_Store
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+
+/client/.idea
+/client/.vscode
+
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
