@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var passport = require('passport');
-var config = require('../config/database');
+var config = require('../config/config');
 require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
@@ -45,8 +45,8 @@ var login = (req, res, next) => {
                 if (isMatch && !err) {
                     console.log(u);
                     // if user is found and password is right create a token
-                    var token = jwt.sign(u.toJSON(), config.secret);
-                    var refreshToken = jwt.sign(u.toJSON(), config.refreshTokenSecret, { expiresIn: config.refreshTokenLife})
+                    var token = jwt.sign(u.toJSON(), config.authentification.secret);
+                    var refreshToken = jwt.sign(u.toJSON(), config.authentification.refreshTokenSecret, { expiresIn: config.authentification.refreshTokenLife})
                     tokenList[refreshToken] = res;
                     // return the information including token as JSON
                     res.json({
@@ -70,7 +70,7 @@ var token = (req, res) => {
             "email": postData.email,
             "username": postData.username
         };
-        const token = jwt.sign(user, config.secret, { expiresIn: config.tokenLife})
+        const token = jwt.sign(user, config.authentification.secret, { expiresIn: config.authentification.tokenLife})
         const response = {
             "token": token,
         };

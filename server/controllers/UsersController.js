@@ -6,7 +6,19 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
-var config = require('../config/database');
+var multer  = require('multer');
+var config = require('../config/config');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb)
+    {
+        cb(null, config.upload.directory);
+    },
+    filename: function (req, file, cb)
+    {
+        cb(null, file.originalname );
+    }
+});
 
 var getAllUsers = (req, res, next) => {
     user.find({}).sort('firstName')
@@ -33,7 +45,7 @@ var getUserById = (req, res, next) => {
 var profile=  function (req, res) {
     var token = req.headers['authorization'].replace(/^Bearer\s/, '');
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
-    jwt.verify(token, config.secret, function(err, decoded) {
+    jwt.verify(token, config.authentification.secret, function(err, decoded) {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
         res.status(200).send(decoded);
     });

@@ -2,13 +2,13 @@ var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var BearerStrategy = require('passport-http-bearer').Strategy;
 var user = require('../models/User');
-var config = require('../config/database'); // get db config file
+var config = require('./config'); // get db config file
 var jwt = require('jwt-simple');
 
 module.exports = function (passport) {
     var opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeader();
-    opts.secretOrKey = config.secret;
+    opts.secretOrKey = config.authentification.secret;
     passport.use(new JwtStrategy(
         opts,
         function (jwt_payload, done) {
@@ -29,7 +29,7 @@ module.exports = function (passport) {
         function (token, done) {
             console.log(token);
             try {
-                var decoded = jwt.decode(token, config.secret);
+                var decoded = jwt.decode(token, config.authentification.secret);
                 user.findOne({_id: decoded._id}, function (err, user) {
                     if (err) {
                         return done(err);
