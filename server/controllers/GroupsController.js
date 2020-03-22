@@ -15,7 +15,6 @@ var getAllGroups = (req, res, next) => {
             res.status(500).send(error);
         });
 };
-
 var addGroup = (req, res, next) => {
     var groupName = req.body.groupName;
     group.create({groupName: groupName})
@@ -30,7 +29,6 @@ var addGroup = (req, res, next) => {
             res.status(500).send(error);
     });
 };
-
 var getGroupById = (req,res,next) => {
     group.findOne({ "_id": req.params.id })
         .then((data) => {
@@ -42,9 +40,23 @@ var getGroupById = (req,res,next) => {
             res.status(500).send(error);
     });
 };
+var deleteGroup = (req,res,next) => {
+    group.deleteOne({ "_id": req.params.id })
+        .then(() =>
+        {
+            res.set('Content-Type', 'text/html');
+            res.status(202).send("The groupe Was Deleted Successfully !");
+        })
+        .catch(error =>
+        {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+        });
+};
 
 module.exports = {
     getAllGroups,
     getGroupById,
-    addGroup
+    addGroup,
+    deleteGroup
 };

@@ -5,7 +5,7 @@ var global = require('../config/config');
 require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
-var User = require("../models/user");
+var user = require("../models/User");
 const nodemailer = require('nodemailer');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         
         smtpTransport.sendMail(mailOptions, function(error, response){
             if(error){
-                // console.log(error);
+                console.log(error);
                 res.send({
                     success : false,
                     error : "somthing is wrong"

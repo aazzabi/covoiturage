@@ -21,9 +21,10 @@ module.exports = {
     smtpTransport: nodemailer.createTransport({
         service: "gmail",
         host: "smtp.gmail.com",
+        port: 465,
         auth: {
-            user: "retrioapp@gmail.com",
-            pass: "retrioapp1234"
+            user: "prisma.crm.2019@gmail.com",
+            pass: "prismacrm2019"
         }
     })
 };

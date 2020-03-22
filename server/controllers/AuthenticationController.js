@@ -6,6 +6,7 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var user = require("../models/User");
 const tokenList = {};
+var bcrypt = require('bcrypt-nodejs');
 
 var register = (req, res, next) => {
     if (!req.body.email || !req.body.password || !req.body.username || !req.body.lastName || !req.body.firstName) {
@@ -33,13 +34,15 @@ var register = (req, res, next) => {
 
 var login = (req, res, next) => {
     user.findOne({
-        username: req.body.username
+        email: req.body.email
     }, function (err, u) {
         if (err) throw err;
 
         if (!u) {
             res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
+            console.log(u);
+            console.log(req.body.password);
             // check if password matches
             u.comparePassword(req.body.password, function (err, isMatch) {
                 if (isMatch && !err) {
