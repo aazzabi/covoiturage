@@ -3,8 +3,11 @@ var router = express.Router();
 var privilegesController = require('../controllers/PrivilegesController');
 var isAuthenticated = require('../policies/isAuthenticated');
 var isAdmin = require('../policies/isAdmin');
-var permit = require('../policies/Permit');
+var authorize = require('../policies/Permition');
 var passport = require('passport');
+
+// EXAMPLE authorize with array of roles ['ADMIN','USER', 'DRIVER']
+// router.get('/', authorize(['ADMIN']), privilegesController.getAll);
 
 router.get('/', privilegesController.getAll);
 router.post('/add', isAuthenticated, privilegesController.addPrivilege);
