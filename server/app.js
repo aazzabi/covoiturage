@@ -14,10 +14,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/Users');
 var groupsRouter = require('./routes/Groups');
 var privilegesRouter = require('./routes/Privileges');
+var rideRouter = require('./routes/Ride');
+
 
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
-mongoose.connect(url, { useNewUrlParser: true });
+mongoose.connect(url, { useNewUrlParser: true , useCreateIndex: true  });
 // mongoose.set({ usecreateIndexes: true });
 var mongo = mongoose.connection;
 mongo.on('connected', () => { console.log('Connected !') });
@@ -47,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/ride',rideRouter);
 app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
 
