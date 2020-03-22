@@ -9,8 +9,8 @@ const isAuthenticated = require('../policies/isAuthenticated');
 router.get('/', function(req, res, next) {res.render('index', { title: 'Express' });});
 
 router.post('/login', authController.login);
-router.post('/register', AuthenticationControllerPolicy.register,  authController.register);
-// router.post('/register',  authController.register);
+// router.post('/register', AuthenticationControllerPolicy.register,  authController.register);
+router.post('/register',  authController.register);
 router.post('/token', authController.token);
 router.post('/sendEmail', emailController.sendEmail);
 
