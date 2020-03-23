@@ -1,5 +1,6 @@
 var ride = require('../models/Ride');
 var user = require('../models/User');
+var traveler = require('../models/Traveler');
 var dis = require('google-distance');
 dis.apiKey = 'AIzaSyDtJlOlL_sZhchii9wg4A6yi7vZutilBeg';
 
@@ -191,12 +192,29 @@ var editRide = async (req, res, next) => {
 
 };
 
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
 var addTravelerRide = async (req, res, next) => {
 
     rideid = await ride.findById(req.params.idRide);
     userid = await user.findById(req.params.idUser);
-console.log(userid);
-    rideid.travelers = userid;
+
+    trav = traveler.create({
+        user: req.body.status,
+        confimationCode: makeid(5),
+        valide: false,
+
+    });
+
+    rideid.travelers = trav;
 
 
     await rideid.save()

@@ -9,4 +9,4 @@ var travalerSchema = mongoose.Schema(
 
 var traveler = mongoose.model('Traveler', travalerSchema);
 
-module.exports = package;
+module.exports = traveler;
