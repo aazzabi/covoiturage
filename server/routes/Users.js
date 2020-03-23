@@ -21,6 +21,6 @@ var upload = multer({storage: storage});
 router.get('/profile', isAuthenticated, userController.profile);
 router.get('/getAllUsers',isAuthenticated, userController.getAllUsers);
 router.get('/getUserById/:id', userController.getUserById);
-router.post('/becomeDriver/:id', userController.becomeDriver);
+router.post('/becomeDriver/:idUser', userController.becomeDriver);
 
 module.exports = router;
