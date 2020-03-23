@@ -7,6 +7,19 @@ var jwt = require('jsonwebtoken');
 var user = require("../models/User");
 const tokenList = {};
 var bcrypt = require('bcrypt-nodejs');
+var fs = require('fs');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, config.upload.directory + '\\drivers\\');
+    },
+    filename: function (req, file, cb) {
+        console.log(file); //log the file object info in console
+        cb(null, file.originalname);
+    }
+});
+var upload = multer({storage: storage}).single('image');
 
 var register = (req, res, next) => {
     if (!req.body.email || !req.body.password || !req.body.username || !req.body.lastName || !req.body.firstName) {
@@ -32,6 +45,50 @@ var register = (req, res, next) => {
     }
 };
 
+var uploadUserImage = (req, res, next) => {
+    console.log(req.body.id, 'id');
+    console.log(req.file, 'file');
+    // upload(req, res, function (error) {
+    //     if (error) {
+    //         res.status(500).json(error);
+    //     } else {
+    //         var ext = '';
+    //         switch (req.file.mimetype)
+    //         {
+    //             case 'image/png':
+    //             {
+    //                 ext = '.png';
+    //                 break;
+    //             }
+    //             case 'image/jpeg':
+    //             {
+    //                 ext = '.jpeg';
+    //                 break;
+    //             }
+    //             case 'image/bmp':
+    //             {
+    //                 ext = '.bmp';
+    //                 break;
+    //             }
+    //         }
+    //         var hashName = crypto.createHash('md5').update(req.file.originalname).digest("hex");
+    //         fs.rename(config.upload.directory + '\\users\\' + req.file.originalname ,
+    //             config.upload.directory + '\\users\\' + hashName  + ext ,
+    //             (error) => {
+    //                 if (error) {
+    //                     // Show the error
+    //                     console.log(error);
+    //                 }
+    //                 else {
+    //                     user.updateOne({"_id": req.body.id}, {"$set": {"avatar": hashName + ext }} );
+    //                     console.log("\nFile Renamed\n");
+    //                 }
+    //             });
+    //         res.status(202).json("data");
+    //     }
+    // });
+};
+
 var login = (req, res, next) => {
     user.findOne({
         email: req.body.email
@@ -49,7 +106,7 @@ var login = (req, res, next) => {
                     console.log(u);
                     // if user is found and password is right create a token
                     var token = jwt.sign(u.toJSON(), config.authentification.secret);
-                    var refreshToken = jwt.sign(u.toJSON(), config.authentification.refreshTokenSecret, { expiresIn: config.authentification.refreshTokenLife})
+                    var refreshToken = jwt.sign(u.toJSON(), config.authentification.refreshTokenSecret, {expiresIn: config.authentification.refreshTokenLife})
                     tokenList[refreshToken] = res;
                     // return the information including token as JSON
                     res.json({
@@ -68,12 +125,12 @@ var token = (req, res) => {
     // refresh the damn token
     const postData = req.body
     // if refresh token exists
-    if((postData.refreshToken) && (postData.refreshToken in tokenList)) {
+    if ((postData.refreshToken) && (postData.refreshToken in tokenList)) {
         const user = {
             "email": postData.email,
             "username": postData.username
         };
-        const token = jwt.sign(user, config.authentification.secret, { expiresIn: config.authentification.tokenLife})
+        const token = jwt.sign(user, config.authentification.secret, {expiresIn: config.authentification.tokenLife})
         const response = {
             "token": token,
         };
@@ -89,5 +146,6 @@ module.exports = {
     login,
     token,
     register,
+    uploadUserImage
 };
 

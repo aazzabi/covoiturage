@@ -16,7 +16,8 @@ module.exports = {
         refreshTokenLife: 86400
     },
     upload: {
-        directory: 'D:\\covoiturageImages'
+        directoryUsersImage: 'D:\\covoiturageImages\\uploads\\users\\',
+        directoryDrivers: 'D:\\covoiturageImages\\uploads\\drivers\\',
     },
     smtpTransport: nodemailer.createTransport({
         service: "gmail",
