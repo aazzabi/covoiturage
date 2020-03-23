@@ -3,13 +3,14 @@ var mongoose = require('mongoose');
 var rideSchema = mongoose.Schema(
     {
         status: { type: String, required: true, enum: ["aaa"] , default: "aaa" },
-        //startTime: { type: Date },
+        startTime: { type: Date },
+        duration: { type: String },
         distance: { type: String, required: true },
         origin: { type: String, required: false },
         destination: { type: String, unique: false, required: true },
         nbrPlaces: {type:Number, required: true, maximum: 4, minimum : 1 },
         prixPerPlace: {type:Number, required: true},
-        decription: {type: String, required: false},
+        description: {type: String, required: false},
         total: { type: Number, unique: false, required: true },
         packageAllowed: { type: Boolean, default: true, required: true },
         driver: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }],
