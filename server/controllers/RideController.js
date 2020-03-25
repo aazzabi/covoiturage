@@ -72,7 +72,6 @@ var add = (req, res, next) => {
                         total: 0,
                         packageAllowed: req.body.packageAllowed,
                         distance: x,
-                        estimatedArriveTime: (new Date((new Date(req.body.startTime).getTime()) + data['durationValue'])),
                         duration: data['duration'],
                         driver: dr
                     })
@@ -90,11 +89,7 @@ var add = (req, res, next) => {
                 .catch(error => {
                     console.log(error);
                 });
-
-
         });
-
-
 };
 
 var deleteRide = (req, res, next) => {
@@ -115,98 +110,115 @@ var editRide = async (req, res, next) => {
     let di;
     rideToUpdate = await ride.findById(req.params.id);
 
-    if (req.body.origin == null)
-        or = rideToUpdate["origin"];
-    else
-        or = req.body.origin;
+    confirmed = false;
+    var i;
+    for (i = 0; i < rideToUpdate.travelers.length; i++) {
+        if (rideToUpdate.travelers[i].valide) {
+            confirmed = true;
+        }
+    }
 
-    if (req.body.destination == null)
-        di = rideToUpdate["destination"];
-    else
-        di = req.body.destination;
-    console.log(rideToUpdate["origin"]);
-    try {
+    if (confirmed){
 
-        dis.get(
-            {
-                origin: or,
-                destination: di,
-                metric: 'meter'
-            },
-            async function (err, data) {
-                rideToUpdate = await ride.findById(req.params.id);
-
-                if (err) return console.log(err);
-                var x = data['distanceValue'] / 1000;
-
-                if (req.body.status == null)
-                    rideToUpdate.status = rideToUpdate["status"];
-                else
-                    rideToUpdate.status = req.body.status;
-
-
-                if (req.body.startTime == null)
-                    rideToUpdate.startTime = rideToUpdate["startTime"];
-                else
-                    rideToUpdate.startTime = req.body.startTime;
-
-
-                if (req.body.origin == null)
-                    rideToUpdate.origin = rideToUpdate["origin"];
-                else
-                    rideToUpdate.origin = req.body.origin;
-
-
-                if (req.body.destination == null)
-                    rideToUpdate.destination = rideToUpdate["destination"];
-                else
-                    rideToUpdate.destination = req.body.destination;
-
-
-                if (req.body.nbrPlaces == null)
-                    rideToUpdate.nbrPlaces = rideToUpdate["nbrPlaces"];
-                else
-                    rideToUpdate.nbrPlaces = req.body.nbrPlaces;
-
-
-                if (req.body.description == null)
-                    rideToUpdate.description = rideToUpdate["description"];
-                else
-                    rideToUpdate.description = req.body.description;
-
-
-                if (req.body.packageAllowed == null)
-                    rideToUpdate.packageAllowed = rideToUpdate["packageAllowed"];
-                else
-                    rideToUpdate.packageAllowed = req.body.packageAllowed;
-
-
-                rideToUpdate.duration = data['duration'];
-
-                rideToUpdate.distance = x;
-
-                rideToUpdate.prixPerPlace = x * 0.06;
-
-                rideToUpdate.total = req.body.total;
-
-
-                await rideToUpdate.save()
-                    .then((data) => {
-                        res.set('Content-Type', 'application/json');
-                        res.status(202).json(data);
-
-                    })
-                    .catch(error => {
-                        res.set('Content-Type', 'text/html');
-                        res.status(500).send(error);
-                    });
-            });
-
-    } catch (e) {
-
-        res.status(500).send(e);
+        res.set('Content-Type', 'application/json');
+        res.status(202).json('you cant update ride after you validate a traveler ');
 
     }
+    else {
+        if (req.body.origin == null)
+            or = rideToUpdate["origin"];
+        else
+            or = req.body.origin;
+
+        if (req.body.destination == null)
+            di = rideToUpdate["destination"];
+        else
+            di = req.body.destination;
+        console.log(rideToUpdate["origin"]);
+        try {
+
+            dis.get(
+                {
+                    origin: or,
+                    destination: di,
+                    metric: 'meter'
+                },
+                async function (err, data) {
+                    rideToUpdate = await ride.findById(req.params.id);
+
+                    if (err) return console.log(err);
+                    var x = data['distanceValue'] / 1000;
+
+                    if (req.body.status == null)
+                        rideToUpdate.status = rideToUpdate["status"];
+                    else
+                        rideToUpdate.status = req.body.status;
+
+
+                    if (req.body.startTime == null)
+                        rideToUpdate.startTime = rideToUpdate["startTime"];
+                    else
+                        rideToUpdate.startTime = req.body.startTime;
+
+
+                    if (req.body.origin == null)
+                        rideToUpdate.origin = rideToUpdate["origin"];
+                    else
+                        rideToUpdate.origin = req.body.origin;
+
+
+                    if (req.body.destination == null)
+                        rideToUpdate.destination = rideToUpdate["destination"];
+                    else
+                        rideToUpdate.destination = req.body.destination;
+
+
+                    if (req.body.nbrPlaces == null)
+                        rideToUpdate.nbrPlaces = rideToUpdate["nbrPlaces"];
+                    else
+                        rideToUpdate.nbrPlaces = req.body.nbrPlaces;
+
+
+                    if (req.body.description == null)
+                        rideToUpdate.description = rideToUpdate["description"];
+                    else
+                        rideToUpdate.description = req.body.description;
+
+
+                    if (req.body.packageAllowed == null)
+                        rideToUpdate.packageAllowed = rideToUpdate["packageAllowed"];
+                    else
+                        rideToUpdate.packageAllowed = req.body.packageAllowed;
+
+
+                    rideToUpdate.duration = data['duration'];
+
+                    rideToUpdate.distance = x;
+
+                    rideToUpdate.prixPerPlace = x * 0.06;
+
+                    rideToUpdate.total = 0;
+
+
+                    await rideToUpdate.save()
+                        .then((data) => {
+                            res.set('Content-Type', 'application/json');
+                            res.status(202).json(data);
+
+                        })
+                        .catch(error => {
+                            res.set('Content-Type', 'text/html');
+                            res.status(500).send(error);
+                        });
+                });
+
+        } catch (e) {
+
+            res.status(500).send(e);
+
+        }
+    }
+
 
 };
 
@@ -275,31 +287,41 @@ var removeTravelerRide = async (req, res, next) => {
     exist = false;
     for (i = 0; i < rideId.travelers.length; i++) {
 
-        if (userid.id.toString() === rideId.travelers[i].user_id.toString()) {
+        if (userid.id.toString() === rideId.travelers[i].user._id.toString()) {
+
             exist = true;
 
-            ride.update({'_id': req.params.idRide}, {"$pull": {"travelers": rideId.travelers[i]}})
-                .then((d) => {
-                    // sendemail lel d.driver , w data.user !!!
-                    res.set('Content-Type', 'application/json');
-                    res.status(202).json(d);
-                })
-                .catch(error => {
-                    res.set('Content-Type', 'application/json');
-                    res.status(500).send(error);
-                });
+            if (rideId.travelers[i].valide){
 
-            traveler.deleteOne({"_id": rideId.travelers[i]._id})
-                .then(() => {
-                    res.set('Content-Type', 'application/json');
-                    res.status(202).send("traveler deleted");
-                })
-                .catch(error => {
-                    res.set('Content-Type', 'application/json');
-                    res.status(500).send(error);
-                });
+                res.set('Content-Type', 'application/json');
+                res.status(202).send("cant delete a valid user");
+            }
+            else {
+                ride.update({'_id': req.params.idRide}, {"$pull": {"travelers": rideId.travelers[i]}})
+                    .then((d) => {
+                        // sendemail lel d.driver , w data.user !!!
+                        res.set('Content-Type', 'application/json');
+                        res.status(202).json(d);
+                    })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+
+                traveler.deleteOne({"_id": rideId.travelers[i]._id})
+                    .then(() => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(202).send("traveler deleted");
+                    })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+            }
+
         }
     }
+
     if (!exist) {
 
         res.set('Content-Type', 'application/json');
