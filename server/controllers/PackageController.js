@@ -7,6 +7,9 @@ exports.add = function (req, res, next) {
         price: req.body.price,
         sender: req.body.sender,
         receiver: req.body.receiver,
+        departure: req.body.departure,
+        weight: req.body.weight,
+        arrival: req.body.arrival,
         valide: req.body.valide,
         sendingCode: makeid(5),
         receiveingCode: makeid(5)
@@ -16,7 +19,6 @@ exports.add = function (req, res, next) {
         if(err) {
             const err = new Error('Package not found');
             err.name = 'NotFoundError';
-
             res.json({
                 error : err
             })
@@ -70,6 +72,9 @@ exports.editPackage = async function (req, res, next) {
         sender: req.body.sender,
         receiver: req.body.receiver,
         valide: req.body.valide,
+        departure: req.body.departure,
+        arrival: req.body.arrival,
+        weight: req.body.weight,
         sendingCode: PackageToEdit.sendingCode,
         receiveingCode: PackageToEdit.receiveingCode
 

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactBSAlertOptions from '../../../layouts/Alerts'
 
 import {connect} from 'react-redux'
 import {setAlert} from '../../../actions/AlertActions'

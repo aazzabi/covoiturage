@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
