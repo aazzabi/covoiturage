@@ -27,7 +27,7 @@ export const loginUser = userData => dispatch => {
                 console.log(err);
                 dispatch({
                     type: GET_ERRORS,
-                    payload: err.response.data
+                    payload: err.response
                 });
             }
         );
@@ -64,7 +64,7 @@ export const getProfile = () => dispatch => {
     console.log("GEETING PROFILE")
     dispatch(setProfileLoading());
     axios
-        .get("/api/users/profile")
+        .get("/users/profile")
         .then(res =>
             dispatch({
                 type: GET_PROFILE,

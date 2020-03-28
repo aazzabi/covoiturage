@@ -7,6 +7,7 @@ import AdminFooter from "components/Footers/AdminFooter.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
 import routes from "routes.js";
+import AllUsers from "../backoffice/Users/AllUsers";
 
 class Admin extends React.Component {
   state = {
@@ -95,7 +96,10 @@ class Admin extends React.Component {
             sidenavOpen={this.state.sidenavOpen}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
-          <Switch>{this.getRoutes(routes)}</Switch>
+          {/*<Switch>{this.getRoutes(routes)}</Switch>*/}
+          <Switch>
+            <Route exact path="/admin/users" render={() => <AllUsers/>} />
+          </Switch>
           <AdminFooter />
         </div>
         {this.state.sidenavOpen ? (
