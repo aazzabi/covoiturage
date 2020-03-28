@@ -27,5 +27,10 @@ module.exports = {
             user: "prisma.crm.2019@gmail.com",
             pass: "prismacrm2019"
         }
-    })
+    }),
+    google : {
+        clientId: "871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com",
+        clientSecret : "QD_M2V8hvU5p63Vzz_-CrjRX",
+        callbackUrl: "http://localhost:3000/auth/google/callback"
+    }
 };

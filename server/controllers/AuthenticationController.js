@@ -9,6 +9,7 @@ const tokenList = {};
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
 var multer = require('multer');
+const { OAuth2Client } = require('google-auth-library');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -141,11 +142,60 @@ var token = (req, res) => {
         res.status(404).send('Invalid request')
     }
 };
+const client = new OAuth2Client('871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com');
+var googleLogin = (req, res) => {
+    console.log("req.body");
+    const {idToken} = req.body;
+
+    client.verifyIdToken({
+        idToken,
+        audience: '871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com'
+    })
+        .then(response => {
+            console.log("req.body 155");
+            // console.log('GOOGLE LOGIN RESPONSE',response)
+            const {email_verified, name, email} = response.payload;
+            if (email_verified) {
+                User.findOne({email}).exec((err, user) => {
+                    if (user) {
+                        const token = jwt.sign({_id: user._id}, config.authentification.secret, {expiresIn: '7d'});
+                        const {_id, email, name, role} = user;
+                        return res.json({
+                            token,
+                            user: {_id, email, name, role}
+                        });
+                    } else {
+                        let password = email + config.authentification.secret;
+                        user = new User({name, email, password});
+                        user.save((err, data) => {
+                            if (err) {
+                                console.log('ERROR GOOGLE LOGIN ON USER SAVE', err);
+                                return res.status(400).json({
+                                    error: 'User signup failed with google'
+                                });
+                            }
+                            const token = jwt.sign({_id: data._id}, config.authentification.secret, {expiresIn: '7d'});
+                            const {_id, email, name, role} = data;
+                            return res.json({
+                                token,
+                                user: {_id, email, name, role}
+                            });
+                        });
+                    }
+                });
+            } else {
+                return res.status(400).json({
+                    error: 'Google login failed. Try again'
+                });
+            }
+        });
+};
 
 module.exports = {
     login,
     token,
     register,
-    uploadUserImage
+    uploadUserImage,
+    googleLogin
 };
 

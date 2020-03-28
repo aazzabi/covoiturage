@@ -4,6 +4,8 @@ var BearerStrategy = require('passport-http-bearer').Strategy;
 var user = require('../models/User');
 var config = require('./config'); // get db config file
 var jwt = require('jwt-simple');
+var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+
 
 module.exports = function (passport) {
     var opts = {};
@@ -44,4 +46,17 @@ module.exports = function (passport) {
                 return done(null, false); //returns a 401 to the caller
             }
         }));
+
+    passport.use(new GoogleStrategy({
+            consumerKey: config.google.clientId,
+            consumerSecret: config.google.clientSecret,
+            callbackURL: config.google.callbackUrl
+        },
+        function(accessToken, refreshToken, profile, done) {
+            user.findOrCreate({ googleId: profile.id }, function (err, u) {
+                console.log(u);
+                return done(err, u);
+            });
+        }
+    ));
 };
