@@ -60,7 +60,8 @@ class Components extends React.Component {
     slider2Values: ["200.00", "400.00"],
     reactQuillText: ""
   };
-  componentDidMount() {
+  componentDidMount()
+  {
     var slider1 = this.refs.slider1;
     var slider2 = this.refs.slider2;
     Slider.create(slider1, {
@@ -386,8 +387,8 @@ class Components extends React.Component {
                           placeholder: "Select"
                         }}
                         data={[
-                          { id: "1", text: "Alerts" },
-                          { id: "2", text: "Badges" },
+                          { text: "Alerts" },
+                          { text: "Badges" },
                           { id: "3", text: "Buttons" },
                           { id: "4", text: "Cards" },
                           { id: "5", text: "Forms" },

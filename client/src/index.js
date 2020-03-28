@@ -54,7 +54,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
         <Route path="/auth" render={props => <AuthLayout {...props} />} />
-
+        <Route path="/admin/blog" render={props => <AuthLayout {...props} />} />
         <Route path="/" render={props => <IndexView {...props} />} />
         <Redirect from="*" to="/" />
       </Switch>

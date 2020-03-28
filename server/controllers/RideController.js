@@ -39,12 +39,7 @@ var add = (req, res, next) => {
             if (err) return console.log(err);
             var x = data['distanceValue'] / 1000;
             var y = data['duration'];
-            console.log(data);
-            console.log(new Date(req.body.startTime));
-            console.log(new Date('02/9/2016').getTime()+data['durationValue']);
-            console.log();
-            console.log((new Date(new Date('02/9/2016').getTime()+data['durationValue'])));
-            console.log((new Date(1335205561117)));
+
 
             ride.create({
                 status: req.body.status,

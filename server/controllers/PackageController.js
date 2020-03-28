@@ -1,7 +1,8 @@
-var Package = require('../models/Package');
+var Package = require('../models/Parcels');
 
 exports.add = function (req, res, next) {
-    var pack = {
+    Package.create({
+        title: req.body.type,
         type: req.body.type,
         size: req.body.size,
         price: req.body.price,
@@ -11,42 +12,31 @@ exports.add = function (req, res, next) {
         weight: req.body.weight,
         arrival: req.body.arrival,
         valide: req.body.valide,
+        files: req.body.files,
+        description: req.body.description,
         sendingCode: makeid(5),
         receiveingCode: makeid(5)
-    };
+    }).then((data) => {
+        res.set('Content-Type', 'application/json');
+        res.status(202).json(data);
 
-    Package.create(pack, function(err, pack) {
-        if(err) {
-            const err = new Error('Package not found');
-            err.name = 'NotFoundError';
-            res.json({
-                error : err
-            })
-        }
-        res.json({
-            message : "package created successfully"
-        })
     })
+        .catch(error => {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+            console.log(error)
+        });
 }
 
-exports.getAllPackage = function(req, res, next) {
-    Package.find({}, function(err, packs) {
-        if(err) {
-            const err = new Error('Package not found');
-            err.name = 'NotFoundError';
-            res.json({
 
-                error: err
-            })
-        }
-        res.json({
-            packs: packs
-        })
-    })
+exports.getAllPackage = async (req, res, next) => {
+    const packages = await Package.find();
+    res.json(packages);
+
 }
 
 exports.getByIdPackage = function(req, res, next) {
-    Package.findOne({"_id": req.params.id}, function(err, packs) {
+    Package.findOne({"_id": req.params.id}, function(err, parcels) {
         if(err) {
             const err = new Error('Package not found');
             err.name = 'NotFoundError';
@@ -56,16 +46,14 @@ exports.getByIdPackage = function(req, res, next) {
             })
         }
         res.json({
-            packs: packs
+            parcels: parcels
         })
     })
 }
 
 exports.editPackage = async function (req, res, next) {
-
     PackageToEdit = await Package.findById(req.params.id);
-
-    var packs = {
+    var parcels = {
         type: req.body.type,
         size: req.body.size,
         price: req.body.price,
@@ -79,7 +67,7 @@ exports.editPackage = async function (req, res, next) {
         receiveingCode: PackageToEdit.receiveingCode
 
     }
-    Package.update({_id: req.params.id}, packs, function (err, packs) {
+    Package.update({_id: req.params.id}, parcels, function (err, parcels) {
         if (err) {
             const err = new Error('Blog post not found');
             err.name = 'NotFoundError';
@@ -94,7 +82,7 @@ exports.editPackage = async function (req, res, next) {
 }
 
 exports.deletePackage = function(req, res, next) {
-    Package.delete({_id: req.params.id}, function(err, packs) {
+    Package.delete({_id: req.params.id}, function(err, parcels) {
         if(err) {
             const err = new Error('Package not found');
             err.name = 'NotFoundError';
@@ -122,17 +110,12 @@ exports.addPackageToRide = async (req, res, next) => {
 
     rideid = await ride.findById(req.params.idRide);
     userid = await user.findById(req.params.idUser);
-
     trav = traveler.create({
         user: req.body.status,
         confimationCode: makeid(5),
         valide: false,
-
     });
-
     rideid.travelers = trav;
-
-
     await rideid.save()
         .then((data) => {
             res.set('Content-Type', 'application/json');

@@ -17,7 +17,7 @@ var privilegesRouter = require('./routes/Privileges');
 var rideRouter = require('./routes/Ride');
 var packageRouter = require('./routes/Package');
 var postRouter = require('./routes/Post');
-
+var upload = require('./routes/upload')
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
 mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true});
@@ -38,6 +38,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+const fileUpload = require('express-fileupload');
 
 app.use(cors());
 app.use(helmet());
@@ -53,6 +54,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload({
+    preserveExtension: true,
+    useTempFiles: false
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -61,10 +66,30 @@ app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
 app.use('/packages', packageRouter)
 app.use('/blogs', postRouter)
+app.post('/upload', function(req, res) {
+    let file;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send('No files were uploaded.');
+        return;
+    }
+    file = req.files.file;
+    file.mv(__dirname + '/public/uploads/' + file.name, function(err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        res.send('File uploaded to ');
+    });
+});
+
 
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Cache-Control, Accept, Origin, X-Session-ID');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,TRACE,COPY,LOCK,MKCOL,MOVE,PROPFIND,PROPPATCH,UNLOCK,REPORT,MKACTIVITY,CHECKOUT,MERGE,M-SEARCH,NOTIFY,SUBSCRIBE,UNSUBSCRIBE,PATCH');
+    res.header('Access-Control-Allow-Credentials', 'false');
+    res.header('Access-Control-Max-Age', '1000');
     next();
 });
 app.use(passport.initialize());
