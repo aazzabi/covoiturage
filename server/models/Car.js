@@ -7,7 +7,6 @@ var carSchema = mongoose.Schema(
         year: {type: String, unique: false, required: false},
         color: {type: String, unique: false, required: true},
         capacite: {type: Number, unique: false, required: true},
-        documents: [{type: mongoose.Schema.Types.ObjectId, ref: 'Document', required: false}],
         owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true},
     });
 
