@@ -1,5 +1,6 @@
 var user = require('../models/User');
 var driverRequest = require('../models/DriverRequest');
+var allCarsModelsCapacity = require('../models/AllCarsModelCapacity');
 var groupModel = require('../models/Group');
 var privilege = require('../models/Privilege');
 var _ = require('lodash');
@@ -14,7 +15,7 @@ const crypto = require('crypto')
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, config.upload.directoryDrivers );
+        cb(null, config.upload.directoryDrivers);
     },
     filename: function (req, file, cb) {
         console.log(file); //log the file object info in console
@@ -56,12 +57,15 @@ var getUserById = (req, res, next) => {
 var updateUser = (req, res, next) => {
     console.log(req.body);
     const updateData = req.body;
-    if (!updateData){
-        res.status(422).send({"message":"please provide what you want to update"})
+    if (!updateData) {
+        res.status(422).send({"message": "please provide what you want to update"})
     }
-    user.findOne({"_id":req.params.id}).then(function(user) {
+    user.findOne({"_id": req.params.id}).then(function (user) {
         console.log(req.params.id, 'id');
-        if (!user) { return res.sendStatus(401); }
+        console.log(user, 'id');
+        if (!user) {
+            return res.sendStatus(401);
+        }
         //NOTE  only update fields that were actually passed...
         if (typeof updateData.username !== 'undefined') {
             user.username = updateData.username;
@@ -82,11 +86,11 @@ var updateUser = (req, res, next) => {
             user.role = updateData.role;
         }
         return user.save()
-            .then(function() {
-                return res.json({ user: user});
+            .then(function () {
+                return res.json({user: user});
             });
-    }).catch(()=>{
-            res.status(422).send({"message":"couldn't update user"})
+    }).catch(() => {
+            res.status(422).send({"message": "couldn't update user"})
         }
     );
 };
@@ -99,30 +103,56 @@ var profile = function (req, res) {
         res.status(200).send(decoded);
     });
 };
-var becomeDriverRequest = async (req, res) => {
-    const u = await user.findOne({"_id": req.params.idUser});
-    const dreq = await driverRequest.findOne({"user": u});
 
-    console.log(dreq);
-    if (dreq == null) {
-        driverRequest.create({user: u})
-            .then((data) => {
-                res.status(202).json(data);
-            }, err => {
-                res.status(202).json(err);
-            });
+var becomeDriverRequest = async (req, res) => {
+    console.log(req.params.id);
+    if (await user.findOne({"_id": req.params.id}) != null) {
+        const us = await user.findOne({"_id": req.params.id});
+        const dreq = await driverRequest.findOne({"user": us});
+        const c = await allCarsModelsCapacity.findOne({"marque": req.body.marque, "model": req.body.model});
+        if (dreq == null) {
+            if (!us.car) {
+                car.create({
+                    capacite: c.capacite,
+                    owner: us,
+                    year: req.body.year,
+                    color: req.body.color,
+                    marque: req.body.marque,
+                    model: req.body.model,
+                }).then(async (data) => {
+                        const add = await user.update({"_id": req.params.id}, {"$set": {"car": data}});
+                        driverRequest.create({user: us})
+                            .then((dq) => {
+                                console.log(dq, 'driver request');
+                                res.status(202).json(data);
+                            }, err => {
+                                res.status(202).json(err);
+                            });
+
+                    },
+                    (error) => res.status(200).send(error));
+            } else {
+                res.status(200).send({"status": 400, "message": "This user already have a car"});
+            }
+        }else {
+            res.status(202).json({"status": "error", "message": "request exists with this user"});
+        }
+
     } else {
-        res.status(202).json({"status": "error", "message": "request exists with this user"});
+        res.status(200).send({"status": 400, "message": "This user doesn't exist"});
     }
 };
 
-
+var refuseDriverRequest = (req, res) => {
+    driverRequest.remove({"_id": req.params.idUser})
+        .then((data) => console.log(data), (error) => console.log(error));
+};
 var uploadDocumentForDriver = (req, res) => {
     uploadDocs(req, res, async function (error) {
         req.files.forEach((fi) => {
             console.log(fi, 'fi');
         });
-        console.log(req.body , 'body');
+        console.log(req.body, 'body');
     });
 };
 module.exports = {
