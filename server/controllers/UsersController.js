@@ -23,51 +23,6 @@ var storage = multer.diskStorage({
 });
 var uploadDocs = multer({storage: storage}).array('document');
 
-var becomeDriver = async (req, res) => {
-    const u = await user.findOne({"_id":req.params.idUser });
-    // Boucle sur les document uploader
-    // upload document ( name, type )
-    //
-
-
-    // upload(req, res, function (error) {
-    //     if (error) {
-    //         res.status(500).json(error);
-    //     } else {
-    //         var ext = '';
-    //         switch (req.file.mimetype)
-    //         {
-    //             case 'image/png':
-    //             {
-    //                 ext = '.png';
-    //                 break;
-    //             }
-    //             case 'image/jpeg':
-    //             {
-    //                 ext = '.jpeg';
-    //                 break;
-    //             }
-    //             case 'image/bmp':
-    //             {
-    //                 ext = '.bmp';
-    //                 break;
-    //             }
-    //         }
-    //         var hashName = crypto.createHash('md5').update(req.file.originalname).digest("hex");
-    //         fs.rename(config.upload.directoryDrivers + req.file.originalname ,
-    //             config.upload.directoryDrivers + hashName  + ext ,
-    //             (error) => {
-    //             if (error) {
-    //                 console.log(error);
-    //             }
-    //             else {
-    //                 console.log("\nFile Renamed\n");
-    //             }
-    //         });
-    //         res.status(202).json("data");
-    //     }
-    // });
-};
 
 var getAllUsers = (req, res, next) => {
     user.find({}).sort('firstName')
@@ -99,10 +54,36 @@ var profile = function (req, res) {
         res.status(200).send(decoded);
     });
 };
+var becomeDriverRequest = async (req, res) => {
+    const u = await user.findOne({"_id": req.params.idUser});
+    const dreq = await driverRequest.findOne({"user": u});
 
+    console.log(dreq);
+    if (dreq == null) {
+        driverRequest.create({user: u})
+            .then((data) => {
+                res.status(202).json(data);
+            }, err => {
+                res.status(202).json(err);
+            });
+    } else {
+        res.status(202).json({"status": "error", "message": "request exists with this user"});
+    }
+};
+
+
+var uploadDocumentForDriver = (req, res) => {
+    uploadDocs(req, res, async function (error) {
+        req.files.forEach((fi) => {
+            console.log(fi, 'fi');
+        });
+        console.log(req.body , 'body ***********************');
+    });
+};
 module.exports = {
     getAllUsers,
     getUserById,
     profile,
-    becomeDriver
+    uploadDocumentForDriver,
+    becomeDriverRequest
 };
