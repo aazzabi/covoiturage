@@ -132,10 +132,9 @@ export default class CreateParcel extends Component {
                                 <Card>
                                     <CardHeader>
 
-                                        <h3 className="mb-0">Add Parcels</h3>
+                                        <h3 className="mb-0">Add Parcels </h3>
                                     </CardHeader>
                                     <CardBody>
-
                                         <Col md="8">
                                             <div className="form-wrapper">
                                                 <Form onSubmit={this.onSubmit}>
@@ -146,7 +145,6 @@ export default class CreateParcel extends Component {
                                                                 <Label>Title</Label>
                                                                 <Input type="text" value={this.state.title}
                                                                        onChange={this.onChangeParceltitle}/>
-
                                                             </FormGroup>
                                                             <FormGroup>
                                                                 <InputLabel

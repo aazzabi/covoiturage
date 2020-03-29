@@ -19,7 +19,6 @@ class Packages extends Component {
     };
     componentDidMount() {
         this.props.getPackages();
-
     }
     handleChange = (name, value) => {
         this.setState({[name]: value, currentPage: 1});
@@ -37,23 +36,14 @@ class Packages extends Component {
         } = this.state;
         const {packages} = this.props;
         let filteredPackages = [];
-
         filteredPackages = search(packages, searchFilter,searchFilter2,"departure","arrival");
-
-        return (
-            <>
-                <AuthHeader title="Choose the best plan for your business" lead=""/>
+        return (<><AuthHeader title="Choose the best plan for your business" lead=""/>
                 <Container className="mt--8 pb-5">
-                    <Row className="justify-content-center">
-                        <Row>
-                            <div className="col">
-                                <Card>
+                    <Row className="justify-content-center"><Row><div className="col"><Card>
                                     <CardHeader className="border-0">
                                         <h3 className="mb-0">Packages List</h3>
                                     </CardHeader>
-                                    <CardBody>
-
-                                        <div className='row'>
+                                    <CardBody><div className='row'>
                                             <Input
                                                 onChange={event => this.handleChange('searchFilter', event.target.value)}
                                                 label='Search packages' iconClass='fas fa-search'
@@ -63,13 +53,11 @@ class Packages extends Component {
                                                 onChange={event => this.handleChange('searchFilter2', event.target.value)}
                                                 label='Search packages' iconClass='fas fa-search'
                                                 placeholder='To'/>
-                                            {
-                                                !!filteredPackages
+                                            {!!filteredPackages
                                                     ?
                                                     <PackagesTable pageSize={pageSize} currentPage={currentPage}
                                                                    packages={filteredPackages}/>
-                                                    : <h1 className='text-white'>No Packages</h1>
-                                            }
+                                                    : <h1 className='text-white'>No Packages</h1> }
                                             <br/>
                                             <Pagination
                                                 itemsCount={filteredPackages.length}
