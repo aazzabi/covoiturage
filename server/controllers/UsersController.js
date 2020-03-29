@@ -25,7 +25,7 @@ var uploadDocs = multer({storage: storage}).array('document');
 
 
 var getAllUsers = (req, res, next) => {
-    user.find({}).sort('firstName')
+    user.find({"role": "USER"}).sort('firstName')
         .then((data) => {
             res.status(202).json(data);
         })
@@ -33,7 +33,15 @@ var getAllUsers = (req, res, next) => {
             res.status(500).send(error);
         });
 };
-
+var getAllDrivers = (req, res, next) => {
+    user.find({"role": "DRIVER"}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
 var getUserById = (req, res, next) => {
     user.findOne({"_id": req.params.id})
         .then((data) => {
@@ -44,6 +52,43 @@ var getUserById = (req, res, next) => {
             res.set('Content-Type', 'text/html');
             res.status(500).send(error);
         });
+};
+var updateUser = (req, res, next) => {
+    console.log(req.body);
+    const updateData = req.body;
+    if (!updateData){
+        res.status(422).send({"message":"please provide what you want to update"})
+    }
+    user.findOne({"_id":req.params.id}).then(function(user) {
+        console.log(req.params.id, 'id');
+        if (!user) { return res.sendStatus(401); }
+        //NOTE  only update fields that were actually passed...
+        if (typeof updateData.username !== 'undefined') {
+            user.username = updateData.username;
+        }
+        if (typeof updateData.email !== 'undefined') {
+            user.email = updateData.email;
+        }
+        if (typeof updateData.firstName !== 'undefined') {
+            user.firstName = updateData.firstName;
+        }
+        if (typeof updateData.lastName !== 'undefined') {
+            user.lastName = updateData.lastName;
+        }
+        if (typeof updateData.phone !== 'undefined') {
+            user.phone = updateData.phone;
+        }
+        if (typeof updateData.role !== 'undefined') {
+            user.role = updateData.role;
+        }
+        return user.save()
+            .then(function() {
+                return res.json({ user: user});
+            });
+    }).catch(()=>{
+            res.status(422).send({"message":"couldn't update user"})
+        }
+    );
 };
 
 var profile = function (req, res) {
@@ -77,11 +122,13 @@ var uploadDocumentForDriver = (req, res) => {
         req.files.forEach((fi) => {
             console.log(fi, 'fi');
         });
-        console.log(req.body , 'body ***********************');
+        console.log(req.body , 'body');
     });
 };
 module.exports = {
     getAllUsers,
+    getAllDrivers,
+    updateUser,
     getUserById,
     profile,
     uploadDocumentForDriver,

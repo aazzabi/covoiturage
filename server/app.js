@@ -15,6 +15,7 @@ var usersRouter = require('./routes/Users');
 var groupsRouter = require('./routes/Groups');
 var privilegesRouter = require('./routes/Privileges');
 var rideRouter = require('./routes/Ride');
+var carsRouter = require('./routes/Cars');
 
 
 const url = "mongodb://localhost:27017/covoiturage";
@@ -52,6 +53,7 @@ app.use('/users', usersRouter);
 app.use('/ride',rideRouter);
 app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
+app.use('/cars', carsRouter);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

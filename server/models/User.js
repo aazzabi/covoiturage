@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema(
         createdAt: {type: Date, default: Date.now()},
         lastLogin: {type: Date},
         group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: false},
-        car: {type: mongoose.Schema.Types.ObjectId, ref: 'Car', required: false},
+        car: {type: mongoose.Schema.Types.ObjectId, ref: 'Car', required: false, unique: true},
         privileges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Privilege', required: false}],
         documents: [{type: mongoose.Schema.Types.ObjectId, ref: 'Document', required: false}],
     });
