@@ -14,6 +14,7 @@ var userSchema = mongoose.Schema(
         avatar: {type: String, required: false},
         createdAt: {type: Date, default: Date.now()},
         lastLogin: {type: Date},
+        status: {type: String,default: ""},
         group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: false},
         car: {type: mongoose.Schema.Types.ObjectId, ref: 'Car', required: false },
         privileges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Privilege', required: false}],

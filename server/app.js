@@ -1,3 +1,4 @@
+var User  = require("./models/User");
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -14,12 +15,16 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/Users');
 var groupsRouter = require('./routes/Groups');
 var privilegesRouter = require('./routes/Privileges');
+
 var rideRouter = require('./routes/Ride');
 var carsRouter = require('./routes/Cars');
 var packageRouter = require('./routes/Package');
 var postRouter = require('./routes/Post');
 var claimsRouter = require('./routes/Claims');
 var upload = require('./routes/upload');
+
+var discussionRouter = require('./routes/Discussion')
+
 
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
@@ -67,11 +72,12 @@ app.use('/users', usersRouter);
 app.use('/ride', rideRouter);
 app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
+
 app.use('/cars', carsRouter);
 app.use('/packages', packageRouter);
 app.use('/blogs', postRouter);
 app.use('/claims', claimsRouter);
-
+app.use('/chat', discussionRouter);
 app.post('/upload', function(req, res) {
     let file;
 
@@ -88,6 +94,7 @@ app.post('/upload', function(req, res) {
         res.send('File uploaded to ');
     });
 });
+
 
 
 app.use(function (req, res, next) {
@@ -115,5 +122,27 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+io.on('connection', (socket) => {
+  console.log('made socket connection', socket.id);
 
+  socket.on("new-message", (data) => {
+    io.sockets.emit("new-message", data);
+  });
+
+  socket.on("disconnect", async () => {
+    const user = await User.findOneAndUpdate(
+        { status: socket.id },
+        { status: "" },
+        { useFindAndModify: false }
+    );
+    console.log("user-disconnect: ", user.username);
+    socket.broadcast.emit("user-disconnected", user);
+  });
+
+
+})
+
+server.listen(3002, function() {
+  console.log('Chat server running...');
+});
 module.exports = app;
