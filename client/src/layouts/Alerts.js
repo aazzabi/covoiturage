@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 
 export const NotificationAlertOptions = (type, title, message) => {

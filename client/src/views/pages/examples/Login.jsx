@@ -23,7 +23,6 @@ import AuthHeader from "components/Headers/AuthHeader.jsx";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../../actions/authActions";
-import { Redirect } from "react-router-dom";
 
 import NotificationAlert from "react-notification-alert";
 import NotificationAlertOptions from "../../../layouts/Alerts";

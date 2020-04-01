@@ -26,7 +26,6 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { clearCurrentProfile } from "./actions/authActions";
-import PrivateRoute from "./utils/PrivateRoute";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -55,6 +54,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
         <Route path="/auth" render={props => <AuthLayout {...props} />} />
+        <Route path="/admin/blog" render={props => <AuthLayout {...props} />} />
         <Route path="/" render={props => <IndexView {...props} />} />
         <Redirect from="*" to="/" />
       </Switch>
