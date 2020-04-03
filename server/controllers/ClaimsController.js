@@ -1,4 +1,4 @@
-var Group = require('../models/Group');
+/*var Group = require('../models/Group');
 var driverRequest = require('../models/DriverRequest');
 var user = require('../models/User');
 var car = require('../models/Car');
@@ -279,4 +279,4 @@ module.exports = {
     changeStatus,
     addCommentToClaim,
 };
-
+*/

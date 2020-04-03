@@ -16,6 +16,7 @@ var usersRouter = require('./routes/Users');
 var groupsRouter = require('./routes/Groups');
 var privilegesRouter = require('./routes/Privileges');
 
+
 var rideRouter = require('./routes/Ride');
 var carsRouter = require('./routes/Cars');
 var packageRouter = require('./routes/Package');
@@ -23,7 +24,10 @@ var postRouter = require('./routes/Post');
 var claimsRouter = require('./routes/Claims');
 var upload = require('./routes/upload');
 
-var discussionRouter = require('./routes/Discussion')
+
+var discussionRouter = require('./routes/Discussion');
+var feedsRouter = require('./routes/FeedBack');
+
 
 
 const url = "mongodb://localhost:27017/covoiturage";
@@ -78,6 +82,7 @@ app.use('/packages', packageRouter);
 app.use('/blogs', postRouter);
 app.use('/claims', claimsRouter);
 app.use('/chat', discussionRouter);
+app.use('/feed', feedsRouter);
 app.post('/upload', function(req, res) {
     let file;
 
@@ -94,6 +99,9 @@ app.post('/upload', function(req, res) {
         res.send('File uploaded to ');
     });
 });
+
+
+
 
 
 

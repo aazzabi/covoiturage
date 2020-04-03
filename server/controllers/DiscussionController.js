@@ -51,7 +51,7 @@ exports.addDisc =  (req, res )  => {
             res.set('Content-Type', 'text/html');
             res.status(500).send(error);
         });
-}
+};
 
 //add  msg in an existing disc or   add new disc + msg
 exports.addMsg =   (req,res ) => {
@@ -88,14 +88,14 @@ exports.addMsg =   (req,res ) => {
     })
 
 
-}
+};
 //list disc  user
 exports.listDiscussionsUser = async (req, res) => {
     discussion.find({$or:[{owner:ObjectId(req.params.id)} , {users : ObjectId(req.params.id)  }]}, function(err, discussions) {
         console.log(discussions);
         res.send(discussions);
     });
-}
+};
 //seen msg "2PersonChat "
 exports.seenMsg = async (req, res) => {
 
@@ -111,7 +111,7 @@ exports.seenMsg = async (req, res) => {
             );
         }
     })
-}
+};
 
 
 // list all msg  disc
@@ -125,7 +125,7 @@ exports.listMsgsDisc = async (req, res) => {
     })
 
 
-}
+};
 // delete  disc
 
 exports.deleteDiscussion = async (req, res)  => {
@@ -147,7 +147,7 @@ exports.deleteDiscussion = async (req, res)  => {
             res.status(500).send(error);
         });
 
-}
+};
 //-------------------------------------chatroom------------------------------------
 // list users in chatroom
 exports.listChatRoomUsers = async (req, res)  => {
@@ -165,7 +165,7 @@ exports.listChatRoomUsers = async (req, res)  => {
         });
 
 
-}
+};
 //add user to chatroom
 exports.addUserInChatRoom = async (req, res)  => {
 
@@ -181,7 +181,7 @@ exports.addUserInChatRoom = async (req, res)  => {
             res.status(500).send(error);
         });
 
-}
+};
 //Remove user from chatRoom
 exports.RemoveUserInChatRoom = async  (req, res)  => {
     var disc = await discussion.findOne({ _id : req.params.discId });
@@ -203,7 +203,7 @@ exports.RemoveUserInChatRoom = async  (req, res)  => {
                     res.set('Content-Type', 'text/html');
                     res.status(500).send(error);
                 });
-}
+};
 //send msg (input c2PersonChat or ChatRoom )
 exports.sendMsgChat =  (req, res)  => {
     var date = Date.now();
@@ -212,7 +212,7 @@ exports.sendMsgChat =  (req, res)  => {
         created_at: date,
         discussion: ObjectId(req.params.idDisc),
         text: req.body.text,
-    })
+    });
 
     message.save().then(()=> {
         res.status(202).send("msg has been saved ");
@@ -222,4 +222,4 @@ exports.sendMsgChat =  (req, res)  => {
             res.set('Content-Type', 'text/html');
             res.status(500).send(error);
         });
-}
+};
