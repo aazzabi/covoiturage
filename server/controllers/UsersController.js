@@ -4,11 +4,11 @@ var allCarsModelsCapacity = require('../models/AllCarsModelCapacity');
 var groupModel = require('../models/Group');
 var privilege = require('../models/Privilege');
 var _ = require('lodash');
-var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
 var multer = require('multer');
+var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 const {imageHash} = require('image-hash');
 const crypto = require('crypto')
@@ -177,5 +177,6 @@ module.exports = {
     getUserById,
     profile,
     uploadDocumentForDriver,
-    becomeDriverRequest
+    becomeDriverRequest,
+    profile
 };

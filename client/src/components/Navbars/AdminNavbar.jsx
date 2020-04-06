@@ -1,7 +1,6 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classnames from "classnames";
-// nodejs library to set properties for components
 import PropTypes from "prop-types";
 // reactstrap components
 import {
@@ -28,7 +27,6 @@ import {
   Col
 } from "reactstrap";
 
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser , getProfile } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/authActions";

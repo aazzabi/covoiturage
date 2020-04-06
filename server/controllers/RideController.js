@@ -321,12 +321,9 @@ var removeTravelerRide = async (req, res, next) => {
 
         }
     }
-
     if (!exist) {
-
         res.set('Content-Type', 'application/json');
         res.status(404).send("traveler not found");
-
     }
 };
 

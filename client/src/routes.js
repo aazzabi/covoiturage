@@ -1,19 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard PRO React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Alternative from "views/pages/dashboards/Alternative.jsx";
 import Buttons from "views/pages/components/Buttons.jsx";
 import Calendar from "views/pages/Calendar.jsx";
@@ -40,6 +25,8 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
+import Create from "./FrontOffice/Parcels/Create";
+import Packages from "./FrontOffice/Parcels/Packages";
 
 const routes = [
   {
@@ -69,9 +56,15 @@ const routes = [
     state: "examplesCollapse",
     views: [
       {
-        path: "/pricing",
-        name: "Pricing",
-        component: Pricing,
+        path: "/parcels/Add",
+        name: "Create Package",
+        component: Create,
+        layout: "/auth"
+      },
+      {
+        path: "/parcels",
+        name: "Packages",
+        component: Packages,
         layout: "/auth"
       },
       {

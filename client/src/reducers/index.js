@@ -4,10 +4,12 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import AlertReducer from './AlertReducer';
 import UsersReducers from '../services/Users/UsersReducers';
+import PackageReducer from "./PackageReducer";
 
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
+    pack:PackageReducer,
     alert: AlertReducer,
     users: UsersReducers,
 });
