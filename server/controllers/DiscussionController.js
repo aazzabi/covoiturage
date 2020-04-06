@@ -185,7 +185,7 @@ exports.addUserInChatRoom = async (req, res)  => {
 //Remove user from chatRoom
 exports.RemoveUserInChatRoom = async  (req, res)  => {
     var disc = await discussion.findOne({ _id : req.params.discId });
-            var i = 1 ;
+            var i = 0 ;
 
             for ( userr of disc.users)
             {
