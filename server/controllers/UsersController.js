@@ -25,6 +25,15 @@ var storage = multer.diskStorage({
 var uploadDocs = multer({storage: storage}).array('document');
 
 
+var getAll = (req, res, next) => {
+    user.find({}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
 var getAllUsers = (req, res, next) => {
     user.find({"role": "USER"}).sort('firstName')
         .then((data) => {
@@ -143,6 +152,10 @@ var becomeDriverRequest = async (req, res) => {
     }
 };
 
+var deleteUser = (req, res) => {
+    user.remove({"_id": req.params.idUser})
+        .then((data) => console.log(data), (error) => console.log(error));
+};
 var refuseDriverRequest = (req, res) => {
     driverRequest.remove({"_id": req.params.idUser})
         .then((data) => console.log(data), (error) => console.log(error));
@@ -156,9 +169,11 @@ var uploadDocumentForDriver = (req, res) => {
     });
 };
 module.exports = {
+    getAll,
     getAllUsers,
     getAllDrivers,
     updateUser,
+    deleteUser,
     getUserById,
     profile,
     uploadDocumentForDriver,

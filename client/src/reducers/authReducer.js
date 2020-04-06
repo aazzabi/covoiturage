@@ -4,9 +4,7 @@ import { SET_CURRENT_USER , GET_PROFILE, PROFILE_LOADING } from "../actions/type
 
 const initialState = {
   isAuthenticated: false,
-  user: {}, 
-
-
+  user: {},
   profile: null,
   loading: false
 };

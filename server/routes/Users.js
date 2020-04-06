@@ -19,9 +19,11 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage});
 
 router.get('/profile', isAuthenticated, userController.profile);
+router.get('/getAll', userController.getAll);
 router.get('/getAllUsers', userController.getAllUsers);
 router.get('/getAllDrivers', userController.getAllDrivers);
 router.post('/updateUser/:id', userController.updateUser);
+router.post('/delete/:id', userController.deleteUser);
 router.get('/getUserById/:id', userController.getUserById);
 router.post('/becomeDriver/:id', userController.becomeDriverRequest);
 router.post('/refuseDriverRequest/:idUser', authorize(['ADMIN']), userController.becomeDriverRequest);
