@@ -29,7 +29,7 @@ router.post('/updateUser/:id', userController.updateUser);
 router.post('/delete/:id', userController.deleteUser);
 router.get('/getUserById/:id', userController.getUserById);
 router.post('/refuseDriverRequest/:idUser', authorize(['ADMIN']), userController.becomeDriverRequest);
-
+// test
 /*
 POST
 http://localhost:3000/users/becomeDriver/:idUser
