@@ -96,10 +96,10 @@ class Admin extends React.Component {
             sidenavOpen={this.state.sidenavOpen}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
-          {/*<Switch>{this.getRoutes(routes)}</Switch>*/}
-          <Switch>
-            <Route exact path="/admin/users" render={() => <AllUsers/>} />
-          </Switch>
+          <Switch>{this.getRoutes(routes)}</Switch>
+          {/*<Switch>*/}
+          {/*  <Route exact path="/admin/users" render={() => <AllUsers/>} />*/}
+          {/*</Switch>*/}
           <AdminFooter />
         </div>
         {this.state.sidenavOpen ? (

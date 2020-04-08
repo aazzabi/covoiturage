@@ -52,11 +52,11 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
+        <Route path="/front" render={props => <AuthLayout {...props} />} />
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
-        <Route path="/auth" render={props => <AuthLayout {...props} />} />
         <Route path="/admin/blog" render={props => <AuthLayout {...props} />} />
         <Route path="/" render={props => <IndexView {...props} />} />
-        <Redirect from="*" to="/" />
+        <Redirect from="*" to="/front" />
       </Switch>
     </BrowserRouter>
   </Provider>,

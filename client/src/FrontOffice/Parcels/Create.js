@@ -199,7 +199,7 @@ export default class CreateParcel extends Component {
                                                         alt="..."
                                                         width={480}
                                                         height={300}
-                                                        src={require("assets/img/parcel.png")}
+                                                        // src={require("../../assets/img/parcel.png")}
                                                     />
                                                     <Row>
                                                         <Col md="4" sm="6">
