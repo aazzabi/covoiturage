@@ -62,7 +62,7 @@ var add = (req, res, next) => {
                 .then((dr) => {
 
                     ride.create({
-                        status: req.body.status,
+                        status: "InProgress",
                         startTime: req.body.startTime,
                         origin: req.body.origin,
                         destination: req.body.destination,
