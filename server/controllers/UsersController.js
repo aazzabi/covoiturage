@@ -22,7 +22,7 @@ var storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-var uploadDocs = multer({storage: storage}).array('document');
+var uploadDocs = multer({storage: storage}).array('doc',10);
 
 
 var getAll = (req, res, next) => {
@@ -113,6 +113,17 @@ var profile = function (req, res) {
     });
 };
 
+
+/*
+POST
+http://localhost:3000/users/becomeDriver/:idUser
+{
+    "marque": "DACIA",
+    "model": "Dacia Dokker",
+    "year": 1990,
+    "color": "red"
+}
+*/
 var becomeDriverRequest = async (req, res) => {
     console.log(req.params.id);
     if (await user.findOne({"_id": req.params.id}) != null) {
@@ -129,7 +140,7 @@ var becomeDriverRequest = async (req, res) => {
                     marque: req.body.marque,
                     model: req.body.model,
                 }).then(async (data) => {
-                        const add = await user.update({"_id": req.params.id}, {"$set": {"car": data}});
+                        const add = await user.findOneAndUpdate({"_id": req.params.id}, {"$set": {"car": data}});
                         driverRequest.create({user: us})
                             .then((dq) => {
                                 console.log(dq, 'driver request');
@@ -162,6 +173,11 @@ var refuseDriverRequest = (req, res) => {
 };
 var uploadDocumentForDriver = (req, res) => {
     uploadDocs(req, res, async function (error) {
+        console.log(req.file);
+        console.log(req.files[0]);
+        console.log(req.files[1]);
+        console.log(req.files[2]);
+        console.log(req.files[3]);
         req.files.forEach((fi) => {
             console.log(fi, 'fi');
         });
@@ -178,5 +194,5 @@ module.exports = {
     profile,
     uploadDocumentForDriver,
     becomeDriverRequest,
-    profile
+    refuseDriverRequest
 };

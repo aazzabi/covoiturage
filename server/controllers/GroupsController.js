@@ -10,9 +10,11 @@ var fs = require('fs');
 var getAllGroups = (req, res, next) => {
     group.find({}).sort('groupName')
         .then((data) => {
+            res.set('Content-Type', 'application/json');
             res.status(202).json(data);
         })
         .catch(error => {
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -37,7 +39,7 @@ var getGroupById = (req,res,next) => {
             res.status(202).json(data);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
     });
 };
@@ -45,12 +47,12 @@ var deleteGroup = (req,res,next) => {
     group.deleteOne({ "_id": req.params.id })
         .then(() =>
         {
-            res.set('Content-Type', 'text/html');
-            res.status(202).send("The groupe Was Deleted Successfully !");
+            res.set('Content-Type', 'application/json');
+            res.status(202).send({"status": "success", "message": "The groupe Was Deleted Successfully !" });
         })
         .catch(error =>
         {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -63,7 +65,7 @@ var addUserToGroup = async (req, res, next) => {
             res.status(202).json(g);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -86,18 +88,20 @@ var updateGroup = (req, res, next) => {
     if (!updateData){
         res.status(422).send({"message":"please provide what you want to update"})
     }
-    group.findOne({"_id":req.params.id}).then(function(group) {
+    group.findOne({"_id":req.params.id}).then(function(grp) {
         console.log(req.params.id, 'id');
-        if (!group) { return res.sendStatus(401); }
+        if (!grp) { return res.sendStatus(401); }
         //NOTE  only update fields that were actually passed...
         if (typeof updateData.groupName !== 'undefined') {
-            user.groupName = updateData.groupName;
+            grp.groupName = updateData.groupName;
         }
         return group.save()
             .then(function() {
-                return res.json({ group: group});
+                res.set('Content-Type', 'application/json');
+                return res.json({ group: grp});
             });
     }).catch(()=>{
+            res.set('Content-Type', 'application/json');
             res.status(422).send({"message":"couldn't update group"})
         }
     );

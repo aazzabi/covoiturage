@@ -40,7 +40,7 @@ var register = (req, res, next) => {
             res.status(202).json(data);
         })
             .catch(error => {
-                res.set('Content-Type', 'text/html');
+                res.set('Content-Type', 'application/json');
                 res.status(500).send(error);
             });
     }

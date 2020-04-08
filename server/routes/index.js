@@ -46,7 +46,7 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
         if (error) {
             res.status(500).json(error);
         } else {
-            switch (req.file.mimetype) {
+            switch (req.files.image.mimetype) {
                 case 'image/png': {
                     ext = '.png';
                     break;
@@ -61,17 +61,21 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
                 }
             }
             await user.updateOne({"_id": idU}, {"avatar": hashName + ext}).then((data) => {
-                fs.rename(config.upload.directoryUsersImage + req.file.originalname,
-                    config.upload.directoryUsersImage + hashName + ext,
-                    (error) => {
-                        if (error) {
-                            res.status(400).json({"success": false, "message": error});
-                        } else {
-                            res.status(202).json({"success": true, "message": "user image was uploaded successfully"});
-                        }
-                    });
+                req.files.image.mv(config.upload.directoryUsersImage + hashName + ext);
+                res.send({
+                    status: true,
+                    message: 'File is uploaded',
+                });
+                // fs.rename(config.upload.directoryUsersImage + req.files.image.name,
+                //     config.upload.directoryUsersImage + hashName + ext,
+                //     (error) => {
+                //         if (error) {
+                //             res.status(400).json({"success": false, "message": error});
+                //         } else {
+                //             res.status(202).json({"success": true, "message": "user image was uploaded successfully"});
+                //         }
+                //     });
             });
-
         }
     });
 
