@@ -18,7 +18,8 @@ var rideRouter = require('./routes/Ride');
 var carsRouter = require('./routes/Cars');
 var packageRouter = require('./routes/Package');
 var postRouter = require('./routes/Post');
-var upload = require('./routes/upload')
+var claimsRouter = require('./routes/Claims');
+var upload = require('./routes/upload');
 
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
@@ -67,8 +68,10 @@ app.use('/ride', rideRouter);
 app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
 app.use('/cars', carsRouter);
-app.use('/packages', packageRouter)
-app.use('/blogs', postRouter)
+app.use('/packages', packageRouter);
+app.use('/blogs', postRouter);
+app.use('/claims', claimsRouter);
+
 app.post('/upload', function(req, res) {
     let file;
 
