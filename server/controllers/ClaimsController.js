@@ -247,7 +247,8 @@ var changeStatus = async (req, res, next) => {
 
 var addCommentToClaim = async (req, res, next) => {
     const u = await user.find({'_id': req.params.idUser});
-    claim.findOneAndUpdate({'_id': req.params.id}, {
+    console.log(req.body.content);
+    claim.updateOne({'_id': req.params.idClaim}, {
         $push: {
             'comments':
                 {
@@ -257,8 +258,9 @@ var addCommentToClaim = async (req, res, next) => {
                 }
         }
     }).then(async (data) => {
+        const cla = await claim.find({'_id': req.params.idClaim});
         res.set('Content-Type', 'application/json');
-        res.status(200).send(data);
+        res.status(200).send(cla);
     }, error => {
         console.log(error);
         res.set('Content-Type', 'application/json');
