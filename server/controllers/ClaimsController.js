@@ -225,9 +225,9 @@ var resolveClaim = async (req, res, next) => {
             res.status(500).send({'status': 'error', 'message': 'the claim isnt in progress'});
 
         }
-    }else {
+    } else {
         res.set('Content-Type', 'application/json');
-        res.status(500).send({'status': 'error', 'message': 'the claim doesnt exist' });
+        res.status(500).send({'status': 'error', 'message': 'the claim doesnt exist'});
 
     }
 };
@@ -245,6 +245,27 @@ var changeStatus = async (req, res, next) => {
     })
 };
 
+var addCommentToClaim = async (req, res, next) => {
+    const u = await user.find({'_id': req.params.idUser});
+    claim.findOneAndUpdate({'_id': req.params.id}, {
+        $push: {
+            'comments':
+                {
+                    'published': new Date(),
+                    'content': req.body.content,
+                    'user': u
+                }
+        }
+    }).then(async (data) => {
+        res.set('Content-Type', 'application/json');
+        res.status(200).send(data);
+    }, error => {
+        console.log(error);
+        res.set('Content-Type', 'application/json');
+        res.status(500).send(error);
+    })
+};
+
 
 module.exports = {
     getAll,
@@ -254,5 +275,6 @@ module.exports = {
     updateClaim,
     resolveClaim,
     changeStatus,
+    addCommentToClaim,
 };
 
