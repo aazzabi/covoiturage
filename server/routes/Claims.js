@@ -1,4 +1,4 @@
-var express = require('express');
+/*var express = require('express');
 var router = express.Router();
 var claimController = require('../controllers/ClaimsController');
 
@@ -11,3 +11,4 @@ router.post('/changeStatus/:id/:status', claimController.changeStatus);
 router.post('/addComment/:idClaim/:idUser', claimController.addCommentToClaim);
 
 module.exports = router;
+*/

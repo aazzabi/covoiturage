@@ -269,14 +269,16 @@ var addCommentToClaim = async (req, res, next) => {
 };
 
 
-module.exports = {
-    getAll,
-    getById,
-    deleteClaim,
-    add,
-    updateClaim,
-    resolveClaim,
-    changeStatus,
-    addCommentToClaim,
+
+module.exports;*/
+/*= {
+getAll,
+getById,
+deleteClaim,
+add,
+updateClaim,
+resolveClaim,
+changeStatus,
+addCommentToClaim,
 };
 */

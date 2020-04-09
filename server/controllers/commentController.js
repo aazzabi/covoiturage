@@ -1,4 +1,4 @@
-
+/*
 const {
     body, param, query, sanitizeBody,
 } = require('express-validator');
@@ -162,3 +162,4 @@ const commentController = {
 };
 
 module.exports = commentController;
+*/
