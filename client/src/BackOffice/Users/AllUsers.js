@@ -118,8 +118,8 @@ class AllUsers extends React.Component {
                             <Fragment key={user._id}>
                                 <tr>
                                     {user.avatar != null
-                                        ? <td><img class="avatar avatar-sm rounded-circle" src={this.imgUrl + user.avatar}/></td>
-                                        : <td><img class="avatar avatar-sm rounded-circle" src={require("assets/img/theme/team-1.jpg")}/></td>
+                                        ? <td><img className="avatar avatar-sm rounded-circle" src={this.imgUrl + user.avatar}/></td>
+                                        : <td><img className="avatar avatar-sm rounded-circle" src={require("assets/img/theme/team-1.jpg")}/></td>
                                     }
                                     <td>{user.username}</td>
                                     <td>{user.firstName} {user.lastName}</td>
