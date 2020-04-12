@@ -27,6 +27,7 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import Create from "./FrontOffice/Parcels/Create";
 import Packages from "./FrontOffice/Parcels/Packages";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
 
 const routes = [
   {
@@ -65,6 +66,12 @@ const routes = [
         path: "/parcels",
         name: "Packages",
         component: Packages,
+        layout: "/auth"
+      },
+      {
+        path: "/viewparcels/:id",
+        name: "view parcels",
+        component: PackagesDetails,
         layout: "/auth"
       },
       {

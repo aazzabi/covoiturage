@@ -35,22 +35,11 @@ exports.getAllPackage = async (req, res, next) => {
 
 }
 
-exports.getByIdPackage = function(req, res, next) {
-    Package.findOne({"_id": req.params.id}, function(err, parcels) {
-        if(err) {
-            const err = new Error('Package not found');
-            err.name = 'NotFoundError';
+exports.getByIdPackage = async (req, res, next) => {
+    const packages = await Package.findOne({_id: req.params.id});
+    res.json(packages);
 
-            res.json({
-                error: err
-            })
-        }
-        res.json({
-            parcels: parcels
-        })
-    })
-}
-
+};
 exports.editPackage = async function (req, res, next) {
     PackageToEdit = await Package.findById(req.params.id);
     var parcels = {
@@ -81,31 +70,32 @@ exports.editPackage = async function (req, res, next) {
     })
 }
 
-exports.deletePackage = function(req, res, next) {
-    Package.delete({_id: req.params.id}, function(err, parcels) {
-        if(err) {
+exports.deletePackage = function (req, res, next) {
+    Package.delete({_id: req.params.id}, function (err, parcels) {
+        if (err) {
             const err = new Error('Package not found');
             err.name = 'NotFoundError';
 
             res.json({
-                error : err
+                error: err
             })
         }
         res.json({
-            message : "package deleted successfully"
+            message: "package deleted successfully"
         })
     })
 }
 
 function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
+    for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
+
 exports.addPackageToRide = async (req, res, next) => {
 
     rideid = await ride.findById(req.params.idRide);
