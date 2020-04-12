@@ -124,7 +124,7 @@ export default class CreateParcel extends Component {
     render() {
         return (
             <>
-                <AuthHeader title="Choose the best plan for your business" lead=""/>
+                <AuthHeader title="Add Parcels" lead=""/>
                 <Container className="mt--8 pb-5">
                     <Row className="justify-content-center">
                         <Col lg="8">
@@ -161,7 +161,6 @@ export default class CreateParcel extends Component {
                                                                     <MenuItem value={"MEDICINE"}>MEDICINE</MenuItem>
                                                                     <MenuItem value={"MONEY"}>MONEY</MenuItem>
                                                                     <MenuItem value={"OTHER"}>OTHER</MenuItem>
-
                                                                 </Select>
                                                             </FormGroup>
                                                         </Col>

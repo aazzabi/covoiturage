@@ -40,7 +40,6 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                 </th>
                 <th scope="col">size</th>
                 <th scope="col">price</th>
-                <th scope="col">description</th>
 
                 <th scope="col"/>
             </tr>
@@ -59,21 +58,19 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                                         src={`${serverUrl}${pack.files[0]}`}
                                     />
                                 </a>
-                                <Media>
-                            <span className="name mb-0 text-sm">{pack.title}  </span>
-                                </Media>
+
+                             <span className="name mb-0 text-sm"> <a className="font-weight-bold"> {pack.title}</a></span>
                             </Media>
 
                         </td>
                         <td>
-                            <Badge className="badge-dot mr-4" color="">
-                                <i className="bg-warning"/>
-                                <span className="status">{pack.type}</span>
+                            <Badge color="primary" pill>
+                                {pack.type}
                             </Badge>
                         </td>
-                        <td>{pack.departure}
+                        <td><i className="ni ni-square-pin"/> {pack.departure}
                         </td>
-                        <td>{pack.arrival}
+                        <td><i className="ni ni-pin-3"/> {pack.arrival}
                         </td>
                         <td>{pack.weight}
                         </td>
@@ -83,9 +80,7 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                         <td>
                             {pack.price}
                         </td>
-                        <td>
-                            {pack.description}
-                        </td>
+
                         <td className="text-right">
                             <UncontrolledDropdown>
                                 <DropdownToggle
@@ -100,10 +95,10 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                                     right
                                 >
                                     <DropdownItem
-                                        href="#pablo"
-                                        onClick={e => e.preventDefault()}
+                                        href={`/auth/viewparcels/${pack._id}/view`}
                                     >
-                                        Action
+
+                                        View Parcel info
                                     </DropdownItem>
                                     <DropdownItem
                                         href="#pablo"

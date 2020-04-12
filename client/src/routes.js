@@ -29,6 +29,9 @@ import CreateParcel from "./frontoffice/Parcels/Create";
 import Packages from "./frontoffice/Parcels/Packages";
 import AllUsers from "./backoffice/Users/AllUsers";
 import AllDrivers from "./backoffice/Users/AllDrivers";
+import Create from "./FrontOffice/Parcels/Create";
+import Packages from "./FrontOffice/Parcels/Packages";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
 
 const routes = [
   {
@@ -67,6 +70,24 @@ const routes = [
         path: "/parcels",
         name: "Packages",
         component: Packages,
+        layout: "/auth"
+      },
+      {
+        path: "/viewparcels/:id",
+        name: "view parcels",
+        component: PackagesDetails,
+        layout: "/auth"
+      },
+      {
+        path: "/login",
+        name: "Login",
+        component: Login,
+        layout: "/auth"
+      },
+      {
+        path: "/register",
+        name: "Register",
+        component: Register,
         layout: "/auth"
       },
       {
