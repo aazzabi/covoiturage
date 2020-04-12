@@ -26,7 +26,7 @@ var uploadDocs = multer({storage: storage}).array('doc', 10);
 
 
 var getAll = (req, res, next) => {
-    user.find({}).sort('firstName')
+    user.find({'role': {'$ne': 'ADMIN'}}).sort('firstName')
         .then((data) => {
             res.status(202).json(data);
         })

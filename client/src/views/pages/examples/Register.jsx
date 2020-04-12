@@ -38,6 +38,17 @@ import AuthHeader from "components/Headers/AuthHeader.jsx";
 
 class Register extends React.Component {
   state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
+    }
+  }
+
+  confirme() {
+    console.log('clicked');
+  }
+
   render() {
     return (
       <>
@@ -49,6 +60,8 @@ class Register extends React.Component {
           <Row className="justify-content-center">
             <Col lg="6" md="8">
               <Card className="bg-secondary border-0">
+
+
                 <CardHeader className="bg-transparent pb-5">
                   <div className="text-muted text-center mt-2 mb-4">
                     <small>Sign up with</small>
@@ -84,6 +97,8 @@ class Register extends React.Component {
                     </Button>
                   </div>
                 </CardHeader>
+
+
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
                     <small>Or sign up with credentials</small>
@@ -184,7 +199,7 @@ class Register extends React.Component {
                       </Col>
                     </Row>
                     <div className="text-center">
-                      <Button className="mt-4" color="info" type="button">
+                      <Button className="mt-4" color="info" type="button"  onClick={e => this.confirme(e)}>
                         Create account
                       </Button>
                     </div>

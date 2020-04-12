@@ -9,13 +9,13 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_ALL:
-            return {...state, allUsers: action.payload};
+            return {...state, all: action.payload};
         case GET_USERS:
             return {...state, users: action.payload};
         case GET_DRIVERS:
             return {...state, drivers: action.payload};
         case DELETE_USER:
-            return {...state, users: state.users.filter(u => u._id !== action.payload)};
+            return {...state, all: state.all.filter(u => u._id !== action.payload)};
         default:
             return state;
     }

@@ -7,7 +7,6 @@ import AdminFooter from "components/Footers/AdminFooter.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
 import routes from "routes.js";
-import AllUsers from "../backoffice/Users/AllUsers";
 
 class Admin extends React.Component {
   state = {

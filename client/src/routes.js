@@ -27,6 +27,8 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import CreateParcel from "./frontoffice/Parcels/Create";
 import Packages from "./frontoffice/Parcels/Packages";
+import AllUsers from "./backoffice/Users/AllUsers";
+import AllDrivers from "./backoffice/Users/AllDrivers";
 
 const routes = [
   {
@@ -36,15 +38,15 @@ const routes = [
     state: "dashboardsCollapse",
     views: [
       {
-        path: "/dashboard",
+        path: "/users",
         name: "All",
-        component: Dashboard,
+        component: AllUsers,
         layout: "/admin"
       },
       {
-        path: "/alternative-dashboard",
-        name: "Add",
-        component: Alternative,
+        path: "/drivers",
+        name: "Drivers",
+        component: AllDrivers,
         layout: "/admin"
       }
     ]

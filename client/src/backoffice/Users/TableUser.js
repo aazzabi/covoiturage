@@ -40,7 +40,7 @@ const TableUser = ({users, currentPage, pageSize}) => {
                     <td>{user.firstName} {user.lastName}</td>
                     <td>{user.email}</td>
                     <td>
-                        <btn variant="info" onClick={() => this.props.editUser(user._id)}>Edit</btn>
+                        {/*<btn variant="info" onClick={() => this.props.editUser(user._id)}>Edit</btn>*/}
                         <btn variant="danger" onClick={() => this.deleteHandler(user._id)}>Delete</btn>
                     </td>
                 </tr>
