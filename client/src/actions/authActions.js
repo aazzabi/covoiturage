@@ -6,7 +6,6 @@ import {CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CUR
 
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
-    console.log('heyy');
     axios
         .post("http://localhost:3000/login", userData)
         .then(res => {
@@ -27,9 +26,24 @@ export const loginUser = userData => dispatch => {
                 console.log(err);
                 dispatch({
                     type: GET_ERRORS,
-                    payload: err.response.data
+                    payload: err.response
                 });
             }
+        );
+};
+
+export const register = userData => dispatch => {
+    axios
+        .post("http://localhost:3000/register", userData)
+        .then(res => {
+
+            //dispatch(setAddedUser(res));
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
         );
 };
 
@@ -64,7 +78,7 @@ export const getProfile = () => dispatch => {
     console.log("GEETING PROFILE")
     dispatch(setProfileLoading());
     axios
-        .get("/api/users/profile")
+        .get("/users/profile")
         .then(res =>
             dispatch({
                 type: GET_PROFILE,

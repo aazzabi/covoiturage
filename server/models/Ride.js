@@ -12,9 +12,10 @@ var rideSchema = mongoose.Schema(
         prixPerPlace: {type:Number, required: true},
         description: {type: String, required: false},
         total: { type: Number, unique: false, required: true },
+        placeConfirmed: { type: Number, unique: false, required: true , default: 0 },
         packageAllowed: { type: Boolean, default: true, required: true },
-        driver: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }],
-        travelers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Traveler', required: true }],
+        driver: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        travelers: [{ type: mongoose.Schema.Types.Object, ref: 'Traveler', required: true }],
         package: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Package', required: true }],
     });
 

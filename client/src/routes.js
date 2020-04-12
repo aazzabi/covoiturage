@@ -25,27 +25,29 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
-import Create from "./FrontOffice/Parcels/Create";
-import Packages from "./FrontOffice/Parcels/Packages";
-import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
+import CreateParcel from "./frontoffice/Parcels/Create";
+import Packages from "./frontoffice/Parcels/Packages";
+import PackagesDetails from "./frontoffice/Parcels/PackageDetails";
+import AllDrivers from "./BackOffice/Users/AllDrivers";
+import AllUsers from "./BackOffice/Users/AllUsers";
 
 const routes = [
   {
     collapse: true,
-    name: "Dashboards",
+    name: "Users",
     icon: "ni ni-shop text-primary",
     state: "dashboardsCollapse",
     views: [
       {
-        path: "/dashboard",
-        name: "Dashboard",
-        component: Dashboard,
+        path: "/users",
+        name: "All",
+        component: AllUsers,
         layout: "/admin"
       },
       {
-        path: "/alternative-dashboard",
-        name: "Alternative",
-        component: Alternative,
+        path: "/drivers",
+        name: "Drivers",
+        component: AllDrivers,
         layout: "/admin"
       }
     ]
@@ -59,7 +61,7 @@ const routes = [
       {
         path: "/parcels/Add",
         name: "Create Package",
-        component: Create,
+        component: CreateParcel,
         layout: "/auth"
       },
       {

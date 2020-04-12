@@ -16,7 +16,7 @@ var addPrivilege = (req, res, next ) => {
         })
         .catch(error =>
         {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -29,7 +29,7 @@ var deletePrivilege = (req,res,next) => {
         })
         .catch(error =>
         {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -37,9 +37,11 @@ var deletePrivilege = (req,res,next) => {
 var getAll = (req, res, next) => {
     Privelege.find({})
         .then((data) => {
+            res.set('Content-Type', 'application/json');
             res.status(202).json(data);
         })
         .catch(error => {
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -50,7 +52,7 @@ var getById = (req, res, next) => {
             res.status(202).json(data);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -62,7 +64,7 @@ var getByUser = (req, res, next) => {
             res.status(202).json(data);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -73,7 +75,7 @@ var getByGroup = (req, res, next) => {
             res.status(202).json(data);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -87,7 +89,7 @@ var addToUser = async (req, res, next) => {
             res.status(202).json(user);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };
@@ -100,7 +102,7 @@ var addToGroup = async (req, res, next) => {
             res.status(202).json(group);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 };

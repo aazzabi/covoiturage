@@ -6275,6 +6275,7 @@ button.bg-darker:focus {
 
 .pb-6,
 .py-6 {
+  margin-top: 2rem !important;
   padding-bottom: 4.5rem !important; }
 
 .pl-6,
