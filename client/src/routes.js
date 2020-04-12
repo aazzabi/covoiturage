@@ -27,11 +27,9 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import CreateParcel from "./frontoffice/Parcels/Create";
 import Packages from "./frontoffice/Parcels/Packages";
-import AllUsers from "./backoffice/Users/AllUsers";
-import AllDrivers from "./backoffice/Users/AllDrivers";
-import Create from "./FrontOffice/Parcels/Create";
-import Packages from "./FrontOffice/Parcels/Packages";
-import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
+import PackagesDetails from "./frontoffice/Parcels/PackageDetails";
+import AllDrivers from "./BackOffice/Users/AllDrivers";
+import AllUsers from "./BackOffice/Users/AllUsers";
 
 const routes = [
   {
