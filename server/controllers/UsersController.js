@@ -22,7 +22,7 @@ var storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-var uploadDocs = multer({storage: storage}).array('doc',10);
+var uploadDocs = multer({storage: storage}).array('doc', 10);
 
 
 var getAll = (req, res, next) => {
@@ -154,7 +154,7 @@ var becomeDriverRequest = async (req, res) => {
             } else {
                 res.status(200).send({"status": 400, "message": "This user already have a car"});
             }
-        }else {
+        } else {
             res.status(202).json({"status": "error", "message": "request exists with this user"});
         }
 
@@ -164,8 +164,8 @@ var becomeDriverRequest = async (req, res) => {
 };
 
 var deleteUser = (req, res) => {
-    user.remove({"_id": req.params.idUser})
-        .then((data) => console.log(data), (error) => console.log(error));
+    user.remove({"_id": req.params.id})
+        .then((data) => res.status(200).send({"status": 400, "message": "This user already have a car"}), (error) => console.log(error));
 };
 var refuseDriverRequest = (req, res) => {
     driverRequest.remove({"_id": req.params.idUser})

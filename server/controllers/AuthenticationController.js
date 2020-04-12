@@ -9,7 +9,7 @@ const tokenList = {};
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
 var multer = require('multer');
-const { OAuth2Client } = require('google-auth-library');
+const {OAuth2Client} = require('google-auth-library');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -90,17 +90,15 @@ var uploadUserImage = (req, res, next) => {
     // });
 };
 
-var login = (req, res, next) => {
+var login =  (req, res, next) => {
     user.findOne({
         email: req.body.email
-    }, function (err, u) {
+    }, async function (err, u) {
         if (err) throw err;
 
         if (!u) {
             res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-            console.log(u);
-            console.log(req.body.password);
             // check if password matches
             u.comparePassword(req.body.password, function (err, isMatch) {
                 if (isMatch && !err) {
