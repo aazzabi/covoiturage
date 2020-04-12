@@ -5,20 +5,13 @@ import {Card, CardBody, CardHeader, Container, Row} from "reactstrap";
 import {fetchPostById} from "../../actions/Parcels/PackagesActions";
 
 class PackagesDetails extends Component {
-
-
     constructor(props) {
         super(props);
-
-
     }
-
     componentDidMount() {
         const {id} = this.props.match.params;
         this.props.fetchPostById(id);
     }
-
-
     render() {
         const parcel = this.props.parcel;
         console.log(parcel)
