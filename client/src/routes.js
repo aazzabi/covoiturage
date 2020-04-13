@@ -25,11 +25,11 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
-import CreateParcel from "./frontoffice/Parcels/Create";
-import Packages from "./frontoffice/Parcels/Packages";
-import PackagesDetails from "./frontoffice/Parcels/PackageDetails";
+import Packages from "./FrontOffice/Parcels/Packages";
 import AllDrivers from "./BackOffice/Users/AllDrivers";
 import AllUsers from "./BackOffice/Users/AllUsers";
+import CreateParcel from "./FrontOffice/Parcels/Create";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails.jsx";
 
 const routes = [
   {
@@ -59,7 +59,7 @@ const routes = [
     state: "examplesCollapse",
     views: [
       {
-        path: "/parcels/Add",
+        path: "/Add",
         name: "Create Package",
         component: CreateParcel,
         layout: "/auth"

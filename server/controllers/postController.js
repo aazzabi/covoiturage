@@ -1,140 +1,342 @@
-const {
-    body, param, query,
-} = require('express-validator');
+let _ = require('lodash');
 
-const Post = require('../models/Blogs');
-
-const postController = {
-    findAllBlogs: [
-        query('limit').toInt(),
-        query('offset').toInt(),
-
-        (req, res, next) => {
-            const { offset, limit } = req.query;
-
-            Post.find({}, {}, {
-                skip: offset,
-                limit,
-            })
-                .then((posts) => {
-                    res.status(202).json(posts);
-
-                    next();
-                })
-                .catch(next);
-        },
-
-    ],
-
-    findPostById: [
-
-        param('id').isMongoId(),
-        (req, res, next) => {
-            Post.findById(req.params.id)
-                .then((post) => {
-                    if (!post) {
-                        const err = new Error('Blog post not found ');
-                        err.name = 'NotFoundError';
-                        throw err;
-                    }
-
-                    res.status(202).json(post);
-
-                    next();
-                })
-                .catch(next);
-        },
-
-    ],
-    findPostByCategorie: [
-        (req, res, next) => {
-            Post.find({ categories: req.params.categories })
-                .then((post) => {
-                    if (!post) {
-                        const err = new Error('Blog post not found for the given permalink');
-                        err.name = 'NotFoundError';
-                        throw err;
-                    }
-
-                    res.status(202).json(post);
-
-                    next();
-                })
-                .catch(next);
-        },
-
-    ],
-    createPost: [
-        body('title').isString().trim().isLength({ max: 500 }),
-        body('content').isString().trim()
-            .isLength({ max: 500 }),
-        body('tags').toArray().isLength({ min: 1 }),
-        body('categories.*').isMongoId(),
-        body('user.*').isMongoId(),
-        body('publishAt'),
-        body('modifyAt'),
-
-        (req, res, next) => {
-            Post.create(req.body)
-                .then((post) => {
-                    res.status(202).json(post);
-
-                    next();
-                })
-                .catch(next);
-        },
-
-    ],
-    updatePost: [
-        param('id').isMongoId(),
-        body('title').optional({ checkFalsy: true }).isString().trim()
-            .isLength({ max: 500 }),
-        body('content').optional({ checkFalsy: true }).isString().trim()
-            .isLength({ max: 500 }),
-        body('tags').optional({ checkFalsy: true }).toArray()
-            .isLength({ min: 1 }),
-        body('categories.*').isMongoId(),
-        body('user.*').isMongoId(),
-
-        (req, res, next) => {
-            const { id } = req.params;
-            const replacement = req.body;
-            const options = {
-                new: true,
-                useFindAndModify: false,
-            };
-
-            replacement.updated = new Date();
-
-            Post.findByIdAndUpdate(id, replacement, options)
-                .then((post) => {
-                    if (!post) {
-                        const err = new Error('Blog post not found ');
-                        err.name = 'NotFoundError';
-                        throw err;
-                    }
-
-                    res.status(202).json(post);
-
-                    next();
-                })
-                .catch(next);
-        },
-
-
-    ],
-    deletePost: [
-        param('id').isMongoId(),
-
-        (req, res, next) => {
-            Post.findByIdAndDelete(req.params.id)
-                .then(() => {
-                    res.status(204);
-                    next();
-                })
-                .catch(next);
-        },
-    ],
+const Post = require('../models/BlogPost');
+const Comment = require('../models/comment');
+/**
+ * Get a list of posts
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.fetchPosts = function (req, res, next) {
+    Post
+        .find({})
+        .select({})
+        .limit(100)
+        .sort({
+            time: -1
+        })
+        .exec(function (err, posts) {
+            if (err) {
+                console.log(err);
+                return res.status(422).json({
+                    message: 'Error! Could not retrieve posts.'
+                });
+            }
+            res.json(posts);
+        });
 };
 
-module.exports = postController;
+/**
+ * Create a new post
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.createPost = function (req, res, next) {
+
+    // Require auth
+    const userconn = 1;
+
+    const title = req.body.title;
+    const categories = req.body.categories;
+    const content = req.body.content;
+    const user = userconn;
+    const time = Date.now();
+    const  files= req.body.files;
+
+    // Make sure title, categories and content are not empty
+    if (!title || !categories || !content) {
+        return res.status(422).json({
+            message: 'Title, categories and content are all required.'
+        });
+    }
+
+    const post = new Post({
+        title: title,
+        categories: _.uniq(categories.split(',').map((item) => item.trim())),
+        content: content,
+        files:files,
+        time: time,
+    });
+
+    post.save(function (err, post) {
+        if (err) {
+            return next(err);
+        }
+        res.json(post);
+    });
+};
+
+/**
+ * Fetch a single post by post ID
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.fetchPost = function (req, res, next) {
+    Post.findById({
+        _id: req.params.id
+    }, function (err, post) {
+        if (err) {
+            console.log(err);
+            return res.status(422).json({
+                message: 'Error! Could not retrieve the post with the given post ID.'
+            });
+        }
+        if (!post) {
+            return res.status(404).json({
+                message: 'Error! The post with the given ID is not exist.'
+            });
+        }
+        res.json(post);  // return the single blog post
+    });
+};
+
+/**
+ * Check if current post can be updated or deleted by the authenticated user: The author can only make change to his/her own posts
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.allowUpdateOrDelete = function (req, res, next) {
+
+    // Require auth
+    const user = req.user;
+
+    // Find the post by post ID
+    Post.findById({
+        _id: req.params.id
+    }, function (err, post) {
+
+        if (err) {
+            console.log(err);
+            return res.status(422).json({
+                message: 'Error! Could not retrieve the post with the given post ID.'
+            });
+        }
+
+        // Check if the post exist
+        if (!post) {
+            return res.status(404).json({
+                message: 'Error! The post with the given ID is not exist.'
+            });
+        }
+
+        console.log(user._id);
+        console.log(post.authorId);
+
+        // Check if the user ID is equal to the author ID
+        if (!user._id.equals(post.authorId)) {
+            return res.send({allowChange: false});
+        }
+        res.send({allowChange: true});
+    });
+};
+
+/**
+ * Edit/Update a post
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.updatePost = function (req, res, next) {
+
+    // Require auth
+    const user = req.user;
+
+    // Find the post by post ID
+    Post.findById({
+        _id: req.params.id
+    }, function (err, post) {
+
+        if (err) {
+            console.log(err);
+            return res.status(422).json({
+                message: 'Error! Could not retrieve the post with the given post ID.'
+            });
+        }
+
+        // Check if the post exist
+        if (!post) {
+            return res.status(404).json({
+                message: 'Error! The post with the given ID is not exist.'
+            });
+        }
+
+        // Make sure the user ID is equal to the author ID (Cause only the author can edit the post)
+        // console.log(user._id);
+        // console.log(post.authorId);
+        if (!user._id.equals(post.authorId)) {
+            return res.status(422).json({
+                message: 'Error! You have no authority to modify this post.'
+            });
+        }
+
+        // Make sure title, categories and content are not empty
+        const title = req.body.title;
+        const categories = req.body.categories;
+        const content = req.body.content;
+
+        if (!title || !categories || !content) {
+            return res.status(422).json({
+                message: 'Title, categories and content are all required.'
+            });
+        }
+
+        // Update user
+        post.title = title;
+        post.categories = _.uniq(categories.split(',').map((item) => item.trim())),  // remove leading and trailing spaces, remove duplicate categories;
+            post.content = content;
+
+        // Save user
+        post.save(function (err, post) {  // callback function
+            if (err) {
+                return next(err);
+            }
+            res.json(post);  // return the updated post
+        });
+    });
+};
+
+/**
+ * Delete a post by post ID
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.deletePost = function (req, res, next) {
+
+    // Require auth
+
+    // Delete the post
+    Post.findByIdAndRemove(req.params.id, function (err, post) {
+        if (err) {
+            return next(err);
+        }
+        if (!post) {
+            return res.status(422).json({
+                message: 'Error! The post with the given ID is not exist.'
+            });
+        }
+
+        // Delete comments correspond to this post
+        Comment.remove({postId: post._id}, function (err) {
+            if (err) {
+                return next(err);
+            }
+        });
+
+        // Return a success message
+        res.json({
+            message: 'The post has been deleted successfully!'
+        });
+    });
+};
+
+/**
+ * Fetch posts by author ID
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.fetchPostsByAuthorId = function (req, res, next) {
+
+    // Require auth
+    const user = req.user;
+
+    // Fetch posts by author ID
+    Post
+        .find({
+            authorId: user._id
+        })
+        .select({})
+        .limit(100)
+        .sort({
+            time: -1
+        })
+        .exec(function (err, posts) {
+            if (err) {
+                console.log(err);
+                return res.status(422).json({
+                    message: 'Error! Could not retrieve posts.'
+                });
+            }
+            res.json(posts);
+        });
+};
+
+/**
+ * ------- Comment APIs -------
+ */
+
+/**
+ * Create a new comment (post ID and user ID are both needed)
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.createComment = function (req, res, next) {
+
+
+    // Get post ID
+    const postId = req.params.postId;
+
+    // Get content and make sure it is not empty
+    const content = req.body.content;
+    if (!content) {
+        return res.status(422).json({
+            message: 'Comment cannot be empty.'
+        });
+    }
+    // Create a new comment
+    const comment = new Comment({
+        content: content,
+        postId: postId,
+        time: Date.now(),
+    });
+
+    // Save the comment
+    comment.save(function (err, comment) {  // callback function
+        if (err) {
+            return next(err);
+        }
+        res.json(comment);  // return the created comment
+    });
+};
+
+/**
+ * Fetch comments for a specific blog post (post ID is needed)
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.fetchCommentsByPostId = function (req, res, next) {
+    Comment
+        .find({
+            postId: req.params.postId
+        })
+        .select({})
+        .limit(100)
+        .sort({
+            time: 1
+        })
+        .exec(function (err, comments) {
+            if (err) {
+                console.log(err);
+                return res.status(422).json({
+                    message: 'Error! Could not retrieve comments.'
+                });
+            }
+            res.json(comments);
+        });
+};

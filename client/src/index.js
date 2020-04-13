@@ -2,7 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 // react library for routing
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
+import PostList from './FrontOffice/Blog/listPosts';
+import PostNew from './FrontOffice/Blog/post_new';
+import PostDetail from './FrontOffice/Blog/post_detail/index';
+import PostMine from './FrontOffice/Blog/post_mine';
 // plugins styles from node_modules
 import "react-notification-alert/dist/animate.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -54,7 +57,10 @@ ReactDOM.render(
       <Switch>
         <Route path="/front" render={props => <AuthLayout {...props} />} />
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
-        <Route path="/admin/blog" render={props => <AuthLayout {...props} />} />
+        <Route exact path='/posts' component={PostList} />
+        <Route path='/posts/new' component={PostNew} />
+        <Route path='/posts/:id' component={PostDetail} />
+        <Route path='/my_posts' component={PostMine} />
         <Route path="/" render={props => <IndexView {...props} />} />
         <Redirect from="*" to="/front" />
       </Switch>

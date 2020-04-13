@@ -69,7 +69,7 @@ app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
 app.use('/cars', carsRouter);
 app.use('/packages', packageRouter);
-app.use('/blogs', postRouter);
+app.use('/posts',postRouter);
 app.use('/claims', claimsRouter);
 
 app.post('/upload', function(req, res) {
