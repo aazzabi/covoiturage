@@ -103,6 +103,10 @@ var login = async (req, res) => {
                 id: u.id,
                 username: u.username,
                 role: u.role,
+                email: u.email,
+                phone: u.phone,
+                lastName: u.lastName,
+                firstName: u.firstName,
             }
         }; //l'emport
         jwt.sign(
