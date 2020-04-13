@@ -5,5 +5,7 @@ export const CLEAR_CURRENT_PROFILE = 'CLEAR_CURRENT_PROFILE';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
+export const REGISTER = 'REGISTER';
+
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const GET_PROFILE = "GET_PROFILE";
