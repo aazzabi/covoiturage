@@ -50,9 +50,10 @@ class AllUsers extends React.Component {
             drivers: [],
             d: {},
             response: {},
-            currentUser: jwt_decode(localStorage.getItem("jwtToken")),
         };
-
+        // if (localStorage.getItem("jwtToken")) {
+        //     currentUser: jwt_decode(localStorage.getItem("jwtToken"));
+        // }
     };
 
     imgUrl = '../../assets/uploads/users/';
@@ -69,7 +70,8 @@ class AllUsers extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.state.currentUser._id, 'currentUser');
+        const currentUser = jwt_decode(localStorage.getItem("jwtToken"));
+        console.log(currentUser._id, 'currentUser');
         this.props.getAll();
         this.props.getUsers();
         this.props.getDrivers();
