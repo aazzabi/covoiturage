@@ -13,8 +13,8 @@ import {
 } from "reactstrap";
 
 
-const TableUser = ({users, currentPage, pageSize}) => {
-    const currentUsers = users.slice((currentPage - 1) * pageSize, pageSize * currentPage);
+const TableUser = ({all, currentPage, pageSize}) => {
+    const currentUsers = all.slice((currentPage - 1) * pageSize, pageSize * currentPage);
     const serverUrl = "http://127.0.0.1:8887/";
 
     return (
@@ -32,7 +32,7 @@ const TableUser = ({users, currentPage, pageSize}) => {
             </tr>
             </thead>
             <tbody className="list">
-            {!!users &&
+            {!!all &&
             currentUsers.map(user =>
                 <tr key={user._id}>
                     <td><img src={this.imgUrl + user.avatar}/></td>

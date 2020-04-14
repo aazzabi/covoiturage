@@ -1,6 +1,5 @@
-import axios from "axios";
 import Axios from "axios";
-import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS,} from "./UserTypes";
+import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS, GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS } from "./UserTypes";
 import {GET_ERRORS} from "../../actions/types";
 
 
@@ -39,10 +38,44 @@ export const getDrivers = () => {
     }
 };
 
+// get getAllTechnicals
+export const getAllTechnicals = () => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/users/getAllTechnicals`);
+            dispatch({type: GET_TECHNICALS, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+// get getAllFinancials
+export const getAllFinancials = () => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/users/getAllFinancials`);
+            dispatch({type: GET_FINANCIALS, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+// get getAllRelationals
+export const getAllRelationals = () => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/users/getAllRelationals`);
+            dispatch({type: GET_RELATIONALS, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+
 
 // Delete Site
 export const deleteUser = id => dispatch => {
-    axios
+    Axios
         .delete(`http://localhost:3000/users/delete/${id}`).then(res => {
             console.log("action ", id)
             dispatch({

@@ -27,6 +27,7 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import AllDrivers from "./BackOffice/Users/AllDrivers";
 import AllUsers from "./BackOffice/Users/AllUsers";
+import Agents from "./BackOffice/Users/Agents.jsx";
 import CreateParcel from "./frontoffice/Parcels/Create";
 import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
 import Packages from "./frontoffice/Parcels/Packages";
@@ -48,6 +49,12 @@ const routes = [
         path: "/drivers",
         name: "Drivers",
         component: AllDrivers,
+        layout: "/admin"
+      },
+      {
+        path: "/agents",
+        name: "Agents",
+        component: Agents,
         layout: "/admin"
       }
     ]

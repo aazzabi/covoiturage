@@ -91,11 +91,14 @@ class AllDrivers extends React.Component {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let users = this.props.users;
         let all = this.props.all;
+        console.log(this.props , 'drivers');
+        let drivers = this.props.drivers;
         if (error) {
             return (
                 <div>Error: {error.message}</div>
             )
         } else {
+            const currentDrivers = this.state.drivers.slice((currentPage - 1) * pageSize, pageSize * currentPage);
             return (
 
                 <div>
@@ -113,8 +116,8 @@ class AllDrivers extends React.Component {
                         </thead>
                         <tbody>
 
-
-                        {this.state.drivers.map(user => (
+                        {!!drivers
+                        && currentDrivers.map(user => (
                             <Fragment key={user._id}>
                                 <tr>
                                     {user.avatar != null
@@ -135,13 +138,7 @@ class AllDrivers extends React.Component {
                                 </tr>
                             </Fragment>
                         ))}
-
-
                         </tbody>
-
-                        {/*<TableUser pageSize={pageSize} currentPage={currentPage} users={users}/>*/}
-
-
                     </Table>
 
                     <Pagination
