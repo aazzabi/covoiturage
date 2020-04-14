@@ -16,7 +16,7 @@ export default combineReducers({
     parcel:ParcelReducer,
     alert: AlertReducer,
     users: UsersReducers,
-    form: formReducer,
+    // form: formReducer,
     posts: postsReducer,
     comments: commentsReducer,
 });

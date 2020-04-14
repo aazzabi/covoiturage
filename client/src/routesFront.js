@@ -3,15 +3,15 @@ import Register from "./views/pages/examples/Register";
 import Calendar from "./views/pages/Calendar";
 import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
-import CreateParcel from "./FrontOffice/Parcels/Create";
-import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
-import Packages from "./FrontOffice/Parcels/Packages";
 import {Route} from "react-router-dom";
 import React from "react";
-import PostList from './FrontOffice/Blog/listPosts';
-import PostNew from './FrontOffice/Blog/post_new';
-import PostDetail from './FrontOffice/Blog/post_detail/index';
-import PostMine from './FrontOffice/Blog/post_mine';
+import CreateParcel from "./frontoffice/Parcels/Create";
+import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
+import PostDetail from "./frontoffice/Blog/post_detail";
+import Packages from "./frontoffice/Parcels/Packages";
+import PostNew from "./frontoffice/Blog/post_new";
+import PostMine from "./frontoffice/Blog/post_mine";
+import PostList from "./frontoffice/Blog/listPosts";
 
 const routesFront = [
     {
