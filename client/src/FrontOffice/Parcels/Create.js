@@ -16,6 +16,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {Redirect} from "react-router";
 
 export default class CreateParcel extends Component {
 
@@ -116,10 +117,14 @@ export default class CreateParcel extends Component {
             files: this.state.files
         };
         console.log(parcel);
-        axios.post('http://localhost:3000/packages/add', parcel);
-
-        this.setState({title: '', type: '', price: '', weight: '', size: '', description: ''})
+        axios.post('http://localhost:3000/packages/add', parcel)
+    .then(res => {
+            this.setState({title: '', type: '', price: '', weight: '', size: '', description: ''})
+            this.props.history.push("/front/parcels");
+        })
+            .catch(err => console.log(err));
     }
+
 
     render() {
         return (

@@ -114,8 +114,7 @@ class PackagesDetails extends Component {
                 <Container className="mt--6 container-fluid">
                     <Row className="justify-content-center">
                         <Col lg="6">
-                            <div className="col">
-                                <Card>
+                                <Card >
                                     <CardHeader className="border-0">
                                         <div className="align-items-center row">
                                             <div className="col-8"><h5 className="h3 mb-0">Packages List</h5></div>
@@ -204,19 +203,19 @@ class PackagesDetails extends Component {
                                     </CardBody>
 
                                 </Card>
-                            </div>
+                          
                         </Col>
                         <Col lg="6">
                             <div className="col">
                                 <Card>
 
                                     <CardBody><img alt="..." className="img-fluid rounded"
-                                                   src={`${serverUrl}${parcel.files}`}></img></CardBody>        </Card>
-
+                                                   src={`${serverUrl}${parcel.files}`}></img></CardBody>
+                                </Card>
                             </div>
                         </Col>
-
-                    </Row></Container>
+                    </Row>
+                </Container>
             </>
         );
     }
