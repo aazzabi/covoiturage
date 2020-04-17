@@ -2,7 +2,8 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER} from "./types";
+import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER} from "./types";
+import {GET_USERS} from "../services/Users/UserTypes";
 
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
@@ -56,6 +57,52 @@ export const setCurrentUser = decoded => {
         type: SET_CURRENT_USER,
         payload: decoded
     };
+};
+
+// export const getCurrentUser = () => {
+//     return dispatch => {
+//         const token = localStorage.getItem("jwtToken");
+//         if (token) {
+//             return fetch("http://localhost:3000/users/profile", {
+//                 method: "GET",
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     Accept: 'application/json',
+//                     'Authorization': `Bearer ${token}`
+//                 }
+//             })
+//                 .then(resp => resp.json())
+//                 .then(data => {
+//                     console.log(data);
+//                     if (data.message) {
+//                         // An error will occur if the token is invalid.
+//                         // If this happens, you may want to remove the invalid token.
+//                         // localStorage.removeItem("token")
+//                     } else {
+//                         dispatch(loginUser(data.user))
+//                     }
+//                 })
+//         }
+//     }
+// }
+// get users
+export const getCurrentUser = () => {
+    return async (dispatch) => {
+        try {
+            const token = localStorage.getItem("jwtToken");
+            if (token) {
+                const result = await axios.get(`http://localhost:3000/users/profile`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }});
+                dispatch({type: GET_LOGGED_USER, payload: result.data})
+            }
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
 };
 
 // Log user out

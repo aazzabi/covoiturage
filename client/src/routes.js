@@ -27,6 +27,13 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import AllDrivers from "./BackOffice/Users/AllDrivers";
 import AllUsers from "./BackOffice/Users/AllUsers";
+import Agents from "./BackOffice/Users/Agents.jsx";
+import AllClaims from "./BackOffice/Claims/AllClaims.jsx";
+import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
+import CreateParcel from "./frontoffice/Parcels/Create";
+import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
+import Packages from "./frontoffice/Parcels/Packages";
+
 const routes = [
   {
     collapse: true,
@@ -45,7 +52,35 @@ const routes = [
         name: "Drivers",
         component: AllDrivers,
         layout: "/admin"
+      },
+      {
+        path: "/agents",
+        name: "Agents",
+        component: Agents,
+        layout: "/admin"
       }
+    ]
+  },
+  {
+    collapse: true,
+    name: "Claims",
+    icon: "ni ni-shop text-primary",
+    state: "dashboardsCollapse",
+    views: [
+      {
+        path: "/claims",
+        name: "All",
+        component: AllClaims,
+        layout: "/admin",
+        invisible: false
+      },
+      {
+        path: "/claims/:id",
+        name: "détail",
+        component: DetailClaim,
+        layout: "/admin",
+        invisible: false
+      },
     ]
   },
   {

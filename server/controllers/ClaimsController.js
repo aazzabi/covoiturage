@@ -134,6 +134,7 @@ var deleteClaim = (req, res, next) => {
         })
         .catch(error => {
             res.set('Content-Type', 'application/json');
+            console.log(error);
             res.status(500).send(error);
         });
 };

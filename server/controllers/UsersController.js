@@ -52,6 +52,33 @@ var getAllDrivers = (req, res, next) => {
             res.status(500).send(error);
         });
 };
+var getAllTechnicals = (req, res, next) => {
+    user.find({"role": "TECHNICAL"}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+var getAllFinancials = (req, res, next) => {
+    user.find({"role": "FINANCIAL"}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+var getAllRelationals = (req, res, next) => {
+    user.find({"role": "RELATIONAL"}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
 var getUserById = (req, res, next) => {
     user.findOne({"_id": req.params.id})
         .then((data) => {
@@ -188,6 +215,9 @@ module.exports = {
     getAll,
     getAllUsers,
     getAllDrivers,
+    getAllFinancials,
+    getAllRelationals,
+    getAllTechnicals,
     updateUser,
     deleteUser,
     getUserById,
