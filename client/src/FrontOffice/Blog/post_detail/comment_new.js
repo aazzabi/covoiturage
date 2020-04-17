@@ -7,9 +7,9 @@ class CommentNew extends Component {
 
   handleFormSubmit({ comment }) {
     const postId = this.props.postId;
-    this.props.createComment({ comment, postId }, () => {  // callback 1: clear text editor
+      this.props.createComment({ comment, postId }, () => {
       document.querySelector("trix-editor").value = ""
-    }, (path, state) => {  // callback 2: history replace
+    }, (path, state) => {
       this.props.history.replace(path, state);
     });
   }

@@ -10,13 +10,10 @@ const Comment = require('../models/comment');
  * @param next
  */
 exports.fetchPosts = function (req, res, next) {
+
     Post
         .find({})
         .select({})
-        .limit(100)
-        .sort({
-            time: -1
-        })
         .exec(function (err, posts) {
             if (err) {
                 console.log(err);
@@ -289,9 +286,8 @@ exports.createComment = function (req, res, next) {
 
     // Get post ID
     const postId = req.params.postId;
-
-    // Get content and make sure it is not empty
     const content = req.body.content;
+    console.log(content);
     if (!content) {
         return res.status(422).json({
             message: 'Comment cannot be empty.'

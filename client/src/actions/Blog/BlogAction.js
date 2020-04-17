@@ -138,20 +138,19 @@ export function createComment({ comment, postId }, clearTextEditor, historyRepla
                 });
                 dispatch(reset('comment_new'));  // - Clear form value (data)
                 clearTextEditor();  // - Clear text editor (UI)
-                historyReplace(`/posts/${postId}`, null);  // - clear alert message
+                historyReplace(`/front/BlogDetails/${postId}`, null);  // - clear alert message
             })
             .catch(({response}) => {  // If fail, render alert message
 
-                // failure reason: un-authenticated
                 if (!response.data.message) {
-                    return historyReplace(`/posts/${postId}`, {
+                    return historyReplace(`/front/BlogDetails/${postId}`, {
                         time: new Date().toLocaleString(),
                         message: 'You must sign in before you can post new comment.',
                     });
                 }
 
                 // failure reason: comment is empty
-                historyReplace(`/posts/${postId}`, {
+                historyReplace(`/front/BlogDetails/${postId}`, {
                     time: new Date().toLocaleString(),
                     message: response.data.message,
                 });

@@ -6,10 +6,6 @@ import {fetchPostById} from "../../../actions/Parcels/PackagesActions";
 import Map from "./map"
 import Geocode from "react-geocode";
 import Col from "reactstrap/es/Col";
-import InputGroup from "reactstrap/es/InputGroup";
-import InputGroupAddon from "reactstrap/es/InputGroupAddon";
-import InputGroupText from "reactstrap/es/InputGroupText";
-
 
 class PackagesDetails extends Component {
 
@@ -114,96 +110,95 @@ class PackagesDetails extends Component {
                 <Container className="mt--6 container-fluid">
                     <Row className="justify-content-center">
                         <Col lg="6">
-                                <Card >
-                                    <CardHeader className="border-0">
-                                        <div className="align-items-center row">
-                                            <div className="col-8"><h5 className="h3 mb-0">Packages List</h5></div>
-                                            <div className="text-right col-4"><a href="#mapss" onClick={this.handleHide}
-                                                                                 className="btn-neutral btn btn-default btn-sm">
-                                                <i className="ni ni-map-big"></i> Show maps</a>
-                                            </div>
+                            <Card>
+                                <CardHeader className="border-0">
+                                    <div className="align-items-center row">
+                                        <div className="col-8"><h5 className="h3 mb-0">Packages List</h5></div>
+                                        <div className="text-right col-4"><a href="#mapss" onClick={this.handleHide}
+                                                                             className="btn-neutral btn btn-default btn-sm">
+                                            <i className="ni ni-map-big"></i> Show maps</a>
                                         </div>
-                                    </CardHeader>
-                                    <CardBody>
-                                        <div className="h2 mb-0 card-title">{parcel.title}</div>
-                                        <hr className="my-4"></hr>
-                                        <h6 className="heading-small text-muted mb-4">Destination</h6>
-                                        <div
-                                            className="timeline timeline-one-side"
-                                            data-timeline-axis-style="dashed"
-                                            data-timeline-content="axis"
-                                        >
-                                            <div className="timeline-block">
+                                    </div>
+                                </CardHeader>
+                                <CardBody>
+                                    <div className="h2 mb-0 card-title">{parcel.title}</div>
+                                    <hr className="my-4"></hr>
+                                    <h6 className="heading-small text-muted mb-4">Destination</h6>
+                                    <div
+                                        className="timeline timeline-one-side"
+                                        data-timeline-axis-style="dashed"
+                                        data-timeline-content="axis"
+                                    >
+                                        <div className="timeline-block">
                       <span className="timeline-step badge-success">
                         <i className="ni ni-square-pin"/>
                       </span>
-                                                <div className="timeline-content">
-                                                    <div className="d-flex justify-content-between pt-1">
-                                                        <div>
+                                            <div className="timeline-content">
+                                                <div className="d-flex justify-content-between pt-1">
+                                                    <div>
                             <span className="text-muted text-sm font-weight-bold">
                                 {parcel.departure}
                             </span>
-                                                        </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="timeline-block">
+                                        </div>
+                                        <div className="timeline-block">
                       <span className="timeline-step badge-info">
                         <i className="ni ni-delivery-fast"/>
                       </span>
-                                                <div className="timeline-content">
-                                                    <div className="d-flex justify-content-between pt-1">
-                                                        <div>
+                                            <div className="timeline-content">
+                                                <div className="d-flex justify-content-between pt-1">
+                                                    <div>
                             <span className="text-muted text-sm font-weight-bold">
                                 {parcel.arrival}
                             </span>
-                                                        </div>
-                                                        <div className="text-right">
-
-                                                        </div>
                                                     </div>
+                                                    <div className="text-right">
 
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr className="my-4"></hr>
+                                    <h6 className="heading-small text-muted mb-4">size and weights</h6>
+                                    <b> WEIGHTS : </b>
+                                    <button type="button" className="btn btn-success btn-sm">{parcel.weight} Kg
+                                    </button>
+                                    <br></br> <b> Size : </b>
+                                    <button type="button" className="btn btn-primary btn-sm">{parcel.size}</button>
+                                    <hr className="my-4"></hr>
+                                    <h6 className="heading-small text-muted mb-4">Pricing proposal</h6>
+                                    <div className="mb-2"><sup className="text-black-50">$</sup> <span
+                                        className="h2 text-black-50">{parcel.price}</span>
+                                    </div>
+                                    <h6 className="heading-small text-muted mb-4">Owner</h6>
+
+                                    <ul className="list my--3 list-group list-group-flush">
+                                        <li className="px-0 list-group-item">
+                                            <div className="align-items-center row">
+                                                <div className="col-auto col"><a className="avatar rounded-circle"
+                                                                                 href="#pablo">
+                                                    <img alt="..." src={`${serverUrl}${parcel.files}`}></img></a>
+                                                </div>
+                                                <div className="col ml--2"><h4 className="mb-0"><a href="#pablo">Nacef
+                                                    Otay</a></h4><span className="text-success">●</span>
+                                                    <small>Online</small></div>
+                                                <div className="col-auto col">
+                                                    <button type="button" className="btn btn-primary btn-sm">Contact
+                                                    </button>
                                                 </div>
                                             </div>
+                                        </li>
 
-                                        </div>
-                                        <hr className="my-4"></hr>
-                                        <h6 className="heading-small text-muted mb-4">size and weights</h6>
-                                        <b> WEIGHTS : </b>
-                                        <button type="button" className="btn btn-success btn-sm">{parcel.weight} Kg
-                                        </button>
-                                        <br></br> <b> Size : </b>
-                                        <button type="button" className="btn btn-primary btn-sm">{parcel.size}</button>
-                                        <hr className="my-4"></hr>
-                                        <h6 className="heading-small text-muted mb-4">Pricing proposal</h6>
-                                        <div className="mb-2"><sup className="text-black-50">$</sup> <span
-                                            className="h2 text-black-50">{parcel.price}</span>
-                                        </div>
-                                        <h6 className="heading-small text-muted mb-4">Owner</h6>
+                                    </ul>
+                                </CardBody>
 
-                                        <ul className="list my--3 list-group list-group-flush">
-                                            <li className="px-0 list-group-item">
-                                                <div className="align-items-center row">
-                                                    <div className="col-auto col"><a className="avatar rounded-circle"
-                                                                                     href="#pablo">
-                                                        <img alt="..." src={`${serverUrl}${parcel.files}`}></img></a>
-                                                    </div>
-                                                    <div className="col ml--2"><h4 className="mb-0"><a href="#pablo">John
-                                                        Michael</a></h4><span className="text-success">●</span>
-                                                        <small>Online</small></div>
-                                                    <div className="col-auto col">
-                                                        <button type="button" className="btn btn-primary btn-sm">Contact
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
+                            </Card>
 
-                                        </ul>
-                                    </CardBody>
-
-                                </Card>
-                          
                         </Col>
                         <Col lg="6">
                             <div className="col">

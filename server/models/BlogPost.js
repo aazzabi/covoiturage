@@ -13,5 +13,7 @@ const postSchema = new Schema({
         files:{type: String},
         time: Date,
 });
+
 const ModelClass = mongoose.model('posts', postSchema);
 module.exports = ModelClass;
+

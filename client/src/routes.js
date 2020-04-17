@@ -27,10 +27,6 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import AllDrivers from "./BackOffice/Users/AllDrivers";
 import AllUsers from "./BackOffice/Users/AllUsers";
-import CreateParcel from "./frontoffice/Parcels/Create";
-import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
-import Packages from "./frontoffice/Parcels/Packages";
-
 const routes = [
   {
     collapse: true,
@@ -58,24 +54,7 @@ const routes = [
     icon: "ni ni-ungroup text-orange",
     state: "examplesCollapse",
     views: [
-      {
-        path: "/Add",
-        name: "Create Package",
-        component: CreateParcel,
-        layout: "/auth"
-      },
-      {
-        path: "/parcels",
-        name: "Packages",
-        component: Packages,
-        layout: "/auth"
-      },
-      {
-        path: "/viewparcels/:id",
-        name: "view parcels",
-        component: PackagesDetails,
-        layout: "/auth"
-      },
+
       {
         path: "/login",
         name: "Login",

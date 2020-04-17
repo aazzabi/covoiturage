@@ -1,8 +1,10 @@
 var Package = require('../models/Parcels');
 
 exports.add = function (req, res, next) {
-    Package.create({
-        title: req.body.type,
+
+    Package.create(
+        {
+        title: req.body.title,
         type: req.body.type,
         size: req.body.size,
         price: req.body.price,
@@ -14,9 +16,12 @@ exports.add = function (req, res, next) {
         valide: req.body.valide,
         files: req.body.files,
         description: req.body.description,
+
+
         sendingCode: makeid(5),
         receiveingCode: makeid(5)
-    }).then((data) => {
+    }
+    ).then((data) => {
         res.set('Content-Type', 'application/json');
         res.status(202).json(data);
 
@@ -100,6 +105,7 @@ exports.addPackageToRide = async (req, res, next) => {
 
     rideid = await ride.findById(req.params.idRide);
     userid = await user.findById(req.params.idUser);
+
     trav = traveler.create({
         user: req.body.status,
         confimationCode: makeid(5),

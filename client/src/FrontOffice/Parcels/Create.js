@@ -9,15 +9,12 @@ import {
 } from 'reactstrap';
 import PlacesAutocomplete from "./GAutoComplete";
 import AuthHeader from "../../components/Headers/AuthHeader";
-
 import {DropzoneArea, DropzoneDialog} from 'material-ui-dropzone'
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import {Redirect} from "react-router";
-
 export default class CreateParcel extends Component {
 
     constructor(props) {
@@ -40,6 +37,7 @@ export default class CreateParcel extends Component {
             description: "",
             departure: "",
             arrival: "",
+            currentUser: {},
             files: [],
 
         }
@@ -105,7 +103,8 @@ export default class CreateParcel extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-        const parcel = {
+
+            const parcel = {
             title: this.state.title,
             type: this.state.type,
             price: this.state.price,
@@ -124,7 +123,6 @@ export default class CreateParcel extends Component {
         })
             .catch(err => console.log(err));
     }
-
 
     render() {
         return (
@@ -188,8 +186,6 @@ export default class CreateParcel extends Component {
                                                                     }}
                                                                 />
                                                             </FormGroup>
-
-
                                                         </Col>
                                                         <Label>From</Label>
                                                         <PlacesAutocomplete inputValue={this.state.arrival}
@@ -203,7 +199,7 @@ export default class CreateParcel extends Component {
                                                         alt="..."
                                                         width={480}
                                                         height={300}
-                                                        // src={require("../../assets/img/parcel.png")}
+                                                        src={require("../../assets/img/parcel.png")}
                                                     />
                                                     <Row>
                                                         <Col md="4" sm="6">

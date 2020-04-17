@@ -17,6 +17,7 @@ router.get('/:id', packageController.getByIdPackage);
 router.delete('/delete/:id', packageController.deletePackage);
 router.post('/addPackageToRide/:idUser/:idRide', packageController.addPackageToRide);
 router.post("/multiple-upload", upload.any(), process_upload);
+
 function process_upload(req, res) {
     if(req.files) {
         console.log("req.files.length = ", req.files.length);
