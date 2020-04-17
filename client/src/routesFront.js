@@ -12,6 +12,7 @@ import Packages from "./frontoffice/Parcels/Packages";
 import PostNew from "./frontoffice/Blog/post_new";
 import PostMine from "./frontoffice/Blog/post_mine";
 import PostList from "./frontoffice/Blog/listPosts";
+import ClaimAdd from "./frontoffice/Claims/ClaimAdd";
 
 const routesFront = [
     {
@@ -69,6 +70,12 @@ const routesFront = [
         path: "/register",
         name: "Register",
         component: Register,
+        layout: "/front"
+    },
+    {
+        path: "/claims/new",
+        name: "Blog new",
+        component: ClaimAdd,
         layout: "/front"
     },
     {

@@ -69,7 +69,6 @@ class AllDrivers extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.state.currentUser._id, 'currentUser');
         this.props.getAll();
         this.props.getUsers();
         this.props.getDrivers();
@@ -78,7 +77,6 @@ class AllDrivers extends React.Component {
 
     deleteHandler(e, elementId) {
         e.preventDefault();
-        console.log("deleteHandler");
         this.props.deleteUser(elementId);
     }
 

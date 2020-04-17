@@ -9,6 +9,9 @@ import PackageReducer from "./PackageReducer";
 import ParcelReducer from "./Parcel";
 import commentsReducer from "./Blog/commentReducer";
 import postsReducer from "./Blog/postReducer";
+import ClaimsReducers from "../services/Claims/ClaimsReducers";
+
+
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
@@ -16,7 +19,7 @@ export default combineReducers({
     parcel:ParcelReducer,
     alert: AlertReducer,
     users: UsersReducers,
-    // form: formReducer,
+    claims: ClaimsReducers,
     posts: postsReducer,
     comments: commentsReducer,
 });
