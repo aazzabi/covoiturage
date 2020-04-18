@@ -1,7 +1,6 @@
 import Axios from "axios";
-import {ADD_CLAIM, GET_ALL, RESOLVE_USER, DELETE_CLAIM, GET_CLAIM} from "./ClaimsTypes"
+import {ADD_CLAIM, GET_ALL, RESOLVE_USER, DELETE_CLAIM, GET_CLAIM , GET_ALL_COMMENT, ADD_COMMENT_TO_CLAIM} from "./ClaimsTypes"
 import {GET_ERRORS} from "../../actions/types";
-import {DELETE_USER} from "../Users/UserTypes";
 
 const ROOT_URL = 'http://localhost:3000/claims';
 
@@ -46,20 +45,16 @@ export const getAll = (id) => {
     }
 };
 
-
 export const getClaim = (idClaim, idUser) => {
     return async (dispatch) => {
         try {
             const result = await Axios.get(`http://localhost:3000/claims/getById/`+idClaim+`/`+idUser);
-            console.log(result, 'result');
-            dispatch({type: GET_ALL, payload: result.data})
+            dispatch({type: GET_CLAIM, payload: result.data[0]})
         } catch (error) {
             dispatch({type: GET_ERRORS, error})
         }
     }
 };
-
-
 
 
 // Delete Site
@@ -79,7 +74,6 @@ export const deleteClaim = id => dispatch => {
     );
 };
 
-
 // Delete Site
 export const resolveClaim = id => dispatch => {
     Axios
@@ -97,3 +91,26 @@ export const resolveClaim = id => dispatch => {
         })
     );
 };
+
+export function addComment({commentText, claimId, userId},  historyPush, historyReplace)
+{
+    return function (dispatch) {
+        Axios.post(`${ROOT_URL}/addComment/`+ claimId +'/' + userId, {
+            content: commentText,
+        }, {})
+            .then((response) => {  // If create post succeed, navigate to the post detail page
+                dispatch({
+                    type: ADD_COMMENT_TO_CLAIM,
+                    payload: response.data,
+                });
+                // historyPush(`/admin/claims/`+claimId);
+            })
+            .catch(({response}) => {  // If create post failed, alert failure message
+                console.log(response, 'error');
+                historyReplace('/claims/new', {
+                    time: new Date().toLocaleString(),
+                    message: response,
+                });
+            });
+    }
+}

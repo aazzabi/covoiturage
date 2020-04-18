@@ -1,8 +1,9 @@
-import {ADD_CLAIM, GET_ALL, RESOLVE_USER , DELETE_CLAIM, GET_CLAIM} from "./ClaimsTypes";
+import {ADD_CLAIM, GET_ALL, RESOLVE_USER , DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, ADD_COMMENT_TO_CLAIM} from "./ClaimsTypes";
 
 const initialState = {
     addClaim: {},
     all: [],
+    allComments: [],
     claim: {},
 };
 export default function (state = initialState, action) {
@@ -11,6 +12,10 @@ export default function (state = initialState, action) {
             return {...state, add: action.payload};
         case GET_ALL:
             return {...state, all: action.payload};
+        case GET_ALL_COMMENT:
+            return {...state, allComments: action.payload};
+        case ADD_COMMENT_TO_CLAIM:
+            return {...state, claim: action.payload};
         case GET_CLAIM:
             return {...state, claim: action.payload};
         case DELETE_CLAIM:
