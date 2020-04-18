@@ -64,20 +64,20 @@ const routes = [
   {
     collapse: true,
     name: "Claims",
-    icon: "ni ni-shop text-primary",
-    state: "dashboardsCollapse",
+    icon: "ni ni-spaceship text-pink",
+    state: "claimsCollapse",
     views: [
-      {
-        path: "/claims",
-        name: "All",
-        component: AllClaims,
-        layout: "/admin",
-        invisible: false
-      },
       {
         path: "/claims/:id",
         name: "détail",
         component: DetailClaim,
+        layout: "/admin",
+        invisible: true
+      },
+      {
+        path: "/claims",
+        name: "All",
+        component: AllClaims,
         layout: "/admin",
         invisible: false
       },
