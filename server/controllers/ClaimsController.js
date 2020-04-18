@@ -7,6 +7,8 @@ var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+// import { v1 as uuidv1 } from 'uuid';
+var uuid = require('uuid');
 
 
 // idha admin => getAll
@@ -247,19 +249,21 @@ var changeStatus = async (req, res, next) => {
 };
 
 var addCommentToClaim = async (req, res, next) => {
-    const u = await user.find({'_id': req.params.idUser});
+    const u = await user.findOne({'_id': req.params.idUser});
+    console.log(u);
     console.log(req.body.content);
     claim.updateOne({'_id': req.params.idClaim}, {
         $push: {
             'comments':
                 {
+                    '_id': uuid.v1(),
                     'published': new Date(),
                     'content': req.body.content,
                     'user': u
                 }
         }
     }).then(async (data) => {
-        const cla = await claim.find({'_id': req.params.idClaim});
+        const cla = await claim.findOne({'_id': req.params.idClaim});
         res.set('Content-Type', 'application/json');
         res.status(200).send(cla);
     }, error => {
