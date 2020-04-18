@@ -85,8 +85,8 @@ class ClaimAdd extends Component {
             <>
                 <AuthHeader title="Déposer une récalamation" lead=""/>
                 {/*<Container className="mt--8 pb-5">*/}
-                <Row className="justify-content-center" style={{marginBottom: -100}}>
-                    <div className="bg-gradient-secondary shadow card post " style={{width: 500}}>
+                <Row className="justify-content-center" style={{marginBottom: -200}}>
+                    <div className="bg-gradient-secondary shadow card post " style={{width: 500, marginTop: -150}}>
                         <div className="p-lg-5 card-body">
                             {this.renderAlert()}
                             {/*<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>*/}
