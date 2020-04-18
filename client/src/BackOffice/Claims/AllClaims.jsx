@@ -130,14 +130,11 @@ class AllClaims extends React.Component {
                                     </td>
                                     <td>{claim.comments.length}</td>
                                     <td>
-                                        {/*<a href={'/admin/claims/' + claim._id}>*/}
-                                        {/*    <Button variant="info" className="btn btn-success" onClick={() => this.props.editClaim(claim._id)}>*/}
-                                        {/*        <i className="fa fa-eye"></i>*/}
-                                        {/*    </Button>*/}
-                                        {/*</a>*/}
-                                        <a
-                                            href={`/admin/claims/${claim._id}`}
-                                            className="btn  btn-outline-success mr-1" replace="true"><i className="fa fa-eye"></i> </a>
+                                        <a href={`/admin/claims/${claim._id}`}
+                                            className="btn  btn-outline-success mr-1">
+                                            <i className="fa fa-eye"></i>
+                                        </a>
+
                                         <a className="btn btn-secondary"
                                               href={`/admin/claims/edit/${claim._id}`}><i className="fa fa-pen"></i>
                                         </a>
