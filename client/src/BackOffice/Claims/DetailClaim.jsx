@@ -60,9 +60,9 @@ class DetailClaim extends Component {
                         }
                     </div>
                     <div className="col-md-7 text-justify">
-                        {comment.user && (comment.user.firstName + ' ' + comment.user.lastName + ' ( ' + comment.user.username + ' )')}
+                        <b>{comment.user && (comment.user.firstName + ' ' + comment.user.lastName + ' ( ' + comment.user.username + ' )')}</b>
                         <br/>{comment.content}</div>
-                    <div className="col-md-4 text-right">{comment._id}<br/>
+                    <div className="col-md-4 text-right">
                         <span className="span-with-margin f6 text-grey">{new Date(comment.published).toLocaleString()}</span><br/>
                         {
                             comment.user._id === this.state.currentUser._id
@@ -94,7 +94,7 @@ class DetailClaim extends Component {
             }, (path, state) => {
                 this.props.history.replace(path, state);
             });
-            this.setState({'commentText': ''})
+            this.setState({'[commentText]': ''});
         } else {
             return (
                 <div className="alert alert-danger" role="alert">
