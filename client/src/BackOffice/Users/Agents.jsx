@@ -13,6 +13,8 @@ import {
 } from '../../services/Users/UsersActions'
 import {connect} from 'react-redux';
 import classnames from "classnames";
+import moment from 'moment';
+import Pagination from "./Pagination";
 
 
 const pagination = paginationFactory({
@@ -113,6 +115,15 @@ class Agents extends React.Component {
         this.setState({currentPage: page});
     }
 
+    formateTime(time, nbr) {
+        if (nbr !== 0) {
+            var seconds = parseInt((time * 60) / nbr);
+        } else {
+            var seconds = parseInt((time * 60) / 1);
+        }
+        var format =  Math.floor(moment.duration(seconds,'seconds').asHours()) + 'h ' + moment.duration(seconds,'seconds').minutes() + ' m ' + moment.duration(seconds,'seconds').seconds()+ ' s';
+        return format;
+    }
 
     render() {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
@@ -190,7 +201,10 @@ class Agents extends React.Component {
                                             <th>User Name</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Role</th>
+                                            <th>Claims opened</th>
+                                            <th>Avg. of Reaction </th>
+                                            <th>Claims Resolved</th>
+                                            <th>Avg. of Response</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -210,12 +224,15 @@ class Agents extends React.Component {
                                                     <td>{user.username}</td>
                                                     <td>{user.firstName} {user.lastName}</td>
                                                     <td>{user.email}</td>
-                                                    <td>{user.role}</td>
+                                                    <td>{user.nbrClaimsOpened}</td>
+                                                    <td>{this.formateTime(user.moyAssiduite , user.nbrClaimsOpened)}</td>
+                                                    <td>{user.nbrClaimsResolved}</td>
+                                                    <td>{this.formateTime(user.moyReponse , user.nbrClaimsResolved)}</td>
                                                     <td>
-                                                        <Button variant="info"
-                                                                onClick={() => this.props.editUser(user._id)}>Edit</Button>
-                                                        <Button variant="danger"
-                                                                onClick={e => this.deleteHandler(e, user._id)}>Delete</Button>
+                                                        <Button variant="info" className="btn-warning"
+                                                                onClick={() => this.props.editUser(user._id)}><i className="fa fa-pen"></i></Button>
+                                                        <Button variant="danger" className="btn-danger"
+                                                                onClick={e => this.deleteHandler(e, user._id)}><i className="fa fa-trash"></i></Button>
                                                     </td>
                                                 </tr>
                                             </Fragment>
@@ -231,7 +248,10 @@ class Agents extends React.Component {
                                             <th>User Name</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Role</th>
+                                            <th>Claims opened</th>
+                                            <th>Avg. of Reaction </th>
+                                            <th>Claims Resolved</th>
+                                            <th>Avg. of Response</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -251,12 +271,15 @@ class Agents extends React.Component {
                                                     <td>{user.username}</td>
                                                     <td>{user.firstName} {user.lastName}</td>
                                                     <td>{user.email}</td>
-                                                    <td>{user.role}</td>
+                                                    <td>{user.nbrClaimsOpened}</td>
+                                                    <td>{this.formateTime(user.moyAssiduite , user.nbrClaimsOpened)}</td>
+                                                    <td>{user.nbrClaimsResolved}</td>
+                                                    <td>{this.formateTime(user.moyReponse , user.nbrClaimsResolved)}</td>
                                                     <td>
-                                                        <Button variant="info"
-                                                                onClick={() => this.props.editUser(user._id)}>Edit</Button>
-                                                        <Button variant="danger"
-                                                                onClick={e => this.deleteHandler(e, user._id)}>Delete</Button>
+                                                        <Button variant="info" className="btn-warning"
+                                                                onClick={() => this.props.editUser(user._id)}><i className="fa fa-pen"></i></Button>
+                                                        <Button variant="danger" className="btn-danger"
+                                                                onClick={e => this.deleteHandler(e, user._id)}><i className="fa fa-trash"></i></Button>
                                                     </td>
                                                 </tr>
                                             </Fragment>
@@ -272,7 +295,10 @@ class Agents extends React.Component {
                                             <th>User Name</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Role</th>
+                                            <th>Opened CL</th>
+                                            <th>Avg. of Reaction </th>
+                                            <th> Resolved CL</th>
+                                            <th>Avg. of Response</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -292,12 +318,15 @@ class Agents extends React.Component {
                                                     <td>{user.username}</td>
                                                     <td>{user.firstName} {user.lastName}</td>
                                                     <td>{user.email}</td>
-                                                    <td>{user.role}</td>
+                                                    <td>{user.nbrClaimsOpened}</td>
+                                                    <td>{this.formateTime(user.moyAssiduite , user.nbrClaimsOpened)}</td>
+                                                    <td>{user.nbrClaimsResolved}</td>
+                                                    <td>{this.formateTime(user.moyReponse , user.nbrClaimsResolved)}</td>
                                                     <td>
-                                                        <Button variant="info"
-                                                                onClick={() => this.props.editUser(user._id)}>Edit</Button>
-                                                        <Button variant="danger"
-                                                                onClick={e => this.deleteHandler(e, user._id)}>Delete</Button>
+                                                        <Button variant="info" className="btn-warning"
+                                                                onClick={() => this.props.editUser(user._id)}><i className="fa fa-pen"></i></Button>
+                                                        <Button variant="danger" className="btn-danger"
+                                                                onClick={e => this.deleteHandler(e, user._id)}><i className="fa fa-trash"></i></Button>
                                                     </td>
                                                 </tr>
                                             </Fragment>
