@@ -1,5 +1,14 @@
 import Axios from "axios";
-import {ADD_CLAIM, GET_ALL, RESOLVE_CLAIM, DELETE_CLAIM, GET_CLAIM , GET_ALL_COMMENT,UNRESOLVE_CLAIM, ADD_COMMENT_TO_CLAIM} from "./ClaimsTypes"
+import {
+    ADD_CLAIM,
+    ADD_COMMENT_TO_CLAIM,
+    DELETE_CLAIM,
+    DELETE_COMMENT,
+    GET_ALL,
+    GET_CLAIM,
+    RESOLVE_CLAIM,
+    UNRESOLVE_CLAIM
+} from "./ClaimsTypes"
 import {GET_ERRORS} from "../../actions/types";
 
 const ROOT_URL = 'http://localhost:3000/claims';
@@ -20,7 +29,7 @@ export function addClaim({titleC, typeC, priority, description, userId}, history
                     type: ADD_CLAIM,
                     payload: response.data,
                 });
-                historyPush(`/admin/claims/`+userId);
+                historyPush(`/admin/claims/` + userId);
             })
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
@@ -36,7 +45,7 @@ export const getAll = (id) => {
     return async (dispatch) => {
         try {
             console.log(id, 'claim action : $id ');
-            const result = await Axios.get(`http://localhost:3000/claims/getAll/`+id);
+            const result = await Axios.get(`http://localhost:3000/claims/getAll/` + id);
             console.log(result, 'result');
             dispatch({type: GET_ALL, payload: result.data})
         } catch (error) {
@@ -48,7 +57,7 @@ export const getAll = (id) => {
 export const getClaim = (idClaim, idUser) => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3000/claims/getById/`+idClaim+`/`+idUser);
+            const result = await Axios.get(`http://localhost:3000/claims/getById/` + idClaim + `/` + idUser);
             dispatch({type: GET_CLAIM, payload: result.data})
         } catch (error) {
             dispatch({type: GET_ERRORS, error})
@@ -71,6 +80,27 @@ export const deleteClaim = id => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+    );
+};
+
+// deleteComment
+export const deleteComment = (id, idComment) => dispatch => {
+    Axios
+        .post(`http://localhost:3000/claims/deleteComment/${id}/${idComment}`).then(res => {
+            console.log(res, 'res');
+            dispatch({
+                type: DELETE_COMMENT,
+                payload: res,
+                idComment: idComment
+            })
+        }
+    ).catch(err => {
+            console.log(err, 'err');
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response
+            })
+        }
     );
 };
 
@@ -110,10 +140,9 @@ export const unresolveClaim = id => dispatch => {
     });
 };
 
-export function addComment({commentText, claimId, userId},  historyPush, historyReplace)
-{
+export function addComment({commentText, claimId, userId}, historyPush, historyReplace) {
     return function (dispatch) {
-        Axios.post(`${ROOT_URL}/addComment/`+ claimId +'/' + userId, {
+        Axios.post(`${ROOT_URL}/addComment/` + claimId + '/' + userId, {
             content: commentText,
         }, {})
             .then((response) => {  // If create post succeed, navigate to the post detail page
@@ -125,7 +154,7 @@ export function addComment({commentText, claimId, userId},  historyPush, history
             })
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
-                historyReplace('/claims/'+ claimId, {
+                historyReplace('/claims/' + claimId, {
                     time: new Date().toLocaleString(),
                     message: response,
                 });

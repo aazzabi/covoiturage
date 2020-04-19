@@ -255,11 +255,14 @@ var addCommentToClaim = async (req, res, next) => {
     const u = await user.findOne({'_id': req.params.idUser});
     console.log(u);
     console.log(req.body.content);
+    const newIdWithSep = uuid.v1();
+    const newId = newIdWithSep.replace(/-/g, '');
+    console.log(newId, 'newId');
     claim.updateOne({'_id': req.params.idClaim}, {
         $push: {
             'comments':
                 {
-                    '_id': uuid.v1(),
+                    '_id': newId,
                     'published': new Date(),
                     'content': req.body.content,
                     'user': u
@@ -275,7 +278,34 @@ var addCommentToClaim = async (req, res, next) => {
         res.status(500).send(error);
     })
 };
+var deleteComment = async (req, res, next) => {
+    const comm = await claim.findOne({"_id": req.params.idClaim}, {"comments": 1, "_id": 0});
+    if (comm.comments.length > 0) {
+        let cm;
+        comm.comments.forEach(c => {
+            if (c._id === req.params.idComment) {
+                cm = c;
+            }
+        });
 
+        claim.updateOne({'_id': req.params.idClaim}, {$pull: {'comments': cm}})
+            .then(async (data) => {
+                console.log(data);
+                const cla = await claim.findOne({'_id': req.params.idClaim});
+                res.set('Content-Type', 'application/json');
+                res.status(200).send(cla);
+            }, error => {
+                console.log(error);
+                res.set('Content-Type', 'application/json');
+                res.status(500).send(error);
+            });
+    } else {
+        res.set('Content-Type', 'application/json');
+        res.status(500).send({status:'error', 'message': 'There is no comments'});
+    }
+
+
+};
 
 module.exports = {
     getAll,
@@ -286,5 +316,6 @@ module.exports = {
     resolveClaim,
     changeStatus,
     addCommentToClaim,
+    deleteComment,
 };
 

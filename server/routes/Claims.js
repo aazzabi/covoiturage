@@ -9,5 +9,6 @@ router.delete('/delete/:id', claimController.deleteClaim);
 router.post('/resolve/:id', claimController.resolveClaim);
 router.post('/changeStatus/:id/:status', claimController.changeStatus);
 router.post('/addComment/:idClaim/:idUser', claimController.addCommentToClaim);
+router.post('/deleteComment/:idClaim/:idComment', claimController.deleteComment);
 
 module.exports = router;

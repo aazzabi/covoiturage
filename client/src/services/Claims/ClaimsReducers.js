@@ -1,4 +1,4 @@
-import {ADD_CLAIM, GET_ALL, RESOLVE_CLAIM , DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, ADD_COMMENT_TO_CLAIM, UNRESOLVE_CLAIM} from "./ClaimsTypes";
+import {ADD_CLAIM, GET_ALL, RESOLVE_CLAIM , DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, DELETE_COMMENT, ADD_COMMENT_TO_CLAIM, UNRESOLVE_CLAIM} from "./ClaimsTypes";
 
 const initialState = {
     addClaim: {},
@@ -16,6 +16,11 @@ export default function (state = initialState, action) {
             return {...state, allComments: action.payload};
         case ADD_COMMENT_TO_CLAIM:
             return {...state, claim: action.payload};
+        case DELETE_COMMENT:
+            console.log(action, 'action REDUCER')
+            return {...state, claim: action.payload.data};
+        // return {...state, claim: state.claim.comments.filter(u => u._id === action.idComment)};
+        // return {...state, claim: state.claim.comments.splice(u => u._id !== action.payload , 1)};
         case GET_CLAIM:
             return {...state, claim: action.payload};
         case DELETE_CLAIM:

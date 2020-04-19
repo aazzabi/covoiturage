@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addComment, getClaim, unresolveClaim, resolveClaim} from '../../services/Claims/ClaimsAction';
+import {addComment, getClaim, unresolveClaim, resolveClaim, deleteComment} from '../../services/Claims/ClaimsAction';
 import {Badge, Button, Input} from "reactstrap";
 import {getCurrentUser} from "../../actions/authActions"
 import Table from "@material-ui/core/Table";
@@ -15,7 +15,7 @@ class DetailClaim extends Component {
         this.state = {
             claim: {},
             currentUser: {},
-            commentText: {},
+            commentText: '',
         };
     }
 
@@ -51,7 +51,7 @@ class DetailClaim extends Component {
         return (
             <div className="card" key={comment._id} style={{padding: 10, margin: 20}}>
                 <div className=" row">
-                    <div className="col-sm-1">
+                    <div className="col-md-1">
                         {comment.user &&
                         comment.user.avatar == '' ? <img className="avatar avatar-sm rounded-circle" alt="..."
                                                          src="/static/media/team-4.23007132.jpg"/>
@@ -62,10 +62,14 @@ class DetailClaim extends Component {
                     <div className="col-md-7 text-justify">
                         {comment.user && (comment.user.firstName + ' ' + comment.user.lastName + ' ( ' + comment.user.username + ' )')}
                         <br/>{comment.content}</div>
-                    <div className="col-lg-4">
-                        <span className="span-with-margin f6 text-grey">{comment.user && comment.user.username}</span>
-                        <span
-                            className="span-with-margin f6 text-grey">{new Date(comment.published).toLocaleString()}</span>
+                    <div className="col-md-4 text-right">{comment._id}<br/>
+                        <span className="span-with-margin f6 text-grey">{new Date(comment.published).toLocaleString()}</span><br/>
+                        {
+                            comment.user._id === this.state.currentUser._id
+                                ?<Button className="btn-sm btn-danger" onClick={e => this.deleteComment(comment._id)}><i className="fa fa-trash"></i></Button>
+                                : <a></a>
+                        }
+
                     </div>
                     <hr/>
                 </div>
@@ -73,6 +77,11 @@ class DetailClaim extends Component {
         );
     }
 
+    deleteComment(id) {
+        console.log(id, 'id');
+        this.props.deleteComment(this.state.claim._id, id);
+
+    }
     confirmeComment() {
         console.log(this.state.commentText);
         if (this.props.currentUser) {
@@ -85,7 +94,7 @@ class DetailClaim extends Component {
             }, (path, state) => {
                 this.props.history.replace(path, state);
             });
-
+            this.setState({'commentText': ''})
         } else {
             return (
                 <div className="alert alert-danger" role="alert">
@@ -210,4 +219,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {getClaim, getCurrentUser, addComment, unresolveClaim , resolveClaim})(DetailClaim);
+export default connect(mapStateToProps, {getClaim, getCurrentUser, addComment, unresolveClaim , deleteComment, resolveClaim})(DetailClaim);
