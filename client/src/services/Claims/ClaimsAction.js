@@ -1,5 +1,5 @@
 import Axios from "axios";
-import {ADD_CLAIM, GET_ALL, RESOLVE_USER, DELETE_CLAIM, GET_CLAIM , GET_ALL_COMMENT, ADD_COMMENT_TO_CLAIM} from "./ClaimsTypes"
+import {ADD_CLAIM, GET_ALL, RESOLVE_CLAIM, DELETE_CLAIM, GET_CLAIM , GET_ALL_COMMENT,UNRESOLVE_CLAIM, ADD_COMMENT_TO_CLAIM} from "./ClaimsTypes"
 import {GET_ERRORS} from "../../actions/types";
 
 const ROOT_URL = 'http://localhost:3000/claims';
@@ -49,7 +49,7 @@ export const getClaim = (idClaim, idUser) => {
     return async (dispatch) => {
         try {
             const result = await Axios.get(`http://localhost:3000/claims/getById/`+idClaim+`/`+idUser);
-            dispatch({type: GET_CLAIM, payload: result.data[0]})
+            dispatch({type: GET_CLAIM, payload: result.data})
         } catch (error) {
             dispatch({type: GET_ERRORS, error})
         }
@@ -76,20 +76,38 @@ export const deleteClaim = id => dispatch => {
 
 // Delete Site
 export const resolveClaim = id => dispatch => {
+    console.log('RESOLVE_CLAIM action');
     Axios
-        .delete(`http://localhost:3000/users/delete/${id}`).then(res => {
-            console.log("action ", id);
+        .post(`http://localhost:3000/claims/resolve/${id}`).then(res => {
             dispatch({
-                type: RESOLVE_USER,
-                payload: id
+                type: RESOLVE_CLAIM,
+                payload: res.data
             })
         }
-    ).catch(err =>
+    ).catch(err => {
+        console.log(err);
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         })
-    );
+    });
+};
+// unresolveClaim
+export const unresolveClaim = id => dispatch => {
+    Axios
+        .post(`http://localhost:3000/claims/changeStatus/${id}/IN_PROGRESS`).then(res => {
+            dispatch({
+                type: UNRESOLVE_CLAIM,
+                payload: res.data
+            })
+        }
+    ).catch(err => {
+        console.log(err);
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    });
 };
 
 export function addComment({commentText, claimId, userId},  historyPush, historyReplace)
@@ -107,7 +125,7 @@ export function addComment({commentText, claimId, userId},  historyPush, history
             })
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
-                historyReplace('/claims/new', {
+                historyReplace('/claims/'+ claimId, {
                     time: new Date().toLocaleString(),
                     message: response,
                 });

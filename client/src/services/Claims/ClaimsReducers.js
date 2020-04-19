@@ -1,4 +1,4 @@
-import {ADD_CLAIM, GET_ALL, RESOLVE_USER , DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, ADD_COMMENT_TO_CLAIM} from "./ClaimsTypes";
+import {ADD_CLAIM, GET_ALL, RESOLVE_CLAIM , DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, ADD_COMMENT_TO_CLAIM, UNRESOLVE_CLAIM} from "./ClaimsTypes";
 
 const initialState = {
     addClaim: {},
@@ -20,7 +20,10 @@ export default function (state = initialState, action) {
             return {...state, claim: action.payload};
         case DELETE_CLAIM:
             return {...state, all: state.all.filter(u => u._id !== action.payload)};
-        case RESOLVE_USER:
+        case RESOLVE_CLAIM:
+            console.log(action.payload);
+            return {...state, claim: action.payload};
+        case UNRESOLVE_CLAIM:
             return {...state, claim: action.payload};
         default:
             return state;

@@ -32,7 +32,9 @@ var getAll = async (req, res, next) => {
             res.status(400).send(error);
         });
     } else {
-        claim.find({'responsible': u}).then((data) => {
+        // console.log('other', u)
+        claim.find({'responsible._id': u._id}).then((data) => {
+            console.log('other', data)
             res.set('Content-Type', 'application/json');
             res.status(200).send(data);
         }, error => {
@@ -55,7 +57,7 @@ var getById = async (req, res, next) => {
     const cla = await claim.findOne({"_id": req.params.idClaim});
     if (u.role === "ADMIN") {
         console.log(u.role);
-        claim.find({"_id": req.params.idClaim}).then((data) => {
+        claim.findOne({"_id": req.params.idClaim}).then((data) => {
             console.log(data, 'data use');
             res.set('Content-Type', 'application/json');
             res.status(200).send(data);
@@ -65,7 +67,7 @@ var getById = async (req, res, next) => {
         });
     } else if (u.role === 'USER') {
         console.log(u.role);
-        claim.find({"_id": req.params.idClaim}).then((data) => {
+        claim.findOne({"_id": req.params.idClaim}).then((data) => {
             res.status(200).send(data);
         }, error => {
             res.status(400).send(error);
@@ -201,7 +203,7 @@ var updateClaim = (req, res, next) => {
 var resolveClaim = async (req, res, next) => {
     const cr = await claim.findOne({"_id": req.params.id});
     if (cr) {
-        if (cr.status === 'IN_PROGRESS') {
+        if ((cr.status === 'IN_PROGRESS') || (cr.status === 'WAITING')) {
             claim.findOneAndUpdate(
                 {'_id': req.params.id, 'status': 'IN_PROGRESS'},
                 {$set: {'status': 'RESOLVED', 'resolvedAt': new Date()}}
@@ -224,6 +226,7 @@ var resolveClaim = async (req, res, next) => {
                 res.status(500).send(error);
             })
         } else {
+            console.log('cr');
             res.set('Content-Type', 'application/json');
             res.status(500).send({'status': 'error', 'message': 'the claim isnt in progress'});
 

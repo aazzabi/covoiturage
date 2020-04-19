@@ -128,7 +128,7 @@ class AllClaims extends React.Component {
                                             : <Badge color="success">Confirmed</Badge>
                                         }
                                     </td>
-                                    <td>{claim.comments.length}</td>
+                                    <td>{claim.comments && claim.comments.length}</td>
                                     <td>
                                         <a href={`/admin/claims/${claim._id}`}
                                             className="btn  btn-outline-success mr-1">

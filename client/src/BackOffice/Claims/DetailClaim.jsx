@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getClaim, addComment} from '../../services/Claims/ClaimsAction';
+import {addComment, getClaim, unresolveClaim, resolveClaim} from '../../services/Claims/ClaimsAction';
 import {Badge, Button, Input} from "reactstrap";
 import {getCurrentUser} from "../../actions/authActions"
 import Table from "@material-ui/core/Table";
@@ -94,6 +94,14 @@ class DetailClaim extends Component {
             );
         }
     }
+    resolveClaim() {
+        console.log('RESOLVE_CLAIM')
+        this.props.resolveClaim(this.state.claim._id);
+    }
+
+    unresolveClaim() {
+        this.props.unresolveClaim(this.state.claim._id);
+    }
 
     handleChange = (name, value) => {
         this.setState({[name]: value});
@@ -105,7 +113,22 @@ class DetailClaim extends Component {
         return (
             <>
                 <div className="card" style={{padding: 10, margin: 20}}>
-                    <div className="card-header"><h2 className="mb-0">Claim Detail </h2></div>
+                    <div className="card-header">
+                        <div className="row">
+                            <div className="col-md-9"><h2>Claim Detail </h2></div>
+                            {
+                                this.props.currentUser.role === claim.type ?
+                                    (<div className="col-md-2">
+                                        {
+                                            claim.status === 'WAITING' ? <Button onClick={(e) => this.resolveClaim()}>Resolve</Button>
+                                            : claim.status === 'IN_PROGRESS' ?  <Button onClick={(e) => this.resolveClaim()}>Resolve</Button>
+                                            : <Button onClick={(e) => this.unresolveClaim()}>UnResolve</Button>
+                                        }
+                                    </div>)
+                                    : (<a></a>)
+                            }
+                        </div>
+                    </div>
                     <div className="card-body">
                         <form className="">
                             <div className="row">
@@ -187,4 +210,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {getClaim, getCurrentUser, addComment})(DetailClaim);
+export default connect(mapStateToProps, {getClaim, getCurrentUser, addComment, unresolveClaim , resolveClaim})(DetailClaim);
