@@ -130,7 +130,19 @@ class ClaimAdd extends Component {
     }
 }
 
+const validate = (values) => {
+    const errors = {}
+
+    if(!values.titleC) {
+        errors.title = "Enter a title"
+    }
+    if(!values.description) {
+        errors.content = "Enter a description for your claim"
+    }
+    return errors
+};
 ClaimAdd = reduxForm({
+    validate,
     form: 'post_new',  // name of the form
 })(ClaimAdd);
 

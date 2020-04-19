@@ -3,6 +3,7 @@ var router = express.Router();
 var claimController = require('../controllers/ClaimsController');
 
 router.post('/add/:idUser', claimController.add);
+router.post('/updateClaim/:id', claimController.updateClaim);
 router.get('/getAll/:idUser', claimController.getAll);
 router.get('/getById/:idClaim/:idUser', claimController.getById);
 router.delete('/delete/:id', claimController.deleteClaim);

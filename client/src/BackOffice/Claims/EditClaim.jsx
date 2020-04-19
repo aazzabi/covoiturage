@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
-import {addClaim, getClaim} from '../../services/Claims/ClaimsAction';
+import {addClaim, getClaim, editClaim} from '../../services/Claims/ClaimsAction';
 import {Button, Input} from "reactstrap";
 import {getCurrentUser} from "./../../actions/authActions"
 
@@ -48,10 +48,10 @@ class EditClaim extends Component {
         console.log(this.props, 'props');
         console.log(this.props.claim.title, 'props.claim.title');
         this.setState({
-            'titleC': this.props.claim.title,
-            'typeC': this.props.claim.type,
-            'priority': this.props.claim.priority,
-            'description': this.props.claim.description,
+            titleC: this.props.claim.title,
+            typeC: this.props.claim.type,
+            priority: this.props.claim.priority,
+            description: this.props.claim.description,
         })
     }
 
@@ -68,12 +68,12 @@ class EditClaim extends Component {
         console.log(this.state.priority);
         console.log(this.state.description);
         if (this.props.currentUser) {
-            this.props.addClaim({
+            this.props.editClaim({
                 titleC: this.state.titleC,
                 description: this.state.description,
                 typeC: this.state.typeC,
                 priority: this.state.priority,
-                userId: this.props.currentUser._id,
+                claimId: this.props.match.params.id,
             }, (path) => {  // callback 1: history push
                 this.props.history.push(path);
             }, (path, state) => {
@@ -102,10 +102,12 @@ class EditClaim extends Component {
                         <form>
                             <label htmlFor="titleC">Titre : </label>
                             <Input name="titleC" id="titleC" placeholder="Enter your title" type="text"
+                                   value={this.state.titleC}
                                    onChange={event => this.handleChange('titleC', event.target.value)}/>
 
                             <label htmlFor="typeC">Type : </label>
                             <Input name="typeC" id="typeC" type="select" label="Type:"
+                                   value={this.state.typeC}
                                    onChange={event => this.handleChange('typeC', event.target.value)}>
                                 <option value={"TECHNICAL"}>TECHNICAL</option>
                                 <option value={"FINANCIAL"}>FINANCIAL</option>
@@ -114,6 +116,7 @@ class EditClaim extends Component {
 
                             <label htmlFor="priority">Priority : </label>
                             <Input name="priority" id="typeC" type="select"
+                                   value={this.state.priority}
                                    onChange={event => this.handleChange('priority', event.target.value)}>
                                 <option value={"LOW"}>LOW</option>
                                 <option value={"NORMAL"}>NORMAL</option>
@@ -123,6 +126,7 @@ class EditClaim extends Component {
 
                             <label htmlFor="description">Description : </label>
                             <Input name="description" label="Description :"
+                                   value={this.state.description}
                                    onChange={event => this.handleChange('description', event.target.value)}/>
                             <Button className="mt-4" color="info" type="button"
                                     onClick={e => this.confirme(e)}>
@@ -136,9 +140,22 @@ class EditClaim extends Component {
     }
 }
 
+const validate = (values) => {
+    const errors = {}
+
+    if(!values.titleC) {
+        errors.title = "Enter a title"
+    }
+    if(!values.description) {
+        errors.content = "Enter a description for your claim"
+    }
+    return errors
+};
 
 EditClaim = reduxForm({
+    validate,
     form: 'claim_edit',  // name of the form
+    enableReinitialize : true // you need to add this property
 })(EditClaim);
 
 function mapStateToProps(state) {
@@ -148,4 +165,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {addClaim, getCurrentUser, getClaim})(EditClaim);
+export default connect(mapStateToProps, {addClaim, getCurrentUser, getClaim, editClaim})(EditClaim);

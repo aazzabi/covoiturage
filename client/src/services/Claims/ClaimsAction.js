@@ -1,6 +1,7 @@
 import Axios from "axios";
 import {
     ADD_CLAIM,
+    EDIT_CLAIM,
     ADD_COMMENT_TO_CLAIM,
     DELETE_CLAIM,
     DELETE_COMMENT,
@@ -34,6 +35,34 @@ export function addClaim({titleC, typeC, priority, description, userId}, history
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
                 historyReplace('/claims/new', {
+                    time: new Date().toLocaleString(),
+                    message: response,
+                });
+            });
+    }
+}
+
+// editClaim
+export function editClaim({titleC, typeC, priority, description,claimId}, historyPush, historyReplace) {
+    return function (dispatch) {
+        console.log({titleC, typeC, priority, description});
+        console.log(`${ROOT_URL}/updateClaim/` + claimId, '`${ROOT_URL}/updateClaim/`+ claimId');
+        Axios.post(`${ROOT_URL}/updateClaim/` + claimId, {
+            title: titleC,
+            description: description,
+            type: typeC,
+            priority: priority,
+        }, {})
+            .then((response) => {  // If create post succeed, navigate to the post detail page
+                dispatch({
+                    type: EDIT_CLAIM,
+                    payload: response.data,
+                });
+                historyPush(`/admin/claims/` + claimId);
+            })
+            .catch(({response}) => {  // If create post failed, alert failure message
+                console.log(response, 'error');
+                historyReplace('/admin/claims/', {
                     time: new Date().toLocaleString(),
                     message: response,
                 });
