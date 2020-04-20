@@ -10,6 +10,7 @@ router.put('/edit/:id', rideController.editRide);
 router.get('/getById/:id', rideController.getById);
 router.delete('/delete/:id', rideController.deleteRide);
 router.get('/getAll', rideController.getAll);
+router.get('/price/:ori/:des', rideController.getPrice);
 router.get('/allTravelersByRide/:idRide', rideController.getAllTravelers);
 router.post('/addTravelerById/:idUser/:idRide', rideController.addTravelerRide);
 router.delete('/removeTravelerById/:idUser/:idRide', rideController.removeTravelerRide);

@@ -1,0 +1,29 @@
+.pagination-container {
+    justify-content: center;
+    display: flex;
+}
+
+
+.page-active {
+    background: #5e72e4 !important;
+    transition: 0.2s ease-in-out;
+}
+
+
+.pagination-container>ul>li {
+    padding: 15px;
+    display: inline-block;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    margin: 0px 5px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    border-radius: 50% !important;
+
+}
+
+.pagination-container>ul>li:hover {
+    cursor: pointer;
+}

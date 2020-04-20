@@ -28,7 +28,8 @@ import Widgets from "views/pages/Widgets.jsx";
 import Create from "./FrontOffice/Parcels/Create";
 import Packages from "./FrontOffice/Parcels/Packages";
 import CreateRide from "./FrontOffice/Ride/CreateRide";
-
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
+import RideDetails from "./FrontOffice/Ride/RideDetails";
 const routes = [
   {
     collapse: true,
@@ -64,13 +65,24 @@ const routes = [
       },
       {
         path: "/ride/add",
-        name: "Packages",
+        name: "rideAdd",
         component: CreateRide,
+        layout: "/auth"
+      },{
+        path: "/myride/:id",
+        name: "myRide",
+        component: RideDetails,
         layout: "/auth"
       },   {
         path: "/parcels",
         name: "Packages",
         component: Packages,
+        layout: "/auth"
+      },
+      {
+        path: "/viewparcels/:id",
+        name: "view parcels",
+        component: PackagesDetails,
         layout: "/auth"
       },
       {

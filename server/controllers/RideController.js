@@ -2,7 +2,7 @@ var ride = require('../models/Ride');
 var user = require('../models/User');
 var traveler = require('../models/Traveler');
 var dis = require('google-distance');
-dis.apiKey = 'AIzaSyDtJlOlL_sZhchii9wg4A6yi7vZutilBeg';
+dis.apiKey = 'AIzaSyCkTjWTcA3sD2wiyBr4SANvsdrtZfmv8rM';
 var SendEmail = require('./SendEmailController');
 
 
@@ -398,6 +398,31 @@ var getTraveler = (req, res, next) => {
 
 
 };
+var getPrice = (req, res, next) => {
+
+    dis.get(
+        {
+            origin: req.params.ori,
+            destination: req.params.des,
+            metric: 'meter'
+        },
+        function(err, data) {
+            if (err){
+                res.set('Content-Type', 'application/json');
+                res.status(202).json(err);
+            } else {
+                res.set('Content-Type', 'application/json');
+                var x = data['distanceValue'] / 1000;
+                var num = Number(x*0.06);
+                var roundedString = num.toFixed(2);
+                var rounded = Number(roundedString);
+                res.status(202).json(rounded);
+                console.log(data);
+            }
+        });
+
+
+};
 
 
 module.exports = {
@@ -411,5 +436,6 @@ module.exports = {
     removeTravelerRide,
     getRidesByDriver,
     confrimTraveler,
-    getTraveler
+    getTraveler,
+    getPrice
 };
