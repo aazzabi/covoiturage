@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import {Search} from "react-bootstrap-table2-toolkit";
 import {Alert, Button, Table} from "reactstrap";
-import {deleteUser, getAll, getDrivers, getUsers} from '../../services/Users/UsersActions'
+import {deleteUser, getAll, getDrivers, getUsers, getAllFinancials} from '../../services/Users/UsersActions'
 import {connect} from 'react-redux';
 import jwt_decode from "jwt-decode";
 import Pagination from "./Pagination";
@@ -48,6 +48,7 @@ class AllUsers extends React.Component {
             all: [],
             users: [],
             drivers: [],
+            financials: [],
             d: {},
             response: {},
         };
@@ -69,12 +70,13 @@ class AllUsers extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const currentUser = jwt_decode(localStorage.getItem("jwtToken"));
         console.log(currentUser._id, 'currentUser');
         this.props.getAll();
         this.props.getUsers();
         this.props.getDrivers();
+        this.props.getAllFinancials()
     }
 
 
@@ -89,15 +91,18 @@ class AllUsers extends React.Component {
         this.setState({currentPage: page});
     }
 
+
     render() {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let users = this.props.users;
         let all = this.props.all;
+        console.log(this.props.financials , 'this.props.financials');
         if (error) {
             return (
                 <div>Error: {error.message}</div>
             )
         } else {
+            const currentUsers = this.state.all.slice((currentPage - 1) * pageSize, pageSize * currentPage);
             return (
                 <div>
                     <h2>Users List</h2>
@@ -116,7 +121,8 @@ class AllUsers extends React.Component {
                         <tbody>
 
 
-                        {this.state.all.map(user => (
+                        {!!all &&
+                        currentUsers.map(user => (
                             <Fragment key={user._id}>
                                 <tr>
                                     {user.avatar != null
@@ -136,14 +142,9 @@ class AllUsers extends React.Component {
                                 </tr>
                             </Fragment>
                         ))}
-
-
                         </tbody>
-
-                        {/*<TableUser pageSize={pageSize} currentPage={currentPage} users={users}/>*/}
-
-
                     </Table>
+                    {/*<TableUser pageSize={pageSize} currentPage={currentPage} users={users}/>*/}
 
                     <Pagination
                         itemsCount={users.length}
@@ -162,7 +163,8 @@ function mapStateToProps(state) {
         all: state.users.all,
         drivers: state.users.drivers,
         users: state.users.users,
+        financials: state.users.financials,
     }
 };
 
-export default connect(mapStateToProps, {getAll, getUsers, getDrivers, deleteUser})(AllUsers);
+export default connect(mapStateToProps, {getAll, getUsers, getDrivers, deleteUser , getAllFinancials})(AllUsers);

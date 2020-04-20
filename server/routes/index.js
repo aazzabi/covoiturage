@@ -11,7 +11,6 @@ const crypto = require('crypto');
 var fs = require('fs');
 const passport = require('passport');
 const {check, validationResult} = require("express-validator/check");
-const bcrypt = require("bcryptjs");
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -83,110 +82,6 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
 });
 router.post('/google-login', authController.googleLogin);
 
-
-router.post("/authenticate", [
-        check("email", "Please enter a valid Email").isEmail(),
-        check("password", "Password is required").exists()
-    ], async (req, res) => {
-        //Check errors in  the body
-        const errors = validationResult(req);
-        //Bad Request
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            });
-        }
-        const {email, password} = req.body;
-        //ParserBody
-        console.log(req.body); // lezem middleware lel hkeya hedhi
-        try {
-            console.log(req.body); // lezem middleware lel hkeya hedhi
-            // See if User exists
-            let u = await User.findOne({
-                email
-            });
-            if (!u) {
-                return res.status(400).json({
-                    errors: [
-                        {
-                            msg: "Invalid Credentials "
-                        }
-                    ]
-                });
-            }
-            //See if password matches
-            const isMatch = await bcrypt.compareSync(password, u.password);
-            console.log(password , 'password');
-            console.log(u.password , 'u.password');
-            console.log(isMatch);
-            if (isMatch === false) {
-                return res.status(400).json({ 'status': 'error', 'message': 'Invalid Credentials' });
-            }
-            // Return Json WebToken
-            const payload = {
-                User: {
-                    id: u.id,
-                    username: u.username,
-                    role: u.role,
-                }
-            }; //l'emport
-            jwt.sign(
-                payload,
-                config.authentification.secret,
-                {
-                    expiresIn: 360000
-                },
-                (err, token) => {
-                    if (err) throw err;
-                    res.json({
-                        token
-                    });
-                }
-            );
-        } catch (error) {
-            console.log(error.message);
-            res.status(500).send("server Error");
-        }
-    }
-);
-router.post("/inscription",  (req, res) => {
-    User.findOne({email: req.body.email}).then(u => {
-        if (u) {
-            return res.status(400).json({msg: "Email already exists"});
-        } else {
-            const newUser = new User({
-                username: req.body.username,
-                lastName: req.body.lastName,
-                firstName: req.body.firstName,
-                email: req.body.email,
-                phone: req.body.phone,
-                gender: req.body.gender,
-                avatar: req.body.avatar,
-            });
-            // hashSync : 3tatni hash , compatible ( selon bcrypt-generator)
-            const pwd = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-            newUser.password = pwd;
-            User.create({
-                password: newUser.password,
-                username: newUser.username,
-                lastName: newUser.lastName,
-                firstName: newUser.firstName,
-                email: newUser.email,
-                phone: newUser.phone,
-                gender: newUser.gender,
-                avatar: newUser.avatar,
-            }).then(async (data) => {
-                await User.updateOne({'_id': data._id}, {$set: {'password': pwd}});
-                res.set('Content-Type', 'application/json');
-                res.status(202).json(data);
-            })
-            .catch(error => {
-                res.set('Content-Type', 'application/json');
-                res.status(500).send(error);
-            });
-        }
-    });
-});
 
 
 module.exports = router;

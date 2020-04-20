@@ -7,6 +7,7 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 export const REGISTER = 'REGISTER';
 
+export const GET_LOGGED_USER = "GET_LOGGED_USER";
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const GET_PROFILE = "GET_PROFILE";
 export const FETCH_POSTS = 'fetch_posts';

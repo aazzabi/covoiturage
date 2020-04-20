@@ -5,16 +5,17 @@ import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
 import {Route} from "react-router-dom";
 import React from "react";
-import CreateParcel from "./FrontOffice/Parcels/Create";
-import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
-import PostDetail from "./FrontOffice/Blog/post_detail";
-import Packages from "./FrontOffice/Parcels/Packages";
-import PostNew from "./FrontOffice/Blog/post_new";
-import PostMine from "./FrontOffice/Blog/post_mine";
-import PostList from "./FrontOffice/Blog/listPosts";
 import CreateRide from "./FrontOffice/Ride/CreateRide";
 import RideDetails from "./FrontOffice/Ride/RideDetails";
 import CreateRidePrice from "./FrontOffice/Ride/CreateRidePrice";
+import CreateParcel from "./frontoffice/Parcels/Create";
+import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
+import PostDetail from "./frontoffice/Blog/post_detail";
+import Packages from "./frontoffice/Parcels/Packages";
+import PostNew from "./frontoffice/Blog/post_new";
+import PostMine from "./frontoffice/Blog/post_mine";
+import PostList from "./frontoffice/Blog/listPosts";
+import ClaimAdd from "./frontoffice/Claims/ClaimAdd";
 
 const routesFront = [
     {
@@ -89,6 +90,12 @@ const routesFront = [
         path: "/register",
         name: "Register",
         component: Register,
+        layout: "/front"
+    },
+    {
+        path: "/claims/new",
+        name: "Blog new",
+        component: ClaimAdd,
         layout: "/front"
     },
     {

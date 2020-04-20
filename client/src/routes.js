@@ -25,6 +25,12 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
+import AllDrivers from "./BackOffice/Users/AllDrivers";
+import AllUsers from "./BackOffice/Users/AllUsers";
+import Agents from "./BackOffice/Users/Agents.jsx";
+import AllClaims from "./BackOffice/Claims/AllClaims.jsx";
+import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
+import EditClaim from "./BackOffice/Claims/EditClaim.jsx";
 import Create from "./FrontOffice/Parcels/Create";
 import Packages from "./FrontOffice/Parcels/Packages";
 import CreateRide from "./FrontOffice/Ride/CreateRide";
@@ -34,22 +40,57 @@ import PackageDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails"
 const routes = [
   {
     collapse: true,
-    name: "Dashboards",
+    name: "Users",
     icon: "ni ni-shop text-primary",
     state: "dashboardsCollapse",
     views: [
       {
-        path: "/dashboard",
-        name: "Dashboard",
-        component: Dashboard,
+        path: "/users",
+        name: "All",
+        component: AllUsers,
         layout: "/admin"
       },
       {
-        path: "/alternative-dashboard",
-        name: "Alternative",
-        component: Alternative,
+        path: "/drivers",
+        name: "Drivers",
+        component: AllDrivers,
+        layout: "/admin"
+      },
+      {
+        path: "/agents",
+        name: "Agents",
+        component: Agents,
         layout: "/admin"
       }
+    ]
+  },
+  {
+    collapse: true,
+    name: "Claims",
+    icon: "ni ni-spaceship text-pink",
+    state: "claimsCollapse",
+    views: [
+      {
+        path: "/claims/edit/:id",
+        name: "détail",
+        component: EditClaim,
+        layout: "/admin",
+        invisible: true
+      },
+      {
+        path: "/claims/:id",
+        name: "détail",
+        component: DetailClaim,
+        layout: "/admin",
+        invisible: true
+      },
+      {
+        path: "/claims",
+        name: "All",
+        component: AllClaims,
+        layout: "/admin",
+        invisible: false
+      },
     ]
   },
   {
@@ -61,20 +102,10 @@ const routes = [
       {
         path: "/Add",
         name: "Create Package",
-        component: Create,
+        component: CreateParcel,
         layout: "/auth"
       },
       {
-        path: "/ride/add",
-        name: "rideAdd",
-        component: CreateRide,
-        layout: "/auth"
-      },{
-        path: "/myride/:id",
-        name: "myRide",
-        component: RideDetails,
-        layout: "/auth"
-      },   {
         path: "/parcels",
         name: "Packages",
         component: Packages,
@@ -83,7 +114,7 @@ const routes = [
       {
         path: "/viewparcels/:id",
         name: "view parcels",
-        component: PackageDetails,
+        component: PackagesDetails,
         layout: "/auth"
       },
       {

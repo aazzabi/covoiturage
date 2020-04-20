@@ -110,7 +110,7 @@ var login = async (req, res) => {
             }
         }; //l'emport
         jwt.sign(
-            payload,
+            u.toJSON(),
             config.authentification.secret,
             {
                 expiresIn: 360000
