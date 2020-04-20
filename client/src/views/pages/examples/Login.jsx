@@ -63,9 +63,9 @@ class Login extends React.Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
       console.log(nextProps.errors);
-      this.refs.notify.notificationAlert(
-        NotificationAlertOptions("danger", "Error", "Invalid Credentials")
-      );
+      // this.refs.notify.notificationAlert(
+      //   NotificationAlertOptions("danger", "Error", "Invalid Credentials")
+      // );
     }
   }
   onChange(e) {

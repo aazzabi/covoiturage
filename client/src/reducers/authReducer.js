@@ -1,18 +1,21 @@
 import isEmpty from "../validation/is-empty";
 
-import { SET_CURRENT_USER , GET_PROFILE, PROFILE_LOADING } from "../actions/types";
+import {REGISTER, SET_CURRENT_USER , GET_PROFILE, PROFILE_LOADING } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
-  user: {}, 
-
-
+  user: {},
   profile: null,
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case REGISTER:
+      return {
+        ...state,
+        users: [action.payload, ...state.users]
+      };
     case SET_CURRENT_USER:
       return {
         ...state,

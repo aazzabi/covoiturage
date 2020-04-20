@@ -27,9 +27,8 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import Create from "./FrontOffice/Parcels/Create";
 import Packages from "./FrontOffice/Parcels/Packages";
-import CreateRide from "./FrontOffice/Ride/CreateRide";
 import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
-import RideDetails from "./FrontOffice/Ride/RideDetails";
+
 const routes = [
   {
     collapse: true,
@@ -58,9 +57,9 @@ const routes = [
     state: "examplesCollapse",
     views: [
       {
-        path: "/parcels/Add",
+        path: "/Add",
         name: "Create Package",
-        component: Create,
+        component: CreateParcel,
         layout: "/auth"
       },
       {

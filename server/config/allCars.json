@@ -1,0 +1,1677 @@
+[
+  {
+    "marque": "DACIA",
+    "model": "Dacia Dokker",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Dokker Stepway",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Duster",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Lodgy",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Lodgy Stepway",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Logan",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Logan MCV",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Logan MCV Stepway",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Sandero",
+    "capacite": 320
+  },
+  {
+    "marque": "DACIA",
+    "model": "Dacia Sandero Stepway",
+    "capacite": 320
+  },
+  {
+    "marque": "DS",
+    "model": "DS DS3",
+    "capacite": 285
+  },
+  {
+    "marque": "DS",
+    "model": "DS DS7 Crossback",
+    "capacite": 285
+  },
+  {
+    "marque": "DS",
+    "model": "New DS DS3 Crossback 2019",
+    "capacite": 285
+  },
+  {
+    "marque": "FERRARI",
+    "model": "Ferrari 488 Pista",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "Ferrari 488 Spider",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "Ferrari 812 Superfast",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "Ferrari GTC4Lusso",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "Ferrari Portofino",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "New Ferrari F8 Tributo 2019",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "New Ferrari Roma 2020",
+    "capacite": 292
+  },
+  {
+    "marque": "FERRARI",
+    "model": "New Ferrari SF90 Stradale 2020",
+    "capacite": 292
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat 124 Spider",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat 500",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat 500L",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat 500L Cross",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat 500L Wagon",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat 500X",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Doblò",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Doblò Maxi",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Doblò Maxi XL",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Fullback 2Cab",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Panda",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Panda 4x4",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Qubo",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Talento Combi",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Talento Combi Long",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Tipo 4-door",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Tipo 5-door",
+    "capacite": 185
+  },
+  {
+    "marque": "FIAT",
+    "model": "Fiat Tipo SW",
+    "capacite": 185
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford C-MAX",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford EcoSport",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Edge",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Fiesta",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Fiesta Active",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Focus",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Focus Active",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Focus Sportbreak",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Galaxy",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Grand C-MAX",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Grand Tourneo Connect",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Ka+",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Ka+ Active",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Mondeo",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Mondeo Sportbreak",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Mustang",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Ranger",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford S-MAX",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Tourneo Connect",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Tourneo Courier",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Tourneo Custom L1",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "Ford Tourneo Custom L2",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "New Ford Explorer 2020",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "New Ford Kuga 2020",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "New Ford Mustang Mach-E 2020",
+    "capacite": 270
+  },
+  {
+    "marque": "FORD",
+    "model": "New Ford Puma 2020",
+    "capacite": 270
+  },
+  {
+    "marque": "HONDA",
+    "model": "Honda CR-V",
+    "capacite": 171
+  },
+  {
+    "marque": "HONDA",
+    "model": "Honda Civic",
+    "capacite": 171
+  },
+  {
+    "marque": "HONDA",
+    "model": "Honda Civic 4-door",
+    "capacite": 171
+  },
+  {
+    "marque": "HONDA",
+    "model": "Honda Jazz",
+    "capacite": 171
+  },
+  {
+    "marque": "HONDA",
+    "model": "Honda NSX",
+    "capacite": 171
+  },
+  {
+    "marque": "HONDA",
+    "model": "New Honda HR-V 2019",
+    "capacite": 171
+  },
+  {
+    "marque": "HONDA",
+    "model": "New Honda e 2020",
+    "capacite": 171
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai H-1 Travel",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai Kona",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai Nexo",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai Santa Fe",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai Tucson",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i20",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i20 Active",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i20 Coupe",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i30",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i30 Fastback",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i30 N",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai i30 Tourer",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "Hyundai ix20",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "New Hyundai IONIQ 2020",
+    "capacite": 252
+  },
+  {
+    "marque": "HYUNDAI",
+    "model": "New Hyundai i10 2020",
+    "capacite": 252
+  },
+  {
+    "marque": "INFINITI",
+    "model": "Infiniti Q30",
+    "capacite": 430
+  },
+  {
+    "marque": "INFINITI",
+    "model": "Infiniti Q50",
+    "capacite": 430
+  },
+  {
+    "marque": "INFINITI",
+    "model": "Infiniti QX30",
+    "capacite": 430
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar E-PACE",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar F-PACE",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar I-PACE",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar XE",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar XF",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar XF Sportbrake",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar XJ",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "Jaguar XJ LWB",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "New Jaguar F-TYPE Convertible 2020",
+    "capacite": 336
+  },
+  {
+    "marque": "JAGUAR",
+    "model": "New Jaguar F-TYPE Coupe 2020",
+    "capacite": 336
+  },
+  {
+    "marque": "JEEP",
+    "model": "Jeep Cherokee",
+    "capacite": 351
+  },
+  {
+    "marque": "JEEP",
+    "model": "Jeep Compass",
+    "capacite": 351
+  },
+  {
+    "marque": "JEEP",
+    "model": "Jeep Grand Cherokee",
+    "capacite": 351
+  },
+  {
+    "marque": "JEEP",
+    "model": "Jeep Renegade",
+    "capacite": 351
+  },
+  {
+    "marque": "JEEP",
+    "model": "Jeep Wrangler",
+    "capacite": 351
+  },
+  {
+    "marque": "JEEP",
+    "model": "Jeep Wrangler unlimited",
+    "capacite": 351
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Carens",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Ceed",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Ceed Sportswagon",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Optima",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Optima Sportswagon",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Picanto",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia ProCeed",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Rio",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Sportage",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Stinger",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "Kia Stonic",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "New Kia Niro 2020",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "New Kia Sorento 2020",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "New Kia XCeed 2020",
+    "capacite": 255
+  },
+  {
+    "marque": "KIA",
+    "model": "New Kia e-Soul 2020",
+    "capacite": 255
+  },
+  {
+    "marque": "LAMBORGHINI",
+    "model": "Lamborghini Aventador S Coupé",
+    "capacite": 100
+  },
+  {
+    "marque": "LAMBORGHINI",
+    "model": "Lamborghini Urus",
+    "capacite": 100
+  },
+  {
+    "marque": "LAMBORGHINI",
+    "model": "New Lamborghini Huracán EVO 2019",
+    "capacite": 100
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "Land Rover Discovery",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "New Land Rover Defender 110 2020",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "New Land Rover Defender 90 2020",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "New Land Rover Discovery Sport 2019",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "New Range Rover Evoque 2019",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "Range Rover",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "Range Rover LWB",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "Range Rover Sport",
+    "capacite": 297
+  },
+  {
+    "marque": "LAND ROVER",
+    "model": "Range Rover Velar",
+    "capacite": 297
+  },
+  {
+    "marque": "LEXUS",
+    "model": "Lexus CT",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "Lexus IS",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "Lexus LC",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "Lexus LS",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "Lexus NX",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "New Lexus ES 2019",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "New Lexus RC 2019",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "New Lexus RX 2020",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "New Lexus RX L 2020",
+    "capacite": 375
+  },
+  {
+    "marque": "LEXUS",
+    "model": "New Lexus UX 2019",
+    "capacite": 375
+  },
+  {
+    "marque": "MASERATI",
+    "model": "Maserati Ghibli",
+    "capacite": 500
+  },
+  {
+    "marque": "MASERATI",
+    "model": "Maserati GranCabrio",
+    "capacite": 500
+  },
+  {
+    "marque": "MASERATI",
+    "model": "Maserati GranTurismo",
+    "capacite": 500
+  },
+  {
+    "marque": "MASERATI",
+    "model": "Maserati Quattroporte",
+    "capacite": 500
+  },
+  {
+    "marque": "MASERATI",
+    "model": "New Maserati Levante 2019",
+    "capacite": 500
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda 3",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda 3 Saloon",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda 6",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda 6 Tourer",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda CX-3",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda CX-5",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "Mazda MX-5",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "New Mazda 2 2020",
+    "capacite": 250
+  },
+  {
+    "marque": "MAZDA",
+    "model": "New Mazda CX-30 2020",
+    "capacite": 250
+  },
+  {
+    "marque": "MINI",
+    "model": "MINI 3-door",
+    "capacite": 211
+  },
+  {
+    "marque": "MINI",
+    "model": "MINI 5-door",
+    "capacite": 211
+  },
+  {
+    "marque": "MINI",
+    "model": "MINI Cabrio",
+    "capacite": 211
+  },
+  {
+    "marque": "MINI",
+    "model": "MINI Countryman",
+    "capacite": 211
+  },
+  {
+    "marque": "MINI",
+    "model": "New MINI Clubman 2019",
+    "capacite": 211
+  },
+  {
+    "marque": "MITSUBISHI",
+    "model": "Mitsubishi Eclipse Cross",
+    "capacite": 235
+  },
+  {
+    "marque": "MITSUBISHI",
+    "model": "Mitsubishi L200",
+    "capacite": 235
+  },
+  {
+    "marque": "MITSUBISHI",
+    "model": "Mitsubishi Outlander",
+    "capacite": 235
+  },
+  {
+    "marque": "MITSUBISHI",
+    "model": "Mitsubishi Space Star",
+    "capacite": 235
+  },
+  {
+    "marque": "MITSUBISHI",
+    "model": "New Mitsubishi ASX 2020",
+    "capacite": 235
+  },
+  {
+    "marque": "NISSAN",
+    "model": "New Nissan Juke 2020",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan 370Z",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan GT-R",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan Leaf",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan Micra",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan NP300 Navara",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan Qashqai",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan X-Trail",
+    "capacite": 300
+  },
+  {
+    "marque": "NISSAN",
+    "model": "Nissan e-NV200 Evalia",
+    "capacite": 300
+  },
+  {
+    "marque": "OPEL",
+    "model": "New Opel Astra 2020",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "New Opel Astra Sports Tourer 2020",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "New Opel Corsa 2020",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "New Opel Zafira Life L 2019",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "New Opel Zafira Life M 2019",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "New Opel Zafira Life S 2019",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel ADAM",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Combo Life",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Combo Life L2",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Crossland X",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Grandland X",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Insignia Grand Sport",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Insignia Sports Tourer",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Karl / Viva",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Mokka X",
+    "capacite": 215
+  },
+  {
+    "marque": "OPEL",
+    "model": "Opel Zafira",
+    "capacite": 215
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "New Peugeot 2008 2020",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "New Peugeot 208 2020",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "New Peugeot 508 2019",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "New Peugeot 508 SW 2019",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "New Peugeot Rifter 2019",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "New Peugeot Rifter Long 2019",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot 108",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot 3008",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot 308",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot 308 SW",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot 5008",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot Traveller Compact",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot Traveller Long",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot Traveller Standard",
+    "capacite": 166
+  },
+  {
+    "marque": "PEUGEOT",
+    "model": "Peugeot iOn",
+    "capacite": 166
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "New Porsche 911 Carrera 2019",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "New Porsche Cayenne Coupé 2019",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "New Porsche Macan 2019",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "New Porsche Taycan 2020",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "Porsche 718 Boxster",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "Porsche 718 Cayman",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "Porsche Cayenne",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "Porsche Panamera",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "Porsche Panamera Executive",
+    "capacite": 280
+  },
+  {
+    "marque": "PORSCHE",
+    "model": "Porsche Panamera Sport Turismo",
+    "capacite": 280
+  },
+  {
+    "marque": "RENAULT",
+    "model": "New Renault Captur 2020",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "New Renault Clio 2019",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "New Renault Espace 2020",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "New Renault Kadjar 2019",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "New Renault Twingo 2019",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "New Renault Zoe 2020",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Alaskan",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Grand Kangoo",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Grand Scénic",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Grand Trafic Combi",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Kangoo",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Koleos",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Mégane",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Mégane Sport Tourer",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Scénic",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Talisman",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Talisman Sport Tourer",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Trafic Combi",
+    "capacite": 31
+  },
+  {
+    "marque": "RENAULT",
+    "model": "Renault Twizy",
+    "capacite": 31
+  },
+  {
+    "marque": "SEAT",
+    "model": "New SEAT Leon 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "New SEAT Leon Sportstourer 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "New SEAT Mii electric 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "New SEAT Tarraco 2019",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "SEAT Alhambra",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "SEAT Arona",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "SEAT Ateca",
+    "capacite": 251
+  },
+  {
+    "marque": "SEAT",
+    "model": "SEAT Ibiza",
+    "capacite": 251
+  },
+  {
+    "marque": "SMART",
+    "model": "New Smart EQ forfour 2020",
+    "capacite": 260
+  },
+  {
+    "marque": "SMART",
+    "model": "New Smart EQ fortwo 2020",
+    "capacite": 260
+  },
+  {
+    "marque": "SMART",
+    "model": "New Smart EQ fortwo cabrio 2020",
+    "capacite": 260
+  },
+  {
+    "marque": "SSANGYONG",
+    "model": "New SsangYong Korando 2020",
+    "capacite": 423
+  },
+  {
+    "marque": "SSANGYONG",
+    "model": "SsangYong Musso",
+    "capacite": 423
+  },
+  {
+    "marque": "SSANGYONG",
+    "model": "SsangYong Rexton",
+    "capacite": 423
+  },
+  {
+    "marque": "SSANGYONG",
+    "model": "SsangYong Rodius",
+    "capacite": 423
+  },
+  {
+    "marque": "SSANGYONG",
+    "model": "SsangYong Tivoli",
+    "capacite": 423
+  },
+  {
+    "marque": "SSANGYONG",
+    "model": "SsangYong XLV",
+    "capacite": 423
+  },
+  {
+    "marque": "SUBARU",
+    "model": "New Subaru Forester 2019",
+    "capacite": 243
+  },
+  {
+    "marque": "SUBARU",
+    "model": "Subaru BRZ",
+    "capacite": 243
+  },
+  {
+    "marque": "SUBARU",
+    "model": "Subaru Impreza",
+    "capacite": 243
+  },
+  {
+    "marque": "SUBARU",
+    "model": "Subaru Levorg",
+    "capacite": 243
+  },
+  {
+    "marque": "SUBARU",
+    "model": "Subaru Outback",
+    "capacite": 243
+  },
+  {
+    "marque": "SUBARU",
+    "model": "Subaru XV",
+    "capacite": 243
+  },
+  {
+    "marque": "SUZUKI",
+    "model": "Suzuki Ignis",
+    "capacite": 85
+  },
+  {
+    "marque": "SUZUKI",
+    "model": "Suzuki Jimny",
+    "capacite": 85
+  },
+  {
+    "marque": "SUZUKI",
+    "model": "Suzuki S-Cross",
+    "capacite": 85
+  },
+  {
+    "marque": "SUZUKI",
+    "model": "Suzuki Swift",
+    "capacite": 85
+  },
+  {
+    "marque": "SUZUKI",
+    "model": "Suzuki Vitara",
+    "capacite": 85
+  },
+  {
+    "marque": "TESLA",
+    "model": "Tesla Model 3",
+    "capacite": 425
+  },
+  {
+    "marque": "TESLA",
+    "model": "Tesla Model S",
+    "capacite": 425
+  },
+  {
+    "marque": "TESLA",
+    "model": "Tesla Model X",
+    "capacite": 425
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "New Toyota Camry 2019",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "New Toyota Corolla 2019",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "New Toyota Corolla Saloon 2019",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "New Toyota Corolla Touring Sports 2019",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "New Toyota RAV4 2019",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota AYGO",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota C-HR",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota GT86",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Hilux 2Cab",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Land Cruiser 3-door",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Land Cruiser 5-door",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Mirai",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Prius",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Prius Plug-in Hybrid",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Prius+",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Proace Verso Compact",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Proace Verso Long",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Proace Verso Medium",
+    "capacite": 168
+  },
+  {
+    "marque": "TOYOTA",
+    "model": "Toyota Yaris",
+    "capacite": 168
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen California 6.1 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen Caravelle 6.1 Long 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen Caravelle 6.1 Short 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen Golf 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen Grand California 600 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen ID.3 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen Multivan 6.1 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen T-Roc Cabriolet 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "New Volkswagen up! 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Amarok",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Arteon",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Caddy",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Caddy Maxi",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Golf Alltrack",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Golf Estate",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Golf Sportsvan",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Passat",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Passat Alltrack",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Passat Estate",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Polo",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Sharan",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen T-Cross",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen T-Roc",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Tiguan",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Tiguan Allspace",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Touareg",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLKSWAGEN",
+    "model": "Volkswagen Touran",
+    "capacite": 251
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo S60",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo S90",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo V40",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo V40 Cross Country",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo V60",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo V60 Cross Country",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo V90",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo V90 Cross Country",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo XC40",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo XC60",
+    "capacite": 335
+  },
+  {
+    "marque": "VOLVO",
+    "model": "Volvo XC90",
+    "capacite": 335
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "New Škoda Citigo iV 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "New Škoda Kamiq 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "New Škoda Octavia 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "New Škoda Octavia Combi 2020",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Fabia",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Fabia Combi",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Karoq",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Kodiaq",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Scala",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Superb",
+    "capacite": 251
+  },
+  {
+    "marque": "ŠKODA",
+    "model": "Škoda Superb Combi",
+    "capacite": 251
+  }
+]

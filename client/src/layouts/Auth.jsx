@@ -3,10 +3,11 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
-import AuthFooter from "components/Footers/AuthFooter.jsx";
+import AuthNavbar from "../components/Navbars/AuthNavbar.jsx";
+import AuthFooter from "../components/Footers/AuthFooter.jsx";
 
-import routes from "routes.js";
+import routesFront from "../routesFront.js";
+import {Navbar} from "reactstrap";
 
 class Auth extends React.Component {
   componentDidMount() {
@@ -22,12 +23,12 @@ class Auth extends React.Component {
       this.refs.mainContent.scrollTop = 0;
     }
   }
-  getRoutes = routes => {
-    return routes.map((prop, key) => {
+  getRoutesFront = routesFront => {
+    return routesFront.map((prop, key) => {
       if (prop.collapse) {
-        return this.getRoutes(prop.views);
+        return this.getRoutesFront(prop.views);
       }
-      if (prop.layout === "/auth") {
+      if (prop.layout === "/front") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -45,7 +46,7 @@ class Auth extends React.Component {
       <>
         <div className="main-content" ref="mainContent">
           <AuthNavbar />
-          <Switch>{this.getRoutes(routes)}</Switch>
+          <Switch>{this.getRoutesFront(routesFront)}</Switch>
         </div>
         <AuthFooter />
       </>

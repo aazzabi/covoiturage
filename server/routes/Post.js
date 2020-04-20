@@ -1,26 +1,32 @@
 var express = require('express');
-const commentController = require('../controllers/commentController');
-const postController = require('../controllers/postController');
-
+const Blog = require('../controllers/postController');
 const router = express.Router();
+/**
+ * Blog Posts APIs
+ */
 
-router.route('/')
-    .get(postController.findAllBlogs)
-    .post(postController.createPost);
+router.get('/posts', Blog.fetchPosts);
 
-router.route('/:id')
-    .get(postController.findPostById)
-    .put(postController.updatePost)
-    .delete(postController.deletePost);
+router.post('/posts', Blog.createPost);
 
-router.route('/Categorie/:Categorie')
-    .get(postController.findPostByCategorie);
+router.get('/posts/:id', Blog.fetchPost);
 
-router.route('/:id/comments')
-    .get(commentController.findAllPostComments)
-    .post(commentController.createComment);
-router.route('comments/:id')
-    .get(commentController.findCommentById)
-    .put(commentController.updateComment)
-    .delete(commentController.deleteComment);
+router.get('/allow_edit_or_delete/:id',  Blog.allowUpdateOrDelete);
+
+router.put('/posts/:id', Blog.updatePost);
+
+router.delete('/posts/:id',  Blog.deletePost);
+
+router.get('/my_posts', Blog.fetchPostsByAuthorId);
+
+/**
+ * Blog Comment APIs
+ */
+
+router.post('/comments/:postId', Blog.createComment);
+
+router.get('/comments/:postId', Blog.fetchCommentsByPostId);
+
+
+
 module.exports = router;
