@@ -14,8 +14,6 @@ import Geocode from "react-geocode";
 
 import PlacesAutocomplete from "../Parcels/GAutoComplete";
 import classnames from "classnames";
-import {fetchRideById} from "../../actions/Rides/RidesActions";
-
 
 export default class CreateRide extends Component {
 
@@ -32,7 +30,6 @@ export default class CreateRide extends Component {
         this.onChangePackagesAcceptation = this.onChangePackagesAcceptation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state = {
-
             mapPosition: {
                 lat: "",
                 lng: ""
@@ -108,28 +105,6 @@ export default class CreateRide extends Component {
 
     }
 
-     onChangePrice() {
-
-        // if (this.state.origin && this.state.destination){
-        //
-        //     const result = axios.get('http://localhost:3000/ride/price/' + this.state.origin + '/' + this.state.destination);
-        //
-        //     result.then((data) => {
-        //
-        //         console.log(JSON.stringify(data));
-        //         if (JSON.stringify(data)){
-        //             this.setState({prixPerPlace: JSON.stringify(data.data)});
-        //             console.log(this.prixPerPlace);
-        //         }
-        //     }).catch(err =>{
-        //
-        //         this.setState({prixPerPlace: 0});
-        //
-        //     });
-        // }
-
-    }
-
     onChangeRideDescription(e) {
         this.setState({description: e.target.value})
     }
@@ -141,8 +116,7 @@ export default class CreateRide extends Component {
 
     }
 
-
-     onSubmit(e) {
+    onSubmit(e) {
         e.preventDefault()
         const parcel = {
             status: this.state.status,
@@ -154,22 +128,14 @@ export default class CreateRide extends Component {
             origin: this.state.origin,
 
         };
-         // axios.post('http://localhost:3000/ride/add/5e77726fe79f4c2ef0080397', parcel);
-         //
-         // console.log(parcel);
 
-         axios.post(`http://localhost:3000/ride/add/5e77726fe79f4c2ef0080397`, parcel)
-             .then(res => {
-                 console.log(res);
-                 console.log(res.data._id);
-                 this.props.history.push('myride/'+res.data._id);
-             })
-
-        // fetch('http://localhost:3000/ride/add/5e77726fe79f4c2ef0080397', parcel).then(response => response.json())
-        // console.log(parcel);
-
-
-
+        axios.post(`http://localhost:3000/ride/add/5e77726fe79f4c2ef0080397`, parcel)
+            .then(res => {
+                console.log(res);
+                console.log(res.data._id);
+                console.log(res.data.prixPerPlace);
+                this.props.history.push('price/'+res.data._id);
+            })
     }
 
     render() {
@@ -206,7 +172,7 @@ export default class CreateRide extends Component {
                                                                     }}
                                                                     timeFormat={true}
                                                                     selected={this.state.startTime}
-                                                                   // value={this.state.status}
+                                                                    // value={this.state.status}
                                                                     onChange={this.onChangeParcelType}
                                                                     showTimeSelect
                                                                 />
@@ -337,7 +303,6 @@ export default class CreateRide extends Component {
                             </Col>
 
                         </Form>
-
                     </Row>
                 </Container>
             </>

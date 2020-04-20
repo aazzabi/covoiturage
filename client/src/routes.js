@@ -27,7 +27,9 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import Create from "./FrontOffice/Parcels/Create";
 import Packages from "./FrontOffice/Parcels/Packages";
-import PackagesDetails from "./FrontOffice/Parcels/PackageDetails";
+import CreateRide from "./FrontOffice/Ride/CreateRide";
+import RideDetails from "./FrontOffice/Ride/RideDetails";
+import PackageDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
 
 const routes = [
   {
@@ -59,7 +61,7 @@ const routes = [
       {
         path: "/Add",
         name: "Create Package",
-        component: CreateParcel,
+        component: Create,
         layout: "/auth"
       },
       {
@@ -81,7 +83,7 @@ const routes = [
       {
         path: "/viewparcels/:id",
         name: "view parcels",
-        component: PackagesDetails,
+        component: PackageDetails,
         layout: "/auth"
       },
       {

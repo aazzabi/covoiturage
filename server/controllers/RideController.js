@@ -56,7 +56,12 @@ var add = (req, res, next) => {
         },
         function (err, data) {
             if (err) return console.log(err);
-            var x = data['distanceValue'] / 1000;
+            var x = (data['distanceValue'] / 1000)*0.06;
+            var num = Number(x);
+            var roundedString = num.toFixed(2);
+            var rounded = Number(roundedString);
+
+
 
             user.findOne({"_id": req.params.idDriver})
                 .then((dr) => {
@@ -67,7 +72,7 @@ var add = (req, res, next) => {
                         origin: req.body.origin,
                         destination: req.body.destination,
                         nbrPlaces: req.body.nbrPlaces,
-                        prixPerPlace: x * 0.06,
+                        prixPerPlace: rounded,
                         decription: req.body.decription,
                         total: 0,
                         packageAllowed: req.body.packageAllowed,
@@ -194,8 +199,11 @@ var editRide = async (req, res, next) => {
                     rideToUpdate.duration = data['duration'];
 
                     rideToUpdate.distance = x;
+                    if (req.body.prixPerPlace == null)
+                        rideToUpdate.prixPerPlace = x * 0.06;
+                    else
+                        rideToUpdate.prixPerPlace = req.body.prixPerPlace;
 
-                    rideToUpdate.prixPerPlace = x * 0.06;
 
                     rideToUpdate.total = 0;
 
