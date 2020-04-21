@@ -6,6 +6,7 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 export const REGISTER = 'REGISTER';
+export const DRIVER_REQUEST = 'DRIVER_REQUEST';
 
 export const GET_LOGGED_USER = "GET_LOGGED_USER";
 export const PROFILE_LOADING = "PROFILE_LOADING";
@@ -20,3 +21,6 @@ export const CHECK_AUTHORITY = 'check_authority';  // check if the user has the 
 
 export const CREATE_COMMENT = 'create_comment';
 export const FETCH_COMMENTS = 'fetch_comments';
+
+export const GET_MARQUES = 'GET_MARQUES';
+export const GET_MODEL_BY_MARQUE = 'GET_MODEL_BY_MARQUE';

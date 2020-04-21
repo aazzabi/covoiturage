@@ -1,6 +1,13 @@
 import isEmpty from "../validation/is-empty";
 
-import {REGISTER, SET_CURRENT_USER , GET_PROFILE, PROFILE_LOADING , GET_LOGGED_USER} from "../actions/types";
+import {
+  REGISTER,
+  SET_CURRENT_USER,
+  GET_PROFILE,
+  PROFILE_LOADING,
+  GET_LOGGED_USER,
+  DRIVER_REQUEST
+} from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
@@ -16,6 +23,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         users: [action.payload, ...state.users]
+      };
+    case DRIVER_REQUEST:
+      return {
+        ...state,
+        user: [action.payload, ...state.user]
       };
     case SET_CURRENT_USER:
       return {

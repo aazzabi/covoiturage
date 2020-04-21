@@ -13,6 +13,7 @@ import PostNew from "./frontoffice/Blog/post_new";
 import PostMine from "./frontoffice/Blog/post_mine";
 import PostList from "./frontoffice/Blog/listPosts";
 import ClaimAdd from "./frontoffice/Claims/ClaimAdd";
+import BecomeDriver from "./frontoffice/Drivers/BecomeDriver";
 
 const routesFront = [
     {
@@ -29,11 +30,16 @@ const routesFront = [
         component: Packages,
         layout: "/front"
     },
-
     {
         path: "/login",
         name: "Login",
         component: Login,
+        layout: "/front"
+    },
+    {
+        path: "/becomeDriver",
+        name: "Become Driver",
+        component: BecomeDriver,
         layout: "/front"
     },
     {
