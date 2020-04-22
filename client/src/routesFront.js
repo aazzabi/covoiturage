@@ -12,6 +12,7 @@ import PostNew from "./FrontOffice/Blog/post_new";
 import PostMine from "./FrontOffice/Blog/post_mine";
 import PostList from "./FrontOffice/Blog/listPosts";
 import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
+import MyParcel from "./FrontOffice/Parcels/myparcels";
 
 const routesFront = [
     {
@@ -25,6 +26,12 @@ const routesFront = [
         path: "/parcels/:id",
         name: "view parcels",
         component: PackagesDetails,
+        layout: "/front"
+    },
+    {
+        path: "/myParcels/",
+        name: "view parcels",
+        component: MyParcel,
         layout: "/front"
     },
     {

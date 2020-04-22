@@ -12,7 +12,7 @@ var packageSchema = mongoose.Schema(
         weight: {type: Number, unique: false, required: false},
         price: {type: Number, unique: false, required: true},
         receiver: {type: String, unique: false},
-        sender: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+        sender: {type: mongoose.Schema.Types.Object, ref: 'User'},
         valide: {type: Boolean, unique: false},
         description: [{type: String,required: false}],
         sendingCode: {type: String, unique: false, required: true},

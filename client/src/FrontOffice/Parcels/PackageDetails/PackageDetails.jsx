@@ -25,8 +25,8 @@ import ModalFooter from "reactstrap/es/ModalFooter";
 import Button from "@material-ui/core/Button";
 import {reduxForm} from "redux-form";
 import {getCurrentUser} from "../../../actions/authActions";
-import classnames from "classnames";
 import Axios from "axios";
+import NotificationAlert from 'react-notification-alert';
 
 class PackagesDetails extends Component {
 
@@ -40,7 +40,8 @@ class PackagesDetails extends Component {
             open: false,
             message:"",
             suggestion:"",
-            showing: true
+            showing: true,
+            sender:{}
 
         }
         this.myDivToFocus = React.createRef()
@@ -54,17 +55,14 @@ class PackagesDetails extends Component {
                 currentUser: nextProps.currentUser
             });
         }
-
-        this.origin();
-        this.des();
-
     }
 
     componentDidMount() {
         const {id} = this.props.match.params;
         this.props.fetchPostById(id);
+        console.log(this.props.parcel)
         this.setState({
-            parcel: this.props.parcel
+            parcel: this.props.parcel,
         });
         this.props.getCurrentUser();
 
@@ -133,23 +131,39 @@ class PackagesDetails extends Component {
 
     AddRequestSubmit() {
         const {id} = this.props.match.params;
-        console.log(id)
         const request = {
             Suggestion: this.state.suggestion,
             Message: this.state.message,
             parcelId: id,
             userId: this.props.currentUser._id,
         };
-        console.log(request)
-
+        this.notify("success")
         Axios.post('http://localhost:3000/packages/addrequest', request)
             .then(res => {
                 this.props.history.push("/front/parcels/"+ id);
-                console.log(this.props.currentUser._id)
+
             })
             .catch(err => console.log(err));
-    }
 
+    }
+    notify = type => {
+        let options = {
+            place: "tc",
+            message: (
+                <div className="alert-text">
+          <span className="alert-title" data-notify="title">
+          </span>
+           <span data-notify="message">
+             your proposal has been sent successfully
+          </span>
+                </div>
+            ),
+            type: type,
+            icon: "ni ni-bell-55",
+            autoDismiss: 7
+        };
+        this.refs.notificationAlert.notificationAlert(options);
+    };
 
 
     render() {
@@ -158,7 +172,7 @@ class PackagesDetails extends Component {
         const serverUrl = "http://127.0.0.1:8887/";
         const {handleSubmit} = this.props;
         const {open} = this.state;
-
+            console.log(parcel)
         return (
             <><AuthHeader title="Packages Available" lead=""/>
                 {!showing
@@ -172,6 +186,9 @@ class PackagesDetails extends Component {
                     : null
                 }
                 <Container className="mt--6 container-fluid">
+                    <NotificationAlert ref="notificationAlert" />
+
+
                     <Row className="justify-content-center">
                         <Col lg="6">
                             <Card>
@@ -248,8 +265,11 @@ class PackagesDetails extends Component {
                                                                                  href="#pablo">
                                                     <img alt="..." src={`${serverUrl}${parcel.files}`}></img></a>
                                                 </div>
-                                                <div className="col ml--2"><h4 className="mb-0"><a href="#pablo">Nacef
-                                                    Otay</a></h4><span className="text-success">●</span>
+                                                <div className="col ml--2"><h4 className="mb-0"><a href="#pablo">
+
+                                                    {parcel.sender ? parcel.sender.lastName : ""} {parcel.sender ? parcel.sender.firstName : ""}
+
+                                                </a></h4><span className="text-success">●</span>
                                                     <small>Online</small></div>
 
                                                     <Col className="col-auto">
@@ -350,7 +370,7 @@ class PackagesDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-    parcel: state.parcel,
+    parcel: state.pack.parcel,
     currentUser: state.auth.user
 });
 const mapDispatchToProps = (dispatch) => {

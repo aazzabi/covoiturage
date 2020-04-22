@@ -2,7 +2,8 @@ var Package = require('../models/Parcels');
 var RequestParcels = require('../models/RequestParcels');
 var User = require('../models/User');
 
-exports.add = function (req, res, next) {
+exports.add = async (req, res, next) =>{
+    const user = await User.findOne({"_id": req.body.sender});
 
     Package.create(
         {
@@ -10,7 +11,7 @@ exports.add = function (req, res, next) {
         type: req.body.type,
         size: req.body.size,
         price: req.body.price,
-        sender: req.body.sender,
+        sender: user,
         departure: req.body.departure,
         weight: req.body.weight,
         arrival: req.body.arrival,
@@ -68,13 +69,19 @@ exports.getByIdPackage = async (req, res, next) => {
     res.json(packages);
 
 };
+exports.getMyPackage = async (req, res, next) => {
+    const user = await User.findOne({"_id": req.params.id});
+
+    const packages = await Package.find({sender:user });
+    res.json(packages);
+
+};
 exports.editPackage = async function (req, res, next) {
     PackageToEdit = await Package.findById(req.params.id);
     var parcels = {
         type: req.body.type,
         size: req.body.size,
         price: req.body.price,
-        sender: req.body.sender,
         receiver: req.body.receiver,
         valide: req.body.valide,
         departure: req.body.departure,

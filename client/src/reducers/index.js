@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
+import {combineReducers} from 'redux';
+import {reducer as formReducer} from 'redux-form';
 
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
@@ -15,8 +15,7 @@ import ClaimsReducers from "../services/Claims/ClaimsReducers";
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
-    pack:PackageReducer,
-    parcel:ParcelReducer,
+    pack: PackageReducer,
     alert: AlertReducer,
     users: UsersReducers,
     claims: ClaimsReducers,
