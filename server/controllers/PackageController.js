@@ -1,4 +1,6 @@
 var Package = require('../models/Parcels');
+var RequestParcels = require('../models/RequestParcels');
+var User = require('../models/User');
 
 exports.add = function (req, res, next) {
 
@@ -9,15 +11,12 @@ exports.add = function (req, res, next) {
         size: req.body.size,
         price: req.body.price,
         sender: req.body.sender,
-        receiver: req.body.receiver,
         departure: req.body.departure,
         weight: req.body.weight,
         arrival: req.body.arrival,
         valide: req.body.valide,
         files: req.body.files,
         description: req.body.description,
-
-
         sendingCode: makeid(5),
         receiveingCode: makeid(5)
     }
@@ -33,6 +32,30 @@ exports.add = function (req, res, next) {
         });
 }
 
+exports.addRequest = async (req, res, next) => {
+    const parcelId = await Package.findOne({"_id": req.body.parcelId});
+    const user = await User.findOne({"_id": req.body.userId});
+    console.log(req.body)
+    RequestParcels.create(
+        {
+            suggestion: req.body.suggestion,
+            message: req.body.message,
+            confirmation: false,
+            userId: user,
+            parcelId: parcelId,
+
+        }
+    ).then((data) => {
+        res.set('Content-Type', 'application/json');
+        res.status(202).json(data);
+
+    })
+        .catch(error => {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+            console.log(error)
+        });
+}
 
 exports.getAllPackage = async (req, res, next) => {
     const packages = await Package.find();
@@ -101,26 +124,3 @@ function makeid(length) {
     return result;
 }
 
-exports.addPackageToRide = async (req, res, next) => {
-
-    rideid = await ride.findById(req.params.idRide);
-    userid = await user.findById(req.params.idUser);
-
-    trav = traveler.create({
-        user: req.body.status,
-        confimationCode: makeid(5),
-        valide: false,
-    });
-    rideid.travelers = trav;
-    await rideid.save()
-        .then((data) => {
-            res.set('Content-Type', 'application/json');
-            res.status(202).json(data);
-
-        })
-        .catch(error => {
-            res.set('Content-Type', 'text/html');
-            res.status(500).send(error);
-        });
-
-};

@@ -94,7 +94,7 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                                     right
                                 >
                                     <DropdownItem
-                                        href={`/front/viewparcels/${pack._id}`}
+                                        href={`/front/parcels/${pack._id}`}
                                     >
                                         View Parcel info
                                     </DropdownItem>

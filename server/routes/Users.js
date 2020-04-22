@@ -21,7 +21,7 @@ var storage = multer.diskStorage({
 });
 var uploadDocs = multer({storage: storage}).single('doc');
 
-router.get('/profile', isAuthenticated, userController.profile);
+router.get('/profile', userController.profile);
 router.get('/getAll', userController.getAll);
 router.get('/getAllUsers', userController.getAllUsers);
 router.get('/getAllDrivers', userController.getAllDrivers);

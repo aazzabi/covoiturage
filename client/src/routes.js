@@ -30,9 +30,6 @@ import AllUsers from "./BackOffice/Users/AllUsers";
 import Agents from "./BackOffice/Users/Agents.jsx";
 import AllClaims from "./BackOffice/Claims/AllClaims.jsx";
 import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
-import CreateParcel from "./frontoffice/Parcels/Create";
-import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
-import Packages from "./frontoffice/Parcels/Packages";
 
 const routes = [
   {

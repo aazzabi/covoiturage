@@ -15,7 +15,8 @@ class PostEdit extends Component {
     const _id = this.props.post._id;
     categories = categories.toString();
 
-    this.props.updatePost({ _id, title, categories, content }, this.props.onEditSuccess, (path, state) => {
+    this.props.updatePost({ _id, title, categories, content },
+        this.props.onEditSuccess, (path, state) => {
       this.props.history.replace(path, state);
     });
   }

@@ -11,11 +11,12 @@ const upload = multer({dest: '/uploads'});
 
 router.use(cors());
 router.post('/add', packageController.add);
+router.post('/addrequest', packageController.addRequest);
+
 router.put('/edit/:id', packageController.editPackage);
 router.get('/All', packageController.getAllPackage);
 router.get('/:id', packageController.getByIdPackage);
 router.delete('/delete/:id', packageController.deletePackage);
-router.post('/addPackageToRide/:idUser/:idRide', packageController.addPackageToRide);
 router.post("/multiple-upload", upload.any(), process_upload);
 
 function process_upload(req, res) {

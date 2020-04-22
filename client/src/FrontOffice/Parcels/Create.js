@@ -15,7 +15,10 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-export default class CreateParcel extends Component {
+import {connect} from "react-redux";
+import {addClaim} from "../../services/Claims/ClaimsAction";
+import {getCurrentUser} from "../../actions/authActions";
+class CreateParcel extends Component {
 
     constructor(props) {
         super(props);
@@ -113,15 +116,27 @@ export default class CreateParcel extends Component {
             departure: this.state.departure,
             arrival: this.state.arrival,
             description: this.state.description,
-            files: this.state.files
+            files: this.state.files,
+            sender: this.props.currentUser._id
         };
         console.log(parcel);
         axios.post('http://localhost:3000/packages/add', parcel)
     .then(res => {
-            this.setState({title: '', type: '', price: '', weight: '', size: '', description: ''})
             this.props.history.push("/front/parcels");
+            console.log(this.props.currentUser._id)
         })
             .catch(err => console.log(err));
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps) {
+            this.setState({
+                currentUser: nextProps.currentUser,
+            });
+        }
+    }
+    componentDidMount() {
+        this.props.getCurrentUser();
     }
 
     render() {
@@ -325,3 +340,11 @@ export default class CreateParcel extends Component {
     }
 
 }
+
+function mapStateToProps(state) {
+    return {
+        currentUser: state.auth.currentUser,
+    }
+}
+
+export default connect(mapStateToProps, {getCurrentUser})(CreateParcel);
