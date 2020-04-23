@@ -1,11 +1,9 @@
 
-import Alternative from "views/pages/dashboards/Alternative.jsx";
 import Buttons from "views/pages/components/Buttons.jsx";
 import Calendar from "views/pages/Calendar.jsx";
 import Cards from "views/pages/components/Cards.jsx";
 import Charts from "views/pages/Charts.jsx";
 import Components from "views/pages/forms/Components.jsx";
-import Dashboard from "views/pages/dashboards/Dashboard.jsx";
 import Elements from "views/pages/forms/Elements.jsx";
 import Google from "views/pages/maps/Google.jsx";
 import Grid from "views/pages/components/Grid.jsx";
@@ -13,7 +11,6 @@ import Icons from "views/pages/components/Icons.jsx";
 import Lock from "views/pages/examples/Lock.jsx";
 import Login from "views/pages/examples/Login.jsx";
 import Notifications from "views/pages/components/Notifications.jsx";
-import Pricing from "views/pages/examples/Pricing.jsx";
 import Profile from "views/pages/examples/Profile.jsx";
 import SiteSelector from "views/pages/examples/SiteSelector";
 import ReactBSTables from "views/pages/tables/ReactBSTables.jsx";
@@ -33,8 +30,6 @@ import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
 import EditClaim from "./BackOffice/Claims/EditClaim.jsx";
 import Create from "./FrontOffice/Parcels/Create";
 import Packages from "./FrontOffice/Parcels/Packages";
-import CreateRide from "./FrontOffice/Ride/CreateRide";
-import RideDetails from "./FrontOffice/Ride/RideDetails";
 import PackageDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
 
 const routes = [
@@ -102,7 +97,7 @@ const routes = [
       {
         path: "/Add",
         name: "Create Package",
-        component: CreateParcel,
+        component: Create,
         layout: "/auth"
       },
       {
@@ -114,7 +109,7 @@ const routes = [
       {
         path: "/viewparcels/:id",
         name: "view parcels",
-        component: PackagesDetails,
+        component: PackageDetails,
         layout: "/auth"
       },
       {

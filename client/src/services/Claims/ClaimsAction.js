@@ -41,7 +41,6 @@ export function addClaim({titleC, typeC, priority, description, userId}, history
             });
     }
 }
-
 // editClaim
 export function editClaim({titleC, typeC, priority, description,claimId}, historyPush, historyReplace) {
     return function (dispatch) {

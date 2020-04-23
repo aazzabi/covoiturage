@@ -62,7 +62,6 @@ var add = (req, res, next) => {
             var rounded = Number(roundedString);
 
 
-
             user.findOne({"_id": req.params.idDriver})
                 .then((dr) => {
 
@@ -72,8 +71,8 @@ var add = (req, res, next) => {
                         origin: req.body.origin,
                         destination: req.body.destination,
                         nbrPlaces: req.body.nbrPlaces,
-                        prixPerPlace: rounded,
-                        decription: req.body.decription,
+                        prixPerPlace: req.body.prixPerPlace,
+                        description: req.body.description,
                         total: 0,
                         packageAllowed: req.body.packageAllowed,
                         distance: x,
@@ -337,7 +336,7 @@ var removeTravelerRide = async (req, res, next) => {
 
 var getRidesByDriver = (req, res, next) => {
 
-    ride.find({"driver": req.params.idUser})
+    ride.find({"driver": req.params.idUser}).sort('rideStartTime')
         .then((data) => {
             res.set('Content-Type', 'application/json');
             res.status(202).json(data);

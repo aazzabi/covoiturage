@@ -101,7 +101,7 @@ export default function GoogleMaps(props) {
             renderInput={params => (
                 <TextField
                     {...params}
-                    label="Add a location"
+                    label={props.label}
                     variant="outlined"
                     style={styleW}
                     onChange={(e) => props.handleChange(e)}

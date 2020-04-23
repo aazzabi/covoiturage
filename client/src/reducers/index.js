@@ -10,9 +10,11 @@ import ParcelReducer from "./Parcel";
 import commentsReducer from "./Blog/commentReducer";
 import postsReducer from "./Blog/postReducer";
 import ClaimsReducers from "../services/Claims/ClaimsReducers";
+import RideReducers from "../services/Rides/RideReducers";
 
 
 export default combineReducers({
+    rides: RideReducers,
     auth: authReducer,
     errors: errorReducer,
     pack:PackageReducer,
