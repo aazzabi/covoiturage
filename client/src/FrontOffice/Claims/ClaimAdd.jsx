@@ -31,10 +31,10 @@ class ClaimAdd extends Component {
     renderAlert() {
         const {state} = this.props.history.location;
         const {action} = this.props.history;
-        if (state && action === 'REPLACE') {
+        if (state && action === 'PUSH') {
             return (
                 <div className="alert alert-danger" role="alert">
-                    {`[${state.time}] --- `} <strong>Oops!</strong> {state.message}
+                   <strong>Oops!</strong> {state.message}
                 </div>
             );
         }
@@ -66,10 +66,8 @@ class ClaimAdd extends Component {
             }, (path) => {  // callback 1: history push
                 this.props.history.push(path);
             }, (path, state) => {
-                this.props.history.replace(path, state);
+                this.props.history.push(path, state);
             });
-            console.log('done jsx');
-            this.props.history.push('/front/login');
         } else {
             return (
                 <div className="alert alert-danger" role="alert">

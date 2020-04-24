@@ -55,6 +55,8 @@ router.post('/becomeDriver/:id', userController.becomeDriverRequest);
 // lkolhom bech yet7aatou fel entité du user sous forme d'objet
 router.post('/uploadDocumentForDriver/:idUser', async (req, res, next) => {
     uploadDocs(req, res, async function (error) {
+        console.log(req.files, 'req. files');
+        console.log(req.params.idUser, 'idUser');
         req.files.doc.forEach((fi, index) => {
             var hashName = crypto.createHash('md5').update(fi.name + new Date()).digest("hex");
             let ext;
@@ -72,9 +74,12 @@ router.post('/uploadDocumentForDriver/:idUser', async (req, res, next) => {
                 }
             }).then((data) => {
                 console.log(data);
+            }, error1 => {
+                console.log(error1);
             });
         });
     });
+    res.status(200).send({"status": 200, "message": "Upload finished"});
 
 });
 
