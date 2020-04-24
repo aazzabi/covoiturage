@@ -6,7 +6,7 @@ import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADIN
 import {GET_USERS} from "../services/Users/UserTypes";
 
 // Login - Get User Token
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData,  historyPush, historyReplace ) => dispatch => {
     axios
         .post("http://localhost:3000/login", userData)
         .then(res => {
@@ -23,14 +23,13 @@ export const loginUser = userData => dispatch => {
             // Set current user
             dispatch(setCurrentUser(decoded));
         })
-        .catch(err => {
-                console.log(err);
-                dispatch({
-                    type: GET_ERRORS,
-                    payload: err.response
-                });
-            }
-        );
+        .catch(({response}) => {  // If create post failed, alert failure message
+            console.log(response, 'error');
+            historyReplace('/front/login', {
+                time: new Date().toLocaleString(),
+                message: response.data.message,
+            });
+        });
 };
 
 export const register = (userData, fd )=> dispatch => {
