@@ -1,4 +1,4 @@
-import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS,GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS} from "./UserTypes";
+import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS,GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS, UPDATE_USER, GET_USER_BY_ID} from "./UserTypes";
 
 const initialState = {
     user: {},
@@ -15,6 +15,10 @@ export default function (state = initialState, action) {
             return {...state, all: action.payload};
         case GET_USERS:
             return {...state, users: action.payload};
+        case GET_USER_BY_ID:
+            return {...state, user: action.payload};
+        case UPDATE_USER:
+            return {...state, user: action.payload};
         case GET_DRIVERS:
             return {...state, drivers: action.payload};
         case GET_FINANCIALS:

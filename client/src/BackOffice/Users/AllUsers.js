@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import {Search} from "react-bootstrap-table2-toolkit";
 import {Alert, Button, Table} from "reactstrap";
-import {deleteUser, getAll, getDrivers, getUsers, getAllFinancials} from '../../services/Users/UsersActions'
+import {deleteUser, getAll, getAllFinancials, getDrivers, getUsers} from '../../services/Users/UsersActions'
 import {connect} from 'react-redux';
 import jwt_decode from "jwt-decode";
 import Pagination from "./Pagination";
@@ -52,9 +52,6 @@ class AllUsers extends React.Component {
             d: {},
             response: {},
         };
-        // if (localStorage.getItem("jwtToken")) {
-        //     currentUser: jwt_decode(localStorage.getItem("jwtToken"));
-        // }
     };
 
     imgUrl = '../../assets/uploads/users/';
@@ -70,13 +67,14 @@ class AllUsers extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const currentUser = jwt_decode(localStorage.getItem("jwtToken"));
         console.log(currentUser._id, 'currentUser');
         this.props.getAll();
         this.props.getUsers();
         this.props.getDrivers();
         this.props.getAllFinancials()
+        console.log(this.state, 'state');
     }
 
 
@@ -96,7 +94,7 @@ class AllUsers extends React.Component {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let users = this.props.users;
         let all = this.props.all;
-        console.log(this.props.financials , 'this.props.financials');
+        console.log(this.props.financials, 'this.props.financials');
         if (error) {
             return (
                 <div>Error: {error.message}</div>
@@ -167,4 +165,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default connect(mapStateToProps, {getAll, getUsers, getDrivers, deleteUser , getAllFinancials})(AllUsers);
+export default connect(mapStateToProps, {getAll, getUsers, getDrivers, deleteUser, getAllFinancials})(AllUsers);

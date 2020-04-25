@@ -42,7 +42,7 @@ class AdminNavbar extends React.Component {
     console.log("click profile")
     e.preventDefault();
     this.props.getProfile();
-   
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -424,10 +424,8 @@ class AdminNavbar extends React.Component {
                       <h6 className="text-overflow m-0">Welcome!</h6>
                     </DropdownItem>
                     <DropdownItem
-                      href="#pablo"
-                      onClick={this.onProfileClick.bind(this)}
-                    >
-                      <i className="ni ni-single-02" />
+                        href={`/admin/profile/`}>
+                    <i className="ni ni-single-02" />
                       <span>My profile</span>
                     </DropdownItem>
                     <DropdownItem
