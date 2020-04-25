@@ -1,5 +1,14 @@
 import Axios from "axios";
-import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS, GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS } from "./UserTypes";
+import {
+    DELETE_USER,
+    GET_ALL,
+    GET_DRIVERS,
+    GET_USERS,
+    GET_FINANCIALS,
+    GET_RELATIONALS,
+    GET_TECHNICALS,
+    GET_USER, GET_CAR
+} from "./UserTypes";
 import {GET_ERRORS} from "../../actions/types";
 
 
@@ -72,7 +81,27 @@ export const getAllRelationals = () => {
     }
 };
 
+export const getUser = (idUser) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/users/getUserById/`+ idUser);
+            dispatch({type: GET_USER, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
 
+export const getCar = (idCar) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/cars/getById/`+ idCar);
+            dispatch({type: GET_CAR, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
 // Delete Site
 export const deleteUser = id => dispatch => {
     Axios

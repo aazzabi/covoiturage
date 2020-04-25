@@ -1,6 +1,5 @@
 var Group = require('../models/Group');
 var driverRequest = require('../models/DriverRequest');
-var user = require('../models/User');
 var car = require('../models/Car');
 var allCarsModelsCapacity = require('../models/AllCarsModelCapacity');
 var _ = require('lodash');
@@ -64,8 +63,21 @@ var getAllCarsModelCapacity = (req, res, next) => {
 //     }
 // };
 
+var getCarById = (req, res, next) => {
+    car.findOne({"_id": req.params.id})
+        .then((data) => {
+            res.set('Content-Type', 'application/json');
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+        });
+};
+
 module.exports = {
     getAll,
     getAllCarsModelCapacity,
+    getCarById,
 };
 

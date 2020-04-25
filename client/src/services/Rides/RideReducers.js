@@ -1,6 +1,7 @@
-import {ADD_RIDE, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE, RESOLVE_RIDE, UNRESOLVE_RIDE} from "./RideTypes";
+import {ADD_MSG, ADD_RIDE, ADD_TRAVELLER, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE} from "./RideTypes";
 
 const initialState = {
+    msg: {},
     addRide: {},
     all: [],
     ride: {},
@@ -9,6 +10,10 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case ADD_RIDE:
             return {...state, add: action.payload};
+        case ADD_TRAVELLER:
+            return {...state, add: action.payload};
+        case ADD_MSG:
+            return {...state, msg: action.payload};
         case EDIT_RIDE:
             return {...state, ride: action.payload};
         case GET_ALL:
@@ -18,11 +23,7 @@ export default function (state = initialState, action) {
             return {...state, ride: action.payload};
         case DELETE_RIDE:
             return {...state, all: state.all.filter(u => u._id !== action.payload)};
-        case RESOLVE_RIDE:
-            console.log(action.payload);
-            return {...state, ride: action.payload};
-        case UNRESOLVE_RIDE:
-            return {...state, ride: action.payload};
+
         default:
             return state;
     }

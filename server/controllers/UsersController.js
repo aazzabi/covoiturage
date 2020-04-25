@@ -1,4 +1,5 @@
 var user = require('../models/User');
+var car = require('../models/Car');
 var driverRequest = require('../models/DriverRequest');
 var allCarsModelsCapacity = require('../models/AllCarsModelCapacity');
 var groupModel = require('../models/Group');

@@ -1,11 +1,11 @@
 import Axios from "axios";
 
-import {ADD_RIDE, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE} from "./RideTypes";
+import {ADD_MSG, ADD_RIDE, ADD_TRAVELLER, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE} from "./RideTypes";
 import {GET_ERRORS} from "../../actions/types";
+
 
 const ROOT_URL = 'http://localhost:3000/ride';
 
-// get users
 export function addRide({startTime, destination, nbrPlaces, packageAllowed, description, origin, prixPerPlace, userId}, historyPush, historyReplace) {
     return function (dispatch) {
         console.log({startTime, destination, nbrPlaces, packageAllowed, description, origin, userId});
@@ -88,6 +88,30 @@ export const myRides = (idDriver) => {
     }
 };
 
+export const getRides = () => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get('http://localhost:3000/ride/getAll');
+            dispatch({type: GET_ALL, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+}
+
+export const userInRide = (idUser,idRide) => {
+    return async (dispatch) => {
+        try {
+            const r = await Axios.get(`http://localhost:3000/ride/userInRide/` + idUser + `/` + idRide);
+            console.log(r);
+            dispatch({type: ADD_MSG, payload: r.data})
+        } catch (error) {
+            console.log(error)
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+}
+
 export const deleteRide = id => dispatch => {
     Axios.delete(`http://localhost:3000/ride/delete/${id}`).then(res => {
             dispatch({
@@ -102,3 +126,16 @@ export const deleteRide = id => dispatch => {
         })
     );
 };
+
+export const addTraveller = (idUser,idRide) => {
+    return async (dispatch) => {
+        try {
+            const r = await Axios.post(`http://localhost:3000/ride/addTravelerById/` + idUser + `/` + idRide);
+            console.log(r);
+            dispatch({type: ADD_TRAVELLER, payload: r.data})
+        } catch (error) {
+            console.log(error)
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+}

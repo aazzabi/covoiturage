@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import _ from 'lodash';
+import {Card, CardFooter, PaginationItem, PaginationLink} from "reactstrap";
 
 const Pagination = (props) => {
     const { itemsCount, pageSize, onPageChange, currentPage } = props;
@@ -10,6 +11,7 @@ const Pagination = (props) => {
     const pages = _.range(1,pageCount + 1)
     return (
         <div className="pagination-container">
+
             <ul>
                 {
                     pages.length > 1 &&

@@ -273,6 +273,29 @@ var addTravelerRide = async (req, res, next) => {
     }
 };
 
+
+
+var userInRide = async (req, res, next) => {
+    console.log('controller');
+    rideId = await ride.findById(req.params.idRide);
+    userid = await user.findById(req.params.idUser);
+    var i;
+    exist = false;
+    for (i = 0; i < rideId.travelers.length; i++) {
+        if (userid.id.toString() === rideId.travelers[i].user._id.toString()) {
+            exist = true;
+        }
+    }
+            if (exist) {
+                res.set('Content-Type', 'application/json');
+                res.status(202).send('exist');
+            } else {
+                res.set('Content-Type', 'application/json');
+                res.status(202).send('notFound');
+            }
+
+};
+
 var getAllTravelers = (req, res, next) => {
 
     ride.find({"_id": req.params.idRide}, {"travelers": 1, "_id": 0})
@@ -396,12 +419,13 @@ var getTraveler = (req, res, next) => {
             res.status(202).json(data);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
         });
 
 
 };
+
 var getPrice = (req, res, next) => {
 
     dis.get(
@@ -430,6 +454,7 @@ var getPrice = (req, res, next) => {
 
 
 module.exports = {
+    userInRide,
     getAll,
     getById,
     add,

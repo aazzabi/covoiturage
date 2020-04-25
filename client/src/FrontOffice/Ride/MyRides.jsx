@@ -23,7 +23,6 @@ import {
     InputGroupAddon,
     InputGroupText, Input, Form
 } from "reactstrap";
-import {getAll, deleteClaim, resolveClaim} from '../../services/Claims/ClaimsAction';
 import {connect} from 'react-redux';
 import jwt_decode from "jwt-decode";
 import Pagination from "./Pagination";
@@ -120,7 +119,7 @@ class MyRides extends React.Component {
             return (
 
                 <>
-                    <AuthHeader title="Choose the best plan for your business" lead=""/>
+                    <AuthHeader title="My Rides" lead=""/>
                     <Container className="mt--8 pb-5">
                         <Row className="justify-content-center">
 
@@ -170,7 +169,7 @@ class MyRides extends React.Component {
                                                                             : <Badge color="danger">NO</Badge>
                                                                 }</td>
                                                                 <td>
-                                                                    <Link to={`/admin/claims/${ride._id}`}>
+                                                                    <Link to={`/front/ride/details/${ride._id}`}>
                                                                         <Button style={{marginRight: 2}}
                                                                             className="btn-icon-only rounded-circle"
                                                                             color="slack"
@@ -227,6 +226,7 @@ class MyRides extends React.Component {
 
                         </Row>
                     </Container>
+
                 </>
 
             )
@@ -241,4 +241,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default withRouter(connect(mapStateToProps, {deleteRide, resolveClaim,  myRides , getCurrentUser})(MyRides));
+export default withRouter(connect(mapStateToProps, {deleteRide,  myRides , getCurrentUser})(MyRides));

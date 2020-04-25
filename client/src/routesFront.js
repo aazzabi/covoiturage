@@ -15,8 +15,24 @@ import PostList from "./FrontOffice/Blog/listPosts";
 import RideAdd from "./FrontOffice/Ride/RideAdd";
 import RideEdit from "./FrontOffice/Ride/RideEdit";
 import MyRides from "./FrontOffice/Ride/MyRides";
+import RideSearch from "./FrontOffice/Ride/RideSearch";
+import DetailRide from "./FrontOffice/Ride/DetailRide";
 
 const routesFront = [
+    {
+        path: "/ride/details/:id",
+        name: "ride",
+        icon: "ni ni-calendar-grid-58 text-red",
+        component: DetailRide,
+        layout: "/front"
+    },
+    {
+        path: "/ride/search",
+        name: "rides",
+        icon: "ni ni-calendar-grid-58 text-red",
+        component: RideSearch,
+        layout: "/front"
+    },
     {
         path: "/ride/add",
         name: "rideAdd",

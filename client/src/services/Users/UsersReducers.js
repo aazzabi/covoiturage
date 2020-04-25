@@ -1,7 +1,17 @@
-import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS,GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS} from "./UserTypes";
+import {
+    DELETE_USER,
+    GET_ALL,
+    GET_DRIVERS,
+    GET_USERS,
+    GET_FINANCIALS,
+    GET_RELATIONALS,
+    GET_TECHNICALS,
+    GET_USER, GET_CAR
+} from "./UserTypes";
 
 const initialState = {
     user: {},
+    car: {},
     drivers: [],
     users: [],
     financials: [],
@@ -15,6 +25,10 @@ export default function (state = initialState, action) {
             return {...state, all: action.payload};
         case GET_USERS:
             return {...state, users: action.payload};
+        case GET_CAR:
+            return {...state, car: action.payload};
+        case GET_USER:
+            return {...state, user: action.payload};
         case GET_DRIVERS:
             return {...state, drivers: action.payload};
         case GET_FINANCIALS:

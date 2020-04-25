@@ -8,6 +8,7 @@ var passport = require('passport');
 router.post('/add/:idDriver', rideController.add);
 router.put('/edit/:id', rideController.editRide);
 router.get('/getById/:id', rideController.getById);
+router.get('/userInRide/:idUser/:idRide', rideController.userInRide);
 router.delete('/delete/:id', rideController.deleteRide);
 router.get('/getAll', rideController.getAll);
 router.get('/price/:ori/:des', rideController.getPrice);

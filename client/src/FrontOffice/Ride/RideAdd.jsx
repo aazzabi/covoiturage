@@ -195,8 +195,6 @@ class RideAdd extends Component {
             <Container className="mt--8 pb-5">
                 <Row className="justify-content-center">
                             {this.renderAlert()}
-                            {/*<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>*/}
-
 
                             <Form>
 
