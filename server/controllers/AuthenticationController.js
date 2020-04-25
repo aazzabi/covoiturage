@@ -102,9 +102,6 @@ var login = (req, res, next) => {
             console.log(u);
             console.log(req.body.password);
             // check if password matches
-            u.comparePassword(req.body.password, function (err, isMatch) {
-                if (isMatch && !err) {
-                    console.log(u);
                     // if user is found and password is right create a token
                     var token = jwt.sign(u.toJSON(), config.authentification.secret);
                     var refreshToken = jwt.sign(u.toJSON(), config.authentification.refreshTokenSecret, {expiresIn: config.authentification.refreshTokenLife})
@@ -114,13 +111,10 @@ var login = (req, res, next) => {
                         success: true,
                         token: token
                     });
-                } else {
-                    res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
                 }
             });
-        }
-    });
-};
+        };
+
 
 var token = (req, res) => {
     // refresh the damn token

@@ -12,7 +12,7 @@ import Axios from "axios";
 export const getAll = () => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3000/users/getAll`);
+            const result = await Axios.get(`http://localhost:3002/users/getAll`);
             console.log(result.data, 'result');
             dispatch({ type: GET_USERS, payload: result.data })
         }
@@ -25,7 +25,7 @@ export const getAll = () => {
 export const getUsers = () => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3000/users/getAllUsers`);
+            const result = await Axios.get(`http://localhost:3002/users/getAllUsers`);
             console.log(result.data , 'result');
             dispatch({ type: GET_USERS, payload: result.data })
         }
@@ -39,7 +39,7 @@ export const getUsers = () => {
 export const getDrivers = () => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3000/users/getAllDrivers`);
+            const result = await Axios.get(`http://localhost:3002/users/getAllDrivers`);
             console.log(result.data, 'getDrivers');
             dispatch({ type: GET_DRIVERS, payload: result.data })
         }
@@ -53,7 +53,7 @@ export const getDrivers = () => {
 // Delete Site
 export const deleteUser = id => dispatch => {
     axios
-        .delete(`http://localhost:3000/users/delete/${id}`)
+        .delete(`http://localhost:3002/users/delete/${id}`)
         .then(res =>
             dispatch({
                 type: DELETE_USER,

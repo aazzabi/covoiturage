@@ -11,11 +11,14 @@ ObjectId = require('mongodb').ObjectID;
 //add new disc + msg
 exports.addDiscussion =  (sender ,text ,receiver)  => {
     var now = new Date();
+    var vide = "null";
         var m = new discussion({
+            title: vide,
             users: ObjectId(receiver.id),
             lastMsg: text,
             created_at: now,
-            owner: ObjectId(sender.id)
+            owner: ObjectId(sender.id),
+
         });
 
 
@@ -38,7 +41,7 @@ exports.addDiscussion =  (sender ,text ,receiver)  => {
 exports.addDisc =  (req, res )  => {
     var now = new Date();
     var m = new discussion({
-        titre : req.body.titre,
+        title : req.body.title,
         type: req.body.type,
         created_at: now,
         owner: ObjectId(req.params.id)
@@ -52,7 +55,26 @@ exports.addDisc =  (req, res )  => {
             res.status(500).send(error);
         });
 };
-
+//add empty 2personDisc
+exports.addEmptyDisc =  (req, res )  => {
+    var now = new Date();
+    var vide = "null";
+    var m = new discussion({
+        title : vide,
+        type: req.body.type,
+        users: ObjectId(req.params.idUser),
+        created_at: now,
+        owner: ObjectId(req.params.idCurrentUser)
+    });
+    m.save().then (()=> {
+        res.status(202).send("discussion has been added ");
+    })
+        .catch(error =>
+        {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+        });
+};
 //add  msg in an existing disc or   add new disc + msg
 exports.addMsg =   (req,res ) => {
 
@@ -89,12 +111,67 @@ exports.addMsg =   (req,res ) => {
 
 
 };
+//add  msg into a existing disc
+exports.addMsgIntoDisc =  async (req,res ) => {
+
+    var date = Date.now();
+    var disc = await discussion.findOne({_id: req.body.discussion});
+    console.log(disc);
+    var message = new msg({
+        sender: req.body.sender,
+        created_at: date,
+        discussion: disc.id,
+        text: req.body.text,
+    });
+    console.log(message);
+    message.save(function (err, todo) {
+        console.log('Your msg has been saved');
+        res.status(202).send("msg added successfully ");
+    })
+
+}
+
+exports.getChannelId =   (req,res ) => {
+
+    var date = Date.now();
+
+
+    discussion.findOne({$or:[{owner:ObjectId(req.params.idCurrentUser) , users : ObjectId(req.params.idUser) , type: "2PersonChat" }, {owner:ObjectId(req.params.idUser) , users : ObjectId(req.params.idCurrentUser)  , type: "2PersonChat" }]}).then((data) => {
+        if(data == null) {
+            console.log("discuss not found")
+            res.set('Content-Type', 'text/html');
+            res.status(404).send(" discuss not found  ");
+
+        }
+        else
+        {
+            console.log(data._id.toString());
+                res.set('Content-Type', 'text/html');
+                res.status(202).send(data._id.toString());
+
+        }
+
+    }).catch(error => {
+        res.set('Content-Type', 'text/html');
+        res.status(500).send(error);
+    });
+
+
+
+};
 //list disc  user
 exports.listDiscussionsUser = async (req, res) => {
     discussion.find({$or:[{owner:ObjectId(req.params.id)} , {users : ObjectId(req.params.id)  }]}, function(err, discussions) {
         console.log(discussions);
         res.send(discussions);
-    });
+    }).populate('users').populate('owner');
+};
+//list own user chatroom
+exports.listOwnChatroomUser = async (req, res) => {
+    discussion.find({owner:ObjectId(req.params.id) , type : "ChatRoom"} , function(err, discussions) {
+        console.log(discussions);
+        res.send(discussions);
+    }).populate('users').populate('owner');
 };
 //seen msg "2PersonChat "
 exports.seenMsg = async (req, res) => {
@@ -148,15 +225,19 @@ exports.deleteDiscussion = async (req, res)  => {
         });
 
 };
+
+
+
 //-------------------------------------chatroom------------------------------------
 // list users in chatroom
 exports.listChatRoomUsers = async (req, res)  => {
-    var disc = await discussion.find({ _id : req.params.id })
-        .then(() =>
+    console.log("aaaaaaaaa");
+    var disc = await discussion.find({ _id : req.params.id }).populate('users').populate('owner')
+        .then((discc) =>
         {
-
-            res.send(disc.users);
-            res.status(202).send("users has been sent ");
+            console.log("okkk");
+            res.send(discc);
+            //res.status(202).send("users has been sent ");
         })
         .catch(error =>
         {

@@ -133,7 +133,14 @@ app.use(function (err, req, res, next) {
 io.on('connection', (socket) => {
   console.log('made socket connection', socket.id);
 
-  socket.on("new-message", (data) => {
+    socket.on("new-user", async user => {
+        console.log("new-user: ", user.username);
+
+        socket.broadcast.emit("user-connected", user);
+    });
+
+
+    socket.on("new-message", (data) => {
     io.sockets.emit("new-message", data);
   });
 
@@ -146,9 +153,20 @@ io.on('connection', (socket) => {
     console.log("user-disconnect: ", user.username);
     socket.broadcast.emit("user-disconnected", user);
   });
-
-
-})
+    socket.on("user-offline", async () => {
+        const user = await User.findOneAndUpdate(
+            { status: socket.id },
+            { status: "" },
+            { useFindAndModify: false }
+        );
+        console.log("user-disconnect: ", user.username);
+        socket.broadcast.emit("user-disconnected", user);
+    });
+    socket.on("broadcast-message", async msgObj => {
+        console.log("broadcast-message: ", msgObj);
+        socket.broadcast.emit("new-message", msgObj);
+    });
+});
 
 server.listen(3002, function() {
   console.log('Chat server running...');

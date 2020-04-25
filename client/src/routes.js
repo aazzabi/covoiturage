@@ -25,8 +25,8 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
-import CreateParcel from "./frontoffice/Parcels/Create";
-import Packages from "./frontoffice/Parcels/Packages";
+//import CreateParcel from "./frontoffice/Parcels/Create";
+//import Packages from "./frontoffice/Parcels/Packages";
 
 const routes = [
   {
@@ -49,7 +49,7 @@ const routes = [
       }
     ]
   },
-  {
+ /* {
     collapse: true,
     name: "Examples",
     icon: "ni ni-ungroup text-orange",
@@ -93,7 +93,7 @@ const routes = [
       }
 
     ]
-  },
+  },*/
   {
     collapse: true,
     name: "Components",

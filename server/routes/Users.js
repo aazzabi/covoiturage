@@ -25,11 +25,11 @@ router.get('/profile', isAuthenticated, userController.profile);
 router.get('/getAll', userController.getAll);
 router.get('/getAllUsers', userController.getAllUsers);
 router.get('/getAllDrivers', userController.getAllDrivers);
-router.post('/updateUser/:id', userController.updateUser);
+router.put('/updateUser/:id', userController.updateUser);
 router.post('/delete/:id', userController.deleteUser);
 router.get('/getUserById/:id', userController.getUserById);
 router.post('/refuseDriverRequest/:idUser', authorize(['ADMIN']), userController.becomeDriverRequest);
-
+router.put('/searchUser',  userController.searchUser);
 /*
 POST
 http://localhost:3000/users/becomeDriver/:idUser

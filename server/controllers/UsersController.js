@@ -94,6 +94,9 @@ var updateUser = (req, res, next) => {
         if (typeof updateData.role !== 'undefined') {
             user.role = updateData.role;
         }
+        if (typeof updateData.status !== 'undefined') {
+            user.status = updateData.status;
+        }
         return user.save()
             .then(function () {
                 return res.json({user: user});
@@ -184,6 +187,13 @@ var uploadDocumentForDriver = (req, res) => {
         console.log(req.body, 'body');
     });
 };
+var searchUser =  async (req, res) => {
+    const users = await user.find(req.body)
+        .sort({ _id: 1 })
+        .limit(12);
+
+    res.send(users);
+};
 module.exports = {
     getAll,
     getAllUsers,
@@ -194,5 +204,6 @@ module.exports = {
     profile,
     uploadDocumentForDriver,
     becomeDriverRequest,
-    refuseDriverRequest
+    refuseDriverRequest,
+    searchUser
 };

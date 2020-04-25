@@ -7,7 +7,7 @@
 .input-group {
   position: relative;
   display: flex;
-  flex-wrap: wrap; // For form validation feedback
+  flex-wrap: wrap; // For forms validation feedback
   align-items: stretch;
   width: 100%;
 
@@ -28,7 +28,7 @@
     }
   }
 
-  // Bring the "active" form control to the top of surrounding elements
+  // Bring the "active" forms control to the top of surrounding elements
   > .form-control:focus,
   > .custom-select:focus,
   > .custom-file .custom-file-input:focus ~ .custom-file-label {
@@ -63,7 +63,7 @@
 //
 // While it requires one extra layer of HTML for each, dedicated prepend and
 // append elements allow us to 1) be less clever, 2) simplify our selectors, and
-// 3) support HTML5 form validation.
+// 3) support HTML5 forms validation.
 
 .input-group-prepend,
 .input-group-append {
@@ -119,7 +119,7 @@
 
 // Sizing
 //
-// Remix the default form control sizing classes into new ones for easier
+// Remix the default forms control sizing classes into new ones for easier
 // manipulation.
 
 .input-group-lg > .form-control,
