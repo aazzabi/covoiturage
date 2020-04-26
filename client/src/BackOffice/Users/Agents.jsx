@@ -74,7 +74,6 @@ class Agents extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
-            console.log(nextProps, 'nexProps');
             this.setState({
                 all: nextProps.all,
                 drivers: nextProps.drivers,
@@ -130,8 +129,6 @@ class Agents extends React.Component {
         let users = this.props.users;
         const {all, financials} = this.props;
         // const currentUsers = fin.slice((currentPage - 1) * pageSize, pageSize * currentPage);
-
-        console.log(this.state, 'this.state.state');
         if (error) {
             return (
                 <div>Error: {error.message}</div>

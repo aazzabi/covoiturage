@@ -43,18 +43,21 @@ const routes = [
     name: "Users",
     icon: "ni ni-shop text-primary",
     state: "dashboardsCollapse",
+    rolesAllowed: ['ADMIN'],
     views: [
       {
         path: "/users",
         name: "All",
         component: AllUsers,
-        layout: "/admin"
+        layout: "/admin",
+        rolesAllowed: ['ADMIN'],
       },
       {
         path: "/agents",
         name: "Agents",
         component: Agents,
-        layout: "/admin"
+        layout: "/admin",
+        rolesAllowed: ['ADMIN'],
       }
     ]
   },
@@ -64,6 +67,7 @@ const routes = [
     name: "Drivers",
     icon: "fas fa-dharmachakra text-primary",
     state: "driversCollapse",
+    rolesAllowed: ['ADMIN'],
     views: [
       {
         path: "/drivers",
