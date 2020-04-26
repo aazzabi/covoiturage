@@ -136,8 +136,6 @@ class Sidebar extends React.Component {
       }
       // if (prop.rolesAllowed && (prop.rolesAllowed.includes(u.role))) {
       if (prop.rolesAllowed && (prop.rolesAllowed.indexOf(u.role) === -1) ) {
-          console.log(prop.rolesAllowed.indexOf(u.role));
-          console.log('null');
           return null;
       }
       if(prop.invisible){

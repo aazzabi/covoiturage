@@ -52,6 +52,9 @@ class AllClaims extends React.Component {
             response: {},
             currentUser: {},
             keyword: '',
+            priority: '',
+            typeC: '',
+            status: '',
         };
     };
 
@@ -79,12 +82,11 @@ class AllClaims extends React.Component {
     }
 
     search() {
-        console.log(this.state.keyword);
         this.props.searchClaim(this.state.currentUser._id, this.state.keyword);
     }
 
-    handleChange = (name, value) => {
-        this.setState({[name]: value});
+     handleChange = async (name, value) => {
+        await this.setState({[name]: value});
         this.search();
     };
 
@@ -102,6 +104,7 @@ class AllClaims extends React.Component {
                     <h2>Claims List</h2>
                     <Row>
                         <div className="col-md-4">
+                            <label htmlFor="keyword">Keyword : </label>
                             <Input name="keyword" id="keyword" placeholder="Search ..." type="text"
                                    value={this.state.keyword}
                                    onChange={event => this.handleChange('keyword', event.target.value)}/>

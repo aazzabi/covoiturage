@@ -298,7 +298,10 @@ var searchClaim = async (req, res, next) => {
             {
                 '$or': [
                     {title: new RegExp(req.params.keyword, "i")},
-                    {description: new RegExp(req.params.keyword, "i")}
+                    {description: new RegExp(req.params.keyword, "i")},
+                    {priority: new RegExp(req.params.keyword, "i")},
+                    {status: new RegExp(req.params.keyword, "i")},
+                    {type: new RegExp(req.params.keyword, "i")},
                 ]
             }
         ).then((data) => {
