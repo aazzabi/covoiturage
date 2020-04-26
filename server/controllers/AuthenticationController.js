@@ -11,6 +11,8 @@ var fs = require('fs');
 var multer = require('multer');
 const {OAuth2Client} = require('google-auth-library');
 const {check, validationResult} = require("express-validator/check");
+const recaptchaHelpers = require('../helpers/recaptcha');
+var _ = require('lodash');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -23,42 +25,50 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage}).single('image');
 
-var register =  (req, res) => {
-    User.findOne({email: req.body.email}).then(u => {
-        if (u) {
-            return res.status(400).json({msg: "Email already exists"});
-        } else {
-            const newUser = new User({
-                username: req.body.username,
-                lastName: req.body.lastName,
-                firstName: req.body.firstName,
-                email: req.body.email,
-                phone: req.body.phone,
-                gender: req.body.gender,
-                avatar: req.body.avatar,
-            });
-            // hashSync : 3tatni hash , compatible ( selon bcrypt-generator)
-            const pwd = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-            newUser.password = pwd;
-            User.create({
-                password: newUser.password,
-                username: newUser.username,
-                lastName: newUser.lastName,
-                firstName: newUser.firstName,
-                email: newUser.email,
-                phone: newUser.phone,
-                gender: newUser.gender,
-                avatar: newUser.avatar,
-            }).then(async (data) => {
-                await User.updateOne({'_id': data._id}, {$set: {'password': pwd}});
-                res.set('Content-Type', 'application/json');
-                res.status(202).json(data);
-            })
-                .catch(error => {
-                    res.set('Content-Type', 'application/json');
-                    res.status(500).send(error);
+var register = (req, res) => {
+    const recaptchaData = {
+        remoteip: req.connection.remoteAddress,
+        response: req.body.recaptchaResponse,
+        secret: config.recaptcha.RECAPTCHA_SECRET_KEY,
+    };
+    recaptchaHelpers.verifyRecaptcha(recaptchaData)
+        .then(() => {
+            User.findOne({email: req.body.email}).then(u => {
+            if (u) {
+                return res.status(400).json({msg: "Email already exists"});
+            } else {
+                const newUser = new User({
+                    username: req.body.username,
+                    lastName: req.body.lastName,
+                    firstName: req.body.firstName,
+                    email: req.body.email,
+                    phone: req.body.phone,
+                    gender: req.body.gender,
+                    avatar: req.body.avatar,
                 });
-        }
+                // hashSync : 3tatni hash , compatible ( selon bcrypt-generator)
+                const pwd = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+                newUser.password = pwd;
+                User.create({
+                    password: newUser.password,
+                    username: newUser.username,
+                    lastName: newUser.lastName,
+                    firstName: newUser.firstName,
+                    email: newUser.email,
+                    phone: newUser.phone,
+                    gender: newUser.gender,
+                    avatar: newUser.avatar,
+                }).then(async (data) => {
+                    await User.updateOne({'_id': data._id}, {$set: {'password': pwd}});
+                    res.set('Content-Type', 'application/json');
+                    res.status(202).json(data);
+                })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+            }
+        })
     });
 };
 
@@ -91,11 +101,11 @@ var login = async (req, res) => {
         }
         //See if password matches
         const isMatch = await bcrypt.compareSync(password, u.password);
-        console.log(password , 'password');
-        console.log(u.password , 'u.password');
+        console.log(password, 'password');
+        console.log(u.password, 'u.password');
         console.log(isMatch);
         if (isMatch === false) {
-            return res.status(400).json({ 'status': 'error', 'message': 'Invalid Credentials' });
+            return res.status(400).json({'status': 'error', 'message': 'Invalid Credentials'});
         }
         // Return Json WebToken
         const payload = {
@@ -124,7 +134,7 @@ var login = async (req, res) => {
         );
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ 'status': 'error', 'message': 'Invalid Credentials' });
+        res.status(500).json({'status': 'error', 'message': 'Invalid Credentials'});
     }
 };
 
