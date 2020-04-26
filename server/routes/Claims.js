@@ -5,6 +5,7 @@ var claimController = require('../controllers/ClaimsController');
 router.post('/add/:idUser', claimController.add);
 router.post('/updateClaim/:id', claimController.updateClaim);
 router.get('/getAll/:idUser', claimController.getAll);
+router.get('/searchClaim/:idUser/:keyword', claimController.searchClaim);
 router.get('/getById/:idClaim/:idUser', claimController.getById);
 router.delete('/delete/:id', claimController.deleteClaim);
 router.post('/resolve/:id', claimController.resolveClaim);

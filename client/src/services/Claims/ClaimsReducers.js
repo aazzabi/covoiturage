@@ -1,4 +1,4 @@
-import {ADD_CLAIM, EDIT_CLAIM, GET_ALL, RESOLVE_CLAIM , DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, DELETE_COMMENT, ADD_COMMENT_TO_CLAIM, UNRESOLVE_CLAIM} from "./ClaimsTypes";
+import {ADD_CLAIM, EDIT_CLAIM, GET_ALL, RESOLVE_CLAIM , SEARCH_CLAIM, DELETE_CLAIM, GET_CLAIM, GET_ALL_COMMENT, DELETE_COMMENT, ADD_COMMENT_TO_CLAIM, UNRESOLVE_CLAIM} from "./ClaimsTypes";
 
 const initialState = {
     addClaim: {},
@@ -13,6 +13,9 @@ export default function (state = initialState, action) {
         case EDIT_CLAIM:
             return {...state, claim: action.payload};
         case GET_ALL:
+            return {...state, all: action.payload};
+        case SEARCH_CLAIM:
+            console.log(action.payload, 'payload');
             return {...state, all: action.payload};
         case GET_ALL_COMMENT:
             return {...state, allComments: action.payload};

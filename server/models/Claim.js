@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 var claimSchema = mongoose.Schema(
     {
-        title: {type: String, unique: false, required: true},
-        description: {type: String, unique: false, required: true},
+        title: {type: String, unique: false, required: true, index: true, text: true},
+        description: {type: String, unique: false, required: true, index: true, text: true},
         status: {type: String, unique: false, enum: ["WAITING", "IN_PROGRESS", "RESOLVED", "CONFIRMED"], default: "WAITING" , required: true},
         priority: {type: String, unique: false, enum: ["LOW", "NORMAL", "IMPORTANT", "CRITICAL"],  required: true},
         type: {type: String, unique: false, enum: ["TECHNICAL", "FINANCIAL", "RELATIONAL"],  required: true},
@@ -14,6 +14,5 @@ var claimSchema = mongoose.Schema(
         responsible: {type: mongoose.Schema.Types.Object, ref: 'User', required: true, unique: false},
         comments: [{type: mongoose.Schema.Types.Object, ref: 'comments'}],
     });
-
 var claim = mongoose.model('Claim', claimSchema);
 module.exports = claim;

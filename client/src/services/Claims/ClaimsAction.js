@@ -7,6 +7,7 @@ import {
     DELETE_COMMENT,
     GET_ALL,
     GET_CLAIM,
+    SEARCH_CLAIM,
     RESOLVE_CLAIM,
     UNRESOLVE_CLAIM
 } from "./ClaimsTypes"
@@ -78,7 +79,7 @@ export const getAll = (id) => {
             console.log(result, 'result');
             dispatch({type: GET_ALL, payload: result.data})
         } catch (error) {
-            dispatch({type: GET_ERRORS, error})
+            dispatch({type: GET_ERRORS, payload: error})
         }
     }
 };
@@ -89,7 +90,7 @@ export const getClaim = (idClaim, idUser) => {
             const result = await Axios.get(`http://localhost:3000/claims/getById/` + idClaim + `/` + idUser);
             dispatch({type: GET_CLAIM, payload: result.data})
         } catch (error) {
-            dispatch({type: GET_ERRORS, error})
+            dispatch({type: GET_ERRORS, payload: error})
         }
     }
 };
@@ -168,6 +169,21 @@ export const unresolveClaim = id => dispatch => {
         })
     });
 };
+
+
+export const searchClaim = (id, keyword) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/claims/searchClaim/`+ id+'/'+keyword );
+            console.log(result, 'result');
+            dispatch({type: GET_ALL, payload: result.data})
+        } catch (error) {
+            console.log(error, 'error');
+            dispatch({type: GET_ERRORS, payload: error})
+        }
+    }
+};
+
 
 export function addComment({commentText, claimId, userId}, historyPush, historyReplace) {
     return function (dispatch) {

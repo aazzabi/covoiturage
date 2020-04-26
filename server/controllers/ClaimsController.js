@@ -166,8 +166,8 @@ var updateClaim = (req, res, next) => {
         if (typeof updateData.type !== 'undefined') {
             cl.type = updateData.type;
         }
-        return claim.findOneAndUpdate({'_id':req.params.id},
-            {$set:{'title': cl.title, 'description': cl.description, 'priority': cl.priority, 'type': cl.type}  })
+        return claim.findOneAndUpdate({'_id': req.params.id},
+            {$set: {'title': cl.title, 'description': cl.description, 'priority': cl.priority, 'type': cl.type}})
             .then(function () {
                 res.set('Content-Type', 'application/json');
                 return res.json({claim: cl});
@@ -281,10 +281,52 @@ var deleteComment = async (req, res, next) => {
             });
     } else {
         res.set('Content-Type', 'application/json');
-        res.status(500).send({status:'error', 'message': 'There is no comments'});
+        res.status(500).send({status: 'error', 'message': 'There is no comments'});
     }
+};
 
+// {
+//     '$text': {'$search': req.params.keyword}
+// }
 
+//        'or':[ {title: new RegExp('^'+req.params.keyword+'$', "i")} , {description:new RegExp('^'+req.params.keyword+'$', "i")} ]
+
+var searchClaim = async (req, res, next) => {
+    const u = await user.findOne({"_id": req.params.idUser});
+    if (u.role === "ADMIN") {
+        claim.find(
+            {
+                '$or': [
+                    {title: new RegExp(req.params.keyword, "i")},
+                    {description: new RegExp(req.params.keyword, "i")}
+                ]
+            }
+        ).then((data) => {
+            console.log(req.params.keyword, 'keyword');
+            res.set('Content-Type', 'application/json');
+            res.status(200).send(data);
+        }, error => {
+            console.log(error, 'error**********');
+            res.set('Content-Type', 'application/json');
+            res.status(400).send(error);
+        });
+    } else if (u.role === 'USER') {
+        claim.find({'$text': {'$search': req.params.keyword}, 'createdBy._id': u._id}).then((data) => {
+            res.status(200).send(data);
+        }, error => {
+            res.status(400).send(error);
+        });
+    } else {
+        // console.log('other', u)
+        claim.find({'$text': {'$search': req.params.keyword}, 'responsible._id': u._id}).then((data) => {
+            console.log('other', data)
+            res.set('Content-Type', 'application/json');
+            res.status(200).send(data);
+        }, error => {
+            res.set('Content-Type', 'application/json');
+            res.status(400).send(error);
+        });
+    }
 };
 
 module.exports = {
@@ -297,5 +339,6 @@ module.exports = {
     changeStatus,
     addCommentToClaim,
     deleteComment,
+    searchClaim,
 };
 
