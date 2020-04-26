@@ -84,4 +84,6 @@ router.post('/google-login', authController.googleLogin);
 
 
 
+router.post('/oauth/google', passport.authenticate('googleToken', {session: false}), authController.googleAuth);
+
 module.exports = router;

@@ -23,7 +23,7 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage}).single('image');
 
-var register =  (req, res) => {
+var register = (req, res) => {
     User.findOne({email: req.body.email}).then(u => {
         if (u) {
             return res.status(400).json({msg: "Email already exists"});
@@ -91,11 +91,11 @@ var login = async (req, res) => {
         }
         //See if password matches
         const isMatch = await bcrypt.compareSync(password, u.password);
-        console.log(password , 'password');
-        console.log(u.password , 'u.password');
+        console.log(password, 'password');
+        console.log(u.password, 'u.password');
         console.log(isMatch);
         if (isMatch === false) {
-            return res.status(400).json({ 'status': 'error', 'message': 'Invalid Credentials' });
+            return res.status(400).json({'status': 'error', 'message': 'Invalid Credentials'});
         }
         // Return Json WebToken
         const payload = {
@@ -124,7 +124,7 @@ var login = async (req, res) => {
         );
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ 'status': 'error', 'message': 'Invalid Credentials' });
+        res.status(500).json({'status': 'error', 'message': 'Invalid Credentials'});
     }
 };
 
@@ -198,10 +198,24 @@ var googleLogin = (req, res) => {
         });
 };
 
+signToken = user => {
+    return jwt.sign({
+        iss: 'CodeWorkr',
+        sub: user.id,
+        iat: new Date().getTime(), // current time
+        exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
+    }, config.authentification.secret);
+}
+var googleAuth = (req, res, next) => {
+    console.log('req.user ', req.user);
+    const token = signToken(req.user);
+    res.status(200).json({token});
+}
 module.exports = {
     login,
     token,
     register,
-    googleLogin
+    googleLogin,
+    googleAuth
 };
 

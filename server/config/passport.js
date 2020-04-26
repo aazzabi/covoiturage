@@ -6,6 +6,8 @@ var config = require('./config'); // get db config file
 var jwt = require('jwt-simple');
 var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 
+var GooglePlusTokenStrategy = require('passport-google-plus-token');
+
 
 module.exports = function (passport) {
     var opts = {};
@@ -59,4 +61,38 @@ module.exports = function (passport) {
             });
         }
     ));
+
+    passport.use('googleToken', new GooglePlusTokenStrategy({
+        clientID: config.google.clientId,
+        clientSecret: config.google.clientSecret,
+    },async (accesToken, refreshToken, profile, done) =>{
+        try {
+            console.log('accesToken', accesToken);
+            console.log('refreshToken', refreshToken);
+            console.log('profile', profile);
+
+            //check if this current user exists in our DB
+            const existingUser = await user.findOne({'google.id': profile.id});
+            if (existingUser) {
+                console.log('user already exist');
+                return done(null, existingUser);
+            }
+
+            //if new Account
+            const newUser = new user({
+                method: 'google',
+                google: {
+                    id: profile.id,
+                    email: profile.emails[0].value,
+                },
+                email: profile.emails[0].value,
+            });
+
+            await newUser.save();
+            done(null, newUser);
+        } catch (e) {
+            done(e, false, e.message)
+        }
+    }))
+
 };
