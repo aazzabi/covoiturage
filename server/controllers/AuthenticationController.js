@@ -149,7 +149,7 @@ var token = (req, res) => {
     }
 };
 
-const client = new OAuth2Client('871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com');
+const client = new OAuth2Client('871066785220-82c81c51vgc954etqo4fo5d5b9505c3c.apps.googleusercontent.com');
 var googleLogin = (req, res) => {
     console.log("req.body");
     const {idToken} = req.body;
@@ -199,23 +199,30 @@ var googleLogin = (req, res) => {
 };
 
 signToken = user => {
-    return jwt.sign({
-        iss: 'CodeWorkr',
-        sub: user.id,
-        iat: new Date().getTime(), // current time
-        exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
-    }, config.authentification.secret);
-}
-var googleAuth = (req, res, next) => {
+    return jwt.sign(user.toJSON(), config.authentification.secret);
+};
+var googleOAuth = (req, res, next) => {
     console.log('req.user ', req.user);
     const token = signToken(req.user);
     res.status(200).json({token});
-}
+};
+var facebookOAuth = (req, res, next) => {
+    console.log('req.user ', req.user);
+    const token = signToken(req.user);
+    res.status(200).json({token});
+};
+
+var secret = async (req,res, next) => {
+    console.log('I managed to get here');
+    res.json({secret: 'ressource'});
+};
 module.exports = {
     login,
     token,
     register,
     googleLogin,
-    googleAuth
+    googleOAuth,
+    facebookOAuth,
+    secret,
 };
 

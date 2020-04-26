@@ -29,8 +29,13 @@ module.exports = {
         }
     }),
     google : {
-        clientId: "871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com",
-        clientSecret : "QD_M2V8hvU5p63Vzz_-CrjRX",
-        callbackUrl: "http://localhost:3000/auth/google/callback"
+        // clientId: "871066785220-82c81c51vgc954etqo4fo5d5b9505c3c.apps.googleusercontent.com", // proket2
+        // clientSecret : "Vv-_PfASmufjO7FvyWUQJpEt", // projet2
+        clientId: "871066785220-82c81c51vgc954etqo4fo5d5b9505c3c.apps.googleusercontent.com",
+        clientSecret : "Vv-_PfASmufjO7FvyWUQJpEt", // projet3
+    },
+    facebook : {
+        clientId: "556643301916298",
+        clientSecret : "72d4ffc99e254c57a30744e966c45db4",
     }
 };
