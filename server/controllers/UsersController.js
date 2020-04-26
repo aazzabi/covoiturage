@@ -45,7 +45,7 @@ var getAllUsers = (req, res, next) => {
         });
 };
 var getAllDrivers = (req, res, next) => {
-    user.find({"role": "DRIVER"}).sort('firstName')
+    user.find({"role": "DRIVER"}).populate('car').sort('firstName')
         .then((data) => {
             res.status(202).json(data);
         })
@@ -198,9 +198,28 @@ var deleteUser = (req, res) => {
         }), (error) => console.log(error));
 };
 var refuseDriverRequest = (req, res) => {
-    driverRequest.remove({"_id": req.params.idUser})
+    driverRequest.remove({"_id": req.params.idRequest})
         .then((data) => console.log(data), (error) => console.log(error));
 };
+
+var acceptDriverRequest = async (req, res, next) => {
+    console.log('idRequest', req.params.idRequest)
+    const drvReq = await  driverRequest.findOne({'_id': req.params.idRequest});
+    console.log('theeenn', drvReq.user);
+    driverRequest.updateOne({'_id': req.params.idRequest},
+        {'$set': {
+            confirmedAt: new Date(),
+            confirmation: true
+        }})
+        .then(async (data) => {
+            await user.updateOne({'_id': drvReq.user} , {'$set': {'role': 'DRIVER'}});
+            res.status(202).json({'status': 200, 'message': 'Driver request accepted, and user accepted as a Driver'});
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+
 var uploadDocumentForDriver = (req, res) => {
     uploadDocs(req, res, async function (error) {
         console.log(req.file);
@@ -214,6 +233,18 @@ var uploadDocumentForDriver = (req, res) => {
         console.log(req.body, 'body');
     });
 };
+
+
+var getAllDriverRequest = (req, res, next) => {
+    driverRequest.find({'confirmation': false}).populate({path: 'user', populate: {path: 'car'}})
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+
 module.exports = {
     getAll,
     getAllUsers,
@@ -227,5 +258,7 @@ module.exports = {
     profile,
     uploadDocumentForDriver,
     becomeDriverRequest,
-    refuseDriverRequest
+    refuseDriverRequest,
+    acceptDriverRequest,
+    getAllDriverRequest
 };

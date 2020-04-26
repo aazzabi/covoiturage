@@ -26,15 +26,16 @@ import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import AllDrivers from "./BackOffice/Users/AllDrivers";
+import AllDriverRequest from "./BackOffice/DriverRequest/AllDriverRequest";
 import AllUsers from "./BackOffice/Users/AllUsers";
 import Agents from "./BackOffice/Users/Agents.jsx";
 import AllClaims from "./BackOffice/Claims/AllClaims.jsx";
 import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
 import EditClaim from "./BackOffice/Claims/EditClaim.jsx";
 import MyProfile from "./BackOffice/MyProfile.jsx";
-import CreateParcel from "./frontoffice/Parcels/Create";
-import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
-import Packages from "./frontoffice/Parcels/Packages";
+import CreateParcel from "./FrontOffice/Parcels/Create";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
+import Packages from "./FrontOffice/Parcels/Packages";
 
 const routes = [
   {
@@ -50,15 +51,30 @@ const routes = [
         layout: "/admin"
       },
       {
+        path: "/agents",
+        name: "Agents",
+        component: Agents,
+        layout: "/admin"
+      }
+    ]
+  },
+
+  {
+    collapse: true,
+    name: "Drivers",
+    icon: "fas fa-dharmachakra text-primary",
+    state: "driversCollapse",
+    views: [
+      {
         path: "/drivers",
-        name: "Drivers",
+        name: "All Drivers",
         component: AllDrivers,
         layout: "/admin"
       },
       {
-        path: "/agents",
-        name: "Agents",
-        component: Agents,
+        path: "/driversRequest",
+        name: "Drivers Request",
+        component: AllDriverRequest,
         layout: "/admin"
       }
     ]

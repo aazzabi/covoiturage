@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {GET_ERRORS, GET_MARQUES, GET_MODEL_BY_MARQUE} from "./types";
+import {GET_ERRORS, GET_MARQUES, GET_MODEL_BY_MARQUE} from "../../actions/types";
 
 export const getAllMarques = () => dispatch => {
     axios
@@ -30,7 +30,6 @@ export const getAllModelByMarque = (marque) => dispatch => {
                 })
             }
         )
-
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import {Search} from "react-bootstrap-table2-toolkit";
-import {Alert, Button, Table} from "reactstrap";
+import {Alert, Badge, Button, Table} from "reactstrap";
 import {deleteUser, getAll, getDrivers, getUsers} from '../../services/Users/UsersActions'
 import {connect} from 'react-redux';
 import jwt_decode from "jwt-decode";
@@ -55,7 +55,7 @@ class AllDrivers extends React.Component {
 
     };
 
-    imgUrl = 'D:\\covoiturageImages\\uploads\\users\\';
+    imgUrl = 'D:/covoiturageImages/uploads/users/';
 
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
@@ -85,6 +85,21 @@ class AllDrivers extends React.Component {
         this.setState({currentPage: page});
     }
 
+    getDoc(docs, type, name, cls) {
+        let final;
+        docs.forEach(d => {
+            if (d.type == type) {
+                final = d;
+            }
+        });
+        return (
+            <a href={require('D:/covoiturageImages/uploads/drivers/' + final.name)}
+               id={final.name} target="_blank">
+                <Badge color={cls} pill><i className="fas fa-download"></i> {name} </Badge>
+            </a>
+        );
+    }
+
     render() {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let users = this.props.users;
@@ -109,6 +124,9 @@ class AllDrivers extends React.Component {
                             <th>User Name</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>User's document</th>
+                            <th>car's document</th>
+                            <th>Car info</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -119,14 +137,26 @@ class AllDrivers extends React.Component {
                             <Fragment key={user._id}>
                                 <tr>
                                     {user.avatar != null
-                                        ? <td><img class="avatar avatar-sm rounded-circle"
-                                                   src={this.imgUrl + user.avatar}/></td>
-                                        : <td><img class="avatar avatar-sm rounded-circle"
+                                        ? <td><img className="avatar avatar-sm rounded-circle" src={require('D:/covoiturageImages/uploads/users/' + user.avatar)}/></td>
+                                        : <td><img className="avatar avatar-sm rounded-circle"
                                                    src={require("assets/img/theme/team-1.jpg")}/></td>
                                     }
                                     <td>{user.username}</td>
                                     <td>{user.firstName} {user.lastName}</td>
                                     <td>{user.email}</td>
+                                    <td>
+                                        {user.documents && this.getDoc(user.documents, 'CIN', 'cin', 'success')}
+                                        {user.documents && this.getDoc(user.documents, 'PERMIS', 'permis', 'warning')}
+                                    </td>
+                                    <td>
+                                        {user.documents && this.getDoc(user.documents, 'CARTE_GRISE', 'Carte grise', 'danger')}
+                                        {user.documents && this.getDoc(user.documents, 'ASSURANCE', 'Assurance', 'primary')}
+                                        {user.documents && this.getDoc(user.documents, 'VIGNETTE', 'Vignette', 'info')}
+                                    </td>
+                                    <td>
+                                        {user.car && user.car.marque} - {user.car && user.car.model}
+                                        <br/>{user.car && user.car.capacite} L
+                                    </td>
                                     <td>
                                         <Button variant="info"
                                                 onClick={() => this.props.editUser(user._id)}>Edit</Button>

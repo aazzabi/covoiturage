@@ -10,7 +10,8 @@ import ParcelReducer from "./Parcel";
 import commentsReducer from "./Blog/commentReducer";
 import postsReducer from "./Blog/postReducer";
 import ClaimsReducers from "../services/Claims/ClaimsReducers";
-import CarsReducer from "./CarsReducer";
+import CarsReducer from "../services/Cars/CarsReducer";
+import DriversReducers from "../services/Drivers/DriversReducers";
 
 
 export default combineReducers({
@@ -22,6 +23,7 @@ export default combineReducers({
     users: UsersReducers,
     claims: ClaimsReducers,
     cars: CarsReducer,
+    drivers: DriversReducers,
     posts: postsReducer,
     comments: commentsReducer,
 });

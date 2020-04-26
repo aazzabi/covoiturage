@@ -54,7 +54,7 @@ class AllUsers extends React.Component {
         };
     };
 
-    imgUrl = '../../assets/uploads/users/';
+    imgUrl = 'D:/covoiturageImages/uploads/users/';
 
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
@@ -124,7 +124,7 @@ class AllUsers extends React.Component {
                             <Fragment key={user._id}>
                                 <tr>
                                     {user.avatar != null
-                                        ? <td><img className="avatar avatar-sm rounded-circle" src={this.imgUrl + user.avatar}/></td>
+                                        ? <td><img className="avatar avatar-sm rounded-circle" src={require('D:/covoiturageImages/uploads/users/' + user.avatar)}/></td>
                                         : <td><img className="avatar avatar-sm rounded-circle" src={require("assets/img/theme/team-1.jpg")}/></td>
                                     }
                                     <td>{user.username}</td>

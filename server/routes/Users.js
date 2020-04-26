@@ -31,8 +31,10 @@ router.get('/getAllRelationals', userController.getAllRelationals);
 router.post('/updateUser/:id', userController.updateUser);
 router.delete('/delete/:id', userController.deleteUser);
 router.get('/getUserById/:id', userController.getUserById);
-router.post('/refuseDriverRequest/:idUser', authorize(['ADMIN']), userController.becomeDriverRequest);
+router.delete('/refuseDriverRequest/:idRequest', userController.refuseDriverRequest);
+router.post('/acceptDriverRequest/:idRequest', userController.acceptDriverRequest);
 
+router.get('/getAllDriverRequest', userController.getAllDriverRequest);
 /*
 POST
 http://localhost:3000/users/becomeDriver/:idUser

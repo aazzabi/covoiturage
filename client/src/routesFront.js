@@ -5,15 +5,15 @@ import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
 import {Route} from "react-router-dom";
 import React from "react";
-import CreateParcel from "./frontoffice/Parcels/Create";
-import PackagesDetails from "./frontoffice/Parcels/PackageDetails/PackageDetails";
-import PostDetail from "./frontoffice/Blog/post_detail";
-import Packages from "./frontoffice/Parcels/Packages";
-import PostNew from "./frontoffice/Blog/post_new";
-import PostMine from "./frontoffice/Blog/post_mine";
-import PostList from "./frontoffice/Blog/listPosts";
-import ClaimAdd from "./frontoffice/Claims/ClaimAdd";
-import BecomeDriver from "./frontoffice/Drivers/BecomeDriver";
+import CreateParcel from "./FrontOffice/Parcels/Create";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
+import PostDetail from "./FrontOffice/Blog/post_detail";
+import Packages from "./FrontOffice/Parcels/Packages";
+import PostNew from "./FrontOffice/Blog/post_new";
+import PostMine from "./FrontOffice/Blog/post_mine";
+import PostList from "./FrontOffice/Blog/listPosts";
+import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
+import BecomeDriver from "./FrontOffice/Drivers/BecomeDriver";
 
 const routesFront = [
     {

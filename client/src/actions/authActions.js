@@ -137,6 +137,7 @@ export const getCurrentUser = () => {
                 dispatch({type: GET_LOGGED_USER, payload: result.data})
             }
         } catch (error) {
+            console.log(error);
             dispatch({type: GET_ERRORS, error})
         }
     }

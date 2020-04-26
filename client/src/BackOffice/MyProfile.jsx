@@ -19,8 +19,8 @@ import React from "react";
 import {Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Input, Row} from "reactstrap";
 // core components
 import {connect} from "react-redux";
-import {getCurrentUser, } from "../actions/authActions";
-import {updateUser, getUserById} from "../services/Users/UsersActions";
+import {getCurrentUser,} from "../actions/authActions";
+import {getUserById, updateUser} from "../services/Users/UsersActions";
 
 class MyProfile extends React.Component {
 
@@ -55,26 +55,32 @@ class MyProfile extends React.Component {
         if (state && action === 'PUSH') {
             return (
                 <div className="alert alert-success" role="alert" style={{marginBottom: 0}}>
-                    <strong>Oops!</strong>  user updated successfuly, changes will refreshed during your next login !
+                    <strong>Oops!</strong> user updated successfuly, changes will refreshed during your next login !
                 </div>
             );
         }
     }
 
+    componentDidCatch() {
+        this.props.history.push('/front/login');
+    }
+
     async componentWillMount() {
-        await this.props.getCurrentUser();
-        await this.props.getUserById(this.props.currentUser._id);
-        console.log(this.props.user);
-        console.log(this.props, 'props');
-        if (!this.props.currentUser) {
+        try {
+            await this.props.getCurrentUser();
+            await this.props.getUserById(this.props.currentUser._id);
+            console.log(this.props.user);
+            console.log(this.props, 'props');
+
+            await this.setState({
+                phone: this.props.user.phone,
+                email: this.props.user.email,
+                firstName: this.props.user.firstName,
+                lastName: this.props.user.lastName,
+            });
+        } catch {
             this.props.history.push('/front/login');
         }
-        await this.setState({
-            phone: this.props.user.phone,
-            email: this.props.user.email,
-            firstName: this.props.user.firstName,
-            lastName: this.props.user.lastName,
-        });
     }
 
     handleChange = (name, value) => {

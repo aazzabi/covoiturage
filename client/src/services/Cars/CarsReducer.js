@@ -1,4 +1,4 @@
-import {GET_MARQUES, GET_MODEL_BY_MARQUE} from "../actions/types";
+import {GET_MARQUES, GET_MODEL_BY_MARQUE} from "../../actions/types";
 
 const initialState = {
     marques: [],

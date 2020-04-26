@@ -21,7 +21,7 @@ import {
 import AuthHeader from "components/Headers/AuthHeader.jsx";
 import {connect} from "react-redux";
 import {confirmeDriverRequest, getCurrentUser} from "./../../actions/authActions"
-import {getAllMarques, getAllModelByMarque} from "./../../actions/CarsActions"
+import {getAllMarques, getAllModelByMarque} from "../../services/Cars/CarsActions"
 import './styles.css'
 
 class BecomeDriver extends React.Component {
