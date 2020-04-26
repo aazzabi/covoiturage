@@ -32,11 +32,13 @@ export const loginUser = (userData,  historyPush, historyReplace ) => dispatch =
         });
 };
 
-export const register = (userData, fd )=> dispatch => {
+export const register = (userData, file)=> dispatch => {
     axios
         .post("http://localhost:3000/register", userData)
         .then(res => {
-            if (fd != null) {
+            if (file != null) {
+                const fd = new FormData();
+                fd.append('image',file);
                 axios.post("http://localhost:3000/uploadUserImage/" + res.data._id, fd).then((r) => {});
             }
             dispatch({
