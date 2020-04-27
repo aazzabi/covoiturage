@@ -5,6 +5,8 @@ export const GET_PACKAGES_ERROR = "GET_PACKAGES_ERROR";
 export const GET_fetchPost_SUCCESS = "GET_fetchPost_SUCCESS";
 export const ADD_Request_Package = "ADD_Request_Package";
 export const GET_fetchPackagesByUserId = "GET_fetchPackagesByUserId";
+export const GET_fetch_Request = "GET_fetch_Request";
+
 
 export const getPackages = () => {
     return async (dispatch) => {
@@ -44,6 +46,14 @@ export function fetchPackagesByUserId(id) {
     return async (dispatch) => {
         const result = await Axios.get('http://localhost:3000/packages/myParcels/' + id);
         dispatch({type: GET_fetchPackagesByUserId, payload: result.data});
+    }
+}
+export function fetchRequest(id) {
+    return async (dispatch) => {
+        const result = await Axios.get('http://localhost:3000/packages/myrequests/' + id);
+        console.log(id)
+        console.log(result)
+        dispatch({type: GET_fetch_Request, payload: result.data});
     }
 }
 

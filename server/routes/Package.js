@@ -13,6 +13,8 @@ router.use(cors());
 router.post('/add', packageController.add);
 router.post('/addrequest', packageController.addRequest);
 router.get('/myparcels/:id', packageController.getMyPackage);
+router.get('/myrequests/:id', packageController.getMyRequest);
+
 
 router.put('/edit/:id', packageController.editPackage);
 router.get('/All', packageController.getAllPackage);

@@ -1,5 +1,5 @@
 import {
-    ADD_Request_Package, GET_fetchPackagesByUserId,
+    ADD_Request_Package, GET_fetch_Request, GET_fetchPackagesByUserId,
     GET_fetchPost_SUCCESS,
     GET_PACKAGES_ERROR,
     GET_PACKAGES_SUCCESS
@@ -9,6 +9,7 @@ const initialState = {
     add: {},
     packages: [],
     myparcels: [],
+    myrequests:[],
     error: null,
     parcel: {}
 }
@@ -18,10 +19,10 @@ export default function packages(state = initialState, action) {
         case ADD_Request_Package:
             return {...state, add: action.payload};
 
-        case GET_PACKAGES_SUCCESS:
+        case GET_fetch_Request:
             return {
                 ...state,
-                packages: action.payload,
+                myrequests: action.payload,
             };
 
         case GET_PACKAGES_ERROR:
@@ -39,6 +40,11 @@ export default function packages(state = initialState, action) {
             return {
                 ...state,
                 parcel: action.payload
+            };
+        case GET_PACKAGES_SUCCESS:
+            return {
+                ...state,
+                packages: action.payload,
             };
         default:
             return state;

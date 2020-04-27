@@ -1,26 +1,26 @@
 var Package = require('../models/Parcels');
-var RequestParcels = require('../models/RequestParcels');
+var ReqParcels = require('../models/RequestParcels');
 var User = require('../models/User');
 
-exports.add = async (req, res, next) =>{
+exports.add = async (req, res, next) => {
     const user = await User.findOne({"_id": req.body.sender});
-
+    console.log(user)
     Package.create(
         {
-        title: req.body.title,
-        type: req.body.type,
-        size: req.body.size,
-        price: req.body.price,
-        sender: user,
-        departure: req.body.departure,
-        weight: req.body.weight,
-        arrival: req.body.arrival,
-        valide: req.body.valide,
-        files: req.body.files,
-        description: req.body.description,
-        sendingCode: makeid(5),
-        receiveingCode: makeid(5)
-    }
+            title: req.body.title,
+            type: req.body.type,
+            size: req.body.size,
+            price: req.body.price,
+            sender: user,
+            departure: req.body.departure,
+            weight: req.body.weight,
+            arrival: req.body.arrival,
+            valide: req.body.valide,
+            files: req.body.files,
+            description: req.body.description,
+            sendingCode: makeid(5),
+            receiveingCode: makeid(5)
+        }
     ).then((data) => {
         res.set('Content-Type', 'application/json');
         res.status(202).json(data);
@@ -34,10 +34,11 @@ exports.add = async (req, res, next) =>{
 }
 
 exports.addRequest = async (req, res, next) => {
+    const user = await User.findOne({"_id": req.body.user});
     const parcelId = await Package.findOne({"_id": req.body.parcelId});
-    const user = await User.findOne({"_id": req.body.userId});
-    console.log(req.body)
-    RequestParcels.create(
+    userid = await User.findById(req.body.user);
+
+    ReqParcels.create(
         {
             suggestion: req.body.suggestion,
             message: req.body.message,
@@ -71,9 +72,16 @@ exports.getByIdPackage = async (req, res, next) => {
 };
 exports.getMyPackage = async (req, res, next) => {
     const user = await User.findOne({"_id": req.params.id});
-
-    const packages = await Package.find({sender:user });
+    const packages = await Package.find({sender: user});
     res.json(packages);
+
+};
+exports.getMyRequest = async (req, res, next) => {
+    const RequestParcels = await Package.findOne({"_id": req.params.id});
+    const requests = await ReqParcels.find({parcelId: RequestParcels});
+    console.log(requests)
+
+    res.json(requests);
 
 };
 exports.editPackage = async function (req, res, next) {

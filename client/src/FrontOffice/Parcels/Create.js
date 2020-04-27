@@ -122,7 +122,7 @@ class CreateParcel extends Component {
         console.log(parcel);
         axios.post('http://localhost:3000/packages/add', parcel)
     .then(res => {
-            this.props.history.push("/front/parcels");
+            this.props.history.push("/front/myParcels");
             console.log(this.props.currentUser._id)
         })
             .catch(err => console.log(err));
@@ -137,6 +137,7 @@ class CreateParcel extends Component {
     }
     componentDidMount() {
         this.props.getCurrentUser();
+        console.log(this.props)
     }
 
     render() {
