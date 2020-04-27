@@ -54,15 +54,17 @@ class Register extends React.Component {
             password: '',
             phone: '',
             gender: '',
+            file: {},
 
             error: null,
             response: {},
         }
     }
 
-    confirme() {
-      console.log(this.state);
-      this.props.register({
+    async confirme() {
+      const fd = new FormData();
+      fd.append('image', this.state.file[0]);
+      const c = await this.props.register({
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         username: this.state.username,
@@ -70,8 +72,7 @@ class Register extends React.Component {
         password: this.state.password,
         phone: this.state.phone,
         gender: this.state.gender,
-      });
-      console.log('done jsx');
+      }, fd);
       this.props.history.push('/front/login');
     }
 
@@ -237,6 +238,9 @@ class Register extends React.Component {
                                   onBlur={() => this.setState({focusedPhone: false})}
                               />
                             </InputGroup>
+                          </FormGroup>
+                          <FormGroup>
+                            <Input type="file" onChange={ (e) => this.handleChange('file', e.target.files) } />
                           </FormGroup>
                           <FormLabel component="legend">Gender</FormLabel>
                           <RadioGroup aria-label="gender" name="gender1" row

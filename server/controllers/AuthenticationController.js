@@ -124,7 +124,7 @@ var login = async (req, res) => {
         );
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("server Error");
+        res.status(500).json({ 'status': 'error', 'message': 'Invalid Credentials' });
     }
 };
 

@@ -1,14 +1,5 @@
 import Axios from "axios";
-import {
-    DELETE_USER,
-    GET_ALL,
-    GET_DRIVERS,
-    GET_USERS,
-    GET_FINANCIALS,
-    GET_RELATIONALS,
-    GET_TECHNICALS,
-    GET_USER, GET_CAR
-} from "./UserTypes";
+import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS, GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS, UPDATE_USER, GET_USER_BY_ID, GET_USER, GET_CAR } from "./UserTypes";
 import {GET_ERRORS} from "../../actions/types";
 
 
@@ -18,6 +9,17 @@ export const getAll = () => {
         try {
             const result = await Axios.get(`http://localhost:3000/users/getAll`);
             dispatch({type: GET_ALL, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+// get users by id
+export const getUserById = (userId) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/users/getUserById/`+userId);
+            dispatch({type: GET_USER_BY_ID, payload: result.data})
         } catch (error) {
             dispatch({type: GET_ERRORS, error})
         }
@@ -119,6 +121,35 @@ export const deleteUser = id => dispatch => {
                 })
             );
 };
+
+
+
+// editClaim
+export function updateUser({phone, firstName, lastName,userId}, historyPush, historyReplace) {
+    return function (dispatch) {
+        console.log({phone, firstName, lastName, userId});
+        console.log(`http://localhost:3000/users/updateUser/` + userId);
+        Axios.post(`http://localhost:3000/users/updateUser/` + userId, {
+            phone: phone,
+            lastName: lastName,
+            firstName: firstName,
+        }, {})
+            .then((response) => {  // If create post succeed, navigate to the post detail page
+                dispatch({
+                    type: UPDATE_USER,
+                    payload: response.data,
+                });
+                historyPush(`/admin/profile/`);
+            })
+            .catch(({response}) => {  // If create post failed, alert failure message
+                console.log(response, 'error');
+                historyReplace('/admin/profile/', {
+                    time: new Date().toLocaleString(),
+                    message: response,
+                });
+            });
+    }
+}
 
 
 

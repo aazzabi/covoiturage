@@ -29,8 +29,11 @@ import AllClaims from "./BackOffice/Claims/AllClaims.jsx";
 import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
 import EditClaim from "./BackOffice/Claims/EditClaim.jsx";
 import Create from "./FrontOffice/Parcels/Create";
-import Packages from "./FrontOffice/Parcels/Packages";
 import PackageDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
+import MyProfile from "./BackOffice/MyProfile.jsx";
+import CreateParcel from "./FrontOffice/Parcels/Create";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
+import Packages from "./FrontOffice/Parcels/Packages";
 
 const routes = [
   {
@@ -139,9 +142,15 @@ const routes = [
       {
         path: "/profile",
         name: "Profile",
+        component: MyProfile,
+        layout: "/admin"
+      },
+      {
+        path: "/profileOld",
+        name: "Profile",
         component: Profile,
         layout: "/admin"
-      }, 
+      },
       {
         path: "/siteselector",
         name: "SiteSelector",

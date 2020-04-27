@@ -2,11 +2,11 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER} from "./types";
+import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER, DRIVER_REQUEST} from "./types";
 import {GET_USERS} from "../services/Users/UserTypes";
 
 // Login - Get User Token
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData,  historyPush, historyReplace ) => dispatch => {
     axios
         .post("http://localhost:3000/login", userData)
         .then(res => {
@@ -23,21 +23,22 @@ export const loginUser = userData => dispatch => {
             // Set current user
             dispatch(setCurrentUser(decoded));
         })
-        .catch(err => {
-                console.log(err);
-                dispatch({
-                    type: GET_ERRORS,
-                    payload: err.response
-                });
-            }
-        );
+        .catch(({response}) => {  // If create post failed, alert failure message
+            console.log(response, 'error');
+            historyReplace('/front/login', {
+                time: new Date().toLocaleString(),
+                message: response.data.message,
+            });
+        });
 };
 
-export const register = userData => dispatch => {
+export const register = (userData, fd )=> dispatch => {
     axios
         .post("http://localhost:3000/register", userData)
         .then(res => {
-            console.log('done action');
+            if (fd != null) {
+                axios.post("http://localhost:3000/uploadUserImage/" + res.data._id, fd).then((r) => {});
+            }
             dispatch({
                 type: REGISTER,
                 payload: res.data
@@ -49,6 +50,42 @@ export const register = userData => dispatch => {
                 payload: err
             })
         );
+};
+
+
+export const confirmeDriverRequest = (userId, carData, fd , historyPush, historyReplace )=> dispatch => {
+    axios
+        .post("http://localhost:3000/users/becomeDriver/"+ userId, carData)
+        .then(res => {
+            if ((res.data.status !== 400) && (fd != null)) {
+                axios.post("http://localhost:3000/users/uploadDocumentForDriver/" + userId, fd).then((r) => {
+                    console.log('r', r);
+                }).catch(err => {
+                        console.log('catch files!', err);
+                        dispatch({
+                            type: GET_ERRORS,
+                            payload: err
+                        });
+                    }
+                );
+            } else {
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: res.data.message
+                })
+            }
+            console.log('res', res);
+            dispatch({
+                type: DRIVER_REQUEST,
+                payload: res.data
+            })
+        }).catch(({response}) => {  // If create post failed, alert failure message
+            console.log(response, 'error');
+            historyReplace('/front/becomeDriver', {
+                time: new Date().toLocaleString(),
+                message: response.data.message,
+            });
+        });
 };
 
 // Set logged in user

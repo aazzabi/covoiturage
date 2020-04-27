@@ -13,6 +13,7 @@ router.delete('/delete/:id', rideController.deleteRide);
 router.get('/getAll', rideController.getAll);
 router.get('/price/:ori/:des', rideController.getPrice);
 router.get('/allTravelersByRide/:idRide', rideController.getAllTravelers);
+router.get('/joinedRide/:idUser', rideController.joinedRides);
 router.post('/addTravelerById/:idUser/:idRide', rideController.addTravelerRide);
 router.delete('/removeTravelerById/:idUser/:idRide', rideController.removeTravelerRide);
 router.get('/getRidesByDiver/:idUser', rideController.getRidesByDriver);

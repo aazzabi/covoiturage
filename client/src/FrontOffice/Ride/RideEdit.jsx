@@ -64,6 +64,13 @@ class RideEdit extends Component {
             ],
             currentUser: {},
             ride: {},
+            startTimeError: "",
+
+            startTimeStyle: "",
+
+            nbrPlacesError:"",
+
+            nbrPlacesStyle:"",
         };
 
     }
@@ -91,18 +98,38 @@ class RideEdit extends Component {
 
     async componentWillMount() {
         await this.props.getCurrentUser();
-        await this.props.getRide(this.props.match.params.id);
-        console.log(this.props, 'props');
-        console.log(this.props.ride, 'props.claim.title');
-        this.setState({
-            startTime: this.props.ride.startTime,
-            origin: this.props.ride.origin,
-            destination: this.props.ride.destination,
-            nbrPlaces: this.props.ride.nbrPlaces,
-            description: this.props.ride.description,
-            packageAllowed: this.props.ride.packageAllowed,
-            prixPerPlace: this.props.ride.prixPerPlace,
-        })
+
+
+        if (this.props.currentUser._id === undefined){
+            this.props.history.push('/front/login');
+        }else {
+            await this.props.getRide(this.props.match.params.id);
+
+            console.log(this.props.ride.driver)
+
+            if (this.props.currentUser._id !== this.props.ride.driver){
+
+                this.props.history.push('/front/ride/search');
+
+            }
+            else{
+
+                console.log(this.props, 'props');
+                this.setState({
+                    startTime: this.props.ride.startTime,
+                    origin: this.props.ride.origin,
+                    destination: this.props.ride.destination,
+                    nbrPlaces: this.props.ride.nbrPlaces,
+                    description: this.props.ride.description,
+                    packageAllowed: this.props.ride.packageAllowed,
+                    prixPerPlace: this.props.ride.prixPerPlace,
+                })
+
+            }
+
+        }
+
+
     }
 
     handleChange = (name, value) => {
@@ -110,7 +137,7 @@ class RideEdit extends Component {
     };
 
     onChangeRideStartTime = (date) => {
-        const valueOfInput = date.format();
+        const valueOfInput = date ;
         this.setState({startTime: valueOfInput});
     };
 
@@ -170,28 +197,73 @@ class RideEdit extends Component {
         });
 
     }
-    confirme() {
+
+
+
+
+
+
+    validateForm() {
+
+        let test = true;
+        let formValid = true;
+        let form = {...this.state};
+        console.log('form',form)
+        if (form.startTime < new Date()) {
+
+            console.log(form.startTime)
+            test = false;
+            this.setState({startTimeError: "please select a valid date"});
+            this.setState({startTimeStyle: "error"});
+        } else {
+            console.log(form.startTime)
+            let date = new Date()
+            console.log(date)
+
+            this.setState({startTimeError: ""});
+            this.setState({startTimeStyle: ""});
+        }
+        if (form.nbrPlaces > 4) {
+            test = false;
+            this.setState({nbrPlacesError: "you can't pick more then 4 travellers"});
+            this.setState({nbrPlacesStyle: "error"});
+        }
+
+        console.log(test);
+
+        console.log(formValid, 'test2')
+        return test;
+    }
+
+
+    confirme(e) {
+        e.preventDefault();
         const u = this.props.currentUser;
         //     const currentUser = jwt_decode(localStorage.getItem("jwtToken").User);
         console.log(this.props.currentUser._id, 'currentUser');
-
+        let formValid = this.validateForm();
         if (this.props.currentUser) {
-            this.props.EditRide({
-                startTime: this.state.startTime,
-                origin: this.state.origin,
-                destination: this.state.destination,
-                nbrPlaces: this.state.nbrPlaces,
-                description: this.state.description,
-                packageAllowed: this.state.packageAllowed,
-                prixPerPlace: this.state.prixPerPlace,
-                rideId: this.props.match.params.id,
-            }, (path) => {  // callback 1: history push
-                this.props.history.push(path);
-            }, (path, state) => {
-                this.props.history.replace(path, state);
-            });
-            console.log('done jsx');
-            this.props.history.push('/front/login');
+            if (formValid) {
+
+                this.props.EditRide({
+                    startTime: this.state.startTime,
+                    origin: this.state.origin,
+                    destination: this.state.destination,
+                    nbrPlaces: this.state.nbrPlaces,
+                    description: this.state.description,
+                    packageAllowed: this.state.packageAllowed,
+                    prixPerPlace: this.state.prixPerPlace,
+                    rideId: this.props.match.params.id,
+                }, (path) => {  // callback 1: history push
+                    this.props.history.push(path);
+                }, (path, state) => {
+                    this.props.history.replace(path, state);
+                });
+                console.log('done jsx');
+                this.props.history.push('/front/login');
+
+            }
+
         } else {
             return (
                 <div className="alert alert-danger" role="alert">
@@ -233,6 +305,11 @@ class RideEdit extends Component {
                                                     <Row>
                                                         <Col md="6">
                                                             <FormGroup>
+
+                                                                <InputGroup
+                                                                    className="input-group-merge input-group-alternative mb-3"
+                                                                    className={this.state.startTimeStyle}
+                                                                >
                                                                 <ReactDatetime
                                                                     inputProps={{
                                                                         placeholder: this.props.ride.startTime,
@@ -242,6 +319,8 @@ class RideEdit extends Component {
                                                                     onChange={this.onChangeRideStartTime}
                                                                     showTimeSelect
                                                                 />
+                                                                </InputGroup>
+                                                                <span className="errorText">{this.state.startTimeError}</span>
                                                             </FormGroup>
 
 
@@ -271,9 +350,8 @@ class RideEdit extends Component {
                                                             <FormGroup>
 
                                                                 <InputGroup
-                                                                    className={classnames("input-group-merge", {
-                                                                        focused: this.state.yourName
-                                                                    })}
+                                                                    className="input-group-merge input-group-alternative mb-3"
+                                                                    className={this.state.nbrPlacesStyle}
                                                                 >
                                                                     <InputGroupAddon addonType="prepend">
                                                                         <InputGroupText>
@@ -281,12 +359,14 @@ class RideEdit extends Component {
                                                                         </InputGroupText>
                                                                     </InputGroupAddon>
                                                                     <Input
-                                                                        placeholder="Places Number Max 4"
+                                                                        placeholder={this.props.ride.nbrPlaces}
                                                                         id="standard-start-adornment"
-                                                                        value={this.props.ride.nbrPlaces}
+                                                                        value={this.state.nbrPlaces}
                                                                         onChange={event => this.handleChange('nbrPlaces', event.target.value)}
                                                                     />
                                                                 </InputGroup>
+                                                                <span className="errorText">{this.state.nbrPlacesError}</span>
+
                                                             </FormGroup>
 
                                                             <FormGroup>

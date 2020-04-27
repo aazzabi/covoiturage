@@ -180,20 +180,22 @@ var becomeDriverRequest = async (req, res) => {
                     },
                     (error) => res.status(200).send(error));
             } else {
-                res.status(200).send({"status": 400, "message": "This user already have a car"});
+                res.status(400).send({"status": 400, "message": "This user already have a car"});
             }
         } else {
-            res.status(202).json({"status": "error", "message": "request exists with this user"});
+            res.status(400).json({"status": 400, "message": "request exists with this user"});
         }
-
     } else {
-        res.status(200).send({"status": 400, "message": "This user doesn't exist"});
+        res.status(400).send({"status": 400, "message": "This user doesn't exist"});
     }
 };
 
 var deleteUser = (req, res) => {
     user.remove({"_id": req.params.id})
-        .then((data) => res.status(200).send({"status": 400, "message": "This user already have a car"}), (error) => console.log(error));
+        .then((data) => res.status(200).send({
+            "status": 400,
+            "message": "This user already have a car"
+        }), (error) => console.log(error));
 };
 var refuseDriverRequest = (req, res) => {
     driverRequest.remove({"_id": req.params.idUser})

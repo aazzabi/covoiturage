@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-import {ADD_MSG, ADD_RIDE, ADD_TRAVELLER, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE} from "./RideTypes";
+import {ADD_MSG, ADD_RIDE, ADD_TRAVELLER, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE, GET_TRAVELLERS} from "./RideTypes";
 import {GET_ERRORS} from "../../actions/types";
 
 
@@ -75,12 +75,50 @@ export const getRide = (idRide) => {
     }
 };
 
+export const confirmTraveller = (idRide,code) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.put(`http://localhost:3000/ride//confirmTraveler/` + idRide+`/`+code);
+            dispatch({type: EDIT_RIDE, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+
 export const myRides = (idDriver) => {
     console.log(idDriver)
     return async (dispatch) => {
         try {
             const result = await Axios.get(`http://localhost:3000/ride/getRidesByDiver/` + idDriver);
             dispatch({type: GET_ALL, payload: result.data})
+            console.log(result.data)
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+
+
+export const joinedRides = (idUser) => {
+    console.log(idUser)
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/ride/joinedRide/` + idUser);
+            dispatch({type: GET_ALL, payload: result.data})
+            console.log(result.data)
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+
+
+export const myTravellers = (idRide) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.get(`http://localhost:3000/ride/allTravelersByRide/` + idRide);
+            dispatch({type: GET_TRAVELLERS, payload: result.data})
             console.log(result.data)
         } catch (error) {
             dispatch({type: GET_ERRORS, error})
@@ -110,13 +148,28 @@ export const userInRide = (idUser,idRide) => {
             dispatch({type: GET_ERRORS, error})
         }
     }
-}
+};
 
 export const deleteRide = id => dispatch => {
     Axios.delete(`http://localhost:3000/ride/delete/${id}`).then(res => {
             dispatch({
                 type: DELETE_RIDE,
                 payload: id
+            })
+        }
+    ).catch(err =>
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    );
+};
+
+export const deleteTraveller = (idUser,idRide) => dispatch => {
+    Axios.delete(`http://localhost:3000/ride/removeTravelerById/${idUser}/${idRide}`).then(res => {
+            dispatch({
+                type: DELETE_RIDE,
+                payload: idUser,idRide
             })
         }
     ).catch(err =>

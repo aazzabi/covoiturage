@@ -25,7 +25,7 @@ import ReactDatetime from "react-datetime";
 class Packages extends Component {
 
     state = {
-        pageSize: 5,
+        pageSize: 10,
         currentPage: 1,
         searchFilter: '',
         searchFilter2: "",

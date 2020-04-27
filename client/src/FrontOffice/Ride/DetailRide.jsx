@@ -5,7 +5,7 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Col,
+    Col, Modal,
     Row, UncontrolledAlert
 } from "reactstrap";
 import {getCurrentUser} from "../../actions/authActions"
@@ -21,6 +21,7 @@ class DetailRide extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            notificationModal: false,
             msg: {},
             traveler:"",
             btn:"",
@@ -41,6 +42,12 @@ class DetailRide extends Component {
             });
         }
     }
+
+    toggleModal = state => {
+        this.setState({
+            [state]: !this.state[state]
+        });
+    };
 
     renderAlert() {
         const {state} = this.props.history.location;
@@ -183,15 +190,68 @@ class DetailRide extends Component {
                     {
                         ride.nbrPlaces === _.map(ride.travelers, traveler => {
                         }).length
-                            ? this.state.btn = <Button
-                                className="mr-lg-6"
-                                color="danger"
-                                href="#pablo"
-                                size="lm"
-                            >
-                                <i className={smile}/>
+                            ? this.state.btn =   <Col md="4">
+                                <Button
+                                    block
+                                    className="mb-3"
+                                    color="danger"
+                                    onClick={() => this.toggleModal("notificationModal")}
+                                >
+                                    more information
+                                </Button>
+                                <Modal
+                                    className="modal-dialog-centered modal-danger"
+                                    contentClassName="bg-gradient-danger"
+                                    isOpen={this.state.notificationModal}
+                                    toggle={() => this.toggleModal("notificationModal")}
+                                >
+                                    <div className="modal-header">
+                                        <h6
+                                            className="modal-title"
+                                            id="modal-title-notification"
+                                        >
+                                            Your attention is required
+                                        </h6>
+                                        <button
+                                            aria-label="Close"
+                                            className="close"
+                                            data-dismiss="modal"
+                                            type="button"
+                                            onClick={() =>
+                                                this.toggleModal("notificationModal")
+                                            }
+                                        >
+                                            <span aria-hidden={true}>×</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <div className="py-3 text-center">
+                                            <i className="ni ni-satisfied ni-3x" />
+                                            <h4 className="heading mt-4">
+                                                we wish you a good day!
+                                            </h4>
+                                            <p>
+                                                we are sorry sir this ride is completely full keep
+                                                 looking for more rides , you will find what you want.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="modal-footer">
 
-                            </Button>
+                                        <Button
+                                            className="text-white ml-auto"
+                                            color="link"
+                                            data-dismiss="modal"
+                                            type="button"
+                                            onClick={() =>
+                                                this.toggleModal("notificationModal")
+                                            }
+                                        >
+                                            Close
+                                        </Button>
+                                    </div>
+                                </Modal>
+                            </Col>
                             : this.state.btn = <Button
                                 className="mr-lg-6"
                                 color="success"
@@ -255,6 +315,7 @@ class DetailRide extends Component {
                 <Row className="justify-content-center">
 
                 </Row>
+
                 <Row style={{marginTop: 200}} className="justify-content-center">
                     <Col className="order-xl-2" xl="6">
 
@@ -264,7 +325,7 @@ class DetailRide extends Component {
                             <Row className="justify-content-center">
                                 <Col className="order-lg-2" lg="3">
                                     <div className="card-profile-image">
-                                        <a href="#pablo" onClick={e => e.preventDefault()}>
+                                        <a href="#" onClick={e => e.preventDefault()}>
                                             <img
                                                 alt="..."
                                                 className="rounded-circle"
@@ -281,12 +342,13 @@ class DetailRide extends Component {
                                     <Button
                                         className="float-right"
                                         color="default"
-                                        href="#pablo"
+                                        href="#"
                                         onClick={e => e.preventDefault()}
                                         size="sm"
                                     >
                                         Contact {driver.username}
                                     </Button>
+
                                 </div>
                             </CardHeader>
                             <CardBody className="pt-0">

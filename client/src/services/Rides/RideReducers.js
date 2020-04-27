@@ -1,9 +1,10 @@
-import {ADD_MSG, ADD_RIDE, ADD_TRAVELLER, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE} from "./RideTypes";
+import {ADD_MSG, ADD_RIDE, ADD_TRAVELLER, DELETE_RIDE, EDIT_RIDE, GET_ALL, GET_RIDE, GET_TRAVELLERS} from "./RideTypes";
 
 const initialState = {
     msg: {},
     addRide: {},
     all: [],
+    travellers: [],
     ride: {},
 };
 export default function (state = initialState, action) {
@@ -18,7 +19,8 @@ export default function (state = initialState, action) {
             return {...state, ride: action.payload};
         case GET_ALL:
             return {...state, all: action.payload};
-
+        case GET_TRAVELLERS:
+            return {...state, travellers: action.payload}
         case GET_RIDE:
             return {...state, ride: action.payload};
         case DELETE_RIDE:

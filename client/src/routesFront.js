@@ -5,6 +5,11 @@ import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
 import {Route} from "react-router-dom";
 import React from "react";
+import RideAdd from "./FrontOffice/Ride/RideAdd";
+import RideEdit from "./FrontOffice/Ride/RideEdit";
+import MyRides from "./FrontOffice/Ride/MyRides";
+import RideSearch from "./FrontOffice/Ride/RideSearch";
+import DetailRide from "./FrontOffice/Ride/DetailRide";
 import CreateParcel from "./FrontOffice/Parcels/Create";
 import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
 import PostDetail from "./FrontOffice/Blog/post_detail";
@@ -12,13 +17,19 @@ import Packages from "./FrontOffice/Parcels/Packages";
 import PostNew from "./FrontOffice/Blog/post_new";
 import PostMine from "./FrontOffice/Blog/post_mine";
 import PostList from "./FrontOffice/Blog/listPosts";
-import RideAdd from "./FrontOffice/Ride/RideAdd";
-import RideEdit from "./FrontOffice/Ride/RideEdit";
-import MyRides from "./FrontOffice/Ride/MyRides";
-import RideSearch from "./FrontOffice/Ride/RideSearch";
-import DetailRide from "./FrontOffice/Ride/DetailRide";
+import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
+import BecomeDriver from "./FrontOffice/Drivers/BecomeDriver";
+import MyTravellers from "./FrontOffice/Ride/MyTravellers";
+import JoinedRides from "./FrontOffice/Ride/JoinedRides";
 
 const routesFront = [
+    {
+        path: "/ride/travellers/:id",
+        name: "myTravellers",
+        icon: "ni ni-calendar-grid-58 text-red",
+        component: MyTravellers,
+        layout: "/front"
+    },
     {
         path: "/ride/details/:id",
         name: "ride",
@@ -51,6 +62,12 @@ const routesFront = [
         layout: "/front"
     },
     {
+        path: "/ride/joinedRides",
+        name: "joinedRides",
+        component: JoinedRides,
+        layout: "/front"
+    },
+    {
         path: "/parcels/add",
         name: "Packages",
         icon: "ni ni-calendar-grid-58 text-red",
@@ -64,11 +81,16 @@ const routesFront = [
         component: Packages,
         layout: "/front"
     },
-
     {
         path: "/login",
         name: "Login",
         component: Login,
+        layout: "/front"
+    },
+    {
+        path: "/becomeDriver",
+        name: "Become Driver",
+        component: BecomeDriver,
         layout: "/front"
     },
     {

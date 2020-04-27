@@ -74,6 +74,7 @@ class Notifications extends React.Component {
     };
     this.refs.notificationAlert.notificationAlert(options);
   };
+
   basicAlert = () => {
     this.setState({
       alert: (

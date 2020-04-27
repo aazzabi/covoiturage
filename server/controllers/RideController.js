@@ -357,6 +357,33 @@ var removeTravelerRide = async (req, res, next) => {
     }
 };
 
+
+var joinedRides = async (req, res, next) => {
+
+    rides = await ride.find({});
+    userid = await user.findById(req.params.idUser);
+    var i;
+    var j;
+    var fetchRides = []
+    for (i = 0; i < rides.length; i++) {
+
+            for(j = 0; j < rides[i].travelers.length; j++){
+
+                if (userid.id.toString() === rides[i].travelers[j].user._id.toString()) {
+
+                    fetchRides.push(rides[i]);
+                   console.log(rides[i].travelers[j])
+
+                }
+            }
+
+
+    }
+
+    res.set('Content-Type', 'application/json');
+    res.status(202).json(fetchRides);
+};
+
 var getRidesByDriver = (req, res, next) => {
 
     ride.find({"driver": req.params.idUser}).sort('rideStartTime')
@@ -454,6 +481,7 @@ var getPrice = (req, res, next) => {
 
 
 module.exports = {
+    joinedRides,
     userInRide,
     getAll,
     getById,

@@ -11,6 +11,7 @@ import commentsReducer from "./Blog/commentReducer";
 import postsReducer from "./Blog/postReducer";
 import ClaimsReducers from "../services/Claims/ClaimsReducers";
 import RideReducers from "../services/Rides/RideReducers";
+import CarsReducer from "./CarsReducer";
 
 
 export default combineReducers({
@@ -22,6 +23,7 @@ export default combineReducers({
     alert: AlertReducer,
     users: UsersReducers,
     claims: ClaimsReducers,
+    cars: CarsReducer,
     posts: postsReducer,
     comments: commentsReducer,
 });

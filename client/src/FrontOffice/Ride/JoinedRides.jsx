@@ -28,7 +28,7 @@ import jwt_decode from "jwt-decode";
 import Pagination from "./Pagination";
 import {getCurrentUser} from "./../../actions/authActions"
 import {Link, withRouter} from 'react-router-dom'
-import {deleteRide, myRides, myTravellers} from "../../services/Rides/RideAction";
+import {deleteRide, deleteTraveller, joinedRides, myRides, myTravellers} from "../../services/Rides/RideAction";
 import AuthHeader from "../../components/Headers/AuthHeader";
 import Moment from 'moment';
 
@@ -63,7 +63,7 @@ const pagination = paginationFactory({
 
 const {SearchBar} = Search;
 
-class MyRides extends React.Component {
+class JoinedRides extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -92,16 +92,10 @@ class MyRides extends React.Component {
             this.props.history.push('/front/login');
         }else {
 
-            if (this.props.currentUser.role !== 'DRIVER'){
-
-                this.props.history.push('/front/ride/search');
-
-            }
-            else{
-                this.props.myRides(this.state.currentUser._id);
+                this.props.joinedRides(this.state.currentUser._id);
                 console.log(this.state.all)
 
-            }
+
 
         }
 
@@ -110,7 +104,9 @@ class MyRides extends React.Component {
 
     deleteHandler(e, elementId) {
         e.preventDefault();
-        this.props.deleteRide(elementId);
+        this.props.deleteTraveller(this.state.currentUser._id,elementId);
+        window.location.reload(false);
+
     }
 
 
@@ -132,7 +128,7 @@ class MyRides extends React.Component {
             return (
 
                 <>
-                    <AuthHeader title="My Rides" lead=""/>
+                    <AuthHeader title="Rides" lead=""/>
                     <Container className="mt--8 pb-5">
                         <Row className="justify-content-center">
 
@@ -142,7 +138,7 @@ class MyRides extends React.Component {
                                     <Card>
                                         <CardHeader>
 
-                                            <h3 className="mb-0">My Rides</h3>
+                                            <h3 className="mb-0">Joined Rides</h3>
                                         </CardHeader>
 
                                         <CardBody>
@@ -194,30 +190,6 @@ class MyRides extends React.Component {
                                                                         </Button>
                                                                     </Link>
 
-                                                                    <Link to={`/front/ride/travellers/${ride._id}`}>
-                                                                        <Button style={{marginRight: 2}}
-                                                                                className="btn-icon-only rounded-circle"
-                                                                                color="twitter"
-                                                                                type="button"
-                                                                        >
-                                                                    <span className="btn-inner--icon">
-                                                                    <i className="fab fa fa-users" />
-                                                                    </span>
-                                                                        </Button>
-                                                                    </Link>
-
-                                                                    <Link to={`/front/ride/edit/${ride._id}`}>
-                                                                    <Button style={{marginRight: 2}}
-                                                                        className="btn-icon-only rounded-circle"
-                                                                        color="facebook"
-                                                                        type="button"
-                                                                    >
-                                                                    <span className="btn-inner--icon">
-                                                                    <i className="fab fa fa-pen" />
-                                                                    </span>
-                                                                    </Button>
-                                                                    </Link>
-
                                                                     <Button
                                                                         onClick={e => this.deleteHandler(e, ride._id)}
                                                                         className="btn-icon-only rounded-circle"
@@ -266,4 +238,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default withRouter(connect(mapStateToProps, {deleteRide,  myRides , getCurrentUser})(MyRides));
+export default withRouter(connect(mapStateToProps, {deleteTraveller,  joinedRides , getCurrentUser})(JoinedRides));
