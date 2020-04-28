@@ -13,6 +13,7 @@ import PostMine from "./FrontOffice/Blog/post_mine";
 import PostList from "./FrontOffice/Blog/listPosts";
 import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
 import MyParcel from "./FrontOffice/Parcels/myparcels";
+import EditPackage from "./FrontOffice/Parcels/EditPackage";
 
 const routesFront = [
     {
@@ -23,9 +24,15 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/parcels/:id",
+        path: "/parcels/details/:id",
         name: "view parcels",
         component: PackagesDetails,
+        layout: "/front"
+    },
+    {
+        path: "/parcels/edit/:id",
+        name: "edit parcels",
+        component: EditPackage,
         layout: "/front"
     },
     {
@@ -35,7 +42,7 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/parcels",
+        path: "/parcels/all/",
         name: "Packages",
         icon: "ni ni-calendar-grid-58 text-red",
         component: Packages,

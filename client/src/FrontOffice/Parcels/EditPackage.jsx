@@ -1,27 +1,33 @@
-import React, {Component, useCallback} from "react";
-import axios from 'axios';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {reduxForm} from 'redux-form';
 import {
     Button,
+    Card,
+    CardBody,
+    CardHeader,
+    Col,
+    Container,
     Form,
     FormGroup,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
+    Input,
+    InputGroup, InputGroupAddon, InputGroupText,
     Label,
-    Input, Col, Row, CardBody, Card, CardHeader, Container
-} from 'reactstrap';
-import PlacesAutocomplete from "./GAutoComplete";
+    Row
+} from "reactstrap";
+import {getCurrentUser} from "./../../actions/authActions"
+import axios from "axios";
 import AuthHeader from "../../components/Headers/AuthHeader";
-import {DropzoneArea, DropzoneDialog} from 'material-ui-dropzone'
+import PlacesAutocomplete from "../Parcels/GAutoComplete";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import {connect} from "react-redux";
-import {addClaim} from "../../services/Claims/ClaimsAction";
-import {getCurrentUser} from "../../actions/authActions";
-class CreateParcel extends Component {
+import {DropzoneArea} from "material-ui-dropzone";
+import {EditPackage, getParcel} from "../../actions/Parcels/PackagesActions";
+
+class EditPackagePage extends Component {
 
     constructor(props) {
         super(props);
@@ -33,8 +39,8 @@ class CreateParcel extends Component {
         this.onChangeParcelDescription = this.onChangeParcelDescription.bind(this);
 
         this.handleOptionChange = this.handleOptionChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
+            parcel: {},
             title: "",
             titleError:"",
             titleStyle:"",
@@ -67,111 +73,53 @@ class CreateParcel extends Component {
         }
     }
 
-
-    validateForm() {
-
-        let test = true;
-        let formValid = true;
-        let form = {...this.state};
-        console.log('form',form)
-
-        if (form.title === '') {
-            test = false;
-            this.setState({titleError: "please select a title"});
-            this.setState({titleStyle: "error"});
-        } else {
-            this.setState({titleError: ""});
-            this.setState({titleStyle: ""});
+    componentWillReceiveProps(nextProps) {
+        if (nextProps) {
+            this.setState({
+                parcel: nextProps.parcel,
+                currentUser: nextProps.currentUser,
+            });
         }
-        if (form.type === '') {
-            test = false;
-            this.setState({typeError: "please select a type"});
-            this.setState({typeStyle: "error"});
-        } else {
-            this.setState({typeError: ""});
-            this.setState({typeStyle: ""});
-        }
-        if (form.price === '') {
-            test = false;
-            this.setState({priceError: "please select the price for your parcel"});
-            this.setState({priceStyle: "error"});
-        } else {
-            this.setState({priceError: ""});
-            this.setState({priceStyle: ""});
-        }
-        if (form.weight === '') {
-            test = false;
-            this.setState({weightError: "please select your parcel weight"});
-            this.setState({weightStyle: "error"});
-        }
-        else {
-            this.setState({weightError: ""});
-            this.setState({weightStyle: ""});
-        }
-
-        if (form.size==='') {
-            test = false;
-            this.setState({sizeError: "please select your parcel size"});
-            this.setState({sizeStyle: "error"});
-        }
-
-        else {
-            this.setState({sizeError: ""});
-            this.setState({sizeStyle: ""});
-        }
-
-        if (form.departure==='') {
-            test = false;
-            this.setState({departureError: "please select your sending location"});
-            this.setState({departureStyle: "error"});
-        }
-
-        else {
-            this.setState({departureError: ""});
-            this.setState({departureStyle: ""});
-        }
-
-        if (form.description==='') {
-            test = false;
-            this.setState({descriptionError: "please write a little description about the parcel"});
-            this.setState({descriptionStyle: "error"});
-        }
-
-        else {
-            this.setState({descriptionError: ""});
-            this.setState({descriptionStyle: ""});
-        }
-
-        if (form.arrival==='') {
-            test = false;
-            this.setState({arrivalError: "please select where tou want to send your parcel"});
-            this.setState({arrivalStyle: "error"});
-        }
-
-        else {
-            this.setState({arrivalError: ""});
-            this.setState({arrivalStyle: ""});
-        }
-
-        // if (!form.file) {
-        //     test = false;
-        //     this.setState({fileError: "upload at least 1 picture"});
-        //     this.setState({arrivalStyle: "error"});
-        // }
-        //
-        // else {
-        //     this.setState({arrivalError: ""});
-        //     this.setState({arrivalStyle: ""});
-        // }
-
-
-        console.log(test);
-
-        console.log(formValid, 'test2')
-        return test;
     }
 
+    async componentWillMount() {
+        await this.props.getCurrentUser();
 
+
+        if (this.props.currentUser._id === undefined){
+            this.props.history.push('/front/login');
+        }else {
+            await this.props.getParcel(this.props.match.params.id);
+
+            console.log(this.props.parcel.sender._id)
+            console.log(this.props.currentUser._id)
+
+            if (this.props.currentUser._id !== this.props.parcel.sender._id){
+
+                this.props.history.push('/front/parcels/all/');
+
+            }
+            else{
+
+                console.log(this.props, 'props');
+                this.setState({
+                    title: this.props.parcel.title,
+                    type: this.props.parcel.type,
+                    price: this.props.parcel.price,
+                    weight: this.props.parcel.weight,
+                    size: this.props.parcel.size,
+                    description: this.props.parcel.description,
+                    departure: this.props.parcel.departure,
+                    arrival: this.props.parcel.arrival,
+                    files: this.props.parcel.files,
+                })
+
+            }
+
+        }
+
+
+    }
 
     onChangeParceltitle(e) {
         this.setState({title: e.target.value})
@@ -232,48 +180,35 @@ class CreateParcel extends Component {
     }
 
 
-    onSubmit(e) {
-        e.preventDefault()
+    confirme(e) {
+        e.preventDefault();
 
-        let formValid = this.validateForm();
+        //console.log(this.props.currentUser._id, 'currentUser');
+        console.log(this.props.parcel);
 
-        if (formValid){
+                this.props.EditPackage({
+                    title: this.state.title,
+                    type: this.state.type,
+                    price: this.state.price,
+                    weight: this.state.weight,
+                    size: this.state.size,
+                    description: this.state.description,
+                    departure: this.state.departure,
+                    arrival: this.state.arrival,
+                    files: this.state.files,
+                    packageId:this.props.match.params.id,
+                }, (path) => {  // callback 1: history push
+                    this.props.history.push(path);
+                }, (path, state) => {
+                    this.props.history.replace(path, state);
+                });
+                console.log('done jsx');
+                //this.props.history.push('/front/login');
 
-            const parcel = {
-                title: this.state.title,
-                type: this.state.type,
-                price: this.state.price,
-                weight: this.state.weight,
-                size: this.state.size,
-                departure: this.state.departure,
-                arrival: this.state.arrival,
-                description: this.state.description,
-                files: this.state.files,
-                sender: this.props.currentUser._id
-            };
-            console.log(parcel);
-            axios.post('http://localhost:3000/packages/add', parcel)
-                .then(res => {
-                    this.props.history.push("/front/parcels");
-                    console.log(this.props.currentUser._id)
-                })
-                .catch(err => console.log(err));
-        }
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps) {
-            this.setState({
-                currentUser: nextProps.currentUser,
-            });
-        }
-    }
-    componentDidMount() {
-        this.props.getCurrentUser();
     }
 
     render() {
+        const {handleSubmit} = this.props;
         return (
             <>
                 <AuthHeader title="Add Parcels" lead=""/>
@@ -289,7 +224,7 @@ class CreateParcel extends Component {
                                     <CardBody>
                                         <Col md="8">
                                             <div className="form-wrapper">
-                                                <Form onSubmit={this.onSubmit}>
+                                                <Form>
                                                     <Row>
                                                         <Col md="6">
 
@@ -300,8 +235,8 @@ class CreateParcel extends Component {
                                                                     className={this.state.titleStyle}
                                                                 >
 
-                                                                <Input type="text" value={this.state.title}
-                                                                       onChange={this.onChangeParceltitle}/>
+                                                                    <Input type="text" value={this.state.title}
+                                                                           onChange={this.onChangeParceltitle}/>
                                                                 </InputGroup>
                                                                 <span style={{color:'red'}} className="errorText">{this.state.titleError}</span>
                                                             </FormGroup>
@@ -464,7 +399,7 @@ class CreateParcel extends Component {
                                                         <span style={{color:'red'}} className="errorText">{this.state.sizeError}</span>
 
                                                     </Row>
-                                                    <Button type="submit">
+                                                    <Button type="submit" onClick={e => this.confirme(e)}>
                                                         Create Parcel
                                                     </Button>
                                                 </Form>
@@ -522,10 +457,29 @@ class CreateParcel extends Component {
 
 }
 
+const validate = (values) => {
+    const errors = {}
+
+    if(!values.destination) {
+        errors.title = "Enter a destination"
+    }
+    if(!values.description) {
+        errors.content = "Enter a description for your ride"
+    }
+    return errors
+};
+
+EditPackagePage = reduxForm({
+    validate,
+    form: 'package_edit',  // name of the form
+    enableReinitialize : true // you need to add this property
+})(EditPackagePage);
+
 function mapStateToProps(state) {
     return {
+        parcel: state.pack.parcel,
         currentUser: state.auth.currentUser,
     }
 }
 
-export default connect(mapStateToProps, {getCurrentUser})(CreateParcel);
+export default connect(mapStateToProps, {getCurrentUser, getParcel, EditPackage})(EditPackagePage);
