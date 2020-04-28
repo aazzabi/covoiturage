@@ -14,6 +14,8 @@ router.post('/add', packageController.add);
 router.post('/addrequest', packageController.addRequest);
 router.get('/myparcels/:id', packageController.getMyPackage);
 router.get('/myrequests/:id', packageController.getMyRequest);
+router.post('/myrequests/:id/accept', packageController.acceptRequest);
+router.delete('/RequestRefuse/:id', packageController.refuseRequest);
 
 
 router.put('/edit/:id', packageController.editPackage);

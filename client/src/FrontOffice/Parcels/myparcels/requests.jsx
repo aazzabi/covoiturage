@@ -5,8 +5,10 @@ import {connect} from 'react-redux';
 import {AddRequest, fetchPackagesByUserId, fetchPostById, fetchRequest} from '../../../actions/Parcels/PackagesActions';
 import {getCurrentUser} from "../../../actions/authActions";
 import AuthHeader from "../../../components/Headers/AuthHeader";
-import {Col, Container, Row} from "reactstrap";
+import {Button, Col, Container, Modal, Row} from "reactstrap";
 import addNotification from 'react-push-notification';
+import {acceptRequestParcel, refuserRequest} from "../../../actions/Parcels/RequestsParcelActions";
+
 
 class requests extends Component {
     constructor(props) {
@@ -30,20 +32,24 @@ class requests extends Component {
         const {id} = this.props.match.params;
         await this.props.getCurrentUser();
         this.props.fetchRequest(id);
-        console.log(this.props.myrequests)
 
     }
 
-     buttonClick = () => {
-        addNotification({
-            title: 'Warning',
-            subtitle: 'This is a subtitle',
-            message: 'This is a very long message',
-            theme: 'darkblue',
-            native: true ,// when using native, your OS will handle theming,
-            user: this.props.currentUser._id
-        });
+
+    deleteRequest(e, id) {
+        e.preventDefault();
+        this.props.refuserRequest(id);
+        console.log(id);
+        window.location.reload()
     };
+
+    AddRequest(e, id) {
+        e.preventDefault();
+        this.props.acceptRequestParcel(id);
+        console.log(id);
+        //     window.location.reload()
+    };
+
     render() {
         return (
             <>
@@ -90,6 +96,8 @@ class requests extends Component {
                                                 <tr>
                                                     <th className="sort" data-sort="name" scope="col">Message</th>
                                                     <th className="sort" data-sort="budget" scope="col">Price</th>
+                                                    <th className="sort" data-sort="budget" scope="col">Status</th>
+
                                                     <th scope="col">Users</th>
                                                     <th className="sort" data-sort="completion" scope="col">Action</th>
                                                     <th scope="col"></th>
@@ -98,60 +106,104 @@ class requests extends Component {
                                                 <tbody className="list">
                                                 {_.map(this.props.myrequests, request =>
 
-                                                        <tr key={request._id}>
-                                                            <th scope="row">
-                                                                <div className="align-items-center media">
+                                                    <tr key={request._id}>
+                                                        <th scope="row">
+                                                            <div className="align-items-center media">
+                                                                <div className="media"><span
+                                                                    className="name mb-0 text-sm">{request.message}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td className="budget">{request.suggestion} TND</td>
+
+
+
+                                                        <td>
+                                                            {request.confirmation === true &&
+
+                                                            <div className="checklist-item checklist-item-success">
+                                                                <div className="checklist-info"><h5
+                                                                    className="checklist-title mb-0">
+                                                                    <div className="align-items-center media">
                                                                     <div className="media"><span
-                                                                        className="name mb-0 text-sm">{request.message}</span>
+                                                                    className="name mb-0 text-sm" color={"white"}>Confirmed</span>
+                                                                    </div></div></h5>
+                                                                    <small>10:30 AM</small></div>
+                                                                <div>
+                                                                    <div
+                                                                        className="custom-control custom-checkbox custom-checkbox-warning">
+                                                                       </div>
+                                                                </div>
+                                                            </div>
+                                                            }
+                                                            {request.confirmation === false &&
+
+                                                            <div className="checklist-item checklist-item-warning">
+                                                                <div className="checklist-info"><h5
+                                                                    className="checklist-title mb-0">
+                                                                    <div className="media"><span
+                                                                        className="name mb-0 text-sm">non confirmed</span>
+                                                                    </div></h5>
+                                                                    <small>10:30 AM</small></div>
+                                                                <div>
+                                                                    <div
+                                                                        className="custom-control custom-checkbox custom-checkbox-warning">
                                                                     </div>
                                                                 </div>
-                                                            </th>
-                                                            <td className="budget">{request.suggestion} TND</td>
-                                                            <td><span className="badge-dot mr-4 badge badge-"><i
-                                                                className="bg-warning"></i><span
-                                                                className="status">  {request.userId ? request.userId.lastName : ""} {request.userId ? request.userId.firstName : ""}</span></span>
-                                                            </td>
+                                                            </div>
+                                                            }
+                                                        </td>
+                                                        <td><span className="badge-dot mr-4 badge badge-"><i
+                                                            className="bg-warning"></i><span
+                                                            className="status">  {request.userId ? request.userId.lastName : ""} {request.userId ? request.userId.firstName : ""}</span></span>
+                                                        </td>
 
-                                                            <td>
-                                                                <div className="d-flex align-items-center">
-                                                                    <button type="button"
-                                                                            className="btn btn-outline-success"  onClick={this.buttonClick}>Accept
-                                                                    </button>
-                                                                    <button type="button"
-                                                                            className="btn btn-outline-danger">Refuse
-                                                                    </button>
-                                                                </div>
-                                                            </td>
+                                                        <td>
+                                                            <div className="d-flex align-items-center">
 
-                                                        </tr>
-                                                )}
+                                                                <button
+                                                                    className="btn btn-outline-danger"
+                                                                    onClick={e => this.deleteRequest(e, request._id)}
+                                                                >Refuse
+                                                                </button>
+                                                                <button type="button"
+                                                                        className="btn btn-outline-success"
+                                                                        onClick={e => this.AddRequest(e, request._id)}>Accept
+                                                                </button>
+                                                            </div>
+                                                        </td>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Container></>
-        );
-    }
-}
+                                                    </tr>
+                                                    )}
 
-function mapStateToProps(state) {
-    return {
-        myrequests: state.pack.myrequests,
-        currentUser: state.auth.user,
-    };
-}
+                                                    </tbody>
+                                                    </table>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </Container></>
+                                                    );
+                                                    }
+                                                    }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchRequest: id => dispatch(fetchRequest(id)),
-        AddRequest,
-        getCurrentUser
-    }
-}
+                                                    function mapStateToProps(state) {
+                                                    return {
+                                                    myrequests: state.pack.myrequests,
+                                                    currentUser: state.auth.user,
+                                                    };
+                                                    }
 
-export default connect(mapStateToProps, mapDispatchToProps)(requests);
+                                                    const mapDispatchToProps = (dispatch) => {
+                                                    return {
+                                                    fetchRequest: id => dispatch(fetchRequest(id)),
+                                                    AddRequest,
+                                                    getCurrentUser,
+                                                    refuserRequest: id => dispatch(refuserRequest(id)),
+                                                    acceptRequestParcel: id => dispatch(acceptRequestParcel(id)),
+                                                    }
+                                                    }
+
+                                                    export default connect(mapStateToProps, mapDispatchToProps)(requests);

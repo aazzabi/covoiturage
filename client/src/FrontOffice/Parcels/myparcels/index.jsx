@@ -57,9 +57,9 @@ class MyParcel extends Component {
                                    className="btn-icon-only rounded-circle btn btn-dribbble"><i
                                     className="fa fa-trash"></i></a>
 
-                        </div>
+                            </div>
                             <br></br>
-                            <a href={`/front/myParcels/${post._id}`} className="btn btn-secondary"  >Show Request</a>
+                            <a href={`/front/myParcels/${post._id}`} className="btn btn-secondary">Show Request</a>
 
                         </div>
                     </div>
@@ -78,7 +78,7 @@ class MyParcel extends Component {
                             <Row className="justify-content-center">
                                 <Col className="px-5" lg="6" md="8" xl="5">
 
-                                        <h1 className="text-white"></h1>
+                                    <h1 className="text-white"></h1>
 
                                 </Col>
                             </Row>

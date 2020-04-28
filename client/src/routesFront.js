@@ -36,7 +36,7 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/myParcels/",
+        path: "/myParcels",
         name: "view parcels",
         component: MyParcel,
         layout: "/front"

@@ -134,7 +134,7 @@ class PackagesDetails extends Component {
         const {id} = this.props.match.params;
         console.log(this.state.message)
         const request = {
-            Suggestion: this.state.suggestion,
+            suggestion: this.state.suggestion,
             message: this.state.message,
             parcelId: id,
             user: this.props.currentUser._id,
@@ -355,7 +355,7 @@ class PackagesDetails extends Component {
                                                                     placeholder="Suggestion"
                                                                     type="number"
                                                                     id="suggestion"
-                                                                    onChange={event => this.handleChange('suggestion', event.target.value)}/>
+                                                                    onChange={event => this.handleChange('suggestion')}/>
                                                             </InputGroup>
                                                         </FormGroup>
                                                         <FormGroup>
@@ -368,7 +368,7 @@ class PackagesDetails extends Component {
                                                                 <Input id="message"
                                                                        placeholder="Message"
                                                                        type="text"
-                                                                       onChange={event => this.handleChange('message', event.target.value)}
+                                                                       onChange={event => this.handleChange('message')}
                                                                 />
                                                             </InputGroup>
                                                         </FormGroup>

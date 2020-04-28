@@ -5,6 +5,7 @@ var User = require('../models/User');
 exports.add = async (req, res, next) => {
     const user = await User.findOne({"_id": req.body.sender});
     console.log(user)
+    console.log("dd",req.body.sender)
     Package.create(
         {
             title: req.body.title,
@@ -37,15 +38,16 @@ exports.addRequest = async (req, res, next) => {
     const user = await User.findOne({"_id": req.body.user});
     const parcelId = await Package.findOne({"_id": req.body.parcelId});
     userid = await User.findById(req.body.user);
+    console.log(req.body);
 
     ReqParcels.create(
         {
-            suggestion: req.body.suggestion,
+            suggestion: req.body.Suggestion,
             message: req.body.message,
             confirmation: false,
             userId: user,
             parcelId: parcelId,
-
+            createdAt: new Date(),
         }
     ).then((data) => {
         res.set('Content-Type', 'application/json');
@@ -64,7 +66,28 @@ exports.getAllPackage = async (req, res, next) => {
     res.json(packages);
 
 }
+exports.refuseRequest = (req, res) => {
+    console.log(req.params.id)
+    ReqParcels.deleteOne({"_id": req.params.id})
+        .then((data) => console.log(data), (error) => console.log(error));
+};
+exports.acceptRequest = async (req, res) => {
+    console.log('idRequest', req.params.id);
 
+    ReqParcels.updateOne({'_id': req.params.id},
+        {
+            '$set': {
+                confirmedAt: new Date(),
+                confirmation: true
+            }
+        })
+        .then(async (data) => {
+            res.status(202).json({'status': 200, 'message': 'Driver request accepted, and user accepted as a Driver'});
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
 exports.getByIdPackage = async (req, res, next) => {
     const packages = await Package.findOne({_id: req.params.id});
     res.json(packages);

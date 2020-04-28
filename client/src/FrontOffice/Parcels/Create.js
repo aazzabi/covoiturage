@@ -18,6 +18,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {connect} from "react-redux";
 import {addClaim} from "../../services/Claims/ClaimsAction";
 import {getCurrentUser} from "../../actions/authActions";
+import {addParcel} from "../../actions/Parcels/PackagesActions";
 class CreateParcel extends Component {
 
     constructor(props) {
@@ -106,7 +107,6 @@ class CreateParcel extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-
             const parcel = {
             title: this.state.title,
             type: this.state.type,
@@ -119,8 +119,7 @@ class CreateParcel extends Component {
             files: this.state.files,
             sender: this.props.currentUser._id
         };
-        console.log(parcel);
-        axios.post('http://localhost:3000/packages/add', parcel)
+        axios.post('http://localhost:3000/packages/add/', parcel)
     .then(res => {
             this.props.history.push("/front/myParcels");
             console.log(this.props.currentUser._id)
@@ -348,4 +347,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {getCurrentUser})(CreateParcel);
+export default connect(mapStateToProps, {getCurrentUser,addParcel})(CreateParcel);
