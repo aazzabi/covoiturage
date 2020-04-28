@@ -8,6 +8,34 @@ export const GET_PACKAGES_ERROR = "GET_PACKAGES_ERROR";
 export const GET_fetchPost_SUCCESS = "GET_fetchPost_SUCCESS";
 export const ADD_Request_Package = "ADD_Request_Package";
 export const GET_fetchPackagesByUserId = "GET_fetchPackagesByUserId";
+export const GET_fetch_Request = "GET_fetch_Request";
+export const Add_Parcel = "Add_Parcel";
+
+export function addParcel({titleC, typeC, priority, description, userId}, historyPush, historyReplace) {
+    return function (dispatch) {
+        Axios.post('http://localhost:3000/packages/add/',  + userId, {
+            title: titleC,
+            description: description,
+            type: typeC,
+            priority: priority,
+        }, {})
+            .then((response) => {
+                dispatch({
+                    type: Add_Parcel,
+                    payload: response.data,
+                });
+                historyPush(`/admin/claims/` + userId);
+            })
+            .catch(({response}) => {
+                console.log(response, 'error');
+                historyReplace('/claims/new', {
+                    time: new Date().toLocaleString(),
+                    message: response,
+                });
+            });
+    }
+}
+
 
 export const getPackages = () => {
     return async (dispatch) => {
@@ -36,7 +64,7 @@ export function AddRequest({Suggestion, Message, userId, postId}, historyPush, h
     return function (dispatch) {
         console.log("AddRequestAction");
         Axios.post(`http://localhost:3000/packages/add/`, {
-            Suggestion: Suggestion,
+            suggestion: Suggestion,
             Message: Message,
             userId: userId,
             postId: postId,
@@ -97,6 +125,14 @@ export function fetchPackagesByUserId(id) {
     return async (dispatch) => {
         const result = await Axios.get('http://localhost:3000/packages/myParcels/' + id);
         dispatch({type: GET_fetchPackagesByUserId, payload: result.data});
+    }
+}
+export function fetchRequest(id) {
+    return async (dispatch) => {
+        const result = await Axios.get('http://localhost:3000/packages/myrequests/' + id);
+        console.log(id)
+        console.log(result)
+        dispatch({type: GET_fetch_Request, payload: result.data});
     }
 }
 

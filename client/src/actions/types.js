@@ -17,3 +17,5 @@ export const DELETE_POST = 'delete_post';
 
 export const CREATE_COMMENT = 'create_comment';
 export const FETCH_COMMENTS = 'fetch_comments';
+export const ACCEPT_Parcel_Request = "ACCEPT_Parcel_Request";
+export const DELETE_Parcel_Request = "DELETE_Parcel_Request";

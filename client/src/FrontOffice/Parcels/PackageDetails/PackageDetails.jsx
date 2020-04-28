@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import AuthHeader from "../../../components/Headers/AuthHeader";
 import {
     Card,
     CardBody,
@@ -38,10 +37,10 @@ class PackagesDetails extends Component {
             parcel: {},
             currentUser: {},
             open: false,
-            message:"",
-            suggestion:"",
+            message: "",
+            suggestion: "",
             showing: true,
-            sender:{}
+            sender: {}
 
         }
         this.myDivToFocus = React.createRef()
@@ -83,16 +82,17 @@ class PackagesDetails extends Component {
 
     }
 
-     handleOpen = () => {
-         const {open} = this.state;
+    handleOpen = () => {
+        const {open} = this.state;
 
-         this.setState({open: !open});
+        this.setState({open: !open});
 
     };
 
     handleClose = () => {
         this.setState({open: false});
     };
+
     origin() {
         Geocode.setApiKey("AIzaSyDtJlOlL_sZhchii9wg4A6yi7vZutilBeg");
 
@@ -124,6 +124,7 @@ class PackagesDetails extends Component {
             }
         );
     }
+
     handleChange = (name, value) => {
         this.setState({[name]: value});
     };
@@ -131,21 +132,25 @@ class PackagesDetails extends Component {
 
     AddRequestSubmit() {
         const {id} = this.props.match.params;
+        console.log(this.state.message)
         const request = {
-            Suggestion: this.state.suggestion,
-            Message: this.state.message,
+            suggestion: this.state.suggestion,
+            message: this.state.message,
             parcelId: id,
-            userId: this.props.currentUser._id,
+            user: this.props.currentUser._id,
         };
+        console.log(request)
+
         this.notify("success")
         Axios.post('http://localhost:3000/packages/addrequest', request)
             .then(res => {
-                this.props.history.push("/front/parcels/"+ id);
+                this.props.history.push("/front/parcels/" + id);
 
             })
             .catch(err => console.log(err));
 
     }
+
     notify = type => {
         let options = {
             place: "tc",
@@ -153,7 +158,7 @@ class PackagesDetails extends Component {
                 <div className="alert-text">
           <span className="alert-title" data-notify="title">
           </span>
-           <span data-notify="message">
+                    <span data-notify="message">
              your proposal has been sent successfully
           </span>
                 </div>
@@ -172,9 +177,38 @@ class PackagesDetails extends Component {
         const serverUrl = "http://127.0.0.1:8887/";
         const {handleSubmit} = this.props;
         const {open} = this.state;
-            console.log(parcel)
+        console.log(parcel)
         return (
-            <><AuthHeader title="Packages Available" lead=""/>
+            <>
+                <div className="header bg-gradient-info py-7 py-lg-5 pt-lg-5 ">
+                    <Container>
+                        <div className="header-body text-center mb-7">
+                            <Row className="justify-content-center">
+                                <Col className="px-5" lg="6" md="8" xl="5">
+
+                                    <h1 className="text-white"></h1>
+
+                                </Col>
+                            </Row>
+                        </div>
+                    </Container>
+                    <div className="separator separator-bottom separator-skew zindex-100">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            preserveAspectRatio="none"
+                            version="1.1"
+                            viewBox="0 0 2560 100"
+                            x="0"
+                            y="0"
+                        >
+                            <polygon
+                                className="fill-default"
+                                points="2560 0 2560 100 0 100"
+                            />
+                        </svg>
+                    </div>
+                </div>
+
                 {!showing
 
                     ?
@@ -186,7 +220,7 @@ class PackagesDetails extends Component {
                     : null
                 }
                 <Container className="mt--6 container-fluid">
-                    <NotificationAlert ref="notificationAlert" />
+                    <NotificationAlert ref="notificationAlert"/>
 
 
                     <Row className="justify-content-center">
@@ -272,23 +306,23 @@ class PackagesDetails extends Component {
                                                 </a></h4><span className="text-success">●</span>
                                                     <small>Online</small></div>
 
-                                                    <Col className="col-auto">
-                                                        <div className="d-flex align-items-center">
-                                                            <div>
-                                                                <label className="custom-toggle custom-toggle-black">
-                                                                    <input defaultChecked type="checkbox"
-                                                                           onClick={this.handleOpen}
+                                                <Col className="col-auto">
+                                                    <div className="d-flex align-items-center">
+                                                        <div>
+                                                            <label className="custom-toggle custom-toggle-black">
+                                                                <input defaultChecked type="checkbox"
+                                                                       onClick={this.handleOpen}
 
-                                                                    />
-                                                                    <span
-                                                                        className="custom-toggle-slider rounded-circle"
-                                                                        data-label-off="Contact"
-                                                                        data-label-on="Contact"
-                                                                    />
-                                                                </label>
-                                                            </div>
+                                                                />
+                                                                <span
+                                                                    className="custom-toggle-slider rounded-circle"
+                                                                    data-label-off="Contact"
+                                                                    data-label-on="Contact"
+                                                                />
+                                                            </label>
                                                         </div>
-                                                    </Col>
+                                                    </div>
+                                                </Col>
 
                                             </div>
                                         </li>
@@ -300,53 +334,53 @@ class PackagesDetails extends Component {
                                     {open
 
                                         ?
-                                    <Card className="bg-gradient-info">
-                                        <CardBody>
-                                            <Row className="justify-content-between align-items-center">
-                                                <div className="col">
+                                        <Card className="bg-gradient-info">
+                                            <CardBody>
+                                                <Row className="justify-content-between align-items-center">
+                                                    <div className="col">
 
+                                                    </div>
+
+                                                </Row>
+                                                <div className="mt-4">
+                                                    <Form>
+                                                        <FormGroup>
+                                                            <InputGroup>
+                                                                <InputGroupAddon addonType="prepend">
+                                                                    <InputGroupText>
+                                                                        <i className="ni ni-money-coins"/>
+                                                                    </InputGroupText>
+                                                                </InputGroupAddon>
+                                                                <Input
+                                                                    placeholder="Suggestion"
+                                                                    type="number"
+                                                                    id="suggestion"
+                                                                    onChange={event => this.handleChange('suggestion')}/>
+                                                            </InputGroup>
+                                                        </FormGroup>
+                                                        <FormGroup>
+                                                            <InputGroup>
+                                                                <InputGroupAddon addonType="prepend">
+                                                                    <InputGroupText>
+                                                                        <i className="ni ni-align-center"/>
+                                                                    </InputGroupText>
+                                                                </InputGroupAddon>
+                                                                <Input id="message"
+                                                                       placeholder="Message"
+                                                                       type="text"
+                                                                       onChange={event => this.handleChange('message')}
+                                                                />
+                                                            </InputGroup>
+                                                        </FormGroup>
+                                                        <Button className="mt-4" type="button"
+                                                                onClick={e => this.AddRequestSubmit(e)}>
+                                                            add request
+                                                        </Button>
+
+                                                    </Form>
                                                 </div>
-
-                                            </Row>
-                                            <div className="mt-4">
-                                                <Form>
-                                                    <FormGroup>
-                                                        <InputGroup>
-                                                            <InputGroupAddon addonType="prepend">
-                                                                <InputGroupText>
-                                                                    <i className="ni ni-money-coins" />
-                                                                </InputGroupText>
-                                                            </InputGroupAddon>
-                                                            <Input
-                                                                placeholder="Suggestion"
-                                                                type="number"
-                                                                id="suggestion"
-                                                                onChange={event => this.handleChange('suggestion', event.target.value)}                                                            />
-                                                        </InputGroup>
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <InputGroup >
-                                                            <InputGroupAddon addonType="prepend">
-                                                                <InputGroupText>
-                                                                    <i className="ni ni-align-center" />
-                                                                </InputGroupText>
-                                                            </InputGroupAddon>
-                                                            <Input id="message"
-                                                                placeholder="Message"
-                                                                type="text"
-                                                                   onChange={event => this.handleChange('message', event.target.value)}
-                                                            />
-                                                        </InputGroup>
-                                                    </FormGroup>
-                                                    <Button className="mt-4"  type="button"
-                                                            onClick={e => this.AddRequestSubmit(e)}>
-                                                        add request
-                                                    </Button>
-
-                                                </Form>
-                                            </div>
-                                        </CardBody>
-                                    </Card> : null
+                                            </CardBody>
+                                        </Card> : null
                                     }
                                 </CardBody>
 
