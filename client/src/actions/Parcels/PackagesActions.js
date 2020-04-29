@@ -136,6 +136,16 @@ export function fetchRequest(id) {
     }
 }
 
+export function DriverRequest(id) {
+    console.log('gaad yod5el')
+    return async (dispatch) => {
+        const result = await Axios.get('http://localhost:3000/packages/driverrequests/' + id);
+        console.log(id)
+        console.log(result)
+        dispatch({type: GET_fetch_Request, payload: result.data});
+    }
+}
+
 export function fetchPostById(id) {
     return async (dispatch) => {
         const result = await Axios.get('http://localhost:3000/packages/' + id);

@@ -14,6 +14,7 @@ import PostList from "./FrontOffice/Blog/listPosts";
 import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
 import MyParcel from "./FrontOffice/Parcels/myparcels";
 import EditPackage from "./FrontOffice/Parcels/EditPackage";
+import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 
 const routesFront = [
     {
@@ -27,6 +28,12 @@ const routesFront = [
         path: "/parcels/details/:id",
         name: "view parcels",
         component: PackagesDetails,
+        layout: "/front"
+    },
+    {
+        path: "/parcels/driverReq/",
+        name: "driverReq",
+        component: DriverRequest,
         layout: "/front"
     },
     {

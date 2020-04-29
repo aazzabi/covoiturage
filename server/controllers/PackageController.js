@@ -152,8 +152,6 @@ exports.confrimSendingParcel = async (req, res, next) => {
     parcelToUpdate = await ReqParcels.findById(req.params.idReq);
     const parcel =  parcelToUpdate.parcelId;
 
-   const p = await ReqParcels.findById(parcel._id);
-
     if (parcel.sendingCode === req.params.sendingCode) {
         parcel.valideSend = true;
         await ReqParcels.updateOne({'_id': parcelToUpdate._id}, {"$set": {"confirmationSend": true,"parcelId":parcel}})
@@ -194,8 +192,6 @@ exports.confrimRecivingParcel = async (req, res, next) => {
     let parcelToUpdate;
     parcelToUpdate = await ReqParcels.findById(req.params.idReq);
     const parcel =  parcelToUpdate.parcelId;
-
-    const p = await ReqParcels.findById(parcel._id);
 
     if (parcel.receiveingCode === req.params.receiveingCode) {
         parcel.valideReceive = true;
