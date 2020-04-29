@@ -92,15 +92,14 @@ class PostDetail extends Component {
     }
 
     renderUpdateAndDeleteButton() {
-        if (this.props.allowChange) {
             return (
                 <div>
                     <button className="btn btn-primary mr-1" onClick={this.onEditClick.bind(this)}>Edit</button>
-                    <button className="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmModal">Delete
+                    <button className="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmModal" onClick={this.renderDeleteConfirmModal.bind(this)}>Delete
                     </button>
                 </div>
             );
-        }
+
     }
 
     render() {
@@ -123,9 +122,8 @@ class PostDetail extends Component {
 
         return (
             <>
-                <AuthHeader title="Add Parcels" lead=""/>
+                <AuthHeader title="post list" lead=""/>
                 <Container className="mt--8 pb-5">
-                    <Row className="justify-content-center">
                         <Card>
                             <div className="post">
                               <CardBody>
@@ -134,6 +132,7 @@ class PostDetail extends Component {
                               </CardBody>
                               <CardFooter>
                                 <Comments postId={this.props.match.params.id}/>
+                                  <br></br>
                                 <CommentNew
                                     postId={this.props.match.params.id}
                                     history={this.props.history}
@@ -145,7 +144,6 @@ class PostDetail extends Component {
                               </CardFooter>
                             </div>
                         </Card>
-                    </Row>
                 </Container>
             </>
         );

@@ -29,14 +29,15 @@ export function fetchPosts() {
     }
 }
 
-export function createPost({ title, categories, content,files }, historyPush, historyReplace) {
+export function createPost({ title, categories, content,files,user }, historyPush, historyReplace) {
 
     return function(dispatch) {
-        console.log(files)
+        console.log(title,categories, content,files,user)
         axios.post(`${ROOT_URL}/posts`, {
             title,
             categories,
             content,
+            user,
             files,
         }, {
         })
@@ -48,10 +49,7 @@ export function createPost({ title, categories, content,files }, historyPush, hi
                 historyPush(`/posts/${response.data._id}`);
             })
             .catch(({response}) => {  // If create post failed, alert failure message
-                historyReplace('/posts/new', {
-                    time: new Date().toLocaleString(),
-                    message: response.data.message,
-                });
+
             });
     }
 }
@@ -115,9 +113,7 @@ export function deletePost(id, historyPush) {
 export function fetchPostsByUserId() {
 
     return function(dispatch) {
-        axios.get(`${ROOT_URL}/my_posts`, {
-            headers: {authorization: localStorage.getItem('token')},  // require auth
-        })
+        axios.get(`${ROOT_URL}/my_posts/`)
             .then((response) => {
                 dispatch({
                     type: FETCH_POSTS,
@@ -127,33 +123,20 @@ export function fetchPostsByUserId() {
     }
 }
 
-export function createComment({ comment, postId }, clearTextEditor, historyReplace) {
+export function createComment({ content, postId ,user}, clearTextEditor, historyReplace) {
 
     return function(dispatch) {
-        axios.post(`${ROOT_URL}/comments/${postId}`, { content: comment })
+        axios.post(`${ROOT_URL}/comments/${postId}`, { content: content, user:user })
             .then((response) => {  // If success, clear the text editor
                 dispatch({
                     type: CREATE_COMMENT,
                     payload: response.data,
                 });
                 dispatch(reset('comment_new'));  // - Clear form value (data)
-                clearTextEditor();  // - Clear text editor (UI)
-                historyReplace(`/front/BlogDetails/${postId}`, null);  // - clear alert message
             })
             .catch(({response}) => {  // If fail, render alert message
 
-                if (!response.data.message) {
-                    return historyReplace(`/front/BlogDetails/${postId}`, {
-                        time: new Date().toLocaleString(),
-                        message: 'You must sign in before you can post new comment.',
-                    });
-                }
 
-                // failure reason: comment is empty
-                historyReplace(`/front/BlogDetails/${postId}`, {
-                    time: new Date().toLocaleString(),
-                    message: response.data.message,
-                });
             });
     }
 }

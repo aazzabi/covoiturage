@@ -116,35 +116,39 @@ class requests extends Component {
                                                         </th>
                                                         <td className="budget">{request.suggestion} TND</td>
 
-
-
                                                         <td>
                                                             {request.confirmation === true &&
 
                                                             <div className="checklist-item checklist-item-success">
-                                                                <div className="checklist-info"><h5
-                                                                    className="checklist-title mb-0">
-                                                                    <div className="align-items-center media">
-                                                                    <div className="media"><span
-                                                                    className="name mb-0 text-sm" color={"white"}>Confirmed</span>
-                                                                    </div></div></h5>
+                                                                <div className="checklist-info">
+                                                                    <h5
+                                                                        className="checklist-title mb-0">
+                                                                        <div className="align-items-center media">
+                                                                            <div className="media"><span
+                                                                                className="name mb-0 text-sm"
+                                                                                color={"white"}>Confirmed</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </h5>
                                                                     <small>10:30 AM</small></div>
                                                                 <div>
                                                                     <div
                                                                         className="custom-control custom-checkbox custom-checkbox-warning">
-                                                                       </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             }
                                                             {request.confirmation === false &&
 
                                                             <div className="checklist-item checklist-item-warning">
-                                                                <div className="checklist-info"><h5
-                                                                    className="checklist-title mb-0">
-                                                                    <div className="media"><span
-                                                                        className="name mb-0 text-sm">non confirmed</span>
-                                                                    </div></h5>
-                                                                    <small>10:30 AM</small></div>
+                                                                <div className="checklist-info">
+                                                                    <h5
+                                                                        className="checklist-title mb-0">
+                                                                        <div className="media"><span
+                                                                            className="name mb-0 text-sm">non confirmed</span>
+                                                                        </div>
+                                                                    </h5>
+                                                                    <small>{request.createdAt}</small></div>
                                                                 <div>
                                                                     <div
                                                                         className="custom-control custom-checkbox custom-checkbox-warning">
@@ -174,36 +178,36 @@ class requests extends Component {
                                                         </td>
 
                                                     </tr>
-                                                    )}
+                                                )}
 
-                                                    </tbody>
-                                                    </table>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </Container></>
-                                                    );
-                                                    }
-                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Container></>
+        );
+    }
+}
 
-                                                    function mapStateToProps(state) {
-                                                    return {
-                                                    myrequests: state.pack.myrequests,
-                                                    currentUser: state.auth.user,
-                                                    };
-                                                    }
+function mapStateToProps(state) {
+    return {
+        myrequests: state.pack.myrequests,
+        currentUser: state.auth.user,
+    };
+}
 
-                                                    const mapDispatchToProps = (dispatch) => {
-                                                    return {
-                                                    fetchRequest: id => dispatch(fetchRequest(id)),
-                                                    AddRequest,
-                                                    getCurrentUser,
-                                                    refuserRequest: id => dispatch(refuserRequest(id)),
-                                                    acceptRequestParcel: id => dispatch(acceptRequestParcel(id)),
-                                                    }
-                                                    }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchRequest: id => dispatch(fetchRequest(id)),
+        AddRequest,
+        getCurrentUser,
+        refuserRequest: id => dispatch(refuserRequest(id)),
+        acceptRequestParcel: id => dispatch(acceptRequestParcel(id)),
+    }
+}
 
-                                                    export default connect(mapStateToProps, mapDispatchToProps)(requests);
+export default connect(mapStateToProps, mapDispatchToProps)(requests);

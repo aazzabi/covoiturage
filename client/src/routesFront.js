@@ -69,18 +69,6 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/postss/new",
-        name: "Blog new",
-        component: PostNew,
-        layout: "/front"
-    },
-    {
-        path: "/posts/my_posts",
-        name: "Blog new",
-        component: PostMine,
-        layout: "/front"
-    },
-    {
         path: "/register",
         name: "Register",
         component: Register,

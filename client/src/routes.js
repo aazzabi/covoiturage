@@ -30,6 +30,8 @@ import AllUsers from "./BackOffice/Users/AllUsers";
 import Agents from "./BackOffice/Users/Agents.jsx";
 import AllClaims from "./BackOffice/Claims/AllClaims.jsx";
 import DetailClaim from "./BackOffice/Claims/DetailClaim.jsx";
+import PostNew from "./FrontOffice/Blog/post_new";
+import PostMine from "./FrontOffice/Blog/post_mine";
 
 const routes = [
   {
@@ -48,6 +50,18 @@ const routes = [
         path: "/drivers",
         name: "Drivers",
         component: AllDrivers,
+        layout: "/admin"
+      },
+      {
+        path: "/posts/new",
+        name: "Blog new",
+        component: PostNew,
+        layout: "/admin"
+      },
+      {
+        path: "/posts/my_posts",
+        name: "Blog new",
+        component: PostMine,
         layout: "/admin"
       },
       {

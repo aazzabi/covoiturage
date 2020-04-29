@@ -1,7 +1,9 @@
 let _ = require('lodash');
+const User = require('../models/User');
 
 const Post = require('../models/BlogPost');
 const Comment = require('../models/comment');
+
 /**
  * Get a list of posts
  *
@@ -35,30 +37,27 @@ exports.fetchPosts = function (req, res, next) {
 exports.createPost = function (req, res, next) {
 
     // Require auth
-    const userconn = 1;
 
     const title = req.body.title;
     const categories = req.body.categories;
     const content = req.body.content;
-    const user = userconn;
+    const user = req.body.user;
     const time = Date.now();
-    const  files= req.body.files;
-
+    const files = req.body.files;
+    console.log((content))
     // Make sure title, categories and content are not empty
-    if (!title || !categories || !content) {
-        return res.status(422).json({
-            message: 'Title, categories and content are all required.'
-        });
-    }
+
 
     const post = new Post({
         title: title,
         categories: _.uniq(categories.split(',').map((item) => item.trim())),
         content: content,
-        files:files,
+        files: files,
         time: time,
-    });
+        user: user
 
+    });
+    console.log("ssss",post)
     post.save(function (err, post) {
         if (err) {
             return next(err);
@@ -251,9 +250,7 @@ exports.fetchPostsByAuthorId = function (req, res, next) {
 
     // Fetch posts by author ID
     Post
-        .find({
-            authorId: user._id
-        })
+        .find()
         .select({})
         .limit(100)
         .sort({
@@ -281,22 +278,22 @@ exports.fetchPostsByAuthorId = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.createComment = function (req, res, next) {
+exports.createComment = async function (req, res, next) {
 
 
     // Get post ID
     const postId = req.params.postId;
     const content = req.body.content;
     console.log(content);
-    if (!content) {
-        return res.status(422).json({
-            message: 'Comment cannot be empty.'
-        });
-    }
+    console.log(postId);
+    const user = await User.findOne({"_id": req.body.user});
+    console.log(user);
+
     // Create a new comment
     const comment = new Comment({
         content: content,
         postId: postId,
+        user: user,
         time: Date.now(),
     });
 
