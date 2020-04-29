@@ -14,10 +14,11 @@ router.post('/add', packageController.add);
 router.post('/addrequest', packageController.addRequest);
 router.get('/myparcels/:id', packageController.getMyPackage);
 router.get('/myrequests/:id', packageController.getMyRequest);
+router.get('/driverrequests/:id', packageController.getDriverRequest);
 router.post('/myrequests/:id/accept', packageController.acceptRequest);
 router.delete('/RequestRefuse/:id', packageController.refuseRequest);
-
-
+router.put('/confirmSender/:idReq/:sendingCode', packageController.confrimSendingParcel);
+router.put('/confirmReciver/:idReq/:receiveingCode', packageController.confrimRecivingParcel);
 router.put('/edit/:id', packageController.editPackage);
 router.get('/All', packageController.getAllPackage);
 router.get('/:id', packageController.getByIdPackage);
