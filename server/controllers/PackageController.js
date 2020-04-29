@@ -136,6 +136,106 @@ exports.editPackage = async function (req, res, next) {
     })
 }
 
+exports.getDriverRequest = async (req, res, next) => {
+    const RequestParcels = await User.findOne({"_id": req.params.id});
+    const requests = await ReqParcels.find({userId: RequestParcels});
+    console.log(requests)
+
+    res.json(requests);
+
+};
+
+
+exports.confrimSendingParcel = async (req, res, next) => {
+
+    let parcelToUpdate;
+    parcelToUpdate = await ReqParcels.findById(req.params.idReq);
+    const parcel =  parcelToUpdate.parcelId;
+
+   const p = await ReqParcels.findById(parcel._id);
+
+    if (parcel.sendingCode === req.params.sendingCode) {
+        parcel.valideSend = true;
+        await ReqParcels.updateOne({'_id': parcelToUpdate._id}, {"$set": {"confirmationSend": true,"parcelId":parcel}})
+            .then(() => {
+
+                Package.updateOne({'_id': parcel._id}, {"$set": {"valideSend": true}})
+                    .then(() => {
+
+                        res.set('Content-Type', 'application/json');
+                        res.status(301).json('done');
+
+                    })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+
+            })
+            .catch(error => {
+                res.set('Content-Type', 'application/json');
+                res.status(500).send(error);
+            });
+
+
+    }
+    else {
+        res.set('Content-Type', 'application/json');
+        res.status(301).json('wrong code');
+
+    }
+
+
+
+};
+
+exports.confrimRecivingParcel = async (req, res, next) => {
+
+    let parcelToUpdate;
+    parcelToUpdate = await ReqParcels.findById(req.params.idReq);
+    const parcel =  parcelToUpdate.parcelId;
+
+    const p = await ReqParcels.findById(parcel._id);
+
+    if (parcel.receiveingCode === req.params.receiveingCode) {
+        parcel.valideReceive = true;
+        await ReqParcels.updateOne({'_id': parcelToUpdate._id}, {"$set": {"confirmationRecive": true,"parcelId":parcel}})
+            .then(() => {
+
+                Package.updateOne({'_id': parcel._id}, {"$set": {"valideReceive": true}})
+                    .then(() => {
+
+                        res.set('Content-Type', 'application/json');
+                        res.status(301).json('done');
+
+                    })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+
+            })
+            .catch(error => {
+                res.set('Content-Type', 'application/json');
+                res.status(500).send(error);
+            });
+
+
+    }
+    else {
+        res.set('Content-Type', 'application/json');
+        res.status(301).json('wrong code');
+
+    }
+
+
+
+};
+
+
+
+
+
 exports.deletePackage = function (req, res, next) {
     Package.delete({_id: req.params.id}, function (err, parcels) {
         if (err) {
