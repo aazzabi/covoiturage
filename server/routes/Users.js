@@ -33,6 +33,7 @@ router.delete('/delete/:id', userController.deleteUser);
 router.get('/getUserById/:id', userController.getUserById);
 router.post('/refuseDriverRequest/:idUser', authorize(['ADMIN']), userController.becomeDriverRequest);
 
+
 /*
 POST
 http://localhost:3000/users/becomeDriver/:idUser

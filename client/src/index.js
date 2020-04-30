@@ -25,6 +25,9 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { clearCurrentProfile } from "./actions/authActions";
+import MapContainer from './FrontOffice/Parcels/map/map_container';
+import HistoryContainer from './FrontOffice/Parcels/history/history_container.js';
+import LocationContainer from './FrontOffice/Parcels/location/location_container.js';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -54,6 +57,9 @@ ReactDOM.render(
         <Route path="/front" render={props => <AuthLayout {...props} />} />
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
         <Route path="/" render={props => <IndexView {...props} />} />
+        <Route exact path="/map" component={MapContainer} />
+        <Route exact path="/history" component={HistoryContainer} />
+        <Route exact path="/location" component={LocationContainer} />
         <Redirect from="*" to="/front" />
       </Switch>
     </BrowserRouter>

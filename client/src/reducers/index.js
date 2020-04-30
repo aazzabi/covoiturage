@@ -10,6 +10,8 @@ import ParcelReducer from "./Parcel";
 import commentsReducer from "./Blog/commentReducer";
 import postsReducer from "./Blog/postReducer";
 import ClaimsReducers from "../services/Claims/ClaimsReducers";
+import entities from "./locatation/entities";
+import locations from './locatation/locationReducer';
 
 
 export default combineReducers({
@@ -21,4 +23,6 @@ export default combineReducers({
     claims: ClaimsReducers,
     posts: postsReducer,
     comments: commentsReducer,
+    entities,
+    location:locations
 });

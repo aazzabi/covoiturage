@@ -5,7 +5,6 @@ export const CLEAR_CURRENT_PROFILE = 'CLEAR_CURRENT_PROFILE';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const REGISTER = 'REGISTER';
-
 export const GET_LOGGED_USER = "GET_LOGGED_USER";
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const GET_PROFILE = "GET_PROFILE";
@@ -19,3 +18,5 @@ export const CREATE_COMMENT = 'create_comment';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const ACCEPT_Parcel_Request = "ACCEPT_Parcel_Request";
 export const DELETE_Parcel_Request = "DELETE_Parcel_Request";
+
+export const CREATE_Location = 'CREATE_Location';

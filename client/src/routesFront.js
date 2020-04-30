@@ -14,6 +14,10 @@ import PostList from "./FrontOffice/Blog/listPosts";
 import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
 import MyParcel from "./FrontOffice/Parcels/myparcels";
 import EditPackage from "./FrontOffice/Parcels/EditPackage";
+import map from './FrontOffice/Parcels/map/map_container';
+import history from './FrontOffice/Parcels/history/history_container.js';
+import location from './FrontOffice/Parcels/location/location_container.js';
+import test from './FrontOffice/Parcels/location';
 
 const routesFront = [
     {
@@ -63,9 +67,25 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/BlogDetails/:id",
+        path: "/history",
         name: "Blog",
-        component: PostDetail,
+        component: history,
+        layout: "/front"
+    }, {
+        path: "/map",
+        name: "Blog",
+        component: map,
+        layout: "/front"
+    }, {
+        path: "/location/:id",
+        name: "Blog",
+        component: location,
+        layout: "/front"
+    },
+    {
+        path: "/test",
+        name: "Blog",
+        component: test,
         layout: "/front"
     },
     {

@@ -8,6 +8,14 @@ var RequestParcelsSchema = mongoose.Schema(
         message: {type: String, unique: false, required: false},
         userId: {type: mongoose.Schema.Types.Object, ref: 'User', required: true},
         parcelId: {type: mongoose.Schema.Types.Object, ref: 'Parcels', required: true},
+        latitude: {
+            type: String,
+            required: false,
+        },
+        longitude: {
+            type: String,
+            required: false,
+        },
         confirmedAt: Date,
         createdAt: Date
 

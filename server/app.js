@@ -19,8 +19,7 @@ var carsRouter = require('./routes/Cars');
 var packageRouter = require('./routes/Package');
 var postRouter = require('./routes/Post');
 var claimsRouter = require('./routes/Claims');
-var upload = require('./routes/upload');
-
+const webpush = require('web-push');
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
 mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true});
@@ -61,7 +60,9 @@ app.use(fileUpload({
     preserveExtension: true,
     useTempFiles: false
 }));
-
+const push = require("./routes/push");
+const times = require('./routes/times');
+const locations = require('./routes/location');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/ride', rideRouter);
@@ -69,10 +70,13 @@ app.use('/groups', groupsRouter);
 app.use('/privileges', privilegesRouter);
 app.use('/cars', carsRouter);
 app.use('/packages', packageRouter);
-app.use('/posts',postRouter);
+app.use('/posts', postRouter);
 app.use('/claims', claimsRouter);
+app.use("/api/push", push);
+app.use("/api/locations", locations);
+app.use("/api/times", times);
 
-app.post('/upload', function(req, res) {
+app.post('/upload', function (req, res) {
     let file;
 
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -80,7 +84,7 @@ app.post('/upload', function(req, res) {
         return;
     }
     file = req.files.file;
-    file.mv(__dirname + '/public/uploads/' + file.name, function(err) {
+    file.mv(__dirname + '/public/uploads/' + file.name, function (err) {
         if (err) {
             return res.status(500).send(err);
         }
@@ -88,6 +92,41 @@ app.post('/upload', function(req, res) {
         res.send('File uploaded to ');
     });
 });
+const User = require('./models/User');
+const vapidKeys = {
+    publicKey:
+        "BFtr-zLwB1QwRVtoG8AzL72ICVStkAO9_rtuDMLsRjfZFMz2XuvSFpjjDD1aOeE9Vpm542q5USaU6RE4QaGKSlo",
+    privateKey: "mhbMw3l2kTuYeJZqJbbOBbC5Mra7kvwgotyEqh-VFKg"
+};
+//setting our previously generated VAPID keys
+webpush.setVapidDetails(
+    "mailto:nacef.otay123@gmail.com",
+    vapidKeys.publicKey,
+    vapidKeys.privateKey
+);
+setInterval(() => {
+    const date = new Date();
+        User.find()
+            .then(users => {
+                users.forEach(user => {
+                    if (user.subscription) {
+                        const subscription = JSON.parse(user.subscription);
+
+                        const payload = JSON.stringify({
+                            title: "Enter your location please",
+                            username: user.username
+                        });
+
+                        webpush.sendNotification(subscription, payload)
+                            .catch(err => {
+                                // console.log(err);
+                            });
+                    }
+                });
+            });
+        console.log("Sent notifications on", date.toString());
+
+}, 60000);
 
 
 app.use(function (req, res, next) {
