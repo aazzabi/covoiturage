@@ -18,6 +18,7 @@ import map from './FrontOffice/Parcels/map/map_container';
 import history from './FrontOffice/Parcels/history/history_container.js';
 import location from './FrontOffice/Parcels/location/location_container.js';
 import test from './FrontOffice/Parcels/location';
+import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 
 const routesFront = [
     {
@@ -31,6 +32,12 @@ const routesFront = [
         path: "/parcels/details/:id",
         name: "view parcels",
         component: PackagesDetails,
+        layout: "/front"
+    },
+    {
+        path: "/parcels/driverReq/",
+        name: "driverReq",
+        component: DriverRequest,
         layout: "/front"
     },
     {

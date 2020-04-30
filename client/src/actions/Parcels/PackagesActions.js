@@ -10,6 +10,7 @@ export const ADD_Request_Package = "ADD_Request_Package";
 export const GET_fetchPackagesByUserId = "GET_fetchPackagesByUserId";
 export const GET_fetch_Request = "GET_fetch_Request";
 export const Add_Parcel = "Add_Parcel";
+export const DELETE_REQUEST = "DELETE_REQUEST";
 
 export function addParcel({titleC, typeC, priority, description, userId}, historyPush, historyReplace) {
     return function (dispatch) {
@@ -74,7 +75,7 @@ export function AddRequest({Suggestion, Message, userId, postId}, historyPush, h
             })
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
-                historyReplace('/front/parcels/' + postId, {
+                historyReplace('/front/parcels/details/' + postId, {
                     time: new Date().toLocaleString(),
                     message: response,
                 });
@@ -107,7 +108,7 @@ export function EditPackage({title, type, price, weight, size, description, depa
 
                 });
                 console.log()
-               // historyPush(`/front/ride/myrides/`);
+                historyPush(`/front/parcels/details/`+packageId);
             })
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
@@ -136,6 +137,43 @@ export function fetchRequest(id) {
     }
 }
 
+export function DriverRequest(id) {
+    return async (dispatch) => {
+        const result = await Axios.get('http://localhost:3000/packages/driverrequests/' + id);
+        console.log(id)
+        console.log(result)
+        dispatch({type: GET_fetch_Request, payload: result.data});
+    }
+}
+
+export const confirmSender = (idReq,code) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.put(`http://localhost:3000/packages/confirmSender/` + idReq+`/`+code);
+
+            dispatch({type: PACKAGES_EDIT, payload: result.data})
+        } catch (error) {
+            console.log(error)
+            //dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+
+
+export const confirmReciver = (idReq,code) => {
+    return async (dispatch) => {
+        try {
+            const result = await Axios.put(`http://localhost:3000/packages/confirmReciver/` + idReq+`/`+code);
+
+            dispatch({type: PACKAGES_EDIT, payload: result.data})
+        } catch (error) {
+            console.log(error)
+            //dispatch({type: GET_ERRORS, error})
+        }
+    }
+};
+
+
 export function fetchPostById(id) {
     return async (dispatch) => {
         const result = await Axios.get('http://localhost:3000/packages/' + id);
@@ -144,3 +182,21 @@ export function fetchPostById(id) {
 
 
 }
+
+export const deleteRequest = idReq => dispatch => {
+    console.log('hnaaa')
+
+    Axios.delete(`http://localhost:3000/packages/RequestRefuse/${idReq}`).then(res => {
+            dispatch({
+                type: DELETE_REQUEST,
+                payload: idReq
+            })
+        }
+    ).catch(err =>
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    );
+};
+
