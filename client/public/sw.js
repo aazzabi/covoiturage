@@ -2,10 +2,15 @@
 self.addEventListener('push', e => {
   const data = e.data.json();
   console.log(data)
+  const options = {
+  };
   self.registration.showNotification(data.title, {
     body: `Hey ${data.username}!`,
     icon: 'images/icon.png',
-    badge: 'images/badge.png',
+    image: 'images/badge.png',
+
+    requireInteraction: true,
+
     actions: [
       {action: 'addLocation', title: 'Add location'},
       {action: 'close', title: 'Close'},
@@ -19,21 +24,10 @@ self.addEventListener('notificationclose', e => {
 
 self.addEventListener('notificationclick', function(event) {
   console.log(event.data);
-  const notification = e.notification;
-  const action = e.action;
   event.waitUntil(
       clients.openWindow('http://localhost:3001/front/location/')
   );
-  switch(action) {
-    case 'addLocation':
-      event.waitUntil(
-          clients.openWindow('http://localhost:3001/front/location/')
-      );
-      break;
-    case 'close':
-    default:
-      notification.close();
-  }
+
 });
 
 self.addEventListener('pushsubscriptionchange', e => {

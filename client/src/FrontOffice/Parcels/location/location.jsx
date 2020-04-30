@@ -28,11 +28,6 @@ class Location extends React.Component {
         const {id} = this.props.match.params;
         this.props.getCurrentUser();
         console.log(this.props.currentUser._id)
-
-    }
-
-    handleFormSubmit() {
-
         const user = this.props.currentUser._id;
         const pos = {latitude: 0, longitude: 0}
 
@@ -43,6 +38,11 @@ class Location extends React.Component {
         });
         console.log(user)
         Axios.put(`http://localhost:3000/api/locations/${user}`, pos)
+    }
+
+    handleFormSubmit() {
+
+
 
     }
 
