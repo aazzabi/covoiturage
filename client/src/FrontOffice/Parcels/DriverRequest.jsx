@@ -32,7 +32,8 @@ import AuthHeader from "../../components/Headers/AuthHeader";
 import Moment from 'moment';
 import _ from 'lodash';
 import {confirmReciver, confirmSender, deleteRequest, DriverRequest} from "../../actions/Parcels/PackagesActions";
-
+import Axios from "axios";
+import ApproveNotif from "./ApproveNotif";
 
 
 const pagination = paginationFactory({
@@ -71,18 +72,45 @@ class DriverRequestPage extends React.Component {
         super(props);
         this.state = {
 
-            code0:"",code1:"",code2:"",code3:"",code4:"",code5:"",code6:"",code7:"",code8:"",code9:"",code10:"",code11:"",
-            coder0:"",coder1:"",coder2:"",coder3:"",coder4:"",coder5:"",coder6:"",coder7:"",coder8:"",coder9:"",coder10:"",coder11:"",
-            e0:"",
-            er0:"",
-            s0:"",
+            code0: "",
+            code1: "",
+            code2: "",
+            code3: "",
+            code4: "",
+            code5: "",
+            code6: "",
+            code7: "",
+            code8: "",
+            code9: "",
+            code10: "",
+            code11: "",
+            coder0: "",
+            coder1: "",
+            coder2: "",
+            coder3: "",
+            coder4: "",
+            coder5: "",
+            coder6: "",
+            coder7: "",
+            coder8: "",
+            coder9: "",
+            coder10: "",
+            coder11: "",
+            e0: "",
+            er0: "",
+            s0: "",
             pageSize: 5,
             currentPage: 1,
             error: null,
             request: [],
             response: [],
             currentUser: {},
+            Latitude: null,
+            Longitude: null
         };
+        window.navigator.geolocation.getCurrentPosition(
+            success => this.setState({Latitude: success.coords.latitude, Longitude: success.coords.longitude})
+        );
     };
 
     componentWillReceiveProps(nextProps) {
@@ -96,29 +124,26 @@ class DriverRequestPage extends React.Component {
 
     handleChange = (name, value) => {
         this.setState({[name]: value});
-        console.log("code",this.state.code);
     };
+    state = {Latitude: null, Longitude: null, errormsg: ''}; // this is equal to contructor
 
     async componentWillMount() {
 
         await this.props.getCurrentUser();
 
 
-                await this.props.DriverRequest(this.props.currentUser._id);
-                console.log(this.state.request)
-
-               // this.props.history.push('/front/ride/search');
-
-
-                console.log(this.state.request)
-                console.log(this.props.currentUser)
+        await this.props.DriverRequest(this.props.currentUser._id);
+        const user = this.props.currentUser._id;
+        let pos = {};
+        pos = {Longitude: this.state.Longitude, Latitude: this.state.Latitude};
+        await Axios.put(`http://localhost:3000/api/locations/${user}`, pos)
 
     }
 
 
-    deleteHandler(e,req) {
+    deleteHandler(e, req) {
         e.preventDefault();
-       this.props.deleteRequest(req);
+        this.props.deleteRequest(req);
         window.location.reload();
     }
 
@@ -127,75 +152,65 @@ class DriverRequestPage extends React.Component {
         this.setState({currentPage: page});
     }
 
-    validateForm(code,index) {
+    validateForm(code, index) {
 
         let test = true;
         let formValid = true;
         let form = {...this.state};
-        console.log('form',form)
 
 
-        if (form['code'+index] !== code) {
+        if (form['code' + index] !== code) {
             test = false;
-            this.handleChange('e'+[index], "wrong code !!")
-            this.handleChange('s'+[index], "error")
+            this.handleChange('e' + [index], "wrong code !!")
+            this.handleChange('s' + [index], "error")
         } else {
-            this.handleChange('e'+[index], "")
-            this.handleChange('s'+[index], "")
+            this.handleChange('e' + [index], "")
+            this.handleChange('s' + [index], "")
         }
 
 
-        console.log(test);
-
-        console.log(formValid, 'test2')
         return test;
     }
 
-    validateFormr(code,index) {
+    validateFormr(code, index) {
 
         let test = true;
         let formValid = true;
         let form = {...this.state};
-        console.log('form',form)
 
 
-        if (form['coder'+index] !== code) {
+        if (form['coder' + index] !== code) {
             test = false;
-            this.handleChange('er'+[index], "wrong code !!")
-            this.handleChange('s'+[index], "error")
+            this.handleChange('er' + [index], "wrong code !!")
+            this.handleChange('s' + [index], "error")
         } else {
-            this.handleChange('er'+[index], "")
-            this.handleChange('s'+[index], "")
+            this.handleChange('er' + [index], "")
+            this.handleChange('s' + [index], "")
         }
 
 
-        console.log(test);
-
-        console.log(formValid, 'test2r')
         return test;
     }
 
-    async confirme(e,code,id,index) {
+    async confirme(e, code, id, index) {
 
         e.preventDefault();
-        let formValid = this.validateForm(code,index);
+        let formValid = this.validateForm(code, index);
         if (formValid) {
-            await this.props.confirmSender(id,code)
-            console.log('done jsx');
+            await this.props.confirmSender(id, code)
             window.location.reload(false);
         }
 
 
     }
 
-   async confirmer(e,code,id,index) {
+    async confirmer(e, code, id, index) {
 
         e.preventDefault();
-        let formValid = this.validateFormr(code,index);
+        let formValid = this.validateFormr(code, index);
 
         if (formValid) {
-            await this.props.confirmReciver(id,code)
-            console.log('done jsx');
+            await this.props.confirmReciver(id, code)
             window.location.reload(false);
         }
 
@@ -206,16 +221,13 @@ class DriverRequestPage extends React.Component {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let array = []
         let all = this.state.request;
-        console.log(all)
         array.push(all)
-        console.log(array)
         if (error) {
             return (
                 <div>Error: {error.message}</div>
             )
         } else {
             const currentDrivers = all.slice((currentPage - 1) * pageSize, pageSize * currentPage);
-            console.log(currentDrivers[0])
             return (
 
                 <>
@@ -230,6 +242,7 @@ class DriverRequestPage extends React.Component {
                                         <CardHeader>
 
                                             <h3 className="mb-0">My Requests</h3>
+                                            <ApproveNotif></ApproveNotif>
                                         </CardHeader>
 
                                         <CardBody>
@@ -250,7 +263,7 @@ class DriverRequestPage extends React.Component {
                                                     <tbody>
 
                                                     {!!all
-                                                    && currentDrivers.map((req,index) => (
+                                                    && currentDrivers.map((req, index) => (
 
                                                         <Fragment key={req._id}>
 
@@ -282,9 +295,10 @@ class DriverRequestPage extends React.Component {
                                                                 {
 
                                                                     req.confirmationSend
-                                                                        ?<td>
+                                                                        ? <td>
                                                                             <div style={{marginTop: 5}}>
-                                                                                <Badge color="success" pill >Confirmed</Badge>
+                                                                                <Badge color="success"
+                                                                                       pill>Confirmed</Badge>
                                                                             </div>
 
                                                                         </td>
@@ -294,35 +308,35 @@ class DriverRequestPage extends React.Component {
 
                                                                                 <InputGroup
                                                                                     className="input-group-merge input-group-alternative mb-3"
-                                                                                    className={this.state['s'+index]}
+                                                                                    className={this.state['s' + index]}
                                                                                 >
 
                                                                                     <Input
                                                                                         placeholder="code.."
                                                                                         id="standard-start-adornment"
-                                                                                        value={this.state['code'+index]}
-                                                                                        onChange={event => this.handleChange('code'+index, event.target.value)}
+                                                                                        value={this.state['code' + index]}
+                                                                                        onChange={event => this.handleChange('code' + index, event.target.value)}
                                                                                     />
                                                                                     <InputGroupAddon addonType="prepend">
                                                                                         <Button style={{marginLeft: 4}}
-                                                                                                onClick={e => this.confirme(e,req.parcelId.sendingCode,req._id,index)}
+                                                                                                onClick={e => this.confirme(e, req.parcelId.sendingCode, req._id, index)}
                                                                                                 className="btn-icon-only rounded-circle"
                                                                                                 color="twitter"
                                                                                                 type="button"
                                                                                         >
                                                                     <span className="btn-inner--icon">
-                                                                    <i className="fab fa fa-pen" />
+                                                                    <i className="fab fa fa-pen"/>
                                                                     </span>
                                                                                         </Button>
                                                                                     </InputGroupAddon>
 
                                                                                 </InputGroup>
 
-                                                                                <span className="errorText">{this.state['e'+index]}</span>
+                                                                                <span
+                                                                                    className="errorText">{this.state['e' + index]}</span>
 
 
                                                                             </FormGroup>
-
 
 
                                                                         </td>
@@ -332,9 +346,10 @@ class DriverRequestPage extends React.Component {
                                                                 {
 
                                                                     req.confirmationRecive
-                                                                        ?<td>
+                                                                        ? <td>
                                                                             <div style={{marginTop: 5}}>
-                                                                                <Badge color="success" pill >Confirmed</Badge>
+                                                                                <Badge color="success"
+                                                                                       pill>Confirmed</Badge>
                                                                             </div>
 
                                                                         </td>
@@ -344,30 +359,32 @@ class DriverRequestPage extends React.Component {
 
                                                                                 <InputGroup
                                                                                     className="input-group-merge input-group-alternative mb-3"
-                                                                                    className={this.state['s'+index]}
+                                                                                    className={this.state['s' + index]}
                                                                                 >
 
                                                                                     <Input
                                                                                         placeholder="code.."
                                                                                         id="standard-start-adornment"
-                                                                                        value={this.state['coder'+index]}
-                                                                                        onChange={event => this.handleChange('coder'+index, event.target.value)}
+                                                                                        value={this.state['coder' + index]}
+                                                                                        onChange={event => this.handleChange('coder' + index, event.target.value)}
                                                                                     />
                                                                                     <InputGroupAddon addonType="prepend">
 
                                                                                         <Button style={{marginLeft: 4}}
-                                                                                                onClick={e => this.confirmer(e,req.parcelId.receiveingCode,req._id,index)}
+                                                                                                onClick={e => this.confirmer(e, req.parcelId.receiveingCode, req._id, index)}
                                                                                                 className="btn-icon-only rounded-circle"
                                                                                                 color="twitter"
                                                                                                 type="button"
                                                                                         >
-                                                                                        <span className="btn-inner--icon">
-                                                                                            <i className="fab fa fa-pen" />
+                                                                                        <span
+                                                                                            className="btn-inner--icon">
+                                                                                            <i className="fab fa fa-pen"/>
                                                                                         </span>
                                                                                         </Button>
                                                                                     </InputGroupAddon>
                                                                                 </InputGroup>
-                                                                                <span className="errorText">{this.state['er'+index]}</span>
+                                                                                <span
+                                                                                    className="errorText">{this.state['er' + index]}</span>
 
                                                                             </FormGroup>
 
@@ -379,10 +396,9 @@ class DriverRequestPage extends React.Component {
                                                                 {
 
                                                                     req.confirmationSend
-                                                                        ?<a></a>
+                                                                        ? <a></a>
                                                                         : <td>
                                                                             <div style={{marginTop: 5}}>
-
 
 
                                                                                 <Button
@@ -392,7 +408,7 @@ class DriverRequestPage extends React.Component {
                                                                                     type="button"
                                                                                 >
                                                                     <span className="btn-inner--icon">
-                                                                    <i className="fab fa fa-trash" />
+                                                                    <i className="fab fa fa-trash"/>
                                                                     </span>
                                                                                 </Button>
 
@@ -443,4 +459,10 @@ function mapStateToProps(state) {
     }
 };
 
-export default withRouter(connect(mapStateToProps, { getCurrentUser, DriverRequest,confirmSender,confirmReciver,deleteRequest})(DriverRequestPage));
+export default withRouter(connect(mapStateToProps, {
+    getCurrentUser,
+    DriverRequest,
+    confirmSender,
+    confirmReciver,
+    deleteRequest
+})(DriverRequestPage));

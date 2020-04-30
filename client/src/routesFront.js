@@ -16,8 +16,7 @@ import MyParcel from "./FrontOffice/Parcels/myparcels";
 import EditPackage from "./FrontOffice/Parcels/EditPackage";
 import map from './FrontOffice/Parcels/map/map_container';
 import history from './FrontOffice/Parcels/history/history_container.js';
-import location from './FrontOffice/Parcels/location/location_container.js';
-import test from './FrontOffice/Parcels/location';
+import test from './FrontOffice/Parcels/ApproveNotif';
 import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 
 const routesFront = [
@@ -82,11 +81,6 @@ const routesFront = [
         path: "/map",
         name: "Blog",
         component: map,
-        layout: "/front"
-    }, {
-        path: "/location/:id",
-        name: "Blog",
-        component: location,
         layout: "/front"
     },
     {

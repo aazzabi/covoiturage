@@ -62,14 +62,12 @@ function registerValidSW(swUrl) {
               }
                 })
                   .then(res => {
-                      console.log("zzzazaaz");
 
                       res.json()
                       .then(data => { user = data; })
                       .then(() => {
                         if (sub) {
                           const body = JSON.stringify({ sub, user });
-                          console.log(body);
                           fetch(
                             `http://localhost:3000/api/push/subscribe`,
                             {

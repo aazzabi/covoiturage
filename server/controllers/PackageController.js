@@ -229,9 +229,6 @@ exports.confrimRecivingParcel = async (req, res, next) => {
 };
 
 
-
-
-
 exports.deletePackage = function (req, res, next) {
     Package.delete({_id: req.params.id}, function (err, parcels) {
         if (err) {

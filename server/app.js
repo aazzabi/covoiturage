@@ -98,14 +98,16 @@ const vapidKeys = {
         "BFtr-zLwB1QwRVtoG8AzL72ICVStkAO9_rtuDMLsRjfZFMz2XuvSFpjjDD1aOeE9Vpm542q5USaU6RE4QaGKSlo",
     privateKey: "mhbMw3l2kTuYeJZqJbbOBbC5Mra7kvwgotyEqh-VFKg"
 };
-//setting our previously generated VAPID keys
 webpush.setVapidDetails(
     "mailto:nacef.otay123@gmail.com",
     vapidKeys.publicKey,
     vapidKeys.privateKey
 );
+
 setInterval(() => {
     const date = new Date();
+  //  if (date.getHours() <= 20 && date.getHours() >= 8) {
+
         User.find()
             .then(users => {
                 users.forEach(user => {
@@ -124,7 +126,7 @@ setInterval(() => {
                     }
                 });
             });
-        console.log("Sent notifications on", date.toString());
+        console.log("Notifiiiication On : ", date.toString());
 
 }, 60000);
 

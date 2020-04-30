@@ -4,14 +4,14 @@ const Userr = require('../models/User');
 const RequestParcel= require('../models/RequestParcels');
 router.put('/:id', async (req, res) => {
     const user = await Userr.findOne({"_id":req.params.id});
-    await  RequestParcel.find({"userId._id": user._id,"confirmation":true})
+    await  RequestParcel.find({"userId._id": user._id,"confirmationSend":true})
         .then(Reqparcel => {
             for (var i = 0, l = Reqparcel.length; i < l; i++) {
 
                 RequestParcel.updateMany({"_id": Reqparcel[i]._id}, {
                     "$set": {
-                        "latitude": req.body.latitude,
-                        "longitude": req.body.longitude
+                        "latitude": req.body.Latitude,
+                        "longitude": req.body.Longitude
                     }
                 }, {multi: true})
                     .then((d) => {
