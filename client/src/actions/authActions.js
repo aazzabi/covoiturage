@@ -2,8 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER, DRIVER_REQUEST} from "./types";
-import {GET_USERS} from "../services/Users/UserTypes";
+import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER} from "./types";
 
 // Login - Get User Token
 export const loginUser = (userData,  historyPush, historyReplace ) => dispatch => {

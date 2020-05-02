@@ -60,13 +60,6 @@ class EditClaim extends Component {
     };
 
     confirme() {
-        const u = this.props.currentUser;
-        //     const currentUser = jwt_decode(localStorage.getItem("jwtToken").User);
-        console.log(this.props.currentUser._id, 'currentUser');
-        console.log(this.state.titleC);
-        console.log(this.state.typeC);
-        console.log(this.state.priority);
-        console.log(this.state.description);
         if (this.props.currentUser) {
             this.props.editClaim({
                 titleC: this.state.titleC,
@@ -91,8 +84,6 @@ class EditClaim extends Component {
     }
 
     render() {
-        let claim = this.props.claim;
-        const {handleSubmit} = this.props;
         return (
             <>
                 <div className="bg-gradient-secondary shadow card post " >

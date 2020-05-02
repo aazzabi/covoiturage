@@ -90,13 +90,6 @@ class MyProfile extends React.Component {
     };
 
     async confirme() {
-        const u = this.props.currentUser;
-        //     const currentUser = jwt_decode(localStorage.getItem("jwtToken").User);
-        console.log(this.props.currentUser._id, 'currentUser');
-        console.log(this.state.phone);
-        console.log(this.state.email);
-        console.log(this.state.firstName);
-        console.log(this.state.lastName);
         this.props.updateUser({
             phone: this.state.phone,
             firstName: this.state.firstName,

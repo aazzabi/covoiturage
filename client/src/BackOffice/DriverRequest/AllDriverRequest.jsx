@@ -59,13 +59,13 @@ class AllDriverRequest extends React.Component {
     getDoc(docs, type, name, cls) {
         let final;
         docs.forEach(d => {
-            if (d.type == type) {
+            if (d.type === type) {
                 final = d;
             }
         });
         return (
             <a href={require('D:/covoiturageImages/uploads/drivers/' + final.name)}
-               id={final.name} target="_blank">
+               id={final.name} target="_blank"  rel="noopener noreferrer" >
                 <Badge color={cls} pill><i className="fas fa-download"></i> {name} </Badge>
             </a>
         );
@@ -83,7 +83,7 @@ class AllDriverRequest extends React.Component {
     }
 
     render() {
-        const {error, currentPage, searchFilter, pageSize, d} = this.state;
+        const {error, currentPage,  pageSize} = this.state;
         let all = this.props.allDriversRequests;
         console.log(this.state.allDriversRequests)
         if (error) {
@@ -118,10 +118,10 @@ class AllDriverRequest extends React.Component {
                             <Fragment key={driveReq._id}>
                                 <tr>
                                     {driveReq.user.avatar != null
-                                        ? <td><img className="avatar avatar-sm rounded-circle"
+                                        ? <td><img className="avatar avatar-sm rounded-circle" alt="avatar"
                                                    src={require('D:/covoiturageImages/uploads/users/' + driveReq.user.avatar)}/>
                                         </td>
-                                        : <td><img className="avatar avatar-sm rounded-circle"
+                                        : <td><img className="avatar avatar-sm rounded-circle" alt="avatar"
                                                    src={require("assets/img/theme/team-1.jpg")}/></td>
                                     }
                                     <td>{Moment(driveReq.requestedAt).format(' DD -  MMMM  - YYYY')}</td>

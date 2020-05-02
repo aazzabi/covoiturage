@@ -53,7 +53,7 @@ class DetailClaim extends Component {
                 <div className=" row">
                     <div className="col-md-1">
                         {comment.user &&
-                        comment.user.avatar == '' ? <img className="avatar avatar-sm rounded-circle" alt="..."
+                        comment.user.avatar === '' ? <img className="avatar avatar-sm rounded-circle" alt="..."
                                                          src="/static/media/team-4.23007132.jpg"/>
                             : <img alt="..." className="avatar avatar-sm rounded-circle"
                                    src="/static/media/team-4.23007132.jpg"/>

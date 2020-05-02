@@ -49,13 +49,6 @@ class ClaimAdd extends Component {
     };
 
     confirme() {
-        const u = this.props.currentUser;
-        //     const currentUser = jwt_decode(localStorage.getItem("jwtToken").User);
-        console.log(this.props.currentUser._id, 'currentUser');
-        console.log(this.state.titleC);
-        console.log(this.state.typeC);
-        console.log(this.state.priority);
-        console.log(this.state.description);
         if (this.props.currentUser) {
             this.props.addClaim({
                 titleC: this.state.titleC,
@@ -79,7 +72,6 @@ class ClaimAdd extends Component {
     }
 
     render() {
-        const {handleSubmit} = this.props;
         return (
             <>
                 <AuthHeader title="Déposer une récalamation" lead=""/>
