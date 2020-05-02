@@ -46,6 +46,8 @@ import {register} from "../../../actions/authActions";
 import ReCAPTCHA from 'react-recaptcha'
 
 class Register extends React.Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -66,19 +68,53 @@ class Register extends React.Component {
 
     }
 
-    async confirme() {
+
+    renderAlert() {
+        const {state} = this.props.history.location;
+        const {action} = this.props.history;
+        if (state && action === 'PUSH') {
+            return (
+                <div className="alert alert-danger" role="alert" style={{marginBottom: 0}}>
+                    <strong>Oops!</strong> {state.message}
+                </div>
+            );
+        }
+    }
+    componentDidMount() {
+        this._isMounted = true;
+    }
+    confirme() {
         if (this.state.isVerified) {
             const file = this.state.file[0];
-            const c = await this.props.register({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                username: this.state.username,
-                email: this.state.email,
-                password: this.state.password,
-                phone: this.state.phone,
-                gender: this.state.gender,
-                recaptchaResponse: this.state.recaptchaResponse,
-            }, file);
+            this.props.register({
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    username: this.state.username,
+                    email: this.state.email,
+                    password: this.state.password,
+                    phone: this.state.phone,
+                    gender: this.state.gender,
+                    recaptchaResponse: this.state.recaptchaResponse,
+                }, file, (path) => {  // callback 1: history push
+                    this.props.history.push(path);
+                }, (path, state) => {
+                    this.props.history.push(path, state);
+                    console.log(state, 'state after error');
+                    if (this._isMounted) {
+                        this.setState({
+                            firstName: state.u.firstName,
+                            lastName: state.u.lastName,
+                            username: state.u.username,
+                            email: state.u.email,
+                            password: state.u.password,
+                            phone: state.u.phone,
+                            gender: state.u.gender,
+                        });
+                    }
+                    console.log(state.u.firstName, 'state.u.firstName')
+                    console.log(this.state, 'state after changement')
+                }
+            );
             this.recaptcha.reset();
             this.props.history.push('/front/login');
         } else {
@@ -86,18 +122,24 @@ class Register extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     handleChange = (name, value) => {
         this.setState({[name]: value});
     };
-    //react-recaptcha
+
+//react-recaptcha
     verifyCallback(response) {
-        if (response){
+        if (response) {
             this.setState({
                 isVerified: true,
                 recaptchaResponse: response,
             })
         }
     }
+
     recaptchLoaded() {
         console.log('recaptcha loaded successfully')
     }
@@ -112,6 +154,9 @@ class Register extends React.Component {
             return (
                 <>
                     {this.state.response.message && <Alert variant="info">{this.state.response.message}</Alert>}
+                    <div className="col-md-12" style={{padding: 0, paddingTop: 80}}>
+                        {this.renderAlert()}
+                    </div>
 
                     <AuthHeader
                         title="Create an account"
@@ -175,6 +220,7 @@ class Register extends React.Component {
                                                     <Input
                                                         placeholder="First name"
                                                         type="text"
+                                                        value={this.state.firstName}
                                                         onChange={event => this.handleChange('firstName', event.target.value)}
                                                         onFocus={() => this.setState({focusedFirstName: true})}
                                                         onBlur={() => this.setState({focusedFirstName: false})}
@@ -191,6 +237,7 @@ class Register extends React.Component {
                                                     <Input
                                                         placeholder="Last name"
                                                         type="text"
+                                                        value={this.state.lastName}
                                                         onChange={event => this.handleChange('lastName', event.target.value)}
                                                         onFocus={() => this.setState({focusedLastName: true})}
                                                         onBlur={() => this.setState({focusedLastName: false})}
@@ -207,6 +254,7 @@ class Register extends React.Component {
                                                     <Input
                                                         placeholder="Username"
                                                         type="text"
+                                                        value={this.state.username}
                                                         onChange={event => this.handleChange('username', event.target.value)}
                                                         onFocus={() => this.setState({focusedUserName: true})}
                                                         onBlur={() => this.setState({focusedUserName: false})}
@@ -223,6 +271,7 @@ class Register extends React.Component {
                                                     <Input
                                                         placeholder="Email"
                                                         type="email"
+                                                        value={this.state.email}
                                                         onChange={event => this.handleChange('email', event.target.value)}
                                                         onFocus={() => this.setState({focusedEmail: true})}
                                                         onBlur={() => this.setState({focusedEmail: false})}
@@ -255,6 +304,7 @@ class Register extends React.Component {
                                                     <Input
                                                         placeholder="Phone number"
                                                         type="number"
+                                                        value={this.state.phone}
                                                         onChange={event => this.handleChange('phone', event.target.value)}
                                                         onFocus={() => this.setState({focusedPhone: true})}
                                                         onBlur={() => this.setState({focusedPhone: false})}
@@ -267,6 +317,7 @@ class Register extends React.Component {
                                             </FormGroup>
                                             <FormLabel component="legend">Gender</FormLabel>
                                             <RadioGroup aria-label="gender" name="gender1" row
+                                                        value={this.state.gender}
                                                         onChange={event => this.handleChange('gender', event.target.value)}>
                                                 <FormControlLabel value="FEMME" control={<Radio/>} label="Female"/>
                                                 <FormControlLabel value="HOMME" control={<Radio/>} label="Male"/>

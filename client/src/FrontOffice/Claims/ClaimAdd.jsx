@@ -67,6 +67,7 @@ class ClaimAdd extends Component {
                 this.props.history.push(path);
             }, (path, state) => {
                 this.props.history.push(path, state);
+                window.location.reload();
             });
         } else {
             return (

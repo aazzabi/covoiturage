@@ -26,14 +26,14 @@ var getAll = async (req, res, next) => {
             res.status(400).send(error);
         });
     } else if (u.role === 'USER') {
-        claim.find({'createdBy._id': u._id}).then((data) => {
+        claim.find({'createdBy': u}).then((data) => {
             res.status(200).send(data);
         }, error => {
             res.status(400).send(error);
         });
     } else {
         // console.log('other', u)
-        claim.find({'responsible._id': u._id}).then((data) => {
+        claim.find({'responsible': u}).then((data) => {
             console.log('other', data)
             res.set('Content-Type', 'application/json');
             res.status(200).send(data);
@@ -54,10 +54,12 @@ var getAll = async (req, res, next) => {
 //      + na7seblou guedeh b9aa bech 7allhaa  + increment de 1 fel nombre des reclamationOuverts
 var getById = async (req, res, next) => {
     const u = await user.findOne({"_id": req.params.idUser});
-    const cla = await claim.findOne({"_id": req.params.idClaim});
+    console.log('USER');
+    const cla = await claim.findOne({"_id": req.params.idClaim})
+        .populate('createdBy').populate('responsible');
     if (u.role === "ADMIN") {
         console.log(u.role);
-        claim.findOne({"_id": req.params.idClaim}).then((data) => {
+        claim.findOne({"_id": req.params.idClaim}).populate('responsible').populate('createdBy').then((data) => {
             console.log(data, 'data use');
             res.set('Content-Type', 'application/json');
             res.status(200).send(data);
@@ -66,14 +68,16 @@ var getById = async (req, res, next) => {
             res.status(400).send(error);
         });
     } else if (u.role === 'USER') {
-        console.log(u.role);
-        claim.findOne({"_id": req.params.idClaim}).then((data) => {
+        console.log('USER');
+        claim.findOne({"_id": req.params.idClaim}).populate('responsible').populate('createdBy').then((data) => {
+            console.log(req.params.idUser);
+            console.log(req.params.idClaim);
+            console.log(data);
             res.status(200).send(data);
         }, error => {
             res.status(400).send(error);
         });
     } else {
-        console.log(cla.status, 'status');
         if (cla.status === "WAITING") {
             console.log(u.role);
             claim.findOneAndUpdate({"_id": req.params.idClaim}, {
@@ -83,8 +87,9 @@ var getById = async (req, res, next) => {
                 }
             })
                 .then(async (data) => {
-                    const cdAfterUpdate = await claim.find({"_id": req.params.idClaim});
-
+                    const cdAfterUpdate = await claim.find({"_id": req.params.idClaim})
+                        .populate('createdBy')
+                        .populate( 'comments');
                     // nzid l wa9t li b9aah bech y7el l réclaamtion , w le nombre de réclamation ouverts
                     var dateDiff = (new Date() - cla.createdAt.getTime()) / (60 * 1000);
                     await user.findOneAndUpdate({'_id': req.params.idUser}, {
@@ -147,7 +152,7 @@ var updateClaim = (req, res, next) => {
     if (!updateData) {
         res.status(422).send({"message": "please provide what you want to update"})
     }
-    claim.findOne({"_id": req.params.id}).then(function (cl) {
+    claim.findOne({"_id": req.params.id}).populate('createdBy').populate('responsible').then(function (cl) {
         console.log(req.params.id, 'id');
         console.log(updateData, 'updateData');
         if (!cl) {
@@ -188,7 +193,7 @@ var resolveClaim = async (req, res, next) => {
                 {'_id': req.params.id, 'status': 'IN_PROGRESS'},
                 {$set: {'status': 'RESOLVED', 'resolvedAt': new Date()}}
             ).then(async (data) => {
-                const cr = await claim.findOne({"_id": req.params.id});
+                const cr = await claim.findOne({"_id": req.params.id}).populate('createdBy').populate('responsible');
 
                 // nzid l wa9t li b9aah bech y7el l réclaamtion , w le nombre de réclamation ouverts
                 var dateDiff = (cr.openedAt.getTime() - cr.createdAt.getTime()) / (60 * 1000);
@@ -221,7 +226,7 @@ var resolveClaim = async (req, res, next) => {
 // http://localhost:3000/claims/changeStatus/:idClaim/:status
 var changeStatus = async (req, res, next) => {
     claim.findOneAndUpdate({'_id': req.params.id}, {$set: {'status': req.params.status}}).then(async (data) => {
-        const cr = await claim.findOne({"_id": req.params.id});
+        const cr = await claim.findOne({"_id": req.params.id}).populate('createdBy').populate('responsible');
         res.set('Content-Type', 'application/json');
         res.status(200).send(cr);
     }, error => {
@@ -249,7 +254,7 @@ var addCommentToClaim = async (req, res, next) => {
                 }
         }
     }).then(async (data) => {
-        const cla = await claim.findOne({'_id': req.params.idClaim});
+        const cla = await claim.findOne({'_id': req.params.idClaim}).populate('createdBy').populate('responsible');
         res.set('Content-Type', 'application/json');
         res.status(200).send(cla);
     }, error => {
@@ -271,7 +276,7 @@ var deleteComment = async (req, res, next) => {
         claim.updateOne({'_id': req.params.idClaim}, {$pull: {'comments': cm}})
             .then(async (data) => {
                 console.log(data);
-                const cla = await claim.findOne({'_id': req.params.idClaim});
+                const cla = await claim.findOne({'_id': req.params.idClaim}).populate('createdBy').populate('responsible');
                 res.set('Content-Type', 'application/json');
                 res.status(200).send(cla);
             }, error => {
@@ -304,7 +309,8 @@ var searchClaim = async (req, res, next) => {
                     {type: new RegExp(req.params.keyword, "i")},
                 ]
             }
-        ).then((data) => {
+        ).populate('createdBy').populate('responsible')
+            .then((data) => {
             console.log(req.params.keyword, 'keyword');
             res.set('Content-Type', 'application/json');
             res.status(200).send(data);
@@ -314,14 +320,34 @@ var searchClaim = async (req, res, next) => {
             res.status(400).send(error);
         });
     } else if (u.role === 'USER') {
-        claim.find({'$text': {'$search': req.params.keyword}, 'createdBy._id': u._id}).then((data) => {
+        claim.find(
+            {
+                '$or': [
+                    {title: new RegExp(req.params.keyword, "i")},
+                    {description: new RegExp(req.params.keyword, "i")},
+                    {priority: new RegExp(req.params.keyword, "i")},
+                    {status: new RegExp(req.params.keyword, "i")},
+                    {type: new RegExp(req.params.keyword, "i")},
+                ]
+            }
+            ).populate('createdBy').populate('responsible').then((data) => {
             res.status(200).send(data);
         }, error => {
             res.status(400).send(error);
         });
     } else {
         // console.log('other', u)
-        claim.find({'$text': {'$search': req.params.keyword}, 'responsible._id': u._id}).then((data) => {
+        claim.find(
+            {
+                '$or': [
+                    {title: new RegExp(req.params.keyword, "i")},
+                    {description: new RegExp(req.params.keyword, "i")},
+                    {priority: new RegExp(req.params.keyword, "i")},
+                    {status: new RegExp(req.params.keyword, "i")},
+                    {type: new RegExp(req.params.keyword, "i")},
+                ]
+            }
+        ).populate('createdBy').populate('responsible').then((data) => {
             console.log('other', data)
             res.set('Content-Type', 'application/json');
             res.status(200).send(data);

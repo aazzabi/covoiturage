@@ -32,19 +32,28 @@ export const loginUser = (userData,  historyPush, historyReplace ) => dispatch =
         });
 };
 
-export const register = (userData, file)=> dispatch => {
+export const register = (userData, file, historyPush ,historyReplace)=> dispatch => {
     axios
         .post("http://localhost:3000/register", userData)
         .then(res => {
-            if (file != null) {
-                const fd = new FormData();
-                fd.append('image',file);
-                axios.post("http://localhost:3000/uploadUserImage/" + res.data._id, fd).then((r) => {});
+            if (res.data.status !== 400 ) {
+                if (file != null) {
+                    const fd = new FormData();
+                    fd.append('image', file);
+                    axios.post("http://localhost:3000/uploadUserImage/" + res.data._id, fd).then((r) => {
+                    });
+                }
+                dispatch({
+                    type: REGISTER,
+                    payload: res.data
+                })
+            } else {
+                historyReplace('/front/register', {
+                    time: new Date().toLocaleString(),
+                    message: res.data.message,
+                    u: userData,
+                });
             }
-            dispatch({
-                type: REGISTER,
-                payload: res.data
-            })
         })
         .catch(err =>
             dispatch({
@@ -76,11 +85,15 @@ export const confirmeDriverRequest = (userId, carData, fd , historyPush, history
                     payload: res.data.message
                 })
             }
-            console.log('res', res);
-            dispatch({
-                type: DRIVER_REQUEST,
-                payload: res.data
-            })
+            historyReplace('/admin/', {
+                time: new Date().toLocaleString(),
+                message: res.data,
+            });
+            // console.log('res', res);
+            // dispatch({
+            //     type: DRIVER_REQUEST,
+            //     payload: res.data
+            // })
         }).catch(({response}) => {  // If create post failed, alert failure message
             console.log(response, 'error');
             historyReplace('/front/becomeDriver', {

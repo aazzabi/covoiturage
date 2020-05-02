@@ -10,8 +10,8 @@ var claimSchema = mongoose.Schema(
         createdAt: {type: Date, unique: false, required: false},
         openedAt: {type: Date, unique: false, required: false},
         resolvedAt: {type: Date, unique: false, required: false},
-        createdBy: {type: mongoose.Schema.Types.Object, ref: 'User', required: true, unique: false},
-        responsible: {type: mongoose.Schema.Types.Object, ref: 'User', required: true, unique: false},
+        createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: false},
+        responsible: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: false},
         comments: [{type: mongoose.Schema.Types.Object, ref: 'comments'}],
     });
 var claim = mongoose.model('Claim', claimSchema);

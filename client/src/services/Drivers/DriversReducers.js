@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
         case ACCEPT_REQUEST:
             return {...state, allDriversRequests: action.payload};
         case DECLINE_REQUEST:
-            return {...state, allDriversRequests: state.allDriversRequests.filter(u => u.id !== action.payload)};
+            return {...state, allDriversRequests: state.allDriversRequests.filter(u => u._id !== action.payload)};
         default:
             return state;
     }

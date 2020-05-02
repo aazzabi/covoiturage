@@ -25,51 +25,67 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage}).single('image');
 
-var register = (req, res) => {
-    const recaptchaData = {
-        remoteip: req.connection.remoteAddress,
-        response: req.body.recaptchaResponse,
-        secret: config.recaptcha.RECAPTCHA_SECRET_KEY,
-    };
-    recaptchaHelpers.verifyRecaptcha(recaptchaData)
-        .then(() => {
-            User.findOne({email: req.body.email}).then(u => {
-            if (u) {
-                return res.status(400).json({msg: "Email already exists"});
-            } else {
-                const newUser = new User({
-                    username: req.body.username,
-                    lastName: req.body.lastName,
-                    firstName: req.body.firstName,
-                    email: req.body.email,
-                    phone: req.body.phone,
-                    gender: req.body.gender,
-                    avatar: req.body.avatar,
-                });
-                // hashSync : 3tatni hash , compatible ( selon bcrypt-generator)
-                const pwd = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-                newUser.password = pwd;
-                User.create({
-                    password: newUser.password,
-                    username: newUser.username,
-                    lastName: newUser.lastName,
-                    firstName: newUser.firstName,
-                    email: newUser.email,
-                    phone: newUser.phone,
-                    gender: newUser.gender,
-                    avatar: newUser.avatar,
-                }).then(async (data) => {
-                    await User.updateOne({'_id': data._id}, {$set: {'password': pwd}});
-                    res.set('Content-Type', 'application/json');
-                    res.status(202).json(data);
-                })
-                    .catch(error => {
+var register = async (req, res) => {
+    const checkUsername = await User.findOne({'username': req.body.username});
+    if (!checkUsername) {
+        const recaptchaData = {
+            remoteip: req.connection.remoteAddress,
+            response: req.body.recaptchaResponse,
+            secret: config.recaptcha.RECAPTCHA_SECRET_KEY,
+        };
+        console.log('here')
+        recaptchaHelpers.verifyRecaptcha(recaptchaData)
+            .then(() => {
+                console.log('here')
+                User.findOne({email: req.body.email}).then(u => {
+                    if (!u) {
+
+                        console.log('here')
+                        const newUser = new User({
+                            username: req.body.username,
+                            lastName: req.body.lastName,
+                            firstName: req.body.firstName,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            gender: req.body.gender,
+                            avatar: req.body.avatar,
+                        });
+                        console.log(newUser, 'newUser')
+
+                        // hashSync : 3tatni hash , compatible ( selon bcrypt-generator)
+                        const pwd = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+                        newUser.password = pwd;
+                        User.create({
+                            password: newUser.password,
+                            username: newUser.username,
+                            lastName: newUser.lastName,
+                            firstName: newUser.firstName,
+                            email: newUser.email,
+                            phone: newUser.phone,
+                            gender: newUser.gender,
+                            avatar: newUser.avatar,
+                        }).then(async (data) => {
+                            console.log(data, 'data')
+                            await User.updateOne({'_id': data._id}, {$set: {'password': pwd}});
+                            res.set('Content-Type', 'application/json');
+                            res.status(202).json(data);
+                        })
+                            .catch(error => {
+                                console.log(error, 'error')
+                                res.set('Content-Type', 'application/json');
+                                res.status(500).send(error);
+                            });
+                    } else {
                         res.set('Content-Type', 'application/json');
-                        res.status(500).send(error);
-                    });
-            }
-        })
-    });
+                        res.send({status: 400, message: "Email already exists"});
+                    }
+                })
+            });
+
+    } else {
+        res.set('Content-Type', 'application/json');
+        res.send ({"status": 400, message: "Username already exists"});
+    }
 };
 
 var login = async (req, res) => {

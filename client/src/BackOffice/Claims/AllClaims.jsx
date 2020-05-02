@@ -87,7 +87,11 @@ class AllClaims extends React.Component {
 
      handleChange = async (name, value) => {
         await this.setState({[name]: value});
-        this.search();
+        if (this.state.keyword) {
+            this.search();
+        } else {
+            this.props.getAll(this.state.currentUser._id);
+        }
     };
 
     render() {

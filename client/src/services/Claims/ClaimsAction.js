@@ -31,7 +31,7 @@ export function addClaim({titleC, typeC, priority, description, userId}, history
                     type: ADD_CLAIM,
                     payload: response.data,
                 });
-                historyPush(`/admin/claims/` + userId);
+                historyPush(`/admin/claims/` + response.data._id);
             })
             .catch(({response}) => {  // If create post failed, alert failure message
                 console.log(response, 'error');
@@ -190,19 +190,19 @@ export function addComment({commentText, claimId, userId}, historyPush, historyR
         Axios.post(`${ROOT_URL}/addComment/` + claimId + '/' + userId, {
             content: commentText,
         }, {})
-            .then((response) => {  // If create post succeed, navigate to the post detail page
-                dispatch({
-                    type: ADD_COMMENT_TO_CLAIM,
-                    payload: response.data,
-                });
-                // historyPush(`/admin/claims/`+claimId);
-            })
-            .catch(({response}) => {  // If create post failed, alert failure message
-                console.log(response, 'error');
-                historyReplace('/claims/' + claimId, {
-                    time: new Date().toLocaleString(),
-                    message: response,
-                });
+        .then((response) => {  // If create post succeed, navigate to the post detail page
+            dispatch({
+                type: ADD_COMMENT_TO_CLAIM,
+                payload: response.data,
             });
+            historyPush(`/admin/claims/`+claimId);
+        })
+        .catch(({response}) => {  // If create post failed, alert failure message
+            console.log(response, 'error');
+            historyReplace('/claims/' + claimId, {
+                time: new Date().toLocaleString(),
+                message: response,
+            });
+        });
     }
 }
