@@ -90,7 +90,7 @@ const ChatBox = ({ socket, user, match, handleChannelOpen }) => {
     if (chatbox) chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  function populateChatBox() {
+   function populateChatBox() {
     let prevMsg = null;
 
     return chats.length === 0 ? (

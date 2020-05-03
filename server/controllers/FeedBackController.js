@@ -1,5 +1,5 @@
 var express = require('express');
-var comment = require('../models/Comment');
+var comment = require('../models/Commentt');
 var rating = require('../models/Rating');
 var mongoose = require('mongoose');
 var user = require('../models/User');
