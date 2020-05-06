@@ -73,7 +73,7 @@ const routes = [
         },
         {
           path: "/posts/my_posts",
-          name: "Blog new",
+          name: "My posts",
           component: PostMine,
           layout: "/admin"
         },
