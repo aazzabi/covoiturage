@@ -20,6 +20,4 @@ export function fetchPostById(id) {
         const result =     await Axios.get('http://localhost:3000/packages/' + id);
         dispatch({type: GET_fetchPost_SUCCESS, parcel: result.data});
     }
-
-
 }

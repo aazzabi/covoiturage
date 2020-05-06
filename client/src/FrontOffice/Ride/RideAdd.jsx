@@ -133,7 +133,7 @@ class RideAdd extends Component {
     }
 
     onChangeRideOrigin(e) {
-        Geocode.setApiKey("AIzaSyCkTjWTcA3sD2wiyBr4SANvsdrtZfmv8rM");
+        Geocode.setApiKey("AIzaSyCTJckDGDyHM8cZ9R-PKUIQGHgfhoXzzFA");
 
         this.setState({origin: e.target.value});
         Geocode.fromAddress(e.target.value).then(
@@ -312,7 +312,6 @@ class RideAdd extends Component {
                                     <div className="card-wrapper">
                                         <Card>
                                             <CardHeader>
-
                                                 <h3 className="mb-0">Please Fill This Form carefully</h3>
                                             </CardHeader>
 
