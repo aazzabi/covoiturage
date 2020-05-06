@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var rideSchema = mongoose.Schema(
     {
-        status: { type: String, required: true, enum: ["aaa"] , default: "aaa" },
+        status: { type: String, required: true, enum: ["InProgress","Completed","Canceled"] , default: "InProgress" },
         startTime: { type: Date },
         duration: { type: String },
         distance: { type: String, required: true },

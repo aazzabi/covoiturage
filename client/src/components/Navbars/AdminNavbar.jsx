@@ -47,7 +47,7 @@ class AdminNavbar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.auth.isAuthenticated) {
-      this.props.history.push("/auth/login");
+      this.props.history.push("/front/login");
     }
 
     if (nextProps.errors) {

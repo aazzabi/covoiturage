@@ -2,7 +2,7 @@ var ride = require('../models/Ride');
 var user = require('../models/User');
 var traveler = require('../models/Traveler');
 var dis = require('google-distance');
-dis.apiKey = 'AIzaSyDtJlOlL_sZhchii9wg4A6yi7vZutilBeg';
+dis.apiKey = 'AIzaSyCkTjWTcA3sD2wiyBr4SANvsdrtZfmv8rM';
 var SendEmail = require('./SendEmailController');
 
 
@@ -56,19 +56,23 @@ var add = (req, res, next) => {
         },
         function (err, data) {
             if (err) return console.log(err);
-            var x = data['distanceValue'] / 1000;
+            var x = (data['distanceValue'] / 1000)*0.06;
+            var num = Number(x);
+            var roundedString = num.toFixed(2);
+            var rounded = Number(roundedString);
+
 
             user.findOne({"_id": req.params.idDriver})
                 .then((dr) => {
 
                     ride.create({
-                        status: req.body.status,
+                        status: "InProgress",
                         startTime: req.body.startTime,
                         origin: req.body.origin,
                         destination: req.body.destination,
                         nbrPlaces: req.body.nbrPlaces,
-                        prixPerPlace: x * 0.06,
-                        decription: req.body.decription,
+                        prixPerPlace: req.body.prixPerPlace,
+                        description: req.body.description,
                         total: 0,
                         packageAllowed: req.body.packageAllowed,
                         distance: x,
@@ -194,8 +198,11 @@ var editRide = async (req, res, next) => {
                     rideToUpdate.duration = data['duration'];
 
                     rideToUpdate.distance = x;
+                    if (req.body.prixPerPlace == null)
+                        rideToUpdate.prixPerPlace = x * 0.06;
+                    else
+                        rideToUpdate.prixPerPlace = req.body.prixPerPlace;
 
-                    rideToUpdate.prixPerPlace = x * 0.06;
 
                     rideToUpdate.total = 0;
 
@@ -266,6 +273,29 @@ var addTravelerRide = async (req, res, next) => {
     }
 };
 
+
+
+var userInRide = async (req, res, next) => {
+    console.log('controller');
+    rideId = await ride.findById(req.params.idRide);
+    userid = await user.findById(req.params.idUser);
+    var i;
+    exist = false;
+    for (i = 0; i < rideId.travelers.length; i++) {
+        if (userid.id.toString() === rideId.travelers[i].user._id.toString()) {
+            exist = true;
+        }
+    }
+            if (exist) {
+                res.set('Content-Type', 'application/json');
+                res.status(202).send('exist');
+            } else {
+                res.set('Content-Type', 'application/json');
+                res.status(202).send('notFound');
+            }
+
+};
+
 var getAllTravelers = (req, res, next) => {
 
     ride.find({"_id": req.params.idRide}, {"travelers": 1, "_id": 0})
@@ -327,9 +357,36 @@ var removeTravelerRide = async (req, res, next) => {
     }
 };
 
+
+var joinedRides = async (req, res, next) => {
+
+    rides = await ride.find({});
+    userid = await user.findById(req.params.idUser);
+    var i;
+    var j;
+    var fetchRides = []
+    for (i = 0; i < rides.length; i++) {
+
+            for(j = 0; j < rides[i].travelers.length; j++){
+
+                if (userid.id.toString() === rides[i].travelers[j].user._id.toString()) {
+
+                    fetchRides.push(rides[i]);
+                   console.log(rides[i].travelers[j])
+
+                }
+            }
+
+
+    }
+
+    res.set('Content-Type', 'application/json');
+    res.status(202).json(fetchRides);
+};
+
 var getRidesByDriver = (req, res, next) => {
 
-    ride.find({"driver": req.params.idUser})
+    ride.find({"driver": req.params.idUser}).sort('rideStartTime')
         .then((data) => {
             res.set('Content-Type', 'application/json');
             res.status(202).json(data);
@@ -389,8 +446,34 @@ var getTraveler = (req, res, next) => {
             res.status(202).json(data);
         })
         .catch(error => {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
             res.status(500).send(error);
+        });
+
+
+};
+
+var getPrice = (req, res, next) => {
+
+    dis.get(
+        {
+            origin: req.params.ori,
+            destination: req.params.des,
+            metric: 'meter'
+        },
+        function(err, data) {
+            if (err){
+                res.set('Content-Type', 'application/json');
+                res.status(202).json(err);
+            } else {
+                res.set('Content-Type', 'application/json');
+                var x = data['distanceValue'] / 1000;
+                var num = Number(x*0.06);
+                var roundedString = num.toFixed(2);
+                var rounded = Number(roundedString);
+                res.status(202).json(rounded);
+                console.log(data);
+            }
         });
 
 
@@ -398,6 +481,8 @@ var getTraveler = (req, res, next) => {
 
 
 module.exports = {
+    joinedRides,
+    userInRide,
     getAll,
     getById,
     add,
@@ -408,5 +493,6 @@ module.exports = {
     removeTravelerRide,
     getRidesByDriver,
     confrimTraveler,
-    getTraveler
+    getTraveler,
+    getPrice
 };

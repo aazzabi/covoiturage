@@ -12,9 +12,11 @@ import postsReducer from "./Blog/postReducer";
 import ClaimsReducers from "../services/Claims/ClaimsReducers";
 import CarsReducer from "../services/Cars/CarsReducer";
 import DriversReducers from "../services/Drivers/DriversReducers";
+import RideReducers from "../services/Rides/RideReducers";
 
 
 export default combineReducers({
+    rides: RideReducers,
     auth: authReducer,
     errors: errorReducer,
     pack:PackageReducer,
