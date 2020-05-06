@@ -33,12 +33,13 @@ import {
 import IndexNavbar from "components/Navbars/IndexNavbar.jsx";
 import IndexHeader from "components/Headers/IndexHeader.jsx";
 import AuthFooter from "components/Footers/AuthFooter.jsx";
+import AuthNavbar from "../components/Navbars/AuthNavbar";
 
 class Index extends React.Component {
   render() {
     return (
       <>
-        <IndexNavbar />
+        <AuthNavbar />
         <div className="main-content">
           <IndexHeader />
           <section className="py-6 pb-9 bg-default">

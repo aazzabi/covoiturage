@@ -1,31 +1,24 @@
 import React from "react";
-import { Link , withRouter } from "react-router-dom";
-import NotificationAlert from "react-notification-alert";
+import {Link} from "react-router-dom";
 // react component used to create sweet alerts
 import ReactBSAlert from "react-bootstrap-sweetalert";
-
 // reactstrap components
 import {
-    UncontrolledCollapse,
-    NavbarBrand,
+    Col,
+    Container,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Media,
+    Nav,
     Navbar,
+    NavbarBrand,
     NavItem,
     NavLink,
-    Nav,
-    Container,
     Row,
-    Col,
-    UncontrolledTooltip,
-    Button,
-    DropdownToggle,
-    DropdownMenu,
-    ListGroup,
-    ListGroupItem,
-    DropdownItem,
+    UncontrolledCollapse,
     UncontrolledDropdown,
-    Media,
-    Collapse,
-    CardBody
+    UncontrolledTooltip
 } from "reactstrap";
 import {connect} from "react-redux";
 import {clearCurrentProfile, getProfile, logoutUser} from "../../actions/authActions";
@@ -49,7 +42,7 @@ class AdminNavbar extends React.Component {
     }
 
     onProfileClick(e) {
-        console.log("click profile")
+        console.log("click profile");
         e.preventDefault();
         this.props.getProfile();
 
@@ -66,7 +59,7 @@ class AdminNavbar extends React.Component {
             alert: (
                 <ReactBSAlert
                     warning
-                    style={{ display: "block", marginTop: "-100px" }}
+                    style={{display: "block", marginTop: "-100px"}}
                     title="For Drivers"
                     onConfirm={() => this.hideAlert()}
                     onCancel={() => this.hideAlert()}
@@ -86,18 +79,17 @@ class AdminNavbar extends React.Component {
     };
 
     render() {
-        const { user } = this.props.auth;
+        const {user} = this.props.auth;
         return (
             <>
                 {this.state.alert}
                 {
                     user._id
-                        ?<Navbar
+                        ? <Navbar
                             className="navbar-horizontal navbar-main navbar-dark navbar-transparent"
                             expand="lg"
                             id="navbar-main"
                         >
-
 
 
                             <Container>
@@ -117,7 +109,7 @@ class AdminNavbar extends React.Component {
                                     id="navbar-collapse"
                                     type="button"
                                 >
-                                    <span className="navbar-toggler-icon" />
+                                    <span className="navbar-toggler-icon"/>
                                 </button>
                                 <UncontrolledCollapse
                                     className="navbar-custom-collapse"
@@ -145,8 +137,8 @@ class AdminNavbar extends React.Component {
                                                     id="navbar-collapse"
                                                     type="button"
                                                 >
-                                                    <span />
-                                                    <span />
+                                                    <span/>
+                                                    <span/>
                                                 </button>
                                             </Col>
                                         </Row>
@@ -154,17 +146,14 @@ class AdminNavbar extends React.Component {
                                     <Nav className="mr-auto" navbar>
 
 
-
-
                                         <Nav>
                                             <UncontrolledDropdown nav>
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="span">
-                                                    <a style={{color:"white"}} href="#">
+                                                    <a style={{color: "white"}} href="#">
                           <span className="nav-link-inner--text">
                            Rides
                         </span>
                                                     </a>
-
 
 
                                                 </DropdownToggle>
@@ -174,40 +163,40 @@ class AdminNavbar extends React.Component {
                                                     </DropdownItem>
                                                     {
                                                         user.role === 'DRIVER'
-                                                            ?    <DropdownItem
+                                                            ? <DropdownItem
                                                                 href="/front/ride/add"
                                                             >
-                                                                <i className="fa fa-car" />
+                                                                <i className="fa fa-car"/>
                                                                 <span>Add a ride</span>
                                                             </DropdownItem>
-                                                            :<DropdownItem
+                                                            : <DropdownItem
                                                                 href="#"
                                                                 onClick={this.warningAlert}
                                                             >
-                                                                <i className="fa fa-car" />
+                                                                <i className="fa fa-car"/>
                                                                 <span>Add a ride</span>
                                                             </DropdownItem>
                                                     }
                                                     {
                                                         user.role === 'DRIVER'
-                                                            ?       <DropdownItem
+                                                            ? <DropdownItem
                                                                 href="/front/ride/myrides/"
                                                             >
-                                                                <i className="ni ni-settings-gear-65" />
+                                                                <i className="ni ni-settings-gear-65"/>
                                                                 <span>My Rides</span>
                                                             </DropdownItem>
-                                                            :<DropdownItem
+                                                            : <DropdownItem
                                                                 href="#"
                                                                 onClick={this.warningAlert}
                                                             >
-                                                                <i className="ni ni-settings-gear-65" />
+                                                                <i className="ni ni-settings-gear-65"/>
                                                                 <span>My Rides</span>
                                                             </DropdownItem>
 
                                                     }
 
 
-                                                    <DropdownItem divider />
+                                                    <DropdownItem divider/>
 
                                                     <DropdownItem className="noti-title" header tag="div">
                                                         <h6 className="text-overflow m-0">For Travellers</h6>
@@ -216,13 +205,13 @@ class AdminNavbar extends React.Component {
                                                         href="/front/ride/search"
                                                         //onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="fa fa-search" />
+                                                        <i className="fa fa-search"/>
                                                         <span>Search for a ride</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="/front/ride/joinedRides"
                                                     >
-                                                        <i className="fa fa-users-cog" />
+                                                        <i className="fa fa-users-cog"/>
                                                         <span>joined rides</span>
                                                     </DropdownItem>
 
@@ -233,51 +222,55 @@ class AdminNavbar extends React.Component {
                                         <Nav>
                                             <UncontrolledDropdown nav>
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="span">
-                                                    <a style={{color:"white"}} href="#">
+                                                    <a style={{color: "white"}} href="#">
                           <span className="nav-link-inner--text">
                            Parcels
                         </span>
                                                     </a>
 
 
-
                                                 </DropdownToggle>
                                                 <DropdownMenu>
                                                     <DropdownItem className="noti-title" header tag="div">
                                                         <h6 className="text-overflow m-0">Welcome!</h6>
                                                     </DropdownItem>
                                                     <DropdownItem
+                                                        href={`/admin/`}>
+                                                        <i className="ni ni-single-02"/>
+                                                        <span>My Dashboard</span>
+                                                    </DropdownItem>
+                                                    <DropdownItem
                                                         href={`/admin/profile/`}>
-                                                        <i className="ni ni-single-02" />
+                                                        <i className="ni ni-single-02"/>
                                                         <span>My profile</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-settings-gear-65" />
+                                                        <i className="ni ni-settings-gear-65"/>
                                                         <span>Settings</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-calendar-grid-58" />
+                                                        <i className="ni ni-calendar-grid-58"/>
                                                         <span>Activity</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-support-16" />
+                                                        <i className="ni ni-support-16"/>
                                                         <span>Support</span>
                                                     </DropdownItem>
-                                                    <DropdownItem divider />
+                                                    <DropdownItem divider/>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         //onClick={this.onLogoutClick.bind(this)}
                                                     >
-                                                        <i className="ni ni-user-run" />
+                                                        <i className="ni ni-user-run"/>
                                                         <span>Logout</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
@@ -287,130 +280,73 @@ class AdminNavbar extends React.Component {
                                         <Nav>
                                             <UncontrolledDropdown nav>
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="span">
-                                                    <a style={{color:"white"}} href="#">
+                                                    <a style={{color: "white"}} href="#">
                           <span className="nav-link-inner--text">
                            claims
                         </span>
                                                     </a>
 
 
-
                                                 </DropdownToggle>
                                                 <DropdownMenu>
                                                     <DropdownItem className="noti-title" header tag="div">
                                                         <h6 className="text-overflow m-0">Welcome!</h6>
                                                     </DropdownItem>
                                                     <DropdownItem
+                                                        href={`/admin/`}>
+                                                        <i className="ni ni-single-02"/>
+                                                        <span>My Dashboard</span>
+                                                    </DropdownItem>
+                                                    <DropdownItem
                                                         href={`/admin/profile/`}>
-                                                        <i className="ni ni-single-02" />
+                                                        <i className="ni ni-single-02"/>
                                                         <span>My profile</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-settings-gear-65" />
+                                                        <i className="ni ni-settings-gear-65"/>
                                                         <span>Settings</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-calendar-grid-58" />
+                                                        <i className="ni ni-calendar-grid-58"/>
                                                         <span>Activity</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-support-16" />
+                                                        <i className="ni ni-support-16"/>
                                                         <span>Support</span>
                                                     </DropdownItem>
-                                                    <DropdownItem divider />
+                                                    <DropdownItem divider/>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         //onClick={this.onLogoutClick.bind(this)}
                                                     >
-                                                        <i className="ni ni-user-run" />
+                                                        <i className="ni ni-user-run"/>
                                                         <span>Logout</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
                                         </Nav>
-
-                                        <Nav>
-                                            <UncontrolledDropdown nav>
-                                                <DropdownToggle className="nav-link pr-0" color="" tag="span">
-                                                    <a style={{color:"white"}} href="#">
-                          <span className="nav-link-inner--text">
-                           contact
-                        </span>
-                                                    </a>
-
-
-
-                                                </DropdownToggle>
-                                                <DropdownMenu   >
-                                                    <DropdownItem className="noti-title" header tag="div">
-                                                        <h6 className="text-overflow m-0">Welcome!</h6>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href={`/admin/profile/`}>
-                                                        <i className="ni ni-single-02" />
-                                                        <span>My profile</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-settings-gear-65" />
-                                                        <span>Settings</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-calendar-grid-58" />
-                                                        <span>Activity</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-support-16" />
-                                                        <span>Support</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem divider />
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        //onClick={this.onLogoutClick.bind(this)}
-                                                    >
-                                                        <i className="ni ni-user-run" />
-                                                        <span>Logout</span>
-                                                    </DropdownItem>
-                                                </DropdownMenu>
-                                            </UncontrolledDropdown>
-                                        </Nav>
-
-
                                     </Nav>
-                                    <hr className="d-lg-none" />
+                                    <hr className="d-lg-none"/>
                                     <Nav className="align-items-lg-center ml-lg-auto" navbar>
-
                                         <Nav>
                                             <UncontrolledDropdown nav>
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="a">
                                                     <Media className="align-items-center">
-                      <span className="avatar avatar-sm rounded-circle">
-                        <img
-                            alt="..."
-                            src={require("assets/img/theme/team-4.jpg")}
-                        />
-                      </span>
+                                                        <span className="avatar avatar-sm rounded-circle">
+                                                        <img alt="..." src={require("assets/img/theme/team-4.jpg")}/></span>
                                                         <Media className="ml-2 d-none d-lg-block">
-                        <span className="mb-0 text-sm font-weight-bold">
-                          {user.username}
-                        </span>
+                                                        <span className="mb-0 text-sm font-weight-bold">
+                                                          {user.username}
+                                                        </span>
                                                         </Media>
                                                     </Media>
                                                 </DropdownToggle>
@@ -419,113 +355,45 @@ class AdminNavbar extends React.Component {
                                                         <h6 className="text-overflow m-0">Welcome!</h6>
                                                     </DropdownItem>
                                                     <DropdownItem
+                                                        href={`/admin/`}>
+                                                        <i className="ni ni-calendar-grid-58"/>
+                                                        <span>My Dashboard</span>
+                                                    </DropdownItem>
+                                                    <DropdownItem
                                                         href={`/admin/profile/`}>
-                                                        <i className="ni ni-single-02" />
+                                                        <i className="ni ni-single-02"/>
                                                         <span>My profile</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-settings-gear-65" />
+                                                        <i className="ni ni-settings-gear-65"/>
                                                         <span>Settings</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                     >
-                                                        <i className="ni ni-calendar-grid-58" />
-                                                        <span>Activity</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-support-16" />
+                                                        <i className="ni ni-support-16"/>
                                                         <span>Support</span>
                                                     </DropdownItem>
-                                                    <DropdownItem divider />
+                                                    <DropdownItem divider/>
                                                     <DropdownItem
                                                         href="#pablo"
                                                         onClick={this.onLogoutClick.bind(this)}
                                                     >
-                                                        <i className="ni ni-user-run" />
+                                                        <i className="ni ni-user-run"/>
                                                         <span>Logout</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
                                         </Nav>
-
-
-                                        <NavItem>
-                                            <NavLink
-                                                className="nav-link-icon"
-                                                href="https://www.facebook.com/creativetim?ref=creative-tim"
-                                                id="tooltip601201423"
-                                                target="_blank"
-                                            >
-                                                <i className="fab fa-facebook-square" />
-                                                <span className="nav-link-inner--text d-lg-none">
-                      Facebook
-                    </span>
-                                            </NavLink>
-                                            <UncontrolledTooltip delay={0} target="tooltip601201423">
-                                                Like us on Facebook
-                                            </UncontrolledTooltip>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                className="nav-link-icon"
-                                                href="https://www.instagram.com/creativetimofficial?ref=creative-tim"
-                                                id="tooltip871243015"
-                                                target="_blank"
-                                            >
-                                                <i className="fab fa-instagram" />
-                                                <span className="nav-link-inner--text d-lg-none">
-                      Instagram
-                    </span>
-                                            </NavLink>
-                                            <UncontrolledTooltip delay={0} target="tooltip871243015">
-                                                Follow us on Instagram
-                                            </UncontrolledTooltip>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                className="nav-link-icon"
-                                                href="https://twitter.com/creativetim?ref=creative-tim"
-                                                id="tooltip366258619"
-                                                target="_blank"
-                                            >
-                                                <i className="fab fa-twitter-square" />
-                                                <span className="nav-link-inner--text d-lg-none">
-                      Twitter
-                    </span>
-                                            </NavLink>
-                                            <UncontrolledTooltip delay={0} target="tooltip366258619">
-                                                Follow us on Twitter
-                                            </UncontrolledTooltip>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                className="nav-link-icon"
-                                                href="https://github.com/creativetimofficial?ref=creative-tim"
-                                                id="tooltip931502898"
-                                                target="_blank"
-                                            >
-                                                <i className="fab fa-github" />
-                                                <span className="nav-link-inner--text d-lg-none">
-                      Github
-                    </span>
-                                            </NavLink>
-                                            <UncontrolledTooltip delay={0} target="tooltip931502898">
-                                                Star us on Github
-                                            </UncontrolledTooltip>
-                                        </NavItem>
                                     </Nav>
                                 </UncontrolledCollapse>
                             </Container>
                         </Navbar>
-                        :<Navbar
+                        : <Navbar
                             className="navbar-horizontal navbar-main navbar-dark navbar-transparent"
                             expand="lg"
                             id="navbar-main"
@@ -547,7 +415,7 @@ class AdminNavbar extends React.Component {
                                     id="navbar-collapse"
                                     type="button"
                                 >
-                                    <span className="navbar-toggler-icon" />
+                                    <span className="navbar-toggler-icon"/>
                                 </button>
                                 <UncontrolledCollapse
                                     className="navbar-custom-collapse"
@@ -575,8 +443,8 @@ class AdminNavbar extends React.Component {
                                                     id="navbar-collapse"
                                                     type="button"
                                                 >
-                                                    <span />
-                                                    <span />
+                                                    <span/>
+                                                    <span/>
                                                 </button>
                                             </Col>
                                         </Row>
@@ -593,7 +461,7 @@ class AdminNavbar extends React.Component {
                                             </NavLink>
                                         </NavItem>
                                     </Nav>
-                                    <hr className="d-lg-none" />
+                                    <hr className="d-lg-none"/>
                                     <Nav className="align-items-lg-center ml-lg-auto" navbar>
                                         <NavItem>
                                             <NavLink
@@ -602,7 +470,7 @@ class AdminNavbar extends React.Component {
                                                 id="tooltip601201423"
                                                 target="_blank"
                                             >
-                                                <i className="fab fa-facebook-square" />
+                                                <i className="fab fa-facebook-square"/>
                                                 <span className="nav-link-inner--text d-lg-none">
                       Facebook
                     </span>
@@ -618,7 +486,7 @@ class AdminNavbar extends React.Component {
                                                 id="tooltip871243015"
                                                 target="_blank"
                                             >
-                                                <i className="fab fa-instagram" />
+                                                <i className="fab fa-instagram"/>
                                                 <span className="nav-link-inner--text d-lg-none">
                       Instagram
                     </span>
@@ -634,7 +502,7 @@ class AdminNavbar extends React.Component {
                                                 id="tooltip366258619"
                                                 target="_blank"
                                             >
-                                                <i className="fab fa-twitter-square" />
+                                                <i className="fab fa-twitter-square"/>
                                                 <span className="nav-link-inner--text d-lg-none">
                       Twitter
                     </span>
@@ -650,7 +518,7 @@ class AdminNavbar extends React.Component {
                                                 id="tooltip931502898"
                                                 target="_blank"
                                             >
-                                                <i className="fab fa-github" />
+                                                <i className="fab fa-github"/>
                                                 <span className="nav-link-inner--text d-lg-none">
                       Github
                     </span>
@@ -686,7 +554,7 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile, getProfile })(
+export default connect(mapStateToProps, {logoutUser, clearCurrentProfile, getProfile})(
     AdminNavbar
 );
 

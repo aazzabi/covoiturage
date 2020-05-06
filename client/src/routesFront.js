@@ -131,6 +131,12 @@ const routesFront = [
         layout: "/front"
     },
     {
+        path: "/claims/new",
+        name: "Blog new",
+        component: ClaimAdd,
+        layout: "/front"
+    },
+    {
         collapse: true,
         name: "Calendar",
         icon: "ni ni-calendar-grid-58 text-red",
