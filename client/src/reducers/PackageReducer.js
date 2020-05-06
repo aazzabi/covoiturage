@@ -4,6 +4,7 @@ import {
     GET_PACKAGES_ERROR,
     GET_PACKAGES_SUCCESS, GET_PARCEL, PACKAGES_EDIT
 } from "../actions/Parcels/PackagesActions";
+import {GET_fetch_Map} from "../actions/Parcels/RequestsParcelActions";
 
 const initialState = {
     add: {},
@@ -11,6 +12,7 @@ const initialState = {
     myparcels: [],
     error: null,
     parcel: {},
+    parcelMap:{},
     request: []
 }
 
@@ -24,6 +26,9 @@ export default function packages(state = initialState, action) {
 
         case GET_PARCEL:
             return {...state, parcel: action.payload};
+        case   GET_fetch_Map:
+            return {...state, parcelMap: action.payload};
+
         case GET_fetch_Request:
             return {...state, request: action.payload};
         case PACKAGES_EDIT:

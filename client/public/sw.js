@@ -4,18 +4,14 @@ self.addEventListener('push', e => {
   console.log(data)
   const options = {
   };
+
   self.registration.showNotification(data.title, {
     body: `Hey ${data.username}!`,
     icon: 'images/icon.png',
-    image: 'images/badge.png',
+    image: 'images/aa.gif',
 
-    requireInteraction: true,
-
-    actions: [
-      {action: 'addLocation', title: 'Add location'},
-      {action: 'close', title: 'Close'},
-    ]
   });
+
 });
 
 self.addEventListener('notificationclose', e => {
@@ -25,7 +21,7 @@ self.addEventListener('notificationclose', e => {
 self.addEventListener('notificationclick', function(event) {
   console.log(event.data);
   event.waitUntil(
-      clients.openWindow('http://localhost:3001/front/location/')
+      clients.openWindow('http://localhost:3001/front/parcels/driverReq/')
   );
 
 });

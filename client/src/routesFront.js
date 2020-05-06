@@ -6,19 +6,17 @@ import Vector from "./views/pages/maps/Vector";
 import React from "react";
 import CreateParcel from "./FrontOffice/Parcels/Create";
 import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
-import PostDetail from "./FrontOffice/Blog/post_detail";
 import Packages from "./FrontOffice/Parcels/Packages";
-import PostNew from "./FrontOffice/Blog/post_new";
-import PostMine from "./FrontOffice/Blog/post_mine";
 import PostList from "./FrontOffice/Blog/listPosts";
 import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
 import MyParcel from "./FrontOffice/Parcels/myparcels";
 import EditPackage from "./FrontOffice/Parcels/EditPackage";
-import map from './FrontOffice/Parcels/map/map_container';
+import map from './FrontOffice/Parcels/map/map';
 import history from './FrontOffice/Parcels/history/history_container.js';
 import test from './FrontOffice/Parcels/ApproveNotif';
 import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
-
+import requests from "./FrontOffice/Parcels/myparcels/requests";
+import BlogDetails from "./FrontOffice/Blog/post_detail/index";
 const routesFront = [
     {
         path: "/parcels/add",
@@ -46,11 +44,24 @@ const routesFront = [
         layout: "/front"
     },
     {
+        path: "/myParcels/map/:id",
+        name: "view parcels",
+        component: map ,
+        layout: "/front"
+    },
+    {
+        path: "/myParcels/:id",
+        name: "view parcels",
+        component: requests ,
+        layout: "/front"
+    },
+    {
         path: "/myParcels/",
         name: "view parcels",
         component: MyParcel,
         layout: "/front"
     },
+
     {
         path: "/parcels/all/",
         name: "Packages",
@@ -71,21 +82,21 @@ const routesFront = [
         name: "Blogs",
         component: PostList,
         layout: "/front"
+    },   {
+        path: "/BlogDetails/:id",
+        name: "Blogs",
+        component: BlogDetails,
+        layout: "/front"
     },
     {
         path: "/history",
-        name: "Blog",
+        name: "history",
         component: history,
-        layout: "/front"
-    }, {
-        path: "/map",
-        name: "Blog",
-        component: map,
         layout: "/front"
     },
     {
         path: "/test",
-        name: "Blog",
+        name: "test",
         component: test,
         layout: "/front"
     },

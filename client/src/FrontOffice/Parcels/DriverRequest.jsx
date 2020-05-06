@@ -107,7 +107,9 @@ class DriverRequestPage extends React.Component {
             currentUser: {},
             Latitude: null,
             Longitude: null
-        };
+            , sw: false
+        }
+        ;
         window.navigator.geolocation.getCurrentPosition(
             success => this.setState({Latitude: success.coords.latitude, Longitude: success.coords.longitude})
         );
@@ -266,160 +268,160 @@ class DriverRequestPage extends React.Component {
                                                     && currentDrivers.map((req, index) => (
 
                                                         <Fragment key={req._id}>
+                                                            {req.confirmation ?
+                                                                <tr>
 
-                                                            <tr>
 
+                                                                    <td>
+                                                                        <div style={{marginTop: 5}}>
+                                                                            {req.parcelId.title}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div style={{marginTop: 5}}>
+                                                                            {req.parcelId.departure}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div style={{marginTop: 5}}>
+                                                                            {req.parcelId.arrival}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div style={{marginTop: 5}}>
+                                                                            {req.parcelId.type}
+                                                                        </div>
 
-                                                                <td>
-                                                                    <div style={{marginTop: 5}}>
-                                                                        {req.parcelId.title}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style={{marginTop: 5}}>
-                                                                        {req.parcelId.departure}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style={{marginTop: 5}}>
-                                                                        {req.parcelId.arrival}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style={{marginTop: 5}}>
-                                                                        {req.parcelId.type}
-                                                                    </div>
+                                                                    </td>
 
-                                                                </td>
+                                                                    {
 
-                                                                {
+                                                                        req.confirmationSend
+                                                                            ? <td>
+                                                                                <div style={{marginTop: 5}}>
+                                                                                    <Badge color="success"
+                                                                                           pill>Confirmed</Badge>
+                                                                                </div>
 
-                                                                    req.confirmationSend
-                                                                        ? <td>
-                                                                            <div style={{marginTop: 5}}>
-                                                                                <Badge color="success"
-                                                                                       pill>Confirmed</Badge>
-                                                                            </div>
+                                                                            </td>
+                                                                            : <td>
 
-                                                                        </td>
-                                                                        : <td>
+                                                                                <FormGroup>
 
-                                                                            <FormGroup>
+                                                                                    <InputGroup
+                                                                                        className="input-group-merge input-group-alternative mb-3"
+                                                                                        className={this.state['s' + index]}
+                                                                                    >
 
-                                                                                <InputGroup
-                                                                                    className="input-group-merge input-group-alternative mb-3"
-                                                                                    className={this.state['s' + index]}
-                                                                                >
-
-                                                                                    <Input
-                                                                                        placeholder="code.."
-                                                                                        id="standard-start-adornment"
-                                                                                        value={this.state['code' + index]}
-                                                                                        onChange={event => this.handleChange('code' + index, event.target.value)}
-                                                                                    />
-                                                                                    <InputGroupAddon addonType="prepend">
-                                                                                        <Button style={{marginLeft: 4}}
-                                                                                                onClick={e => this.confirme(e, req.parcelId.sendingCode, req._id, index)}
-                                                                                                className="btn-icon-only rounded-circle"
-                                                                                                color="twitter"
-                                                                                                type="button"
-                                                                                        >
+                                                                                        <Input
+                                                                                            placeholder="code.."
+                                                                                            id="standard-start-adornment"
+                                                                                            value={this.state['code' + index]}
+                                                                                            onChange={event => this.handleChange('code' + index, event.target.value)}
+                                                                                        />
+                                                                                        <InputGroupAddon
+                                                                                            addonType="prepend">
+                                                                                            <Button style={{marginLeft: 4}}
+                                                                                                    onClick={e => this.confirme(e, req.parcelId.sendingCode, req._id, index)}
+                                                                                                    className="btn-icon-only rounded-circle"
+                                                                                                    color="twitter"
+                                                                                                    type="button"
+                                                                                            >
                                                                     <span className="btn-inner--icon">
                                                                     <i className="fab fa fa-pen"/>
                                                                     </span>
-                                                                                        </Button>
-                                                                                    </InputGroupAddon>
+                                                                                            </Button>
+                                                                                        </InputGroupAddon>
 
-                                                                                </InputGroup>
+                                                                                    </InputGroup>
 
-                                                                                <span
-                                                                                    className="errorText">{this.state['e' + index]}</span>
-
-
-                                                                            </FormGroup>
+                                                                                    <span
+                                                                                        className="errorText">{this.state['e' + index]}</span>
 
 
-                                                                        </td>
+                                                                                </FormGroup>
 
-                                                                }
 
-                                                                {
+                                                                            </td>
 
-                                                                    req.confirmationRecive
-                                                                        ? <td>
-                                                                            <div style={{marginTop: 5}}>
-                                                                                <Badge color="success"
-                                                                                       pill>Confirmed</Badge>
-                                                                            </div>
+                                                                    }
 
-                                                                        </td>
-                                                                        : <td>
+                                                                    {
 
-                                                                            <FormGroup>
+                                                                        req.confirmationRecive
+                                                                            ? <td>
+                                                                                <div style={{marginTop: 5}}>
+                                                                                    <Badge color="success"
+                                                                                           pill>Confirmed</Badge>
+                                                                                </div>
 
-                                                                                <InputGroup
-                                                                                    className="input-group-merge input-group-alternative mb-3"
-                                                                                    className={this.state['s' + index]}
-                                                                                >
+                                                                            </td>
+                                                                            : <td>
 
-                                                                                    <Input
-                                                                                        placeholder="code.."
-                                                                                        id="standard-start-adornment"
-                                                                                        value={this.state['coder' + index]}
-                                                                                        onChange={event => this.handleChange('coder' + index, event.target.value)}
-                                                                                    />
-                                                                                    <InputGroupAddon addonType="prepend">
+                                                                                <FormGroup>
 
-                                                                                        <Button style={{marginLeft: 4}}
-                                                                                                onClick={e => this.confirmer(e, req.parcelId.receiveingCode, req._id, index)}
-                                                                                                className="btn-icon-only rounded-circle"
-                                                                                                color="twitter"
-                                                                                                type="button"
-                                                                                        >
+                                                                                    <InputGroup
+                                                                                        className="input-group-merge input-group-alternative mb-3"
+                                                                                        className={this.state['s' + index]}
+                                                                                    >
+
+                                                                                        <Input
+                                                                                            placeholder="code.."
+                                                                                            id="standard-start-adornment"
+                                                                                            value={this.state['coder' + index]}
+                                                                                            onChange={event => this.handleChange('coder' + index, event.target.value)}
+                                                                                        />
+                                                                                        <InputGroupAddon
+                                                                                            addonType="prepend">
+
+                                                                                            <Button style={{marginLeft: 4}}
+                                                                                                    onClick={e => this.confirmer(e, req.parcelId.receiveingCode, req._id, index)}
+                                                                                                    className="btn-icon-only rounded-circle"
+                                                                                                    color="twitter"
+                                                                                                    type="button"
+                                                                                            >
                                                                                         <span
                                                                                             className="btn-inner--icon">
                                                                                             <i className="fab fa fa-pen"/>
                                                                                         </span>
-                                                                                        </Button>
-                                                                                    </InputGroupAddon>
-                                                                                </InputGroup>
-                                                                                <span
-                                                                                    className="errorText">{this.state['er' + index]}</span>
+                                                                                            </Button>
+                                                                                        </InputGroupAddon>
+                                                                                    </InputGroup>
+                                                                                    <span
+                                                                                        className="errorText">{this.state['er' + index]}</span>
 
-                                                                            </FormGroup>
-
-
-                                                                        </td>
-
-                                                                }
-
-                                                                {
-
-                                                                    req.confirmationSend
-                                                                        ? <a></a>
-                                                                        : <td>
-                                                                            <div style={{marginTop: 5}}>
+                                                                                </FormGroup>
 
 
-                                                                                <Button
-                                                                                    onClick={e => this.deleteHandler(e, req._id)}
-                                                                                    className="btn-icon-only rounded-circle"
-                                                                                    color="pinterest"
-                                                                                    type="button"
-                                                                                >
+                                                                            </td>
+
+                                                                    }
+
+                                                                    {req.confirmationSend
+                                                                            ? <a></a>
+                                                                            : <td>
+                                                                                <div style={{marginTop: 5}}>
+
+
+                                                                                    <Button
+                                                                                        onClick={e => this.deleteHandler(e, req._id)}
+                                                                                        className="btn-icon-only rounded-circle"
+                                                                                        color="pinterest"
+                                                                                        type="button"
+                                                                                    >
                                                                     <span className="btn-inner--icon">
                                                                     <i className="fab fa fa-trash"/>
                                                                     </span>
-                                                                                </Button>
+                                                                                    </Button>
 
-                                                                            </div>
+                                                                                </div>
 
 
-                                                                        </td>
+                                                                            </td>
 
-                                                                }
+                                                                    }
 
-                                                            </tr>
+                                                                </tr> : null}
 
 
                                                         </Fragment>

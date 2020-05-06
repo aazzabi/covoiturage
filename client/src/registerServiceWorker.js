@@ -96,12 +96,9 @@ function registerValidSW(swUrl) {
                               .then(() => {
                                 const worker = new Worker(swUrl);
                                 setInterval(() => {
-                                  navigator.geolocation.getCurrentPosition(pos => {
                                     worker.postMessage({
-                                      lat: pos.coords.latitude,
-                                      lng: pos.coords.longitude,
                                       user
-                                    });
+
                                   });
                                 }, 60000);
                               });

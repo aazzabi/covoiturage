@@ -37,8 +37,8 @@ class PackagesDetails extends Component {
             parcel: {},
             currentUser: {},
             open: false,
-            message: "",
-            suggestion: "",
+            Messages: null,
+            Suggestions: null,
             showing: true,
             sender: {}
 
@@ -89,9 +89,6 @@ class PackagesDetails extends Component {
 
     };
 
-    handleClose = () => {
-        this.setState({open: false});
-    };
 
     origin() {
         Geocode.setApiKey("AIzaSyDtJlOlL_sZhchii9wg4A6yi7vZutilBeg");
@@ -132,14 +129,13 @@ class PackagesDetails extends Component {
 
     AddRequestSubmit() {
         const {id} = this.props.match.params;
-        console.log(this.state.message)
         const request = {
-            suggestion: this.state.suggestion,
-            message: this.state.message,
+            suggestion: this.state.Suggestions,
+            message: this.state.Messages,
             parcelId: id,
             user: this.props.currentUser._id,
         };
-        console.log(request)
+        console.log("request",request)
 
         this.notify("success")
         Axios.post('http://localhost:3000/packages/addrequest', request)
@@ -213,7 +209,8 @@ class PackagesDetails extends Component {
 
                     ?
                     <div className="col">
-                        <Card className="border-0"><Map className="map-canvas" origin={this.state.destinationInfo}
+                        <Card className="border-0"><
+                            Map className="map-canvas" origin={this.state.destinationInfo}
                                                         destination={this.state.originInfo}>
                         </Map></Card></div>
 
@@ -354,8 +351,8 @@ class PackagesDetails extends Component {
                                                                 <Input
                                                                     placeholder="Suggestion"
                                                                     type="number"
-                                                                    id="suggestion"
-                                                                    onChange={event => this.handleChange('suggestion')}/>
+                                                                    id="Suggestions"
+                                                                    onChange={event => this.handleChange('Suggestions', event.target.value)}/>
                                                             </InputGroup>
                                                         </FormGroup>
                                                         <FormGroup>
@@ -365,10 +362,10 @@ class PackagesDetails extends Component {
                                                                         <i className="ni ni-align-center"/>
                                                                     </InputGroupText>
                                                                 </InputGroupAddon>
-                                                                <Input id="message"
+                                                                <Input id="Messages"
                                                                        placeholder="Message"
                                                                        type="text"
-                                                                       onChange={event => this.handleChange('message')}
+                                                                       onChange={event => this.handleChange('Messages', event.target.value)}
                                                                 />
                                                             </InputGroup>
                                                         </FormGroup>
@@ -417,11 +414,8 @@ const mapDispatchToProps = (dispatch) => {
 const validate = (values) => {
     const errors = {}
 
-    if (!values.Suggestion) {
-        errors.Suggestion = "Enter a title"
-    }
     if (!values.message) {
-        errors.message = "Enter a description for your claim"
+        errors.message = "Enter a description for request"
     }
     return errors
 };

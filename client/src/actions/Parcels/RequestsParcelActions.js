@@ -1,10 +1,10 @@
 import Axios from "axios";
-import {GET_fetchPackagesByUserId} from "./PackagesActions";
+import {GET_fetch_Request, GET_fetchPackagesByUserId} from "./PackagesActions";
 
 export const ACCEPT_Parcel_Request = "ACCEPT_Parcel_Request";
 export const DELETE_Parcel_Request = "DELETE_Parcel_Request";
 export const Parcel_Request_ERROR = "Parcel_Request_ERROR";
-
+export const GET_fetch_Map = "GET_fetch_Map";
 
 export function refuserRequest(id) {
     console.log(id)
@@ -17,7 +17,6 @@ export function refuserRequest(id) {
                 })
 
             }
-
         ).catch(err =>
             dispatch({
                 type: Parcel_Request_ERROR,
@@ -28,6 +27,7 @@ export function refuserRequest(id) {
     }
 
 }
+
 export const acceptRequestParcel = id => dispatch => {
     Axios.post(`http://localhost:3000/packages/myrequests/${id}/accept`).then(res => {
             dispatch({
@@ -43,3 +43,12 @@ export const acceptRequestParcel = id => dispatch => {
     );
 
 };
+
+export function fetchmap(id) {
+    return async (dispatch) => {
+        const result = await Axios.get('http://localhost:3000/api/locations/' + id);
+        console.log(id)
+        console.log("ssssss",result)
+        dispatch({type: GET_fetch_Map, payload: result.data});
+    }
+}

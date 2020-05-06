@@ -1,36 +1,38 @@
 const express = require("express");
 const router = express.Router();
 const Userr = require('../models/User');
-const RequestParcel= require('../models/RequestParcels');
+const RequestParcel = require('../models/RequestParcels');
 router.put('/:id', async (req, res) => {
-    const user = await Userr.findOne({"_id":req.params.id});
-    await  RequestParcel.find({"userId._id": user._id,"confirmationSend":true})
+    const user = await Userr.findOne({"_id": req.params.id});
+    await RequestParcel.find({"userId._id": user._id, "confirmationSend": true})
         .then(Reqparcel => {
             for (var i = 0, l = Reqparcel.length; i < l; i++) {
+                if (req.body.Latitude != null , req.body.Longitude != null)
+                {
+                    RequestParcel.updateMany({"_id": Reqparcel[i]._id}, {
+                        "$set": {
+                            "latitude": req.body.Latitude,
+                            "longitude": req.body.Longitude,
+                            "UpdateLocationAt": new Date()
+                        }
+                    }, {multi: true})
+                        .then((d) => {
+                            res.set('Content-Type', 'application/json');
+                            res.status(202).json(d);
+                        }).catch(error => {
+                        res.set('Content-Type', 'text/html');
+                        res.status(500).send(error);
+                    });
+            }}
 
-                RequestParcel.updateMany({"_id": Reqparcel[i]._id}, {
-                    "$set": {
-                        "latitude": req.body.Latitude,
-                        "longitude": req.body.Longitude
-                    }
-                }, {multi: true})
-                    .then((d) => {
-                        res.set('Content-Type', 'application/json');
-                        res.status(202).json(d);
-                    }).catch(error => {
-                    res.set('Content-Type', 'text/html');
-                    res.status(500).send(error);
-                });
-            }
         })
 })
-router.get('/:id', (req, res) => {
-    Location.findById(req.params.id)
+router.get('/:id', async (req, res) => {
+    await RequestParcel.findById(req.params.id)
         .then(location => {
             if (!location) {
-                return res.status(404).json({
-                    email: 'This location does not exist'
-                });
+                console.log("null");
+
             } else {
                 res.json(location);
             }

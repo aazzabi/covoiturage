@@ -42,7 +42,7 @@ exports.addRequest = async (req, res, next) => {
 
     ReqParcels.create(
         {
-            suggestion: req.body.Suggestion,
+            suggestion: req.body.suggestion,
             message: req.body.message,
             confirmation: false,
             userId: user,
@@ -138,7 +138,7 @@ exports.editPackage = async function (req, res, next) {
 
 exports.getDriverRequest = async (req, res, next) => {
     const RequestParcels = await User.findOne({"_id": req.params.id});
-    const requests = await ReqParcels.find({userId: RequestParcels});
+    const requests = await ReqParcels.find({"userId._id": RequestParcels._id});
     console.log(requests)
 
     res.json(requests);

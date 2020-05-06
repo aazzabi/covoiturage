@@ -5,16 +5,17 @@ import {connect} from 'react-redux';
 import {AddRequest, fetchPackagesByUserId, fetchPostById, fetchRequest} from '../../../actions/Parcels/PackagesActions';
 import {getCurrentUser} from "../../../actions/authActions";
 import AuthHeader from "../../../components/Headers/AuthHeader";
-import {Button, Col, Container, Modal, Row} from "reactstrap";
+import {Button, Col, Container, DropdownItem, Modal, Row} from "reactstrap";
 import addNotification from 'react-push-notification';
 import {acceptRequestParcel, refuserRequest} from "../../../actions/Parcels/RequestsParcelActions";
+import UncontrolledTooltip from "reactstrap/lib/UncontrolledTooltip";
 
 
 class requests extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myrequests: [],
+            request: [],
             currentUser: {},
         };
     }
@@ -22,7 +23,7 @@ class requests extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
             this.setState({
-                myrequests: nextProps.myrequests,
+                request: nextProps.request,
                 currentUser: nextProps.currentUser,
             });
         }
@@ -32,6 +33,7 @@ class requests extends Component {
         const {id} = this.props.match.params;
         await this.props.getCurrentUser();
         this.props.fetchRequest(id);
+        console.log(this.props.request);
 
     }
 
@@ -47,10 +49,10 @@ class requests extends Component {
         e.preventDefault();
         this.props.acceptRequestParcel(id);
         console.log(id);
-        //     window.location.reload()
     };
 
     render() {
+        console.log(this.props.request)
         return (
             <>
                 <div className="header bg-gradient-info py-7 py-lg-2 pt-lg-2 ">
@@ -99,12 +101,14 @@ class requests extends Component {
                                                     <th className="sort" data-sort="budget" scope="col">Status</th>
 
                                                     <th scope="col">Users</th>
-                                                    <th className="sort" data-sort="completion" scope="col">Action</th>
+                                                    <th className="sort" data-sort="completion"
+                                                        scope="col">Action/Codes
+                                                    </th>
                                                     <th scope="col"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody className="list">
-                                                {_.map(this.props.myrequests, request =>
+                                                {_.map(this.props.request, request =>
 
                                                     <tr key={request._id}>
                                                         <th scope="row">
@@ -126,7 +130,7 @@ class requests extends Component {
                                                                         <div className="align-items-center media">
                                                                             <div className="media"><span
                                                                                 className="name mb-0 text-sm"
-                                                                                color={"white"}>Confirmed</span>
+                                                                                style={{color:"white"}} >Confirmed</span>
                                                                             </div>
                                                                         </div>
                                                                     </h5>
@@ -145,7 +149,9 @@ class requests extends Component {
                                                                     <h5
                                                                         className="checklist-title mb-0">
                                                                         <div className="media"><span
-                                                                            className="name mb-0 text-sm">non confirmed</span>
+                                                                            style={{color:"white"}}
+                                                                            className="name mb-0 text-sm "
+                                                                           >non confirmed</span>
                                                                         </div>
                                                                     </h5>
                                                                     <small>{request.createdAt}</small></div>
@@ -162,7 +168,8 @@ class requests extends Component {
                                                             className="status">  {request.userId ? request.userId.lastName : ""} {request.userId ? request.userId.firstName : ""}</span></span>
                                                         </td>
 
-                                                        <td>
+                                                        <td> {!request.confirmation
+                                                            ?
                                                             <div className="d-flex align-items-center">
 
                                                                 <button
@@ -175,6 +182,60 @@ class requests extends Component {
                                                                         onClick={e => this.AddRequest(e, request._id)}>Accept
                                                                 </button>
                                                             </div>
+                                                            :
+                                                            <div>
+                                                                <Button
+                                                                    color="primary"
+                                                                    data-placement="top"
+                                                                    id="tooltip611234743"
+                                                                    size="sm"
+                                                                    type="button"
+                                                                >
+                                                                    {request.parcelId ? request.parcelId.sendingCode : ""}
+                                                                </Button>
+                                                                <UncontrolledTooltip
+                                                                    delay={0}
+                                                                    placement="top"
+                                                                    target="tooltip611234743"
+                                                                >
+                                                                    Sender Code
+                                                                </UncontrolledTooltip>
+                                                                <Button
+                                                                    color="primary"
+                                                                    data-placement="top"
+                                                                    id="tooltip61"
+                                                                    size="sm"
+                                                                    type="button"
+                                                                >
+                                                                    {request.parcelId ? request.parcelId.receiveingCode : ""}
+                                                                </Button>
+                                                                <UncontrolledTooltip
+                                                                    delay={0}
+                                                                    placement="top"
+                                                                    target="tooltip61"
+                                                                >
+                                                                    receiveing Code
+                                                                </UncontrolledTooltip>
+                                                                <Button
+                                                                    className={"btn-neutral btn-icon btn btn-default"}
+                                                                    color="primary"
+                                                                    data-placement="top"
+                                                                    id="tooltip61"
+                                                                    size="sm"
+                                                                    href={`/front/myParcels/map/${request._id}`}
+                                                                >
+                                                                    Show map
+                                                                </Button>
+                                                                <UncontrolledTooltip
+                                                                    delay={0}
+                                                                    placement="top"
+                                                                    target="tooltip61"
+                                                                >
+                                                                    Track your Parcel
+                                                                </UncontrolledTooltip>
+                                                            </div>
+                                                        }
+
                                                         </td>
 
                                                     </tr>
@@ -195,7 +256,7 @@ class requests extends Component {
 
 function mapStateToProps(state) {
     return {
-        myrequests: state.pack.myrequests,
+        request: state.pack.request,
         currentUser: state.auth.user,
     };
 }

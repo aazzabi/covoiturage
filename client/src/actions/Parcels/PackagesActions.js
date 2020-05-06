@@ -61,12 +61,12 @@ export const getParcel = (idParcel) => {
 };
 
 
-export function AddRequest({Suggestion, Message, userId, postId}, historyPush, historyReplace) {
+export function AddRequest({suggestion, message, userId, postId}, historyPush, historyReplace) {
     return function (dispatch) {
         console.log("AddRequestAction");
         Axios.post(`http://localhost:3000/packages/add/`, {
-            suggestion: Suggestion,
-            Message: Message,
+            suggestion: suggestion,
+            message: message,
             userId: userId,
             postId: postId,
         }, {})

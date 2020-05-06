@@ -2,19 +2,38 @@ const express = require('express');
 const router = express.Router();
 const webpush = require('web-push');
 const User = require('../models/User');
+const RequestParcel = require('../models/RequestParcels');
 
 router.post('/subscribe/:id', async (req, res) => {
     const subscription = req.body;
     const user = req.params.id;
-  const users =  await  User.findById(user)
-        .then(user => {
+    const users = await User.findById(user)
+        .then(async user => {
             console.log(user)
             if (!user) {
                 res.status(404).json({msg: " not found"});
             } else {
-                user.subscription = JSON.stringify(subscription);
-                user.save();
-                console.log("done")
+
+                await RequestParcel.find({
+                    "userId._id": user._id,
+                    "confirmationSend": true,
+                    "confirmationRecive": false
+                }).then((aa) => {
+                    if (aa && aa.length) {
+                        user.subscription = JSON.stringify(subscription);
+                        user.save();
+                        console.log("done")
+                    } else {
+                        console.log("la")
+                    }
+
+                    }
+                ).catch(
+                    err => {
+                        console.log(err);
+                        console.log("aaaa")
+                    }
+                )
             }
         });
 
@@ -25,9 +44,9 @@ router.post('/subscribe/:id', async (req, res) => {
     });
 
     webpush.sendNotification(subscription, payload)
-     .catch(err => {
-        console.log(err);
-   });
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 router.get('/', (req, res) => {
