@@ -25,6 +25,8 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { clearCurrentProfile } from "./actions/authActions";
+import MapContainer from './FrontOffice/Parcels/map/map_container';
+import HistoryContainer from './FrontOffice/Parcels/history/history_container.js';
 
 // Check for token
 if (localStorage.jwtToken) {

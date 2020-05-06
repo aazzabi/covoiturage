@@ -1,22 +1,28 @@
 var Package = require('../models/Parcels');
+var ReqParcels = require('../models/RequestParcels');
+var User = require('../models/User');
 
-exports.add = function (req, res, next) {
-    Package.create({
-        title: req.body.type,
-        type: req.body.type,
-        size: req.body.size,
-        price: req.body.price,
-        sender: req.body.sender,
-        receiver: req.body.receiver,
-        departure: req.body.departure,
-        weight: req.body.weight,
-        arrival: req.body.arrival,
-        valide: req.body.valide,
-        files: req.body.files,
-        description: req.body.description,
-        sendingCode: makeid(5),
-        receiveingCode: makeid(5)
-    }).then((data) => {
+exports.add = async (req, res, next) => {
+    const user = await User.findOne({"_id": req.body.sender});
+    console.log(user)
+    console.log("dd",req.body.sender)
+    Package.create(
+        {
+            title: req.body.title,
+            type: req.body.type,
+            size: req.body.size,
+            price: req.body.price,
+            sender: user,
+            departure: req.body.departure,
+            weight: req.body.weight,
+            arrival: req.body.arrival,
+            valide: req.body.valide,
+            files: req.body.files,
+            description: req.body.description,
+            sendingCode: makeid(5),
+            receiveingCode: makeid(5)
+        }
+    ).then((data) => {
         res.set('Content-Type', 'application/json');
         res.status(202).json(data);
 
@@ -28,16 +34,77 @@ exports.add = function (req, res, next) {
         });
 }
 
+exports.addRequest = async (req, res, next) => {
+    const user = await User.findOne({"_id": req.body.user});
+    const parcelId = await Package.findOne({"_id": req.body.parcelId});
+    userid = await User.findById(req.body.user);
+    console.log(req.body);
+
+    ReqParcels.create(
+        {
+            suggestion: req.body.suggestion,
+            message: req.body.message,
+            confirmation: false,
+            userId: user,
+            parcelId: parcelId,
+            createdAt: new Date(),
+        }
+    ).then((data) => {
+        res.set('Content-Type', 'application/json');
+        res.status(202).json(data);
+
+    })
+        .catch(error => {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+            console.log(error)
+        });
+}
 
 exports.getAllPackage = async (req, res, next) => {
     const packages = await Package.find();
     res.json(packages);
 
 }
+exports.refuseRequest = (req, res) => {
+    console.log(req.params.id)
+    ReqParcels.deleteOne({"_id": req.params.id})
+        .then((data) => console.log(data), (error) => console.log(error));
+};
+exports.acceptRequest = async (req, res) => {
+    console.log('idRequest', req.params.id);
 
+    ReqParcels.updateOne({'_id': req.params.id},
+        {
+            '$set': {
+                confirmedAt: new Date(),
+                confirmation: true
+            }
+        })
+        .then(async (data) => {
+            res.status(202).json({'status': 200, 'message': 'Driver request accepted, and user accepted as a Driver'});
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
 exports.getByIdPackage = async (req, res, next) => {
     const packages = await Package.findOne({_id: req.params.id});
     res.json(packages);
+
+};
+exports.getMyPackage = async (req, res, next) => {
+    const user = await User.findOne({"_id": req.params.id});
+    const packages = await Package.find({sender: user});
+    res.json(packages);
+
+};
+exports.getMyRequest = async (req, res, next) => {
+    const RequestParcels = await Package.findOne({"_id": req.params.id});
+    const requests = await ReqParcels.find({parcelId: RequestParcels});
+    console.log(requests)
+
+    res.json(requests);
 
 };
 exports.editPackage = async function (req, res, next) {
@@ -46,7 +113,6 @@ exports.editPackage = async function (req, res, next) {
         type: req.body.type,
         size: req.body.size,
         price: req.body.price,
-        sender: req.body.sender,
         receiver: req.body.receiver,
         valide: req.body.valide,
         departure: req.body.departure,
@@ -69,6 +135,99 @@ exports.editPackage = async function (req, res, next) {
         })
     })
 }
+
+exports.getDriverRequest = async (req, res, next) => {
+    const RequestParcels = await User.findOne({"_id": req.params.id});
+    const requests = await ReqParcels.find({"userId._id": RequestParcels._id});
+    console.log(requests)
+
+    res.json(requests);
+
+};
+
+
+exports.confrimSendingParcel = async (req, res, next) => {
+
+    let parcelToUpdate;
+    parcelToUpdate = await ReqParcels.findById(req.params.idReq);
+    const parcel =  parcelToUpdate.parcelId;
+
+    if (parcel.sendingCode === req.params.sendingCode) {
+        parcel.valideSend = true;
+        await ReqParcels.updateOne({'_id': parcelToUpdate._id}, {"$set": {"confirmationSend": true,"parcelId":parcel}})
+            .then(() => {
+
+                Package.updateOne({'_id': parcel._id}, {"$set": {"valideSend": true}})
+                    .then(() => {
+
+                        res.set('Content-Type', 'application/json');
+                        res.status(301).json('done');
+
+                    })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+
+            })
+            .catch(error => {
+                res.set('Content-Type', 'application/json');
+                res.status(500).send(error);
+            });
+
+
+    }
+    else {
+        res.set('Content-Type', 'application/json');
+        res.status(301).json('wrong code');
+
+    }
+
+
+
+};
+
+exports.confrimRecivingParcel = async (req, res, next) => {
+
+    let parcelToUpdate;
+    parcelToUpdate = await ReqParcels.findById(req.params.idReq);
+    const parcel =  parcelToUpdate.parcelId;
+
+    if (parcel.receiveingCode === req.params.receiveingCode) {
+        parcel.valideReceive = true;
+        await ReqParcels.updateOne({'_id': parcelToUpdate._id}, {"$set": {"confirmationRecive": true,"parcelId":parcel}})
+            .then(() => {
+
+                Package.updateOne({'_id': parcel._id}, {"$set": {"valideReceive": true}})
+                    .then(() => {
+
+                        res.set('Content-Type', 'application/json');
+                        res.status(301).json('done');
+
+                    })
+                    .catch(error => {
+                        res.set('Content-Type', 'application/json');
+                        res.status(500).send(error);
+                    });
+
+            })
+            .catch(error => {
+                res.set('Content-Type', 'application/json');
+                res.status(500).send(error);
+            });
+
+
+    }
+    else {
+        res.set('Content-Type', 'application/json');
+        res.status(301).json('wrong code');
+
+    }
+
+
+
+};
+
 
 exports.deletePackage = function (req, res, next) {
     Package.delete({_id: req.params.id}, function (err, parcels) {
@@ -96,25 +255,3 @@ function makeid(length) {
     return result;
 }
 
-exports.addPackageToRide = async (req, res, next) => {
-
-    rideid = await ride.findById(req.params.idRide);
-    userid = await user.findById(req.params.idUser);
-    trav = traveler.create({
-        user: req.body.status,
-        confimationCode: makeid(5),
-        valide: false,
-    });
-    rideid.travelers = trav;
-    await rideid.save()
-        .then((data) => {
-            res.set('Content-Type', 'application/json');
-            res.status(202).json(data);
-
-        })
-        .catch(error => {
-            res.set('Content-Type', 'text/html');
-            res.status(500).send(error);
-        });
-
-};

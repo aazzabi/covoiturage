@@ -1,4 +1,8 @@
 @charset "UTF-8";
+.photomypacel {
+  height: 140px;
+  width: 140px;
+}
 /*!
 
 =========================================================
@@ -16831,6 +16835,7 @@ td.rdtYear:hover {
 
 .icon-actions a + a {
   margin-left: 4px; }
+
 
 button:focus, :focus {
   outline: none; }

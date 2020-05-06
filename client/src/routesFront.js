@@ -3,7 +3,6 @@ import Register from "./views/pages/examples/Register";
 import Calendar from "./views/pages/Calendar";
 import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
-import {Route} from "react-router-dom";
 import React from "react";
 import RideAdd from "./FrontOffice/Ride/RideAdd";
 import RideEdit from "./FrontOffice/Ride/RideEdit";
@@ -11,17 +10,25 @@ import MyRides from "./FrontOffice/Ride/MyRides";
 import RideSearch from "./FrontOffice/Ride/RideSearch";
 import DetailRide from "./FrontOffice/Ride/DetailRide";
 
-import CreateParcel from "./FrontOffice/Parcels/Create";
-import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
 import PostDetail from "./FrontOffice/Blog/post_detail";
-import Packages from "./FrontOffice/Parcels/Packages";
 import PostNew from "./FrontOffice/Blog/post_new";
 import PostMine from "./FrontOffice/Blog/post_mine";
-import PostList from "./FrontOffice/Blog/listPosts";
-import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
 import BecomeDriver from "./FrontOffice/Drivers/BecomeDriver";
 import MyTravellers from "./FrontOffice/Ride/MyTravellers";
 import JoinedRides from "./FrontOffice/Ride/JoinedRides";
+import CreateParcel from "./FrontOffice/Parcels/Create";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
+import Packages from "./FrontOffice/Parcels/Packages";
+import PostList from "./FrontOffice/Blog/listPosts";
+import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
+import MyParcel from "./FrontOffice/Parcels/myparcels";
+import EditPackage from "./FrontOffice/Parcels/EditPackage";
+import map from './FrontOffice/Parcels/map/map';
+import history from './FrontOffice/Parcels/history/history_container.js';
+import test from './FrontOffice/Parcels/ApproveNotif';
+import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
+import requests from "./FrontOffice/Parcels/myparcels/requests";
+import BlogDetails from "./FrontOffice/Blog/post_detail/index";
 
 const routesFront = [
     {
@@ -76,7 +83,44 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/parcels",
+        path: "/parcels/details/:id",
+        name: "view parcels",
+        component: PackagesDetails,
+        layout: "/front"
+    },
+    {
+        path: "/parcels/driverReq/",
+        name: "driverReq",
+        component: DriverRequest,
+        layout: "/front"
+    },
+    {
+        path: "/parcels/edit/:id",
+        name: "edit parcels",
+        component: EditPackage,
+        layout: "/front"
+    },
+    {
+        path: "/myParcels/map/:id",
+        name: "view parcels",
+        component: map ,
+        layout: "/front"
+    },
+    {
+        path: "/myParcels/:id",
+        name: "view parcels",
+        component: requests ,
+        layout: "/front"
+    },
+    {
+        path: "/myParcels/",
+        name: "view parcels",
+        component: MyParcel,
+        layout: "/front"
+    },
+
+    {
+        path: "/parcels/all/",
         name: "Packages",
         icon: "ni ni-calendar-grid-58 text-red",
         component: Packages,
@@ -105,23 +149,22 @@ const routesFront = [
         name: "Blogs",
         component: PostList,
         layout: "/front"
-    },
-    {
-        path: "/posts/:id",
-        name: "Blog",
-        component: PostDetail,
+    },   {
+        path: "/BlogDetails/:id",
+        name: "Blogs",
+        component: BlogDetails,
         layout: "/front"
     },
     {
-        path: "/posts/new",
-        name: "Blog new",
-        component: PostNew,
+        path: "/history",
+        name: "history",
+        component: history,
         layout: "/front"
     },
     {
-        path: "/posts/my_posts",
-        name: "Blog new",
-        component: PostMine,
+        path: "/test",
+        name: "test",
+        component: test,
         layout: "/front"
     },
     {

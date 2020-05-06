@@ -54,7 +54,7 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                                     className="avatar"
                                     onClick={e => e.preventDefault()}
                                 >
-                                    <img
+                                    <img height={48} width={48}
                                         src={`${serverUrl}${pack.files[0]}`}
                                     />
                                 </a>
@@ -80,7 +80,6 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                         <td>
                             {pack.price}
                         </td>
-
                         <td className="text-right">
                             <UncontrolledDropdown>
                                 <DropdownToggle
@@ -95,23 +94,11 @@ const PackagesTable = ({packages, currentPage, pageSize}) => {
                                     right
                                 >
                                     <DropdownItem
-                                        href={`/front/viewparcels/${pack._id}`}
+                                        href={`/front/parcels/details/${pack._id}`}
                                     >
-
                                         View Parcel info
                                     </DropdownItem>
-                                    <DropdownItem
-                                        href="#pablo"
-                                        onClick={e => e.preventDefault()}
-                                    >
-                                        Another action
-                                    </DropdownItem>
-                                    <DropdownItem
-                                        href="#pablo"
-                                        onClick={e => e.preventDefault()}
-                                    >
-                                        Something else here
-                                    </DropdownItem>
+
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </td>

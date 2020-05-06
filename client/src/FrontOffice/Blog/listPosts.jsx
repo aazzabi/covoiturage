@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchPosts} from '../../actions/Blog/BlogAction';
 import AuthHeader from "../../components/Headers/AuthHeader";
-import {Card, CardBody, CardFooter, CardHeader, Container, Row} from "reactstrap";
+import {Container} from "reactstrap";
 import PostsTable from "./posts";
 import PaginationsComp from "../Parcels/Pagination";
 

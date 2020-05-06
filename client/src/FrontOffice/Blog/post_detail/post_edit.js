@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { updatePost } from '../../../actions/Blog/BlogAction';
+import AuthHeader from "../../../components/Headers/AuthHeader";
+import {Card, CardBody, Container} from "reactstrap";
 
 class PostEdit extends Component {
 
@@ -15,7 +17,8 @@ class PostEdit extends Component {
     const _id = this.props.post._id;
     categories = categories.toString();
 
-    this.props.updatePost({ _id, title, categories, content }, this.props.onEditSuccess, (path, state) => {
+    this.props.updatePost({ _id, title, categories, content },
+        this.props.onEditSuccess, (path, state) => {
       this.props.history.replace(path, state);
     });
   }
@@ -61,16 +64,23 @@ class PostEdit extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div className="post">
-        {this.renderAlert()}
-        <h2 className="mb-5">Edit Your Post</h2>
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <Field name="title" component={this.renderInput} type="text" label="Title:" placeholder="Enter your title" required={true} />
-          <Field name="categories" component={this.renderInput} type="text" label="Categories:" placeholder="Enter your categories, use ',' to separate them" required={true} />
-          <Field name="content" component={this.renderTextEditor} label="Content:" />
-          <button action="submit" className="btn btn-primary">Publish</button>
-        </form>
-      </div>
+        <div>               <AuthHeader title="edit post" lead=""/>
+          <Container className="mt--8 pb-5">
+            <Card>
+              <div className="post">
+                <CardBody>
+                  <div className="post">
+                    {this.renderAlert()}
+                    <h2 className="mb-5">Edit Your Post</h2>
+                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                      <Field name="title" component={this.renderInput} type="text" label="Title:" placeholder="Enter your title" required={true} />
+                      <Field name="categories" component={this.renderInput} type="text" label="Categories:" placeholder="Enter your categories, use ',' to separate them" required={true} />
+                      <Field name="content" component={this.renderTextEditor} label="Content:" />
+                      <button action="submit" className="btn btn-primary">Publish</button>
+                    </form>
+                  </div></CardBody></div></Card></Container>
+                </div>
+
     );
   }
 }

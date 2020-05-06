@@ -77,6 +77,7 @@ class Components extends React.Component {
         });
       }.bind(this)
     );
+
     Slider.create(slider2, {
       start: [200.0, 400.0],
       connect: [false, true, false],

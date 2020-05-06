@@ -7,16 +7,15 @@ import { fetchPostsByUserId } from '../../actions/Blog/BlogAction';
 class PostMine extends Component {
 
   componentDidMount() {
-    this.props.fetchPostsByUserId();
+
+      this.props.fetchPostsByUserId();
+
   }
 
-  renderTags(tags) {
-    return tags.map(tag => {
-      return <span className="badge badge-info span-with-margin" key={tag}>{tag}</span>;
-    });
-  }
+
 
   renderPostSummary(post) {
+      console.log(post)
     return (
       <div key={post._id}>
         <h3>
@@ -24,9 +23,8 @@ class PostMine extends Component {
             {post.title}
           </Link>
         </h3>
-        {this.renderTags(post.categories)}
+        {post.categories}
         <span className="span-with-margin text-grey"> • </span>
-        <span className="span-with-margin text-grey">{post.authorName}</span>
         <span className="span-with-margin text-grey"> • </span>
         <span className="span-with-margin text-grey">{new Date(post.time).toLocaleString()}</span>
         <hr />
@@ -35,6 +33,7 @@ class PostMine extends Component {
   }
 
   render() {
+      console.log(this.props.posts)
     return (
       <div className="post">
         <h2 className="mb-5">My Blog Posts</h2>
@@ -47,7 +46,10 @@ class PostMine extends Component {
 }
 
 function mapStateToProps(state) {
-  return { posts: state.posts };
+  return {
+      posts: state.posts
+  };
 }
+
 
 export default connect(mapStateToProps, { fetchPostsByUserId })(PostMine);

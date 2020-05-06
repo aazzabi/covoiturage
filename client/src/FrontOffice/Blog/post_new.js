@@ -3,46 +3,57 @@ import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
 import {createPost} from '../../actions/Blog/BlogAction';
 import AuthHeader from "../../components/Headers/AuthHeader";
-import {Container, Row} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Row} from "reactstrap";
 import axios from "axios";
 import {DropzoneArea} from "material-ui-dropzone";
+import ReactQuill from "react-quill";
+import SimpleHeader from "../../components/Headers/SimpleHeader";
+import {getCurrentUser} from "../../actions/authActions";
 
 class PostNew extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            title: "",
+            categories: "",
+            content: "",
             files: ""
 
 
-    }}
+        }
+    }
+
     handleFormSubmit({title, categories, content}) {
+        console.log(this.props.currentUser._id)
+        const user = this.props.currentUser._id
         const files = this.state.files;
-        console.log(files)
-        this.props.createPost({title, categories, content, files}, (path) => {  // callback 1: history push
-            this.props.history.push(path);
+        console.log(this.state.content)
+
+        this.props.createPost({
+            title: this.state.title,
+            categories: this.state.categories,
+            content: this.state.content,
+            files: this.state.files,
+            user: this.props.currentUser._id
+        }, (path) => {  // callback 1: history push
         }, (path, state) => {
-            this.props.history.replace(path, state);
         });
     }
 
-    renderInput = (field) => (
-        <fieldset className="form-group">
-            <label>{field.label}</label>
-            <input
-                className="form-control"
-                {...field.input}
-                type={field.type}
-                placeholder={field.placeholder}
-                required={field.required ? 'required' : ''}
-                disabled={field.disabled ? 'disabled' : ''}
-            />
-        </fieldset>
-    );
+    handleReactQuillChange = value => {
+        this.setState({
+            content: value
+        });
+    };
+    handleChange = (name, value) => {
+        this.setState({[name]: value});
+    };
 
     renderTextEditor = (field) => (
         <fieldset className="form-group">
             <label>{field.label}</label>
-            <input className="form-control" id="x" type="hidden" name="content"/>
+            <input onChange={event => this.handleChange('content', event.target.value)} className="form-control" id="x"
+                   type="hidden" name="content"/>
             <trix-editor input="x" {...field.input} />
         </fieldset>
     );
@@ -86,38 +97,93 @@ class PostNew extends Component {
 
     }
 
+    componentDidMount() {
+        this.props.getCurrentUser();
+    }
+
     render() {
 
         const {handleSubmit} = this.props;
 
         return (
             <>
-                <AuthHeader title="Add Parcels" lead=""/>
-                <Container className="mt--8 pb-5">
-                    <Row className="justify-content-center">
-                        <div className="post">
-                            {this.renderAlert()}
-                            <h2 className="mb-5">New Post</h2>
-                            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                                <Field name="title" component={this.renderInput} type="text" label="Title:"
-                                       placeholder="Enter your title" required={true}/>
-                                <Field name="categories" component={this.renderInput} type="text" label="Categories:"
-                                       placeholder="Enter your categories, use ',' to separate them" required={true}/>
-                                <Field name="content" component={this.renderTextEditor} label="Content:"/>
-                                <DropzoneArea
-                                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                                    maxFileSize={5000000}
-                                    onChange={this.handlesSave.bind(this)}
-                                    filesLimit={1}
-                                    files="files"
-                                />
-                                <button action="submit" className="btn btn-primary">Publish</button>
-                            </form>
+                <SimpleHeader name="Add Blog" parentName="Forms"/>
+                <Container className="mt--6" fluid>
+                    <Row>
+                        <div className="col">
+                            <div className="card-wrapper">
+                                <Card>
+                                    <CardHeader>
+                                        <h3 className="mb-0">Server side</h3>
+                                    </CardHeader>
+
+                                    <CardBody>
+
+                                        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                                            <div className="form-row">
+                                                <Col className="mb-3" md="4">
+
+                                                    <Input name="title" id="titleC" placeholder="Enter your title"
+                                                           type="text"
+                                                           component={this.renderInput}
+                                                           onChange={event => this.handleChange('title', event.target.value)}/>
+                                                </Col>
+                                                <Col className="mb-3" md="4">
+
+                                                    <Input name="categories" id="categories"
+                                                           placeholder="Enter your categories" type="text"
+                                                           onChange={event => this.handleChange('categories', event.target.value)}/>
+                                                </Col><br></br>
+
+                                                <Col lg="12" md="12">
+
+                                                <ReactQuill
+                                                    value={this.state.content}
+                                                    onChange={this.handleReactQuillChange}
+                                                    theme="snow"
+                                                    modules={{
+                                                        toolbar: [
+                                                            ["bold", "italic"],
+                                                            ["link", "blockquote", "code", "image"],
+                                                            [
+                                                                {
+                                                                    list: "ordered"
+                                                                },
+                                                                {
+                                                                    list: "bullet"
+                                                                }
+                                                            ]
+                                                        ]
+                                                    }}
+                                                />
+
+                                                </Col>
+                                                <hr></hr>
+                                                <DropzoneArea
+                                                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                                                    maxFileSize={5000000}
+                                                    onChange={this.handlesSave.bind(this)}
+                                                    filesLimit={1}
+                                                    files="files"
+                                                />
+                                            </div>
+                                            <Button color="primary" type="submit">
+                                                Submit form
+                                            </Button>
+                                        </form>
+                                    </CardBody>
+                                </Card>
+                            </div>
                         </div>
-                    </Row>
-                </Container>
+                    </Row></Container>
             </>
         );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        currentUser: state.auth.currentUser,
     }
 }
 
@@ -125,4 +191,6 @@ PostNew = reduxForm({
     form: 'post_new',  // name of the form
 })(PostNew);
 
-export default connect(null, {createPost})(PostNew);
+export default connect(mapStateToProps, {createPost, getCurrentUser})(PostNew);
+
+

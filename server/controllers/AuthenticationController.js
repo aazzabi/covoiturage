@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
         cb(null, config.upload.directory + '\\drivers\\');
     },
     filename: function (req, file, cb) {
-        console.log(file); //log the file object info in console
+        console.log(file);
         cb(null, file.originalname);
     }
 });
@@ -89,9 +89,7 @@ var register = async (req, res) => {
 };
 
 var login = async (req, res) => {
-    //Check errors in  the body
     const errors = validationResult(req);
-    //Bad Request
     if (!errors.isEmpty()) {
         return res.status(400).json({
             errors: errors.array()
@@ -99,10 +97,9 @@ var login = async (req, res) => {
     }
     const {email, password} = req.body;
     //ParserBody
-    console.log(req.body); // lezem middleware lel hkeya hedhi
+    console.log(req.body);
     try {
-        console.log(req.body); // lezem middleware lel hkeya hedhi
-        // See if User exists
+        console.log(req.body);
         let u = await User.findOne({
             email
         });
@@ -115,7 +112,6 @@ var login = async (req, res) => {
                 ]
             });
         }
-        //See if password matches
         const isMatch = await bcrypt.compareSync(password, u.password);
         console.log(password, 'password');
         console.log(u.password, 'u.password');
@@ -123,7 +119,6 @@ var login = async (req, res) => {
         if (isMatch === false) {
             return res.status(400).json({'status': 'error', 'message': 'Invalid Credentials'});
         }
-        // Return Json WebToken
         const payload = {
             User: {
                 id: u.id,
@@ -134,7 +129,7 @@ var login = async (req, res) => {
                 lastName: u.lastName,
                 firstName: u.firstName,
             }
-        }; //l'emport
+        };
         jwt.sign(
             u.toJSON(),
             config.authentification.secret,
@@ -155,9 +150,7 @@ var login = async (req, res) => {
 };
 
 var token = (req, res) => {
-    // refresh the damn token
     const postData = req.body
-    // if refresh token exists
     if ((postData.refreshToken) && (postData.refreshToken in tokenList)) {
         const user = {
             "email": postData.email,
@@ -167,7 +160,6 @@ var token = (req, res) => {
         const response = {
             "token": token,
         };
-        // update the token in the list
         tokenList[postData.refreshToken].token = token;
         res.status(200).json(response);
     } else {
@@ -186,7 +178,6 @@ var googleLogin = (req, res) => {
     })
         .then(response => {
             console.log("req.body 155");
-            // console.log('GOOGLE LOGIN RESPONSE',response)
             const {email_verified, name, email} = response.payload;
             if (email_verified) {
                 User.findOne({email}).exec((err, user) => {

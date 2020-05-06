@@ -57,7 +57,9 @@
     "twig": "^1.13.2",
     "twilio": "^3.11.1",
     "twilio-video": "1.12.0",
-    "uuid": "^7.0.3"
+    "google-distance": "^1.0.1",
+    "uuid": "^7.0.3",
+    "web-push": "latest"
   },
   "devDependencies": {
     "bluebird": "^3.7.2",

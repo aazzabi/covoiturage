@@ -4,20 +4,24 @@ import {
     Button,
     Form,
     FormGroup,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
     Label,
     Input, Col, Row, CardBody, Card, CardHeader, Container
 } from 'reactstrap';
 import PlacesAutocomplete from "./GAutoComplete";
 import AuthHeader from "../../components/Headers/AuthHeader";
-
 import {DropzoneArea, DropzoneDialog} from 'material-ui-dropzone'
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-
-export default class CreateParcel extends Component {
+import {connect} from "react-redux";
+import {addClaim} from "../../services/Claims/ClaimsAction";
+import {getCurrentUser} from "../../actions/authActions";
+class CreateParcel extends Component {
 
     constructor(props) {
         super(props);
@@ -32,17 +36,142 @@ export default class CreateParcel extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             title: "",
+            titleError:"",
+            titleStyle:"",
             type: "",
+            typeError:"",
+            typeStyle:"",
             price: "",
+            priceError:"",
+            priceStyle:"",
             weight: "",
+            weightError:"",
+            weightStyle:"",
             size: "",
+            sizeError:"",
+            sizeStyle:"",
+
             description: "",
+            descriptionError:"",
+            descriptionStyle:"",
+
             departure: "",
+            departureError:"",
+            departureStyle:"",
             arrival: "",
+            arrivalError:"",
+            fileError:"",
+            currentUser: {},
             files: [],
 
         }
     }
+
+
+    validateForm() {
+
+        let test = true;
+        let formValid = true;
+        let form = {...this.state};
+        console.log('form',form)
+
+        if (form.title === '') {
+            test = false;
+            this.setState({titleError: "please select a title"});
+            this.setState({titleStyle: "error"});
+        } else {
+            this.setState({titleError: ""});
+            this.setState({titleStyle: ""});
+        }
+        if (form.type === '') {
+            test = false;
+            this.setState({typeError: "please select a type"});
+            this.setState({typeStyle: "error"});
+        } else {
+            this.setState({typeError: ""});
+            this.setState({typeStyle: ""});
+        }
+        if (form.price === '') {
+            test = false;
+            this.setState({priceError: "please select the price for your parcel"});
+            this.setState({priceStyle: "error"});
+        } else {
+            this.setState({priceError: ""});
+            this.setState({priceStyle: ""});
+        }
+        if (form.weight === '') {
+            test = false;
+            this.setState({weightError: "please select your parcel weight"});
+            this.setState({weightStyle: "error"});
+        }
+        else {
+            this.setState({weightError: ""});
+            this.setState({weightStyle: ""});
+        }
+
+        if (form.size==='') {
+            test = false;
+            this.setState({sizeError: "please select your parcel size"});
+            this.setState({sizeStyle: "error"});
+        }
+
+        else {
+            this.setState({sizeError: ""});
+            this.setState({sizeStyle: ""});
+        }
+
+        if (form.departure==='') {
+            test = false;
+            this.setState({departureError: "please select your sending location"});
+            this.setState({departureStyle: "error"});
+        }
+
+        else {
+            this.setState({departureError: ""});
+            this.setState({departureStyle: ""});
+        }
+
+        if (form.description==='') {
+            test = false;
+            this.setState({descriptionError: "please write a little description about the parcel"});
+            this.setState({descriptionStyle: "error"});
+        }
+
+        else {
+            this.setState({descriptionError: ""});
+            this.setState({descriptionStyle: ""});
+        }
+
+        if (form.arrival==='') {
+            test = false;
+            this.setState({arrivalError: "please select where tou want to send your parcel"});
+            this.setState({arrivalStyle: "error"});
+        }
+
+        else {
+            this.setState({arrivalError: ""});
+            this.setState({arrivalStyle: ""});
+        }
+
+        // if (!form.file) {
+        //     test = false;
+        //     this.setState({fileError: "upload at least 1 picture"});
+        //     this.setState({arrivalStyle: "error"});
+        // }
+        //
+        // else {
+        //     this.setState({arrivalError: ""});
+        //     this.setState({arrivalStyle: ""});
+        // }
+
+
+        console.log(test);
+
+        console.log(formValid, 'test2')
+        return test;
+    }
+
+
 
     onChangeParceltitle(e) {
         this.setState({title: e.target.value})
@@ -102,23 +231,46 @@ export default class CreateParcel extends Component {
 
     }
 
+
     onSubmit(e) {
         e.preventDefault()
-        const parcel = {
-            title: this.state.title,
-            type: this.state.type,
-            price: this.state.price,
-            weight: this.state.weight,
-            size: this.state.size,
-            departure: this.state.departure,
-            arrival: this.state.arrival,
-            description: this.state.description,
-            files: this.state.files
-        };
-        console.log(parcel);
-        axios.post('http://localhost:3000/packages/add', parcel);
 
-        this.setState({title: '', type: '', price: '', weight: '', size: '', description: ''})
+        let formValid = this.validateForm();
+
+        if (formValid){
+
+            const parcel = {
+                title: this.state.title,
+                type: this.state.type,
+                price: this.state.price,
+                weight: this.state.weight,
+                size: this.state.size,
+                departure: this.state.departure,
+                arrival: this.state.arrival,
+                description: this.state.description,
+                files: this.state.files,
+                sender: this.props.currentUser._id
+            };
+            console.log(parcel);
+            axios.post('http://localhost:3000/packages/add', parcel)
+                .then(res => {
+                    this.props.history.push("/front/parcels/all");
+                    console.log(this.props.currentUser._id)
+                })
+                .catch(err => console.log(err));
+        }
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps) {
+            this.setState({
+                currentUser: nextProps.currentUser,
+            });
+        }
+    }
+    componentDidMount() {
+        this.props.getCurrentUser();
     }
 
     render() {
@@ -143,9 +295,17 @@ export default class CreateParcel extends Component {
 
                                                             <FormGroup>
                                                                 <Label>Title</Label>
+                                                                <InputGroup
+                                                                    className="input-group-merge input-group-alternative mb-3"
+                                                                    className={this.state.titleStyle}
+                                                                >
+
                                                                 <Input type="text" value={this.state.title}
                                                                        onChange={this.onChangeParceltitle}/>
+                                                                </InputGroup>
+                                                                <span style={{color:'red'}} className="errorText">{this.state.titleError}</span>
                                                             </FormGroup>
+
                                                             <FormGroup>
                                                                 <InputLabel
                                                                     id="demo-simple-select-label">Type</InputLabel>
@@ -162,7 +322,10 @@ export default class CreateParcel extends Component {
                                                                     <MenuItem value={"MONEY"}>MONEY</MenuItem>
                                                                     <MenuItem value={"OTHER"}>OTHER</MenuItem>
                                                                 </Select>
+
                                                             </FormGroup>
+                                                            <span style={{color:'red'}} className="errorText">{this.state.typeError}</span>
+
                                                         </Col>
                                                         <Col md="6">
 
@@ -170,6 +333,8 @@ export default class CreateParcel extends Component {
                                                                 <Label>price</Label>
                                                                 <Input type="price" value={this.state.price}
                                                                        onChange={this.onChangeParcelPrice}/>
+                                                                <span style={{color:'red'}} className="errorText">{this.state.priceError}</span>
+
                                                             </FormGroup>
                                                             <FormGroup>
                                                                 <TextField
@@ -182,23 +347,38 @@ export default class CreateParcel extends Component {
                                                                             position="start">Kg</InputAdornment>,
                                                                     }}
                                                                 />
+                                                                <span style={{color:'red'}} className="errorText">{this.state.weightError}</span>
+
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col md="12">
+
+                                                            <FormGroup>
+                                                                <Label>From</Label>
+
+                                                                <PlacesAutocomplete inputValue={this.state.arrival}
+                                                                                    handleChange={this.filterLocationarrival}/>
+                                                                <span style={{color:'red'}} className="errorText">{this.state.arrivalError}</span>
+
+                                                            </FormGroup>
+                                                            <FormGroup>
+                                                                <Label>To</Label>
+
+                                                                <PlacesAutocomplete inputValue={this.state.departure}
+                                                                                    handleChange={this.filterLocationdeparture}/>
+                                                                <span style={{color:'red'}} className="errorText">{this.state.departureError}</span>
+
                                                             </FormGroup>
 
-
                                                         </Col>
-                                                        <Label>From</Label>
-                                                        <PlacesAutocomplete inputValue={this.state.arrival}
-                                                                            handleChange={this.filterLocationarrival}/>
-                                                        <Label>To</Label>
 
-                                                        <PlacesAutocomplete inputValue={this.state.departure}
-                                                                            handleChange={this.filterLocationdeparture}/>
+
                                                     </Row>
                                                     <img
                                                         alt="..."
                                                         width={480}
                                                         height={300}
-                                                        // src={require("../../assets/img/parcel.png")}
+                                                        src={require("../../assets/img/parcel.png")}
                                                     />
                                                     <Row>
                                                         <Col md="4" sm="6">
@@ -206,37 +386,45 @@ export default class CreateParcel extends Component {
                                                                 <div className="custom-control custom-radio mb-3">
                                                                     <input
                                                                         className="custom-control-input"
-                                                                        id="customRadio1"
+                                                                        //defaultChecked
+                                                                        id="customRadio5"
                                                                         name="custom-radio-1"
                                                                         type="radio"
                                                                         value="S"
-                                                                        checked={this.state.size === 'Small'}
+                                                                        //checked={this.handleOptionChange}
                                                                         onChange={this.handleOptionChange}
                                                                     />
                                                                     <label
                                                                         className="custom-control-label"
-                                                                        htmlFor="customRadio1"
+                                                                        htmlFor="customRadio5"
                                                                     >
                                                                         Small
                                                                     </label>
                                                                 </div>
+
+
                                                             </FormGroup>
                                                         </Col>
                                                         <Col md="4" sm="6">
+
+
                                                             <FormGroup>
+
+
                                                                 <div className="custom-control custom-radio mb-3">
                                                                     <input
                                                                         className="custom-control-input"
-                                                                        id="customRadio2"
-                                                                        name="custom-radio-2"
+                                                                        //defaultChecked
+                                                                        id="customRadio7"
+                                                                        name="custom-radio-1"
                                                                         type="radio"
                                                                         value="M"
-                                                                        checked={this.state.size === 'medium'}
+                                                                        //checked={this.state.size === 'medium'}
                                                                         onChange={this.handleOptionChange}
                                                                     />
                                                                     <label
                                                                         className="custom-control-label"
-                                                                        htmlFor="customRadio2"
+                                                                        htmlFor="customRadio7"
                                                                     >
                                                                         Medium
                                                                     </label>
@@ -246,23 +434,25 @@ export default class CreateParcel extends Component {
                                                         </Col>
                                                         <Col md="3" sm="6">
                                                             <FormGroup>
+
+
                                                                 <div className="custom-control custom-radio mb-3">
                                                                     <input
                                                                         className="custom-control-input"
-                                                                        id="customRadio3"
-                                                                        name="custom-radio-3"
+                                                                        //defaultChecked
+                                                                        id="customRadio6"
+                                                                        name="custom-radio-1"
                                                                         type="radio"
                                                                         value="L"
-                                                                        checked={this.state.size === 'Large'}
                                                                         onChange={this.handleOptionChange}
+
                                                                     />
                                                                     <label
                                                                         className="custom-control-label"
-                                                                        htmlFor="customRadio3"
+                                                                        htmlFor="customRadio6"
                                                                     >
                                                                         Large
                                                                     </label>
-
                                                                 </div>
 
                                                             </FormGroup>
@@ -270,6 +460,9 @@ export default class CreateParcel extends Component {
                                                         <Col md="3" sm="6">
 
                                                         </Col>
+
+                                                        <span style={{color:'red'}} className="errorText">{this.state.sizeError}</span>
+
                                                     </Row>
                                                     <Button type="submit">
                                                         Create Parcel
@@ -296,6 +489,8 @@ export default class CreateParcel extends Component {
                                                 onChange={this.handleSave.bind(this)}
                                                 filesLimit={1}
                                             />
+                                            <span style={{color:'red'}} className="errorText">{this.state.fileError}</span>
+
                                         </div>
                                         <FormGroup>
                                             <label
@@ -311,6 +506,8 @@ export default class CreateParcel extends Component {
                                                 value={this.state.description}
                                                 onChange={this.onChangeParcelDescription}
                                             />
+                                            <span style={{color:'red'}} className="errorText">{this.state.descriptionError}</span>
+
                                         </FormGroup>
                                     </CardBody>
                                 </Card>
@@ -324,3 +521,11 @@ export default class CreateParcel extends Component {
     }
 
 }
+
+function mapStateToProps(state) {
+    return {
+        currentUser: state.auth.currentUser,
+    }
+}
+
+export default connect(mapStateToProps, {getCurrentUser})(CreateParcel);

@@ -19,6 +19,8 @@ import {
   InputGroupAddon, InputGroupText,
   Row
 } from "reactstrap";
+const serverUrl = "http://127.0.0.1:8887/";
+
 class PostDetail extends Component {
 
     constructor(props) {
@@ -30,20 +32,16 @@ class PostDetail extends Component {
 
     componentDidMount() {
 
-        // By default, we set beingEdit as false (Since when the user first click the post, the post detail is read, rather than edited)
         this.setState({
             beingEdit: false
         });
 
-        // Get post id
         const {id} = this.props.match.params;
 
-        // Fetch post detail
         if (!this.props.post) {
             this.props.fetchPost(id);
         }
 
-        // Check whether current authenticated user has authority to make change to this post
     }
 
     handleEditSuccess() {
@@ -65,7 +63,7 @@ class PostDetail extends Component {
         });
     }
 
-    renderDeleteConfirmModal() {  // used for delete confirmation
+    renderDeleteConfirmModal() {
         return (
             <div className="modal fade" id="deleteConfirmModal" tabIndex="-1" role="dialog"
                  aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
@@ -94,25 +92,22 @@ class PostDetail extends Component {
     }
 
     renderUpdateAndDeleteButton() {
-        if (this.props.allowChange) {
             return (
                 <div>
                     <button className="btn btn-primary mr-1" onClick={this.onEditClick.bind(this)}>Edit</button>
-                    <button className="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmModal">Delete
+                    <button className="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmModal" onClick={this.renderDeleteConfirmModal.bind(this)}>Delete
                     </button>
                 </div>
             );
-        }
+
     }
 
     render() {
 
-        // If there is no post match the given post ID, render NoMatch page
         if (!this.props.post) {
             return "nothing";
         }
 
-        // If the component state 'beingEdit' is true, we render the post edit page
         if (this.state.beingEdit) {
             return (
                 <PostEdit
@@ -125,12 +120,10 @@ class PostDetail extends Component {
             );
         }
 
-        // Render the regular post detail page for reading
         return (
             <>
-                <AuthHeader title="Add Parcels" lead=""/>
+                <AuthHeader title="post list" lead=""/>
                 <Container className="mt--8 pb-5">
-                    <Row className="justify-content-center">
                         <Card>
                             <div className="post">
                               <CardBody>
@@ -139,6 +132,7 @@ class PostDetail extends Component {
                               </CardBody>
                               <CardFooter>
                                 <Comments postId={this.props.match.params.id}/>
+                                  <br></br>
                                 <CommentNew
                                     postId={this.props.match.params.id}
                                     history={this.props.history}
@@ -150,7 +144,6 @@ class PostDetail extends Component {
                               </CardFooter>
                             </div>
                         </Card>
-                    </Row>
                 </Container>
             </>
         );
