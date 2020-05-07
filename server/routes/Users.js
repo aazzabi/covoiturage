@@ -21,15 +21,25 @@ var storage = multer.diskStorage({
 });
 var uploadDocs = multer({storage: storage}).single('doc');
 
-router.get('/profile', isAuthenticated, userController.profile);
+router.get('/profile', userController.profile);
 router.get('/getAll', userController.getAll);
 router.get('/getAllUsers', userController.getAllUsers);
 router.get('/getAllDrivers', userController.getAllDrivers);
-router.put('/updateUser/:id', userController.updateUser);
-router.post('/delete/:id', userController.deleteUser);
-router.get('/getUserById/:id', userController.getUserById);
-router.post('/refuseDriverRequest/:idUser', authorize(['ADMIN']), userController.becomeDriverRequest);
+
+
+
+
 router.put('/searchUser',  userController.searchUser);
+router.get('/getAllTechnicals', userController.getAllTechnicals);
+router.get('/getAllFinancials', userController.getAllFinancials);
+router.get('/getAllRelationals', userController.getAllRelationals);
+router.post('/updateUser/:id', userController.updateUser);
+router.delete('/delete/:id', userController.deleteUser);
+router.get('/getUserById/:id', userController.getUserById);
+router.delete('/refuseDriverRequest/:idRequest', userController.refuseDriverRequest);
+router.post('/acceptDriverRequest/:idRequest', userController.acceptDriverRequest);
+
+router.get('/getAllDriverRequest', userController.getAllDriverRequest);
 /*
 POST
 http://localhost:3000/users/becomeDriver/:idUser
@@ -52,6 +62,8 @@ router.post('/becomeDriver/:id', userController.becomeDriverRequest);
 // lkolhom bech yet7aatou fel entité du user sous forme d'objet
 router.post('/uploadDocumentForDriver/:idUser', async (req, res, next) => {
     uploadDocs(req, res, async function (error) {
+        console.log(req.files, 'req. files');
+        console.log(req.params.idUser, 'idUser');
         req.files.doc.forEach((fi, index) => {
             var hashName = crypto.createHash('md5').update(fi.name + new Date()).digest("hex");
             let ext;
@@ -69,9 +81,12 @@ router.post('/uploadDocumentForDriver/:idUser', async (req, res, next) => {
                 }
             }).then((data) => {
                 console.log(data);
+            }, error1 => {
+                console.log(error1);
             });
         });
     });
+    res.status(200).send({"status": 200, "message": "Upload finished"});
 
 });
 

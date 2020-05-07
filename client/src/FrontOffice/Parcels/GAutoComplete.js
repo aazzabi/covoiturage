@@ -49,6 +49,7 @@ export default function GoogleMaps(props) {
         }
 
         loaded.current = true;
+        console.log(options);
     }
 
     const fetch = React.useMemo(

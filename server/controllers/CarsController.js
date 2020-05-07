@@ -25,6 +25,22 @@ var getAllCarsModelCapacity = (req, res, next) => {
     });
 };
 
+var getAllMarques = (req, res, next) => {
+    allCarsModelsCapacity.find({}, {_id: 0 ,'model': 0, 'capacite' : 0}).sort({field : 1}).distinct('marque').then((data) => {
+        res.status(200).send(data);
+    }, error => {
+        res.status(400).send(error);
+    });
+};
+var getAllModelByMarque = (req, res, next) => {
+    allCarsModelsCapacity.find({'marque': req.params.marque }, {_id: 0 , 'capacite': 0, 'marque':0})
+        .then((data) => {
+        res.status(200).send(data);
+    }, error => {
+        res.status(400).send(error);
+    });
+};
+
 // var addCarToUser = async (req, res, next) => {
 //     console.log(req.params.id,'********************');
 //     if (await user.findOne({"_id": req.params.id}) != null) {
@@ -67,5 +83,7 @@ var getAllCarsModelCapacity = (req, res, next) => {
 module.exports = {
     getAll,
     getAllCarsModelCapacity,
+    getAllMarques,
+    getAllModelByMarque,
 };
 

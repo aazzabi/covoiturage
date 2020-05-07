@@ -1,21 +1,34 @@
-import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS,} from "./UserTypes";
+import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS,GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS, UPDATE_USER, GET_USER_BY_ID} from "./UserTypes";
 
 const initialState = {
     user: {},
     drivers: [],
     users: [],
+    financials: [],
+    technicals: [],
+    relationals: [],
     updatedUser: {}
 };
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_ALL:
-            return {...state, allUsers: action.payload};
+            return {...state, all: action.payload};
         case GET_USERS:
             return {...state, users: action.payload};
+        case GET_USER_BY_ID:
+            return {...state, user: action.payload};
+        case UPDATE_USER:
+            return {...state, user: action.payload};
         case GET_DRIVERS:
             return {...state, drivers: action.payload};
+        case GET_FINANCIALS:
+            return {...state, financials: action.payload};
+        case GET_TECHNICALS:
+            return {...state, technicals: action.payload};
+        case GET_RELATIONALS:
+            return {...state, relationals: action.payload};
         case DELETE_USER:
-            return {...state, users: state.users.filter(u => u._id !== action.payload)};
+            return {...state, all: state.all.filter(u => u._id !== action.payload)};
         default:
             return state;
     }

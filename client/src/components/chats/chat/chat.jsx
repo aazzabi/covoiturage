@@ -82,7 +82,7 @@ const Chat = ({ history, location }) => {
         cancelToken: source.token
         }
         );
-        console.log(data.data.user);
+        console.log(data);
     socket.emit("new-user", data.data.user);
     setIsOnline(true);
     localStorage.setItem("isOnline", true);

@@ -21,7 +21,7 @@ var rideRouter = require('./routes/Ride');
 var carsRouter = require('./routes/Cars');
 var packageRouter = require('./routes/Package');
 var postRouter = require('./routes/Post');
-//var claimsRouter = require('./routes/Claims');
+var claimsRouter = require('./routes/Claims');
 var upload = require('./routes/upload');
 
 
@@ -79,10 +79,16 @@ app.use('/privileges', privilegesRouter);
 
 app.use('/cars', carsRouter);
 app.use('/packages', packageRouter);
+
 app.use('/blogs', postRouter);
-//app.use('/claims', claimsRouter);
+app.use('/claims', claimsRouter);
 app.use('/chat', discussionRouter);
 app.use('/feed', feedsRouter);
+
+app.use('/posts',postRouter);
+
+
+
 app.post('/upload', function(req, res) {
     let file;
 

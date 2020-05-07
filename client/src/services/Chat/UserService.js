@@ -11,7 +11,7 @@ export async function getUserProfile(id) {
     return await http.get(`${serviceEndpoint}/getUserById/${id}`).catch(err => console.log(err));
 }
 export async function updateUser(id, data) {
-    return await http.put(`${serviceEndpoint}/updateUser/${id}`, data).catch(err => console.log(err));
+    return await http.post(`${serviceEndpoint}/updateUser/${id}`, data).catch(err => console.log(err));
 }
 export const searchUsers = async (searchData) => {
 

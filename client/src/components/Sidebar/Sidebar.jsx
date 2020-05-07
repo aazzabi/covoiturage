@@ -16,7 +16,7 @@
 */
 import React from "react";
 // react library for routing
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import {NavLink as NavLinkRRD, Link, withRouter} from "react-router-dom";
 // nodejs library that concatenates classes
 import classnames from "classnames";
 // nodejs library to set properties for components
@@ -33,14 +33,36 @@ import {
   Nav
 } from "reactstrap";
 
+import {connect} from "react-redux";
+import {getCurrentUser} from "../../actions/authActions";
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentUser: {},
       collapseOpen: false,
       ...this.getCollapseStates(props.routes)
     };
   }
+
+
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      this.setState({
+        currentUser: nextProps.currentUser,
+      });
+    }
+  }
+
+  async componentWillMount() {
+    await this.props.getCurrentUser();
+  }
+
+
+
+
   // verifies if routeName is the one active (in browser input)
   activeRoute = routeName => {
     return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -107,8 +129,16 @@ class Sidebar extends React.Component {
   };
   // this function creates the links and collapses that appear in the sidebar (left menu)
   createLinks = routes => {
+    const u = this.state.currentUser;
     return routes.map((prop, key) => {
       if (prop.redirect) {
+        return null;
+      }
+      // if (prop.rolesAllowed && (prop.rolesAllowed.includes(u.role))) {
+      if (prop.rolesAllowed && (prop.rolesAllowed.indexOf(u.role) === -1) ) {
+          return null;
+      }
+      if(prop.invisible){
         return null;
       }
       if (prop.collapse) {
@@ -295,4 +325,12 @@ Sidebar.propTypes = {
   })
 };
 
-export default Sidebar;
+
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.auth.currentUser,
+  }
+};
+
+export default withRouter(connect(mapStateToProps, {getCurrentUser})(Sidebar));

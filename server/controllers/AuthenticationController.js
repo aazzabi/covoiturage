@@ -4,12 +4,15 @@ var config = require('../config/config');
 require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
-var user = require("../models/User");
+var User = require("../models/User");
 const tokenList = {};
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
 var multer = require('multer');
-const { OAuth2Client } = require('google-auth-library');
+const {OAuth2Client} = require('google-auth-library');
+const {check, validationResult} = require("express-validator/check");
+const recaptchaHelpers = require('../helpers/recaptcha');
+var _ = require('lodash');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -22,99 +25,135 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage}).single('image');
 
-var register = (req, res, next) => {
-    if (!req.body.email || !req.body.password || !req.body.username || !req.body.lastName || !req.body.firstName) {
-        res.json({success: false, msg: 'Please pass the necessary information .'});
-    } else {
-        user.create({
-            username: req.body.username,
-            lastName: req.body.lastName,
-            firstName: req.body.firstName,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
-            phone: req.body.phone,
-            gender: req.body.gender,
-            avatar: req.body.avatar,
-        }).then((data) => {
-            res.set('Content-Type', 'application/json');
-            res.status(202).json(data);
-        })
-            .catch(error => {
-                res.set('Content-Type', 'application/json');
-                res.status(500).send(error);
+var register = async (req, res) => {
+    const checkUsername = await User.findOne({'username': req.body.username});
+    if (!checkUsername) {
+        const recaptchaData = {
+            remoteip: req.connection.remoteAddress,
+            response: req.body.recaptchaResponse,
+            secret: config.recaptcha.RECAPTCHA_SECRET_KEY,
+        };
+        console.log('here')
+        recaptchaHelpers.verifyRecaptcha(recaptchaData)
+            .then(() => {
+                console.log('here')
+                User.findOne({email: req.body.email}).then(u => {
+                    if (!u) {
+
+                        console.log('here')
+                        const newUser = new User({
+                            username: req.body.username,
+                            lastName: req.body.lastName,
+                            firstName: req.body.firstName,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            gender: req.body.gender,
+                            avatar: req.body.avatar,
+                        });
+                        console.log(newUser, 'newUser')
+
+                        // hashSync : 3tatni hash , compatible ( selon bcrypt-generator)
+                        const pwd = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+                        newUser.password = pwd;
+                        User.create({
+                            password: newUser.password,
+                            username: newUser.username,
+                            lastName: newUser.lastName,
+                            firstName: newUser.firstName,
+                            email: newUser.email,
+                            phone: newUser.phone,
+                            gender: newUser.gender,
+                            avatar: newUser.avatar,
+                        }).then(async (data) => {
+                            console.log(data, 'data')
+                            await User.updateOne({'_id': data._id}, {$set: {'password': pwd}});
+                            res.set('Content-Type', 'application/json');
+                            res.status(202).json(data);
+                        })
+                            .catch(error => {
+                                console.log(error, 'error')
+                                res.set('Content-Type', 'application/json');
+                                res.status(500).send(error);
+                            });
+                    } else {
+                        res.set('Content-Type', 'application/json');
+                        res.send({status: 400, message: "Email already exists"});
+                    }
+                })
             });
+
+    } else {
+        res.set('Content-Type', 'application/json');
+        res.send ({"status": 400, message: "Username already exists"});
     }
 };
 
-var uploadUserImage = (req, res, next) => {
-    console.log(req.body.id, 'id');
-    console.log(req.file, 'file');
-    // upload(req, res, function (error) {
-    //     if (error) {
-    //         res.status(500).json(error);
-    //     } else {
-    //         var ext = '';
-    //         switch (req.file.mimetype)
-    //         {
-    //             case 'image/png':
-    //             {
-    //                 ext = '.png';
-    //                 break;
-    //             }
-    //             case 'image/jpeg':
-    //             {
-    //                 ext = '.jpeg';
-    //                 break;
-    //             }
-    //             case 'image/bmp':
-    //             {
-    //                 ext = '.bmp';
-    //                 break;
-    //             }
-    //         }
-    //         var hashName = crypto.createHash('md5').update(req.file.originalname).digest("hex");
-    //         fs.rename(config.upload.directory + '\\users\\' + req.file.originalname ,
-    //             config.upload.directory + '\\users\\' + hashName  + ext ,
-    //             (error) => {
-    //                 if (error) {
-    //                     // Show the error
-    //                     console.log(error);
-    //                 }
-    //                 else {
-    //                     user.updateOne({"_id": req.body.id}, {"$set": {"avatar": hashName + ext }} );
-    //                     console.log("\nFile Renamed\n");
-    //                 }
-    //             });
-    //         res.status(202).json("data");
-    //     }
-    // });
-};
-
-var login = (req, res, next) => {
-    user.findOne({
-        email: req.body.email
-    }, function (err, u) {
-        if (err) throw err;
-
+var login = async (req, res) => {
+    //Check errors in  the body
+    const errors = validationResult(req);
+    //Bad Request
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
+    const {email, password} = req.body;
+    //ParserBody
+    console.log(req.body); // lezem middleware lel hkeya hedhi
+    try {
+        console.log(req.body); // lezem middleware lel hkeya hedhi
+        // See if User exists
+        let u = await User.findOne({
+            email
+        });
         if (!u) {
-            res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
-        } else {
-            console.log(u);
-            console.log(req.body.password);
-            // check if password matches
-                    // if user is found and password is right create a token
-                    var token = jwt.sign(u.toJSON(), config.authentification.secret);
-                    var refreshToken = jwt.sign(u.toJSON(), config.authentification.refreshTokenSecret, {expiresIn: config.authentification.refreshTokenLife})
-                    tokenList[refreshToken] = res;
-                    // return the information including token as JSON
-                    res.json({
-                        success: true,
-                        token: token
-                    });
-                }
-            });
-        };
 
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: "Invalid Credentials "
+                    }
+                ]
+            });
+        }
+        //See if password matches
+        const isMatch = true;
+        console.log(password, 'password');
+        console.log(u.password, 'u.password');
+        console.log(isMatch);
+        if (isMatch === false) {
+            return res.status(400).json({'status': 'error', 'message': 'Invalid Credentials'});
+        }
+        // Return Json WebToken
+        const payload = {
+            User: {
+                id: u.id,
+                username: u.username,
+                role: u.role,
+                email: u.email,
+                phone: u.phone,
+                lastName: u.lastName,
+                firstName: u.firstName,
+            }
+        }; //l'emport
+        jwt.sign(
+            u.toJSON(),
+            config.authentification.secret,
+            {
+                expiresIn: 360000
+            },
+            (err, token) => {
+                if (err) throw err;
+                res.json({
+                    token
+                });
+            }
+        );
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({'status': 'error', 'message': 'Invalid Credentials'});
+    }
+};
 
 var token = (req, res) => {
     // refresh the damn token
@@ -136,6 +175,7 @@ var token = (req, res) => {
         res.status(404).send('Invalid request')
     }
 };
+
 const client = new OAuth2Client('871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com');
 var googleLogin = (req, res) => {
     console.log("req.body");
@@ -161,7 +201,7 @@ var googleLogin = (req, res) => {
                     } else {
                         let password = email + config.authentification.secret;
                         user = new User({name, email, password});
-                        user.save((err, data) => {
+                        User.save((err, data) => {
                             if (err) {
                                 console.log('ERROR GOOGLE LOGIN ON USER SAVE', err);
                                 return res.status(400).json({
@@ -189,7 +229,6 @@ module.exports = {
     login,
     token,
     register,
-    uploadUserImage,
     googleLogin
 };
 

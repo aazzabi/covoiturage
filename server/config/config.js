@@ -32,5 +32,13 @@ module.exports = {
         clientId: "871066785220-hldeeag52kteqd0krje4cvmcfkvci3ui.apps.googleusercontent.com",
         clientSecret : "QD_M2V8hvU5p63Vzz_-CrjRX",
         callbackUrl: "http://localhost:3000/auth/google/callback"
+    },
+    recaptcha: {
+        RECAPTCHA_SKIP_ENABLED: false,
+        RECAPTCHA_SITE_KEY: '6LfQlO4UAAAAAFcny4jQrGlJS_y87irTjS7j3bbL',// v2
+        RECAPTCHA_SECRET_KEY: '6LfQlO4UAAAAAOYUPjbElWIqiU_whZzRlE6TIo-F'//v2
+
+        // RECAPTCHA_SITE_KEY: '6Leiku4UAAAAABFTa1RAtTm9Zt1sZOJ2mZWtFnDe',// v3
+        // RECAPTCHA_SECRET_KEY: '6Leiku4UAAAAADo_CyVmgjbXOR5jKUMsbkq8i3HA'//v3
     }
 };

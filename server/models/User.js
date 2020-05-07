@@ -19,10 +19,10 @@ var userSchema = mongoose.Schema(
         car: {type: mongoose.Schema.Types.ObjectId, ref: 'Car', required: false },
         privileges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Privilege', required: false}],
         documents: [{type: mongoose.Schema.Types.Object, ref: 'Document', required: false}],
-        moyAssiduite: {type: Number, unique: false, required: false},
-        moyReponse: {type: Number, unique: false, required: false},
-        nbrClaimsOpened: {type: Number, unique: false, required: false},
-        nbrClaimsResolved: {type: Number, unique: false, required: false},
+        moyAssiduite: {type: Number, unique: false, required: false, default: 0},
+        moyReponse: {type: Number, unique: false, required: false, default: 0},
+        nbrClaimsOpened: {type: Number, unique: false, required: false, default: 0},
+        nbrClaimsResolved: {type: Number, unique: false, required: false, default: 0},
     });
 
 

@@ -25,8 +25,19 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
-//import CreateParcel from "./frontoffice/Parcels/Create";
-//import Packages from "./frontoffice/Parcels/Packages";
+
+import AllDrivers from "./backOffice/Users/AllDrivers";
+import AllDriverRequest from "./backOffice/DriverRequest/AllDriverRequest";
+import AllUsers from "./backOffice/Users/AllUsers";
+import Agents from "./backOffice/Users/Agents.jsx";
+import AllClaims from "./backOffice/Claims/AllClaims.jsx";
+import DetailClaim from "./backOffice/Claims/DetailClaim.jsx";
+import EditClaim from "./backOffice/Claims/EditClaim.jsx";
+import MyProfile from "./backOffice/MyProfile.jsx";
+import CreateParcel from "./FrontOffice/Parcels/Create";
+import PackagesDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails";
+import Packages from "./FrontOffice/Parcels/Packages";
+
 
 const routes = [
   {
@@ -34,29 +45,83 @@ const routes = [
     name: "Users",
     icon: "ni ni-shop text-primary",
     state: "dashboardsCollapse",
+    rolesAllowed: ['ADMIN'],
     views: [
       {
-        path: "/dashboard",
+        path: "/users",
         name: "All",
-        component: Dashboard,
+        component: AllUsers,
+        layout: "/admin",
+        rolesAllowed: ['ADMIN'],
+      },
+      {
+        path: "/agents",
+        name: "Agents",
+        component: Agents,
+        layout: "/admin",
+        rolesAllowed: ['ADMIN'],
+      }
+    ]
+  },
+
+  {
+    collapse: true,
+    name: "Drivers",
+    icon: "fas fa-dharmachakra text-primary",
+    state: "driversCollapse",
+    rolesAllowed: ['ADMIN'],
+    views: [
+      {
+        path: "/drivers",
+        name: "All Drivers",
+        component: AllDrivers,
         layout: "/admin"
       },
       {
-        path: "/alternative-dashboard",
-        name: "Add",
-        component: Alternative,
+        path: "/driversRequest",
+        name: "Drivers Request",
+        component: AllDriverRequest,
         layout: "/admin"
       }
     ]
   },
- /* {
+ {
+    collapse: true,
+    name: "Claims",
+    icon: "ni ni-spaceship text-pink",
+    state: "claimsCollapse",
+    views: [
+      {
+        path: "/claims/edit/:id",
+        name: "détail",
+        component: EditClaim,
+        layout: "/admin",
+        invisible: true
+      },
+      {
+        path: "/claims/:id",
+        name: "détail",
+        component: DetailClaim,
+        layout: "/admin",
+        invisible: true
+      },
+      {
+        path: "/claims",
+        name: "All",
+        component: AllClaims,
+        layout: "/admin",
+        invisible: false
+      },
+    ]
+  },
+  {
     collapse: true,
     name: "Examples",
     icon: "ni ni-ungroup text-orange",
     state: "examplesCollapse",
     views: [
       {
-        path: "/parcels/Add",
+        path: "/Add",
         name: "Create Package",
         component: CreateParcel,
         layout: "/auth"
@@ -65,6 +130,24 @@ const routes = [
         path: "/parcels",
         name: "Packages",
         component: Packages,
+        layout: "/auth"
+      },
+      {
+        path: "/viewparcels/:id",
+        name: "view parcels",
+        component: PackagesDetails,
+        layout: "/auth"
+      },
+      {
+        path: "/login",
+        name: "Login",
+        component: Login,
+        layout: "/auth"
+      },
+      {
+        path: "/register",
+        name: "Register",
+        component: Register,
         layout: "/auth"
       },
       {
@@ -82,9 +165,15 @@ const routes = [
       {
         path: "/profile",
         name: "Profile",
+        component: MyProfile,
+        layout: "/admin"
+      },
+      {
+        path: "/profileOld",
+        name: "Profile",
         component: Profile,
         layout: "/admin"
-      }, 
+      },
       {
         path: "/siteselector",
         name: "SiteSelector",
@@ -93,7 +182,7 @@ const routes = [
       }
 
     ]
-  },*/
+  },
   {
     collapse: true,
     name: "Components",

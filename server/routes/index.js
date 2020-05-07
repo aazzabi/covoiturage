@@ -6,10 +6,11 @@ const AuthenticationControllerPolicy = require('../policies/AuthenticationContro
 const isAuthenticated = require('../policies/isAuthenticated');
 var multer = require('multer');
 var config = require('../config/config');
-var user = require('../models/User');
+var User = require('../models/User');
 const crypto = require('crypto');
 var fs = require('fs');
 const passport = require('passport');
+const {check, validationResult} = require("express-validator/check");
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -20,6 +21,7 @@ var storage = multer.diskStorage({
     }
 });
 var uploadImage = multer({storage: storage}).single('image');
+var jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -30,10 +32,8 @@ router.post('/login', authController.login);
 router.post('/register', authController.register);
 router.post('/token', authController.token);
 router.post('/sendEmail', emailController.sendEmail);
-router.get('/auth/google',
-    passport.authenticate('google', {scope: ["profile", "email"] }));
-router.get('/auth/google/callback',
-    passport.authenticate('google', {failureRedirect: '/login'}),
+router.get('/auth/google', passport.authenticate('google', {scope: ["profile", "email"] }));
+router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}),
     function (req, res) {
         res.redirect('/');
     });
@@ -60,7 +60,7 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
                     break;
                 }
             }
-            await user.updateOne({"_id": idU}, {"avatar": hashName + ext}).then((data) => {
+            await User.updateOne({"_id": idU}, {"avatar": hashName + ext}).then((data) => {
                 req.files.image.mv(config.upload.directoryUsersImage + hashName + ext);
                 res.send({
                     status: true,
@@ -72,7 +72,7 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
                 //         if (error) {
                 //             res.status(400).json({"success": false, "message": error});
                 //         } else {
-                //             res.status(202).json({"success": true, "message": "user image was uploaded successfully"});
+                //             res.status(202).json({"success": true, "message": "User image was uploaded successfully"});
                 //         }
                 //     });
             });
@@ -81,6 +81,7 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
 
 });
 router.post('/google-login', authController.googleLogin);
+
 
 
 module.exports = router;

@@ -2,12 +2,12 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER} from "./types";
+import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER} from "./types";
 
 // Login - Get User Token
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData,  historyPush, historyReplace ) => dispatch => {
     axios
-        .post("http://localhost:3000/login", userData)
+        .post("http://localhost:3002/login", userData)
         .then(res => {
             // Save to localStorage
             const {token} = res.data;
@@ -22,29 +22,84 @@ export const loginUser = userData => dispatch => {
             // Set current user
             dispatch(setCurrentUser(decoded));
         })
-        .catch(err => {
-                console.log(err);
-                dispatch({
-                    type: GET_ERRORS,
-                    payload: err.response
-                });
-            }
-        );
+        .catch(({response}) => {  // If create post failed, alert failure message
+            console.log(response, 'error');
+            historyReplace('/front/login', {
+                time: new Date().toLocaleString(),
+                message: response.data.message,
+            });
+        });
 };
 
-export const register = userData => dispatch => {
+export const register = (userData, file, historyPush ,historyReplace)=> dispatch => {
     axios
-        .post("http://localhost:3000/register", userData)
+        .post("http://localhost:3002/register", userData)
         .then(res => {
-
-            //dispatch(setAddedUser(res));
+            if (res.data.status !== 400 ) {
+                if (file != null) {
+                    const fd = new FormData();
+                    fd.append('image', file);
+                    axios.post("http://localhost:3002/uploadUserImage/" + res.data._id, fd).then((r) => {
+                    });
+                }
+                dispatch({
+                    type: REGISTER,
+                    payload: res.data
+                })
+            } else {
+                historyReplace('/front/register', {
+                    time: new Date().toLocaleString(),
+                    message: res.data.message,
+                    u: userData,
+                });
+            }
         })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
-                payload: err.response.data
+                payload: err
             })
         );
+};
+
+
+export const confirmeDriverRequest = (userId, carData, fd , historyPush, historyReplace )=> dispatch => {
+    axios
+        .post("http://localhost:3000/users/becomeDriver/"+ userId, carData)
+        .then(res => {
+            if ((res.data.status !== 400) && (fd != null)) {
+                axios.post("http://localhost:3000/users/uploadDocumentForDriver/" + userId, fd).then((r) => {
+                    console.log('r', r);
+                }).catch(err => {
+                        console.log('catch files!', err);
+                        dispatch({
+                            type: GET_ERRORS,
+                            payload: err
+                        });
+                    }
+                );
+            } else {
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: res.data.message
+                })
+            }
+            historyReplace('/admin/', {
+                time: new Date().toLocaleString(),
+                message: res.data,
+            });
+            // console.log('res', res);
+            // dispatch({
+            //     type: DRIVER_REQUEST,
+            //     payload: res.data
+            // })
+        }).catch(({response}) => {  // If create post failed, alert failure message
+            console.log(response, 'error');
+            historyReplace('/front/becomeDriver', {
+                time: new Date().toLocaleString(),
+                message: response.data.message,
+            });
+        });
 };
 
 // Set logged in user
@@ -53,6 +108,53 @@ export const setCurrentUser = decoded => {
         type: SET_CURRENT_USER,
         payload: decoded
     };
+};
+
+// export const getCurrentUser = () => {
+//     return dispatch => {
+//         const token = localStorage.getItem("jwtToken");
+//         if (token) {
+//             return fetch("http://localhost:3000/users/profile", {
+//                 method: "GET",
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     Accept: 'application/json',
+//                     'Authorization': `Bearer ${token}`
+//                 }
+//             })
+//                 .then(resp => resp.json())
+//                 .then(data => {
+//                     console.log(data);
+//                     if (data.message) {
+//                         // An error will occur if the token is invalid.
+//                         // If this happens, you may want to remove the invalid token.
+//                         // localStorage.removeItem("token")
+//                     } else {
+//                         dispatch(loginUser(data.user))
+//                     }
+//                 })
+//         }
+//     }
+// }
+// get users
+export const getCurrentUser = () => {
+    return async (dispatch) => {
+        try {
+            const token = localStorage.getItem("jwtToken");
+            if (token) {
+                const result = await axios.get(`http://localhost:3002/users/profile`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }});
+                dispatch({type: GET_LOGGED_USER, payload: result.data})
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch({type: GET_ERRORS, error})
+        }
+    }
 };
 
 // Log user out

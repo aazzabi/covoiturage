@@ -1,4 +1,5 @@
 var user = require('../models/User');
+var car = require('../models/Car');
 var driverRequest = require('../models/DriverRequest');
 var allCarsModelsCapacity = require('../models/AllCarsModelCapacity');
 var groupModel = require('../models/Group');
@@ -22,11 +23,11 @@ var storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-var uploadDocs = multer({storage: storage}).array('doc',10);
+var uploadDocs = multer({storage: storage}).array('doc', 10);
 
 
 var getAll = (req, res, next) => {
-    user.find({}).sort('firstName')
+    user.find({'role': {'$ne': 'ADMIN'}}).sort('firstName')
         .then((data) => {
             res.status(202).json(data);
         })
@@ -44,7 +45,34 @@ var getAllUsers = (req, res, next) => {
         });
 };
 var getAllDrivers = (req, res, next) => {
-    user.find({"role": "DRIVER"}).sort('firstName')
+    user.find({"role": "DRIVER"}).populate('car').sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+var getAllTechnicals = (req, res, next) => {
+    user.find({"role": "TECHNICAL"}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+var getAllFinancials = (req, res, next) => {
+    user.find({"role": "FINANCIAL"}).sort('firstName')
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+var getAllRelationals = (req, res, next) => {
+    user.find({"role": "RELATIONAL"}).sort('firstName')
         .then((data) => {
             res.status(202).json(data);
         })
@@ -155,25 +183,46 @@ var becomeDriverRequest = async (req, res) => {
                     },
                     (error) => res.status(200).send(error));
             } else {
-                res.status(200).send({"status": 400, "message": "This user already have a car"});
+                res.status(400).send({"status": 400, "message": "This user already have a car"});
             }
-        }else {
-            res.status(202).json({"status": "error", "message": "request exists with this user"});
+        } else {
+            res.status(400).json({"status": 400, "message": "request exists with this user"});
         }
-
     } else {
-        res.status(200).send({"status": 400, "message": "This user doesn't exist"});
+        res.status(400).send({"status": 400, "message": "This user doesn't exist"});
     }
 };
 
 var deleteUser = (req, res) => {
-    user.remove({"_id": req.params.idUser})
-        .then((data) => console.log(data), (error) => console.log(error));
+    user.remove({"_id": req.params.id})
+        .then((data) => res.status(200).send({
+            "status": 400,
+            "message": "This user already have a car"
+        }), (error) => console.log(error));
 };
 var refuseDriverRequest = (req, res) => {
-    driverRequest.remove({"_id": req.params.idUser})
+    driverRequest.remove({"_id": req.params.idRequest})
         .then((data) => console.log(data), (error) => console.log(error));
 };
+
+var acceptDriverRequest = async (req, res, next) => {
+    console.log('idRequest', req.params.idRequest)
+    const drvReq = await  driverRequest.findOne({'_id': req.params.idRequest});
+    console.log('theeenn', drvReq.user);
+    driverRequest.updateOne({'_id': req.params.idRequest},
+        {'$set': {
+            confirmedAt: new Date(),
+            confirmation: true
+        }})
+        .then(async (data) => {
+            await user.updateOne({'_id': drvReq.user} , {'$set': {'role': 'DRIVER'}});
+            res.status(202).json({'status': 200, 'message': 'Driver request accepted, and user accepted as a Driver'});
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+
 var uploadDocumentForDriver = (req, res) => {
     uploadDocs(req, res, async function (error) {
         console.log(req.file);
@@ -187,6 +236,7 @@ var uploadDocumentForDriver = (req, res) => {
         console.log(req.body, 'body');
     });
 };
+
 var searchUser =  async (req, res) => {
     const users = await user.find(req.body)
         .sort({ _id: 1 })
@@ -194,10 +244,27 @@ var searchUser =  async (req, res) => {
 
     res.send(users);
 };
+
+
+
+var getAllDriverRequest = (req, res, next) => {
+    driverRequest.find({'confirmation': false}).populate({path: 'user', populate: {path: 'car'}})
+        .then((data) => {
+            res.status(202).json(data);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+};
+
+
 module.exports = {
     getAll,
     getAllUsers,
     getAllDrivers,
+    getAllFinancials,
+    getAllRelationals,
+    getAllTechnicals,
     updateUser,
     deleteUser,
     getUserById,
@@ -205,5 +272,10 @@ module.exports = {
     uploadDocumentForDriver,
     becomeDriverRequest,
     refuseDriverRequest,
-    searchUser
+
+    searchUser,
+
+    acceptDriverRequest,
+    getAllDriverRequest
+
 };
