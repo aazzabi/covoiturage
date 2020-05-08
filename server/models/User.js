@@ -3,10 +3,10 @@ var bcrypt = require('bcrypt-nodejs');
 var Car = require('./Car');
 var userSchema = mongoose.Schema(
     {
-        username: {type: String, unique: true, required: true},
-        password: {type: String, required: true},
-        firstName: {type: String, required: true},
-        lastName: {type: String, required: true},
+        username: {type: String, unique: true, required: false},
+        password: {type: String, required: false},
+        firstName: {type: String, required: false},
+        lastName: {type: String, required: false},
         email: {type: String, required: true},
         role: {
             type: String,
@@ -14,8 +14,8 @@ var userSchema = mongoose.Schema(
             enum: ["DRIVER", "ADMIN", "USER", "TECHNICAL", "FINANCIAL", "RELATIONAL"],
             default: "USER"
         },
-        phone: {type: String, required: true},
-        gender: {type: String, required: true, enum: ["HOMME", "FEMME", "AUTRE"]},
+        phone: {type: String, required: false},
+        gender: {type: String, required: false, enum: ["HOMME", "FEMME", "AUTRE"]},
         avatar: {type: String, required: false},
         createdAt: {type: Date, default: Date.now()},
         lastLogin: {type: Date},
@@ -29,11 +29,25 @@ var userSchema = mongoose.Schema(
         nbrClaimsResolved: {type: Number, unique: false, required: false, default: 0},
         subscription: {
             type: String
+        },
+        //OAuth google , facebook
+        method: {type: String, required: true, enum: ["local", "facebook", "google"], default: 'local'},
+        google: {
+            id: {type: String},
+            email: {type: String, lowercase: true}
+        },
+        facebook: {
+            id: {type: String},
+            email: {type: String, lowercase: true}
         }
-    });
+    }
+);
 
 
 userSchema.pre('save', function (next) {
+    if (this.method !== 'local') {
+        next();
+    }
     var user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function (err, salt) {

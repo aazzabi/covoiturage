@@ -32,10 +32,12 @@ router.post('/login', authController.login);
 router.post('/register', authController.register);
 router.post('/token', authController.token);
 router.post('/sendEmail', emailController.sendEmail);
-router.get('/auth/google', passport.authenticate('google', {scope: ["profile", "email"] }));
-router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}),
+router.get('/auth/google', passport.authenticate('google', {scope: ["profile", "email"]}));
+router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/', session: false}),
     function (req, res) {
-        res.redirect('/');
+        console.log('req', req);
+        var token = req.user.token;
+        res.redirect("http://localhost:3000?token=" + token);
     });
 router.post('/uploadUserImage/:id', async (req, res, next) => {
     const idU = req.params.id;
@@ -83,5 +85,8 @@ router.post('/uploadUserImage/:id', async (req, res, next) => {
 router.post('/google-login', authController.googleLogin);
 
 
+router.post('/oauth/google', passport.authenticate('googleToken', {session: false}), authController.googleOAuth);
+router.post('/oauth/facebook', passport.authenticate('facebookToken', {session: false}), authController.facebookOAuth);
+router.get('/secret', passport.authenticate('jwt', {session: false}), authController.secret);
 
 module.exports = router;

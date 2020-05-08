@@ -22,9 +22,11 @@ import AuthHeader from "components/Headers/AuthHeader.jsx";
 
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {loginUser} from "../../../actions/authActions";
+import {loginUser , oauthGoogle, oauthFacebook} from "../../../actions/authActions";
 
 import NotificationAlert from "react-notification-alert";
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from "react-google-login";
 
 class Login extends React.Component {
     constructor() {
@@ -37,6 +39,9 @@ class Login extends React.Component {
         console.log("heeeyyy const")
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.responseFacebook = this.responseFacebook.bind(this);
+        this.responseGoogle = this.responseGoogle.bind(this);
+
     }
 
     onSubmit(e) {
@@ -69,7 +74,7 @@ class Login extends React.Component {
         if (state && action === 'PUSH') {
             return (
                 <div className="alert alert-danger" role="alert" style={{marginBottom: 0}}>
-                    <strong>Oops ! </strong>  Invalid credentials
+                    <strong>Oops ! </strong> Invalid credentials
                 </div>
             );
         }
@@ -93,7 +98,19 @@ class Login extends React.Component {
         this.setState({[e.target.name]: e.target.value});
     }
 
-    state = {};
+    responseFacebook(res) {
+        console.log('response Facebook', res);
+    }
+
+    async responseGoogle(res) {
+        console.log(' GOOOGLE', res);
+        await this.props.oauthGoogle(res.accessToken);
+        if (!this.props.errors) {
+            this.props.history.push('/dashboard');
+        }
+
+    }
+
 
     render() {
         return (
@@ -101,15 +118,15 @@ class Login extends React.Component {
                 <div className="rna-wrapper">
                     <NotificationAlert ref="notify"/>
                 </div>
-              <div className="col-md-12" style={{padding: 0, paddingTop: 80}}>
-                {this.renderAlert()}
-              </div>
+                <div className="col-md-12" style={{padding: 0, paddingTop: 80}}>
+                    {this.renderAlert()}
+                </div>
                 <AuthHeader
                     // title="Welcome!"
                     // lead="Use these awesome forms to login or create new account in your project for free."
                 />
-                <Container className="mt--8 pb-5" >
-                    <Row className="justify-content-center"style={{marginTop: -250}}>
+                <Container className="mt--8 pb-5">
+                    <Row className="justify-content-center" style={{marginTop: -250}}>
                         <Col lg="5" md="7">
                             <Card className="bg-secondary border-0 mb-0">
                                 <CardHeader className="bg-transparent pb-5">
@@ -117,34 +134,23 @@ class Login extends React.Component {
                                         <small>Sign in with</small>
                                     </div>
                                     <div className="btn-wrapper text-center">
-                                        <Button
-                                            className="btn-neutral btn-icon"
-                                            color="default"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
+                                        <FacebookLogin
+                                            appId="556643301916298"
+                                            autoload={true}
+                                            textButton="Facebook"
+                                            fields="name, email, picture"
+                                            calback={this.responseFacebook}
+                                            className="btn btn-outline-primary"
                                         >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                            alt="..."
-                            src={require("assets/img/icons/common/github.svg")}
-                        />
-                      </span>
-                                            <span className="btn-inner--text">Github</span>
-                                        </Button>
-                                        <Button
-                                            className="btn-neutral btn-icon"
-                                            color="default"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
+                                        </FacebookLogin>
+                                        {/* web2  871066785220-82c81c51vgc954etqo4fo5d5b9505c3c.apps.googleusercontent.com */}
+                                        <GoogleLogin
+                                            clientId="871066785220-82c81c51vgc954etqo4fo5d5b9505c3c.apps.googleusercontent.com"
+                                            buttonText="Google"
+                                            onSuccess={this.responseGoogle}
+                                            onFailure={this.responseGoogle}
                                         >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                            alt="..."
-                            src={require("assets/img/icons/common/google.svg")}
-                        />
-                      </span>
-                                            <span className="btn-inner--text">Google</span>
-                                        </Button>
+                                        </GoogleLogin>
                                     </div>
                                 </CardHeader>
                                 <CardBody className="px-lg-5 py-lg-5">
@@ -260,4 +266,4 @@ const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
 });
-export default connect(mapStateToProps, {loginUser})(Login);
+export default connect(mapStateToProps, {loginUser, oauthGoogle})(Login);

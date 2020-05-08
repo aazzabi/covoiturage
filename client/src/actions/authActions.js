@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER} from "./types";
+import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADING, SET_CURRENT_USER, GET_LOGGED_USER, GOOGLE_AUTH_SIGNUP} from "./types";
 
 // Login - Get User Token
 export const loginUser = (userData,  historyPush, historyReplace ) => dispatch => {
@@ -173,4 +173,21 @@ export const setProfileLoading = () => {
     return {
         type: PROFILE_LOADING
     };
+};
+
+
+export const oauthGoogle = data => {
+    return async  dispatch => {
+        console.log('we received : ', data);
+        const resp = await axios.post('http://localhost:3000/oauth/google', {
+            'access_token' : 'ya29.a0Ae4lvC1Z2-kNshj7xJduWtkW_rEpSJPwtfoMWCSMXPPDQycFRdrSvtG8QRtXmw4auOQv1UzOADFTuo25qq3xIG1Ur9tsh1zmG_2UEjTmOt5-KZTzQ6V3SGG5lXKvCd4jCaAdi1nzXc6607bI1CJm77kV533_E-gKZu4',
+            // 'access_token' : data,
+        });
+        dispatch({
+            type: GOOGLE_AUTH_SIGNUP,
+            payload: resp.data.token,
+        });
+        console.log('resp', resp);
+        localStorage.setItem('jwtToken', resp.data.token);
+    }
 };
