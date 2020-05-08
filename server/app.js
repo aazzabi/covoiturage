@@ -22,7 +22,7 @@ var claimsRouter = require('./routes/Claims');
 const webpush = require('web-push');
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
-mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true});
+mongoose.connect(process.env.MONGODB_URI || url, {useNewUrlParser: true, useCreateIndex: true});
 // mongoose.set({ usecreateIndexes: true });
 var mongo = mongoose.connection;
 mongo.on('connected', () => {
