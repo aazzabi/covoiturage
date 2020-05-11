@@ -1,6 +1,6 @@
 import http from "./httpService";
 const apiEndpoint =
-    process.env.REACT_APP_SERVICE_API || "http://localhost:3002";
+    process.env.REACT_APP_SERVICE_API || "http://localhost:3000";
 const serviceEndpoint = apiEndpoint + "/chat";
 
 export async function addMsgIntoDisc(msg) {

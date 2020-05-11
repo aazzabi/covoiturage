@@ -7,7 +7,7 @@ import {GET_ERRORS} from "../../actions/types";
 export const getAll = () => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3002/users/getAll`);
+            const result = await Axios.get(`http://localhost:3000/users/getAll`);
             console.log(result.data, 'result');
             dispatch({ type: GET_USERS, payload: result.data })
         }catch (error) {
@@ -19,7 +19,7 @@ export const getAll = () => {
 export const getUserById = (userId) => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3002/users/getUserById/`+userId);
+            const result = await Axios.get(`http://localhost:3000/users/getUserById/`+userId);
             dispatch({type: GET_USER_BY_ID, payload: result.data})
         } catch (error) {
             dispatch({type: GET_ERRORS, error})
@@ -30,7 +30,7 @@ export const getUserById = (userId) => {
 export const getUsers = () => {
     return async (dispatch) => {
         try {
-            const result = await Axios.get(`http://localhost:3002/users/getAllUsers`);
+            const result = await Axios.get(`http://localhost:3000/users/getAllUsers`);
             console.log(result.data , 'result');
             dispatch({ type: GET_USERS, payload: result.data })
         }
@@ -45,7 +45,7 @@ export const getDrivers = () => {
     return async (dispatch) => {
         try {
 
-            const result = await Axios.get(`http://localhost:3002/users/getAllDrivers`);
+            const result = await Axios.get(`http://localhost:3000/users/getAllDrivers`);
             console.log(result.data, 'getDrivers');
             dispatch({ type: GET_DRIVERS, payload: result.data })
 
@@ -115,7 +115,7 @@ export const getCar = (idCar) => {
 export const deleteUser = id => dispatch => {
 
     Axios
-        .delete(`http://localhost:3002/users/delete/${id}`).then(res => {
+        .delete(`http://localhost:3000/users/delete/${id}`).then(res => {
             console.log("action ", id)
 
             dispatch({
@@ -137,8 +137,8 @@ export const deleteUser = id => dispatch => {
 export function updateUser({phone, firstName, lastName,userId}, historyPush, historyReplace) {
     return function (dispatch) {
         console.log({phone, firstName, lastName, userId});
-        console.log(`http://localhost:3002/users/updateUser/` + userId);
-        Axios.post(`http://localhost:3002/users/updateUser/` + userId, {
+        console.log(`http://localhost:3000/users/updateUser/` + userId);
+        Axios.post(`http://localhost:3000/users/updateUser/` + userId, {
             phone: phone,
             lastName: lastName,
             firstName: firstName,

@@ -20,7 +20,7 @@ class UserProfile extends React.Component {
 
     constructor(props) {
         const sock = openSocket(
-            process.env.REACT_APP_SOCKET_ENDPOINT || "http://localhost:3002"
+            process.env.REACT_APP_SOCKET_ENDPOINT || "http://localhost:3000"
         );
         super(props);
         this.state = {

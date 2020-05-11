@@ -55,7 +55,7 @@ class AllDrivers extends React.Component {
 
     };
 
-    imgUrl = 'F:/covoiturageImages/uploads/users/';
+    imgUrl = 'D:/covoiturageImages/uploads/users/';
 
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
@@ -93,7 +93,7 @@ class AllDrivers extends React.Component {
             }
         });
         return (
-            <a href={require('F:/covoiturageImages/uploads/drivers/' + final.name)}
+            <a href={require('D:/covoiturageImages/uploads/drivers/' + final.name)}
                id={final.name} target="_blank">
                 <Badge color={cls} pill><i className="fas fa-download"></i> {name} </Badge>
             </a>
@@ -137,7 +137,7 @@ class AllDrivers extends React.Component {
                             <Fragment key={user._id}>
                                 <tr>
                                     {user.avatar != null
-                                        ? <td><img className="avatar avatar-sm rounded-circle" src={require('F:/covoiturageImages/uploads/users/' + user.avatar)}/></td>
+                                        ? <td><img className="avatar avatar-sm rounded-circle" src={require('D:/covoiturageImages/uploads/users/' + user.avatar)}/></td>
                                         : <td><img className="avatar avatar-sm rounded-circle"
                                                    src={require("assets/img/theme/team-1.jpg")}/></td>
                                     }
