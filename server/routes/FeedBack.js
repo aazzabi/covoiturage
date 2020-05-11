@@ -13,6 +13,8 @@ router.put('/comments/UpDownVotes/:commId/:userId/:type', feedBackController.Rem
 router.post('/ratings/:idOwner/:profileOwnerId', feedBackController.addRating);
 router.get('/ratings/verif/:idOwner/:profileOwnerId', feedBackController.verifIfUserRateOtherUser);
 router.get('/ratings/:profileOwnerId', feedBackController.allRatings);
+router.get('/ratings/count/:type/:profileOwnerId', feedBackController.countRating);
+router.get('/ratings/countpeople/:type/:profileOwnerId', feedBackController.countPeopleRating);
 module.exports=router;
 
 

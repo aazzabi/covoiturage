@@ -22,6 +22,7 @@ import {
 } from "reactstrap";
 import {listOwnChatroomUser , addUserInChatRoom} from "../../../services/Chat/ChatServices";
 import OnlineUser from "../onlineUsers/onlineUser";
+import cogoToast from "cogo-toast";
 
 class Modals extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class Modals extends React.Component {
                 discussions: res.data
             }));
     };
-    onSubmitt= (discc) => {  addUserInChatRoom(discc,this.props.user) ; this.toggleModal("exampleModal")};
+    onSubmitt= (discc) => {  addUserInChatRoom(discc,this.props.user).then(res => cogoToast.success(`User have been added!`, { hideAfter : 5 })) ; this.toggleModal("exampleModal")};
     populateDiscussion() {
       //  if (!users) return <Badge>you have no chatroom...</Badge>;
 

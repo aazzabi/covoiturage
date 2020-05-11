@@ -172,6 +172,10 @@ io.on('connection', (socket) => {
         console.log("broadcast-message: ", msgObj);
         socket.broadcast.emit("new-message", msgObj);
     });
+    socket.on("broadcast-comment", async comm => {
+        console.log("broadcast-comment: ", comm);
+        socket.broadcast.emit("new-comment", comm);
+    });
 });
 
 server.listen(3002, function() {

@@ -5,6 +5,7 @@ import DiscForm from "./discForm";
 import Card from "../../chats/card";
 import jwt_decode from "jwt-decode";
 import {addDisc} from "../../../services/Chat/ChatServices";
+import cogoToast from "cogo-toast";
 
 const AddChannelForm = ({ history }) => {
   async function handleSubmit(title, callback) {
@@ -19,7 +20,7 @@ const AddChannelForm = ({ history }) => {
       };
       const id = jwt_decode(localStorage.getItem("jwtToken"))._id;
       console.log(id);
-      await addDisc( id ,newchannel);
+      await addDisc( id ,newchannel).then(res => cogoToast.success(`Channel have been added!`, { hideAfter : 5 })) ;
 
 
       alert("channel has been created.");

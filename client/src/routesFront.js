@@ -19,6 +19,7 @@ import PostMine from "./FrontOffice/Blog/post_mine";
 import PostList from "./FrontOffice/Blog/listPosts";
 import ClaimAdd from "./FrontOffice/Claims/ClaimAdd";
 import BecomeDriver from "./FrontOffice/Drivers/BecomeDriver";
+import UserProfile from "./FrontOffice/UserProfile";
 
 const routesFront = [
     {
@@ -82,6 +83,13 @@ const routesFront = [
         path: "/posts/my_posts",
         name: "Blog new",
         component: PostMine,
+        layout: "/front"
+    },
+    {
+        path: "/user/:id",
+        name: "userDetail",
+        icon: "ni ni-calendar-grid-58 text-red",
+        component: UserProfile,
         layout: "/front"
     },
     {
