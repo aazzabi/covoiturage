@@ -1,3 +1,4 @@
+var User  = require("./models/User");
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -14,12 +15,19 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/Users');
 var groupsRouter = require('./routes/Groups');
 var privilegesRouter = require('./routes/Privileges');
+
 var rideRouter = require('./routes/Ride');
 var carsRouter = require('./routes/Cars');
 var packageRouter = require('./routes/Package');
 var postRouter = require('./routes/Post');
 var claimsRouter = require('./routes/Claims');
 const webpush = require('web-push');
+var upload = require('./routes/upload');
+
+var discussionRouter = require('./routes/Discussion');
+var feedsRouter = require('./routes/FeedBack');
+
+
 const url = "mongodb://localhost:27017/covoiturage";
 // const url = "mongodb+srv://admin:admin@covoiturage-nestw.mongodb.net/covoiturage";
 mongoose.connect(process.env.MONGODB_URI || url, {useNewUrlParser: true, useCreateIndex: true});
@@ -76,6 +84,12 @@ app.use("/api/push", push);
 app.use("/api/locations", locations);
 app.use("/api/times", times);
 
+app.use('/blogs', postRouter);
+app.use('/claims', claimsRouter);
+app.use('/chat', discussionRouter);
+app.use('/feed', feedsRouter);
+app.use('/posts',postRouter);
+
 app.post('/upload', function (req, res) {
     let file;
 
@@ -92,7 +106,6 @@ app.post('/upload', function (req, res) {
         res.send('File uploaded to ');
     });
 });
-const User = require('./models/User');
 const vapidKeys = {
     publicKey:
         "BFtr-zLwB1QwRVtoG8AzL72ICVStkAO9_rtuDMLsRjfZFMz2XuvSFpjjDD1aOeE9Vpm542q5USaU6RE4QaGKSlo",
@@ -145,7 +158,6 @@ app.use(passport.initialize());
 app.use(function (req, res, next) {
     next(createError(404));
 });
-
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
@@ -157,4 +169,50 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
+
+io.on('connection', (socket) => {
+  console.log('made socket connection', socket.id);
+
+    socket.on("new-user", async user => {
+        console.log("new-user: ", user.username);
+
+        socket.broadcast.emit("user-connected", user);
+    });
+
+
+    socket.on("new-message", (data) => {
+    io.sockets.emit("new-message", data);
+  });
+
+  socket.on("disconnect", async () => {
+    const user = await User.findOneAndUpdate(
+        { status: socket.id },
+        { status: "" },
+        { useFindAndModify: false }
+    );
+    console.log("user-disconnect: ", user.username);
+    socket.broadcast.emit("user-disconnected", user);
+  });
+    socket.on("user-offline", async () => {
+        const user = await User.findOneAndUpdate(
+            { status: socket.id },
+            { status: "" },
+            { useFindAndModify: false }
+        );
+        console.log("user-disconnect: ", user.username);
+        socket.broadcast.emit("user-disconnected", user);
+    });
+    socket.on("broadcast-message", async msgObj => {
+        console.log("broadcast-message: ", msgObj);
+        socket.broadcast.emit("new-message", msgObj);
+    });
+    socket.on("broadcast-comment", async comm => {
+        console.log("broadcast-comment: ", comm);
+        socket.broadcast.emit("new-comment", comm);
+    });
+});
+
+server.listen(3002, function() {
+  console.log('Chat server running...');
+});
 module.exports = app;

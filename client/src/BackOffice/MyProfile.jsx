@@ -21,17 +21,21 @@ import {Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Input, Ro
 import {connect} from "react-redux";
 import {getCurrentUser,} from "../actions/authActions";
 import {getUserById, updateUser} from "../services/Users/UsersActions";
+import AddComment from '../components/FeedBack/add-comment.component';
+import cogoToast from 'cogo-toast';
+
+
 
 class MyProfile extends React.Component {
 
     constructor(props) {
+
         super(props);
         this.state = {
             error: null,
             response: {},
             currentUser: {},
             user: {},
-
             phone: '',
             email: '',
             firstName: '',
@@ -296,6 +300,7 @@ class MyProfile extends React.Component {
 
                     </Row>
                 </Container>
+
             </>
         );
     }

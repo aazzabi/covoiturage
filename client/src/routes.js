@@ -60,26 +60,6 @@ const routes = [
         ]
     },
     {
-      collapse: true,
-      name: "Posts",
-      icon: "fas fa-dharmachakra text-primary",
-      state: "postsCollapse",
-      views: [
-        {
-          path: "/posts/new",
-          name: "Blog new",
-          component: PostNew,
-          layout: "/admin"
-        },
-        {
-          path: "/posts/my_posts",
-          name: "My posts",
-          component: PostMine,
-          layout: "/admin"
-        },
-      ]
-    },
-    {
         collapse: true,
         name: "Drivers",
         icon: "fas fa-dharmachakra text-primary",
@@ -96,6 +76,26 @@ const routes = [
                 path: "/driversRequest",
                 name: "Drivers Request",
                 component: AllDriverRequest,
+                layout: "/admin"
+            },
+        ]
+    },
+    {
+        collapse: true,
+        name: "Posts",
+        icon: "fas fa-dharmachakra text-primary",
+        state: "postsCollapse",
+        views: [
+            {
+                path: "/posts/new",
+                name: "Blog new",
+                component: PostNew,
+                layout: "/admin"
+            },
+            {
+                path: "/posts/my_posts",
+                name: "My posts",
+                component: PostMine,
                 layout: "/admin"
             },
         ]

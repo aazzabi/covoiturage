@@ -3,6 +3,9 @@ import Register from "./views/pages/examples/Register";
 import Calendar from "./views/pages/Calendar";
 import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
+
+import chat from "./components/chats/chat/chat";
+import {Route} from "react-router-dom";
 import React from "react";
 import RideAdd from "./FrontOffice/Ride/RideAdd";
 import RideEdit from "./FrontOffice/Ride/RideEdit";
@@ -29,6 +32,7 @@ import test from './FrontOffice/Parcels/ApproveNotif';
 import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 import requests from "./FrontOffice/Parcels/myparcels/requests";
 import BlogDetails from "./FrontOffice/Blog/post_detail/index";
+import UserProfile from "./FrontOffice/UserProfile";
 
 const routesFront = [
     {
@@ -133,6 +137,12 @@ const routesFront = [
         layout: "/front"
     },
     {
+        path: "/chat",
+        name: "Chat",
+        component: chat ,
+        layout: "/front"
+     },
+    {
         path: "/becomeDriver",
         name: "Become Driver",
         component: BecomeDriver,
@@ -165,6 +175,13 @@ const routesFront = [
         path: "/test",
         name: "test",
         component: test,
+        layout: "/front"
+    },
+    {
+        path: "/user/:id",
+        name: "userDetail",
+        icon: "ni ni-calendar-grid-58 text-red",
+        component: UserProfile,
         layout: "/front"
     },
     {

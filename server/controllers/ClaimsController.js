@@ -311,14 +311,14 @@ var searchClaim = async (req, res, next) => {
             }
         ).populate('createdBy').populate('responsible')
             .then((data) => {
-            console.log(req.params.keyword, 'keyword');
-            res.set('Content-Type', 'application/json');
-            res.status(200).send(data);
-        }, error => {
-            console.log(error, 'error**********');
-            res.set('Content-Type', 'application/json');
-            res.status(400).send(error);
-        });
+                console.log(req.params.keyword, 'keyword');
+                res.set('Content-Type', 'application/json');
+                res.status(200).send(data);
+            }, error => {
+                console.log(error, 'error**********');
+                res.set('Content-Type', 'application/json');
+                res.status(400).send(error);
+            });
     } else if (u.role === 'USER') {
         claim.find(
             {
@@ -330,7 +330,7 @@ var searchClaim = async (req, res, next) => {
                     {type: new RegExp(req.params.keyword, "i")},
                 ]
             }
-            ).populate('createdBy').populate('responsible').then((data) => {
+        ).populate('createdBy').populate('responsible').then((data) => {
             res.status(200).send(data);
         }, error => {
             res.status(400).send(error);

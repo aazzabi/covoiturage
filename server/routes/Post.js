@@ -1,5 +1,11 @@
 var express = require('express');
+
+
+
+
+
 const Blog = require('../controllers/postController');
+
 const router = express.Router();
 /**
  * Blog Posts APIs
@@ -26,6 +32,7 @@ router.get('/my_posts', Blog.fetchPostsByAuthorId);
 router.post('/comments/:postId', Blog.createComment);
 
 router.get('/comments/:postId', Blog.fetchCommentsByPostId);
+
 
 
 

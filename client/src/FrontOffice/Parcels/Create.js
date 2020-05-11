@@ -219,7 +219,7 @@ class CreateParcel extends Component {
             data,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/forms-data'
                 }
             }
         ).then(function () {
@@ -288,7 +288,7 @@ class CreateParcel extends Component {
                                     </CardHeader>
                                     <CardBody>
                                         <Col md="8">
-                                            <div className="form-wrapper">
+                                            <div className="forms-wrapper">
                                                 <Form onSubmit={this.onSubmit}>
                                                     <Row>
                                                         <Col md="6">
@@ -494,7 +494,7 @@ class CreateParcel extends Component {
                                         </div>
                                         <FormGroup>
                                             <label
-                                                className="form-control-label"
+                                                className="forms-control-label"
                                                 htmlFor="exampleFormControlTextarea1"
                                             >
                                                 Description

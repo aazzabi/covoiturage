@@ -14,3 +14,4 @@ router.post('/addComment/:idClaim/:idUser', claimController.addCommentToClaim);
 router.post('/deleteComment/:idClaim/:idComment', claimController.deleteComment);
 
 module.exports = router;
+

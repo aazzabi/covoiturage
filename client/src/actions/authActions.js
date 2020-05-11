@@ -7,7 +7,7 @@ import {REGISTER, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILE, PROFILE_LOADIN
 // Login - Get User Token
 export const loginUser = (userData,  historyPush, historyReplace ) => dispatch => {
     axios
-        .post("http://localhost:3000/login", userData)
+        .post("http://localhost:3002/login", userData)
         .then(res => {
             // Save to localStorage
             const {token} = res.data;
@@ -33,13 +33,13 @@ export const loginUser = (userData,  historyPush, historyReplace ) => dispatch =
 
 export const register = (userData, file, historyPush ,historyReplace)=> dispatch => {
     axios
-        .post("http://localhost:3000/register", userData)
+        .post("http://localhost:3002/register", userData)
         .then(res => {
             if (res.data.status !== 400 ) {
                 if (file != null) {
                     const fd = new FormData();
                     fd.append('image', file);
-                    axios.post("http://localhost:3000/uploadUserImage/" + res.data._id, fd).then((r) => {
+                    axios.post("http://localhost:3002/uploadUserImage/" + res.data._id, fd).then((r) => {
                     });
                 }
                 dispatch({
@@ -115,7 +115,7 @@ export const getCurrentUser = () => {
         try {
             const token = localStorage.getItem("jwtToken");
             if (token) {
-                const result = await axios.get(`http://localhost:3000/users/profile`, {
+                const result = await axios.get(`http://localhost:3002/users/profile`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',

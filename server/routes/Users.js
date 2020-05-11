@@ -25,6 +25,11 @@ router.get('/profile', userController.profile);
 router.get('/getAll', userController.getAll);
 router.get('/getAllUsers', userController.getAllUsers);
 router.get('/getAllDrivers', userController.getAllDrivers);
+
+
+
+
+router.put('/searchUser',  userController.searchUser);
 router.get('/getAllTechnicals', userController.getAllTechnicals);
 router.get('/getAllFinancials', userController.getAllFinancials);
 router.get('/getAllRelationals', userController.getAllRelationals);
