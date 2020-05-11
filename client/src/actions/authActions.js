@@ -180,7 +180,7 @@ export const oauthGoogle = data => {
     return async  dispatch => {
         console.log('we received : ', data);
         const resp = await axios.post('http://localhost:3000/oauth/google', {
-            'access_token' : 'ya29.a0Ae4lvC1Z2-kNshj7xJduWtkW_rEpSJPwtfoMWCSMXPPDQycFRdrSvtG8QRtXmw4auOQv1UzOADFTuo25qq3xIG1Ur9tsh1zmG_2UEjTmOt5-KZTzQ6V3SGG5lXKvCd4jCaAdi1nzXc6607bI1CJm77kV533_E-gKZu4',
+            'access_token' : 'ya29.a0Ae4lvC3xzzLi0VOq3ZqxoflC6w_KF7abHgzrMSKDTycBUCo8DpFBPOJzNC5pAIty6RnUsKWoedo7ZZJ1va2D_H3_b9fgDThI47JqC_ZYSevIBt5FSSvCo-S_5T-jrpOw79D4XZ88rAkEMmyAlB29RNIe1DBMJy5NKU8',
             // 'access_token' : data,
         });
         dispatch({
@@ -189,5 +189,6 @@ export const oauthGoogle = data => {
         });
         console.log('resp', resp);
         localStorage.setItem('jwtToken', resp.data.token);
+        window.location.reload();
     }
 };
