@@ -49,9 +49,9 @@ class AdminNavbar extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!nextProps.auth.isAuthenticated) {
-            this.props.history.push("/front/login");
-        }
+        // if (!nextProps.auth.isAuthenticated) {
+        //     this.props.history.push("/front/login");
+        // }
     }
 
     warningAlert = () => {
@@ -268,7 +268,7 @@ class AdminNavbar extends React.Component {
                                                     <DropdownItem divider/>
                                                     <DropdownItem
                                                         href="#pablo"
-                                                        //onClick={this.onLogoutClick.bind(this)}
+                                                        onClick={this.onLogoutClick.bind(this)}
                                                     >
                                                         <i className="ni ni-user-run"/>
                                                         <span>Logout</span>
@@ -289,47 +289,10 @@ class AdminNavbar extends React.Component {
 
                                                 </DropdownToggle>
                                                 <DropdownMenu>
-                                                    <DropdownItem className="noti-title" header tag="div">
-                                                        <h6 className="text-overflow m-0">Welcome!</h6>
-                                                    </DropdownItem>
                                                     <DropdownItem
-                                                        href={`/admin/`}>
+                                                        href={`/front/claims/new`}>
                                                         <i className="ni ni-single-02"/>
-                                                        <span>My Dashboard</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href={`/admin/profile/`}>
-                                                        <i className="ni ni-single-02"/>
-                                                        <span>My profile</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-settings-gear-65"/>
-                                                        <span>Settings</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-calendar-grid-58"/>
-                                                        <span>Activity</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-support-16"/>
-                                                        <span>Support</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem divider/>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        //onClick={this.onLogoutClick.bind(this)}
-                                                    >
-                                                        <i className="ni ni-user-run"/>
-                                                        <span>Logout</span>
+                                                        <span>Add new claim</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>

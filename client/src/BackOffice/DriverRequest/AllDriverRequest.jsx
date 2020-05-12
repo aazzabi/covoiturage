@@ -64,7 +64,7 @@ class AllDriverRequest extends React.Component {
             }
         });
         return (
-            <a href={require('D:/covoiturageImages/uploads/drivers/' + final.name)}
+            <a href={require('D:\/covoiturageImages\/uploads\/drivers\/' + final.name)}
                id={final.name} target="_blank"  rel="noopener noreferrer" >
                 <Badge color={cls} pill><i className="fas fa-download"></i> {name} </Badge>
             </a>
