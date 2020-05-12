@@ -14,7 +14,7 @@ import jwt_decode from "jwt-decode";
 import AddChannelForm from "../forms/addChannelForm";
 import {addDisc, addEmptyDisc} from "../../../services/Chat/ChatServices";
 const socket = openSocket(
-  process.env.REACT_APP_SOCKET_ENDPOINT || "http://localhost:3000"
+  process.env.REACT_APP_SOCKET_ENDPOINT || "http://localhost:3002"
 );
 
 const Chat = ({ history, location }) => {
