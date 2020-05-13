@@ -14,10 +14,10 @@ exports.addDiscussion =  (sender ,text ,receiver)  => {
     var vide = "null";
         var m = new discussion({
             title: vide,
-            users: ObjectId(receiver.id),
+            users: ObjectId(receiver),
             lastMsg: text,
             created_at: now,
-            owner: ObjectId(sender.id),
+            owner: ObjectId(sender),
 
         });
 
@@ -40,8 +40,8 @@ exports.addDiscussion =  (sender ,text ,receiver)  => {
 }
 exports.addDisc =  (req, res )  => {
     var now = new Date();
+
     var m = new discussion({
-        title : req.body.title,
         type: req.body.type,
         created_at: now,
         owner: ObjectId(req.params.id)
@@ -81,9 +81,12 @@ exports.addMsg =   (req,res ) => {
     var date = Date.now();
 
 
-     discussion.findOneAndUpdate({$or:[{owner:ObjectId(req.body.sender.id) , users : ObjectId(req.body.receiver.id) , type: "2PersonChat" }, {owner:ObjectId(req.body.receiver.id) , users : ObjectId(req.body.sender.id) , type: "2PersonChat" }]} , {$set:{lastMsg:req.body.text}}).then((data) => {
+     discussion.findOneAndUpdate({$or:[{owner:ObjectId(req.body.sender) , users : ObjectId(req.body.receiver) , type: "2PersonChat" }, {owner:ObjectId(req.body.receiver) , users : ObjectId(req.body.sender) , type: "2PersonChat" }]} , {$set:{lastMsg:req.body.text}}).then((data) => {
         if(data == null) {
-            console.log("discuss added")
+            console.log(req.body.sender);
+            console.log(req.body.text);
+            console.log(req.body.receiver);
+            console.log("discuss added");
             this.addDiscussion(req.body.sender, req.body.text , req.body.receiver);
             res.set('Content-Type', 'text/html');
             res.status(202).send("discuss added successfully ");
@@ -94,22 +97,20 @@ exports.addMsg =   (req,res ) => {
             console.log(data);
             console.log("discussion updated");
             var message = new msg({
-                sender: ObjectId(req.body.sender.id),
+                sender: ObjectId(req.body.sender),
                 created_at: date,
                 discussion: ObjectId(data._id),
                 text: req.body.text,
-            })
+            });
 
             message.save(function (err, todo) {
-                console.log('Your msg has been saved')
+                console.log('Your msg has been saved');
                 res.set('Content-Type', 'text/html');
                 res.status(202).send("msg added successfully ");
             })
         }
 
     })
-
-
 };
 //add  msg into a existing disc
 exports.addMsgIntoDisc =  async (req,res ) => {

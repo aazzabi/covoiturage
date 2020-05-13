@@ -33,6 +33,7 @@ import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 import requests from "./FrontOffice/Parcels/myparcels/requests";
 import BlogDetails from "./FrontOffice/Blog/post_detail/index";
 import UserProfile from "./FrontOffice/UserProfile";
+import ChatBox from "./components/chats/chatbox/chatbox";
 
 const routesFront = [
     {

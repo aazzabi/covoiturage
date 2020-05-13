@@ -6,6 +6,9 @@ const serviceEndpoint = apiEndpoint + "/chat";
 export async function addMsgIntoDisc(msg) {
     return await http.post(`${serviceEndpoint}/addMsgIntoDisc/`, msg).catch(err => console.log(err));
 }
+export async function addMsg(msg) {
+    return await http.post(`${serviceEndpoint}/addMsg/`, msg).catch(err => console.log(err));
+}
 export async function addDisc(id,newchannel) {
     return await http.post(`${serviceEndpoint}/add/${id}`, newchannel).catch(err => console.log(err));
 }

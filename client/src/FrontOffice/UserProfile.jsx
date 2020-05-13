@@ -16,6 +16,8 @@ import HonestyRating from "../components/FeedBack/honestyRating";
 import SafeDrivingRating from "../components/FeedBack/safeDrivingRating";
 import OverallRating from "../components/FeedBack/overallRating";
 import '../components/FeedBack/Rating.css'
+import Contact from "../components/chats/contact";
+import jwt_decode from "jwt-decode";
 
 class UserProfile extends React.Component {
 
@@ -216,8 +218,7 @@ class UserProfile extends React.Component {
                                         {this.state.currentUser
                                         && this.state.currentUser.username !== this.state.user.username
                                             ? <div>
-                                                <a className="btn-facebook btn-lg float-right"
-                                                   href={`/front/chat/ch/${user._id}`}>Contact</a>
+                                                <Contact  user={this.props.match.params.id}  > </Contact>
                                             </div>
                                             : <a></a>
                                         }
