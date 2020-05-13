@@ -117,7 +117,7 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/myParcels/",
+        path: "/myParcelsReq/",
         name: "view parcels",
         component: MyParcel,
         layout: "/front"

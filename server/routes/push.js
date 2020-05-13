@@ -6,8 +6,7 @@ const RequestParcel = require('../models/RequestParcels');
 
 router.post('/subscribe/:id', async (req, res) => {
     const subscription = req.body;
-    const user = req.params.id;
-    const users = await User.findById(user)
+    const users = await User.findById(req.params.id)
         .then(async user => {
             console.log(user)
             if (!user) {
@@ -19,13 +18,13 @@ router.post('/subscribe/:id', async (req, res) => {
                     "confirmationSend": true,
                     "confirmationRecive": false
                 }).then((aa) => {
-                    if (aa && aa.length) {
-                        user.subscription = JSON.stringify(subscription);
-                        user.save();
-                        console.log("done")
-                    } else {
-                        console.log("la")
-                    }
+                        if (aa && aa.length) {
+                            user.subscription = JSON.stringify(subscription);
+                            user.save();
+                            console.log("done")
+                        } else {
+                            console.log("confirmation Required")
+                        }
 
                     }
                 ).catch(
