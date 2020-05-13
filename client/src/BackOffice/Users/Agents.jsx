@@ -194,8 +194,6 @@ class Agents extends React.Component {
                                                     <td>{user.nbrClaimsResolved}</td>
                                                     <td>{this.formateTime(user.moyReponse , user.nbrClaimsResolved)}</td>
                                                     <td>
-                                                        <Button variant="info" className="btn-warning"
-                                                                onClick={() => this.props.editUser(user._id)}><i className="fa fa-pen"></i></Button>
                                                         <Button variant="danger" className="btn-danger"
                                                                 onClick={e => this.deleteHandler(e, user._id)}><i className="fa fa-trash"></i></Button>
                                                     </td>
@@ -241,8 +239,6 @@ class Agents extends React.Component {
                                                     <td>{user.nbrClaimsResolved}</td>
                                                     <td>{this.formateTime(user.moyReponse , user.nbrClaimsResolved)}</td>
                                                     <td>
-                                                        <Button variant="info" className="btn-warning"
-                                                                onClick={() => this.props.editUser(user._id)}><i className="fa fa-pen"></i></Button>
                                                         <Button variant="danger" className="btn-danger"
                                                                 onClick={e => this.deleteHandler(e, user._id)}><i className="fa fa-trash"></i></Button>
                                                     </td>
@@ -288,8 +284,6 @@ class Agents extends React.Component {
                                                     <td>{user.nbrClaimsResolved}</td>
                                                     <td>{this.formateTime(user.moyReponse , user.nbrClaimsResolved)}</td>
                                                     <td>
-                                                        <Button variant="info" className="btn-warning"
-                                                                onClick={() => this.props.editUser(user._id)}><i className="fa fa-pen"></i></Button>
                                                         <Button variant="danger" className="btn-danger"
                                                                 onClick={e => this.deleteHandler(e, user._id)}><i className="fa fa-trash"></i></Button>
                                                     </td>

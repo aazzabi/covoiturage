@@ -15,6 +15,7 @@ import ConfortRating from "../components/FeedBack/confortRating";
 import HonestyRating from "../components/FeedBack/honestyRating";
 import SafeDrivingRating from "../components/FeedBack/safeDrivingRating";
 import OverallRating from "../components/FeedBack/overallRating";
+import '../components/FeedBack/Rating.css'
 
 class UserProfile extends React.Component {
 
@@ -216,9 +217,7 @@ class UserProfile extends React.Component {
                                         && this.state.currentUser.username !== this.state.user.username
                                             ? <div>
                                                 <a className="btn-facebook btn-lg float-right"
-                                                   href={`/admin/claims/`}>Contacter</a>
-                                                <a className="btn-warning btn-lg float-right"
-                                                   href={`/admin/claims/`}>Réclamer</a>
+                                                   href={`/front/chat/ch/${user._id}`}>Contact</a>
                                             </div>
                                             : <a></a>
                                         }

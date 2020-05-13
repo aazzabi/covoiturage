@@ -59,7 +59,6 @@ class AllDrivers extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
-            console.log(nextProps, 'nexProps');
             this.setState({
                 all: nextProps.all,
                 drivers: nextProps.drivers,
@@ -92,6 +91,7 @@ class AllDrivers extends React.Component {
                 final = d;
             }
         });
+        console.log(docs, 'docs')
         return (
             <a href={require('D:/covoiturageImages/uploads/drivers/' + final.name)}
                id={final.name} target="_blank">
@@ -104,7 +104,6 @@ class AllDrivers extends React.Component {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let users = this.props.users;
         let all = this.props.all;
-        console.log(this.props , 'drivers');
         let drivers = this.props.drivers;
         if (error) {
             return (
@@ -145,21 +144,19 @@ class AllDrivers extends React.Component {
                                     <td>{user.firstName} {user.lastName}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        {user.documents && this.getDoc(user.documents, 'CIN', 'cin', 'success')}
-                                        {user.documents && this.getDoc(user.documents, 'PERMIS', 'permis', 'warning')}
+                                        {user.documents[0] && this.getDoc(user.documents, 'CIN', 'cin', 'success')}
+                                        {user.documents[1] && this.getDoc(user.documents, 'PERMIS', 'permis', 'warning')}
                                     </td>
                                     <td>
-                                        {user.documents && this.getDoc(user.documents, 'CARTE_GRISE', 'Carte grise', 'danger')}
-                                        {user.documents && this.getDoc(user.documents, 'ASSURANCE', 'Assurance', 'primary')}
-                                        {user.documents && this.getDoc(user.documents, 'VIGNETTE', 'Vignette', 'info')}
+                                        {user.documents[2] && this.getDoc(user.documents, 'CARTE_GRISE', 'Carte grise', 'danger')}
+                                        {user.documents[3] && this.getDoc(user.documents, 'ASSURANCE', 'Assurance', 'primary')}
+                                        {user.documents[4] && this.getDoc(user.documents, 'VIGNETTE', 'Vignette', 'info')}
                                     </td>
                                     <td>
                                         {user.car && user.car.marque} - {user.car && user.car.model}
                                         <br/>{user.car && user.car.capacite} L
                                     </td>
                                     <td>
-                                        <Button variant="info"
-                                                onClick={() => this.props.editUser(user._id)}>Edit</Button>
                                         <Button variant="danger"
                                                 onClick={e => this.deleteHandler(e, user._id)}>Delete</Button>
                                     </td>

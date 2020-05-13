@@ -55,6 +55,7 @@ const OverallRating = ({profileOwenrId}) => {
                     <label>
 
                         <input
+                        className="rating"
                         type="radio"
                         name="rating"
                         value={ratingValue}

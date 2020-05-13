@@ -123,8 +123,6 @@ class AllUsers extends React.Component {
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
                                     <td>
-                                        <Button variant="info"
-                                                onClick={() => this.props.editUser(user._id)}>Edit</Button>
                                         <Button variant="danger"
                                                 onClick={e => this.deleteHandler(e, user._id)}>Delete</Button>
                                     </td>

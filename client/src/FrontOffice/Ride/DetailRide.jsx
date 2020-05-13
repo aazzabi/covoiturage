@@ -326,11 +326,10 @@ class DetailRide extends Component {
                                 <Col className="order-lg-2" lg="3">
                                     <div className="card-profile-image">
                                         <a href="#" onClick={e => e.preventDefault()}>
-                                            <img
-                                                alt="..."
-                                                className="rounded-circle"
-                                                src={require("assets/img/theme/team-4.jpg")}
-                                            />
+                                            {driver.avatar != null
+                                                ? <img className="rounded-circle" src={require('D:/covoiturageImages/uploads/users/' + driver.avatar)}/>
+                                                : <img className="rounded-circle" src={require("assets/img/theme/team-1.jpg")}/>
+                                            }
                                         </a>
                                     </div>
                                 </Col>
@@ -338,15 +337,17 @@ class DetailRide extends Component {
 
                             <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                                 <div className="d-flex float-right">
-
-                                    <Button
-                                        className="float-right"
-                                        color="default"
-                                        href="#"
-                                        onClick={e => e.preventDefault()}
-                                        size="sm"
+                                    <a
+                                        className="btn btn-sm btn-primary float-right"
+                                        href={`/front/user/${driver._id}`}
                                     >
-                                        Contact {driver.username}
+                                        View profil
+                                    </a>
+                                    <Button
+                                        className="btn btn-sm btn-default float-right"
+                                        href={`/front/chat/ch/${driver._id}`}
+                                    >
+                                        Contact
                                     </Button>
 
                                 </div>

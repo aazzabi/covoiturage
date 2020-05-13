@@ -107,7 +107,6 @@ class AllDriverRequest extends React.Component {
                             <th>User's document</th>
                             <th>car's document</th>
                             <th>Car info</th>
-                            <th>Car info</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -128,19 +127,18 @@ class AllDriverRequest extends React.Component {
                                     <td>{driveReq.user.username}</td>
                                     <td>{driveReq.user.firstName} {driveReq.user.lastName}</td>
                                     <td>
-                                        {this.getDoc(driveReq.user.documents, 'CIN', 'cin', 'success')}
-                                        {this.getDoc(driveReq.user.documents, 'PERMIS', 'permis', 'warning')}
+                                        {driveReq.user.documents[0] && this.getDoc(driveReq.user.documents, 'CIN', 'cin', 'success')}
+                                        {driveReq.user.documents[1] && this.getDoc(driveReq.user.documents, 'PERMIS', 'permis', 'warning')}
                                     </td>
                                     <td>
-                                        {this.getDoc(driveReq.user.documents, 'CARTE_GRISE', 'Carte grise', 'danger')}
-                                        {this.getDoc(driveReq.user.documents, 'ASSURANCE', 'Assurance', 'primary')}
-                                        {this.getDoc(driveReq.user.documents, 'VIGNETTE', 'Vignette', 'info')}
+                                        {driveReq.user.documents[2] && this.getDoc(driveReq.user.documents, 'CARTE_GRISE', 'Carte grise', 'danger')}
+                                        {driveReq.user.documents[3] && this.getDoc(driveReq.user.documents, 'ASSURANCE', 'Assurance', 'primary')}
+                                        {driveReq.user.documents[4] && this.getDoc(driveReq.user.documents, 'VIGNETTE', 'Vignette', 'info')}
                                     </td>
                                     <td>
                                         {driveReq.user.car && driveReq.user.car.marque} - {driveReq.user.car && driveReq.user.car.model}
                                         <br/>{driveReq.user.car.capacite} L
                                     </td>
-                                    <td>{driveReq.confirmation}</td>
                                     <td>
                                         <Button className="btn btn-sm btn-success"
                                                 onClick={e => this.acceptDriverRequest(e, driveReq._id)}><i className="fas fa-check"></i></Button>

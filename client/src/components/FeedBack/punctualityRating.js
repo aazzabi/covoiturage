@@ -58,6 +58,7 @@ const PonctualityRating = ({profileOwenrId}) => {
 
                         <input
                         type="radio"
+                        className="rating"
                         name="rating"
                         value={ratingValue}
                         onClick={() => HandleRate(ratingValue)}
