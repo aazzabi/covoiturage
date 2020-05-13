@@ -1,4 +1,5 @@
 export const GET_ALL = 'GET_ALL';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 export const GET_USERS = 'GET_USERS';
 export const GET_USER = 'GET_USER';

@@ -1,5 +1,5 @@
 import Axios from "axios";
-import {DELETE_USER, GET_ALL, GET_DRIVERS, GET_USERS, GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS, UPDATE_USER, GET_USER_BY_ID, GET_USER, GET_CAR } from "./UserTypes";
+import {DELETE_USER, GET_ALL, GET_DRIVERS,GET_ALL_USERS, GET_USERS, GET_FINANCIALS , GET_RELATIONALS, GET_TECHNICALS, UPDATE_USER, GET_USER_BY_ID, GET_USER, GET_CAR } from "./UserTypes";
 import {GET_ERRORS} from "../../actions/types";
 
 
@@ -9,7 +9,7 @@ export const getAll = () => {
         try {
             const result = await Axios.get(`http://localhost:3000/users/getAll`);
             console.log(result.data, 'result');
-            dispatch({ type: GET_USERS, payload: result.data })
+            dispatch({ type: GET_ALL, payload: result.data })
         }catch (error) {
             dispatch({type: GET_ERRORS, error})
         }

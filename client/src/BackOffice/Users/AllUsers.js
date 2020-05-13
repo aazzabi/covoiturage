@@ -45,10 +45,7 @@ class AllUsers extends React.Component {
             pageSize: 5,
             currentPage: 1,
             error: null,
-            all: [],
             users: [],
-            drivers: [],
-            financials: [],
             d: {},
             response: {},
         };
@@ -60,27 +57,21 @@ class AllUsers extends React.Component {
         if (nextProps) {
             console.log(nextProps, 'nexProps');
             this.setState({
-                all: nextProps.all,
-                drivers: nextProps.drivers,
                 users: nextProps.users,
             });
         }
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         const currentUser = jwt_decode(localStorage.getItem("jwtToken"));
         console.log(currentUser._id, 'currentUser');
-        this.props.getAll();
-        this.props.getUsers();
-        this.props.getDrivers();
-        this.props.getAllFinancials()
+        await this.props.getUsers();
         console.log(this.state, 'state');
     }
 
 
     deleteHandler(e, elementId) {
         e.preventDefault();
-        console.log("deleteHandler");
         this.props.deleteUser(elementId);
     }
 
@@ -93,14 +84,14 @@ class AllUsers extends React.Component {
     render() {
         const {error, currentPage, searchFilter, pageSize, d} = this.state;
         let users = this.props.users;
-        let all = this.props.all;
-        console.log(this.props.financials, 'this.props.financials');
+        console.log(this.state, 'this.state');
+        console.log(this.props, 'this.props.financials');
         if (error) {
             return (
                 <div>Error: {error.message}</div>
             )
         } else {
-            const currentUsers = this.state.all.slice((currentPage - 1) * pageSize, pageSize * currentPage);
+            const currentUsers = users.slice((currentPage - 1) * pageSize, pageSize * currentPage);
             return (
                 <div>
                     <h2>Users List</h2>
@@ -119,7 +110,7 @@ class AllUsers extends React.Component {
                         <tbody>
 
 
-                        {!!all &&
+                        {!!users &&
                         currentUsers.map(user => (
                             <Fragment key={user._id}>
                                 <tr>
@@ -158,11 +149,8 @@ class AllUsers extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        all: state.users.all,
-        drivers: state.users.drivers,
         users: state.users.users,
-        financials: state.users.financials,
     }
 };
 
-export default connect(mapStateToProps, {getAll, getUsers, getDrivers, deleteUser, getAllFinancials})(AllUsers);
+export default connect(mapStateToProps, { getUsers, deleteUser})(AllUsers);
