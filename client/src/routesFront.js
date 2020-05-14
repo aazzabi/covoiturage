@@ -15,7 +15,7 @@ import DetailRide from "./FrontOffice/Ride/DetailRide";
 
 import PostDetail from "./FrontOffice/Blog/post_detail";
 import PostNew from "./FrontOffice/Blog/post_new";
-import PostMine from "./FrontOffice/Blog/post_mine";
+import PostMine from "./BackOffice/Blog/post_mine";
 import BecomeDriver from "./FrontOffice/Drivers/BecomeDriver";
 import MyTravellers from "./FrontOffice/Ride/MyTravellers";
 import JoinedRides from "./FrontOffice/Ride/JoinedRides";

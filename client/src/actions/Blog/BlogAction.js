@@ -98,14 +98,12 @@ export function updatePost({ _id, title, categories, content }, onEditSuccess, h
 export function deletePost(id, historyPush) {
 
     return function(dispatch) {
-        axios.delete(`${ROOT_URL}/posts/${id}`, {
-            headers: {authorization: localStorage.getItem('token')},  // require auth
-        }).then((response) => {
+        axios.delete(`${ROOT_URL}/posts/${id}`).then((response) => {
             dispatch({
                 type: DELETE_POST,
                 payload: id,
             });
-            historyPush('/posts');
+            historyPush('/admin/posts/my_posts');
         })
     }
 }

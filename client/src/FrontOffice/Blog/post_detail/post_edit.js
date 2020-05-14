@@ -64,7 +64,8 @@ class PostEdit extends Component {
     const { handleSubmit } = this.props;
 
     return (
-        <div>               <AuthHeader title="edit post" lead=""/>
+        <div>
+          <AuthHeader title="edit post" lead=""/>
           <Container className="mt--8 pb-5">
             <Card>
               <div className="post">

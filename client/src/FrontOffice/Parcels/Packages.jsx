@@ -53,7 +53,8 @@ class Packages extends Component {
         return (<><AuthHeader title="Parcels list" lead=""/>
                 <Container className="mt--8 pb-5">
                     <Row className="justify-content-center"><Row>
-                        <div className="col"><Card>
+                        <div className="col">
+                            <Card>
                             <CardHeader className="border-0">
 
                             </CardHeader>
