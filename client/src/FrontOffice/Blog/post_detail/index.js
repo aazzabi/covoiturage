@@ -95,8 +95,6 @@ class PostDetail extends Component {
             return (
                 <div>
                     <button className="btn btn-primary mr-1" onClick={this.onEditClick.bind(this)}>Edit</button>
-                    <button className="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmModal" onClick={this.renderDeleteConfirmModal.bind(this)}>Delete
-                    </button>
                 </div>
             );
 

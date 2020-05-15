@@ -95,7 +95,7 @@ exports.getByIdPackage = async (req, res, next) => {
 };
 exports.getMyPackage = async (req, res, next) => {
     const user = await User.findOne({"_id": req.params.id});
-    const packages = await Package.find({sender: user});
+    const packages = await Package.find({"sender._id": user._id});
     res.json(packages);
 
 };

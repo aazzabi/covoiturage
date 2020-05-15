@@ -4,13 +4,7 @@ const User = require('../models/User');
 const Post = require('../models/BlogPost');
 const Comment = require('../models/comment');
 
-/**
- * Get a list of posts
- *
- * @param req
- * @param res
- * @param next
- */
+
 exports.fetchPosts = function (req, res, next) {
 
     Post
@@ -27,13 +21,7 @@ exports.fetchPosts = function (req, res, next) {
         });
 };
 
-/**
- * Create a new post
- *
- * @param req
- * @param res
- * @param next
- */
+
 exports.createPost = function (req, res, next) {
 
     // Require auth
@@ -66,13 +54,7 @@ exports.createPost = function (req, res, next) {
     });
 };
 
-/**
- * Fetch a single post by post ID
- *
- * @param req
- * @param res
- * @param next
- */
+
 exports.fetchPost = function (req, res, next) {
     Post.findById({
         _id: req.params.id
@@ -92,13 +74,7 @@ exports.fetchPost = function (req, res, next) {
     });
 };
 
-/**
- * Check if current post can be updated or deleted by the authenticated user: The author can only make change to his/her own posts
- *
- * @param req
- * @param res
- * @param next
- */
+
 exports.allowUpdateOrDelete = function (req, res, next) {
 
     // Require auth
@@ -134,13 +110,7 @@ exports.allowUpdateOrDelete = function (req, res, next) {
     });
 };
 
-/**
- * Edit/Update a post
- *
- * @param req
- * @param res
- * @param next
- */
+
 exports.updatePost = function (req, res, next) {
 
     // Require auth
@@ -200,13 +170,6 @@ exports.updatePost = function (req, res, next) {
     });
 };
 
-/**
- * Delete a post by post ID
- *
- * @param req
- * @param res
- * @param next
- */
 exports.deletePost = function (req, res, next) {
 
     // Require auth
@@ -236,48 +199,12 @@ exports.deletePost = function (req, res, next) {
     });
 };
 
-/**
- * Fetch posts by author ID
- *
- * @param req
- * @param res
- * @param next
- */
-exports.fetchPostsByAuthorId = function (req, res, next) {
 
-    // Require auth
-    const user = req.user;
+exports.fetchPostsByAuthorId = async (req, res, next) => {
+    const p = await Post.find();
+    res.json(p);
+}
 
-    // Fetch posts by author ID
-    Post
-        .find()
-        .select({})
-        .limit(100)
-        .sort({
-            time: -1
-        })
-        .exec(function (err, posts) {
-            if (err) {
-                console.log(err);
-                return res.status(422).json({
-                    message: 'Error! Could not retrieve posts.'
-                });
-            }
-            res.json(posts);
-        });
-};
-
-/**
- * ------- Comment APIs -------
- */
-
-/**
- * Create a new comment (post ID and user ID are both needed)
- *
- * @param req
- * @param res
- * @param next
- */
 exports.createComment = async function (req, res, next) {
 
 
@@ -306,13 +233,6 @@ exports.createComment = async function (req, res, next) {
     });
 };
 
-/**
- * Fetch comments for a specific blog post (post ID is needed)
- *
- * @param req
- * @param res
- * @param next
- */
 exports.fetchCommentsByPostId = function (req, res, next) {
     Comment
         .find({

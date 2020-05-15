@@ -257,9 +257,10 @@ class DriverRequestPage extends React.Component {
                                                         <th>From</th>
                                                         <th>To</th>
                                                         <th>Type</th>
-                                                        <th width={20}>Sender confirmation</th>
+                                                        <th>Parcel owner</th>
+                                                        <th >Sender confirmation</th>
                                                         <th>Receiver confirmation</th>
-                                                        <th>Action</th>
+                                                        <th></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -293,7 +294,11 @@ class DriverRequestPage extends React.Component {
                                                                         </div>
 
                                                                     </td>
-
+                                                                    <td>
+                                                                        <div style={{marginTop: 5}}>
+                                                                            {req.parcelId.sender.username}
+                                                                        </div>
+                                                                    </td>
                                                                     {
 
                                                                         req.confirmationSend
@@ -420,6 +425,7 @@ class DriverRequestPage extends React.Component {
                                                                             </td>
 
                                                                     }
+
 
                                                                 </tr> : null}
 

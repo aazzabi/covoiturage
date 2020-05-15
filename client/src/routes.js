@@ -128,7 +128,6 @@ const routes = [
                 layout: "/admin",
                 invisible: false
             },
-
         ]
     },
     {

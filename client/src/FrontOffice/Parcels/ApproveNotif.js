@@ -1,16 +1,17 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import AuthHeader from "../../components/Headers/AuthHeader";
 import {Card, CardBody, CardHeader, Col, Container, Row} from "reactstrap";
 import {connect} from "react-redux";
 import {createPost} from "../../actions/Blog/BlogAction";
 import {getCurrentUser} from "../../actions/authActions";
+
 class ApproveNotif extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             publicVapidKey: "BFtr-zLwB1QwRVtoG8AzL72ICVStkAO9_rtuDMLsRjfZFMz2XuvSFpjjDD1aOeE9Vpm542q5USaU6RE4QaGKSlo",
-            sw:false
+            sw: false
         };
         this.handleClick = this.handleClick.bind(this);
         this.run = this.run.bind(this);
@@ -81,15 +82,19 @@ class ApproveNotif extends React.Component {
 
     render() {
         return (
-
-                <button id="notify-btn" onClick={this.handleClick}>Notify</button>
+            <div>
+                <br></br>
+                <button class="btn btn-outline-info" id="notify-btn" onClick={this.handleClick}>Notify</button>
+            </div>
         )
     }
 }
+
 function mapStateToProps(state) {
     return {
         currentUser: state.auth.currentUser,
     }
 }
-export default connect(mapStateToProps, { getCurrentUser})(ApproveNotif);
+
+export default connect(mapStateToProps, {getCurrentUser})(ApproveNotif);
 
