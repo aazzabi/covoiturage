@@ -124,6 +124,91 @@ class Index extends React.Component {
               </Row>
             </Container>
           </section>
+
+
+          <section className="py-6 pb-9 bg-default">
+            <Container fluid>
+              <Row className="justify-content-center text-center">
+                <Col md="6">
+                  <h2 className="display-3 text-white">
+                    Safe parcels
+                  </h2>
+                  <p className="lead text-white">
+                    we will guaranty the safety <br/>
+                    of your parcels
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+          <section className="section section-lg pt-lg-0 mt--7">
+            <Container>
+              <Row className="justify-content-center">
+                <Col lg="12">
+                  <Row>
+                    <Col lg="6">
+                      <Card className="card-lift--hover shadow border-0">
+                        <CardBody className="py-5">
+                          <div className="icon icon-shape bg-gradient-default text-white rounded-circle mb-4">
+                            <i className="fa fa-box" />
+                          </div>
+                          <h4 className="h3 text-default text-uppercase">
+                            Sender
+                          </h4>
+                          <p className="description mt-3">
+                            send your parcel.<br/>
+
+                            Find Riders around you!
+                          </p>
+                          <div>
+                            <Badge color="default" pill>
+                              search for a ride
+                            </Badge>
+                            <Badge color="default" pill>
+                              join ride
+                            </Badge>
+                            <Badge color="default" pill>
+                              get a code
+                            </Badge>
+                            <Badge color="default" pill>
+                              confirm with the driver
+                            </Badge>
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Col>
+
+                    <Col lg="6">
+                      <Card className="card-lift--hover shadow border-0">
+                        <CardBody className="py-5">
+                          <div className="icon icon-shape bg-gradient-danger text-white rounded-circle mb-4">
+                            <i className="fa fa-box-open" />
+                          </div>
+                          <h4 className="h3 text-danger text-uppercase">
+                            Receiver
+                          </h4>
+                          <p className="description mt-3">
+                            Drive when you want.<br/>
+
+                            Find opportunities around you!
+                          </p>
+                          <div>
+                            <Badge color="danger" pill>
+                              create your ride
+                            </Badge>
+                            <Badge color="danger" pill>
+                              manage riders in your ride
+                            </Badge>
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+
           <section className="py-6">
             <Container>
               <Row className="row-grid align-items-center">
@@ -139,7 +224,7 @@ class Index extends React.Component {
                     <h1>Where to ?</h1>
                     <p>
 
-                      How much does GoDrive cost in your city? Calculate a fare estimate for your next trip.Simply enter a pickup location and destination to get started..
+                      How much does carpool cost in your city? Calculate a fare estimate for your next trip.Simply enter a pickup location and destination to get started..
                     </p>
                     <ul className="list-unstyled mt-5">
                       <li className="py-2">

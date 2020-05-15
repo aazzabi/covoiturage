@@ -53,6 +53,13 @@ class IndexHeader extends React.Component {
                       >
                         Join Rides
                       </Button>
+                      <Button
+                          className="my-2"
+                          color="default"
+                          href="/front/parcels/all/"
+                      >
+                        Find parcels
+                      </Button>
                     </div>
                   </div>
                 </Col>
