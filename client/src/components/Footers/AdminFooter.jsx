@@ -25,57 +25,75 @@ class Calendar extends React.Component {
     return (
       <>
         <Container fluid>
-          <footer className="footer pt-0">
-            <Row className="align-items-center justify-content-lg-between">
-              <Col lg="6">
-                <div className="copyright text-center text-lg-left text-muted">
-                  © {new Date().getFullYear()}{" "}
-                  <a
-                    className="font-weight-bold ml-1"
-                    href="https://www.creative-tim.com?ref=adpr-admin-footer"
-                    target="_blank"
-                  >
-                    Creative Tim
-                  </a>
-                </div>
-              </Col>
-              <Col lg="6">
-                <Nav className="nav-footer justify-content-center justify-content-lg-end">
-                  <NavItem>
-                    <NavLink
-                      href="https://www.creative-tim.com?ref=adpr-admin-footer"
-                      target="_blank"
+          <footer className="py-5" id="footer-main">
+            <Container>
+              <Row className="align-items-center justify-content-xl-between">
+                <Col xl="6">
+                  <div className="copyright text-center text-xl-left text-muted">
+                    © {new Date().getFullYear()}{" "}
+                    <a
+                        className="font-weight-bold ml-1"
+                        href="#"
+                        target="_blank"
                     >
-                      Creative Tim
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      href="https://www.creative-tim.com/presentation?ref=adpr-admin-footer"
-                      target="_blank"
-                    >
-                      About Us
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      href="http://blog.creative-tim.com?ref=adpr-admin-footer"
-                      target="_blank"
-                    >
-                      Blog
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      href="https://www.creative-tim.com/license?ref=adpr-admin-footer"
-                      target="_blank"
-                    >
-                      License
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-              </Col>
-            </Row>
+                      by angry nerds
+                    </a>
+                  </div>
+                </Col>
+                <Col xl="6">
+                  <Nav className="nav-footer justify-content-center justify-content-xl-end">
+                    <NavItem>
+                      <NavLink
+                          href="https://www.esprit.tn"
+                          target="_blank"
+                      >
+                        Esprit.tn
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                          href="front/ride/search"
+                          target="_blank"
+                      >
+                        Rides
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                          href="front/parcels/all/"
+                          target="_blank"
+                      >
+                        Parcels
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                          href="front/claims/new"
+                          target="_blank"
+                      >
+                        Claim
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                          href="front/register"
+                          target="_blank"
+                      >
+                        Register
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                          href="front/login"
+                          target="_blank"
+                      >
+                        Login
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </Col>
+              </Row>
+            </Container>
           </footer>
         </Container>
       </>
