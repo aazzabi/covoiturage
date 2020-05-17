@@ -125,7 +125,113 @@ class Index extends React.Component {
             </Container>
           </section>
 
+          <section className="py-6">
+            <Container>
+              <Row className="row-grid align-items-center">
+                <Col className="order-md-2" md="6">
+                  <img
+                      alt="..."
+                      className="img-fluid"
+                      src={require("assets/img/theme/estimate-29c0685b0ebd05767ffed4f3233b0248.svg")}
+                  />
+                </Col>
+                <Col className="order-md-1" md="6">
+                  <div className="pr-md-5">
+                    <h1>Where to ?</h1>
+                    <p>
 
+                      How much does carpool cost in your city? Calculate a fare estimate for your next trip.Simply enter a pickup location and destination to get started..
+                    </p>
+                    <ul className="list-unstyled mt-5">
+                      <li className="py-2">
+                        <div className="d-flex align-items-center">
+                          <div>
+                            <Badge
+                                className="badge-circle mr-3"
+                                color="warning"
+                            >
+                              1
+                            </Badge>
+                          </div>
+                          <div>
+                            <h4 className="mb-0">
+                              Select your start location (A)
+                            </h4>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-2">
+                        <div className="d-flex align-items-center">
+                          <div>
+                            <Badge
+                                className="badge-circle mr-3"
+                                color="info"
+                            >
+                              2
+                            </Badge>
+                          </div>
+                          <div>
+                            <h4 className="mb-0">Select your destination (B)</h4>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-2">
+                        <div className="d-flex align-items-center">
+                          <div>
+                            <Badge
+                                className="badge-circle mr-3"
+                                color="success"
+                            >
+                              3
+                            </Badge>
+                          </div>
+                          <div>
+                            <h4 className="mb-0">
+                              Fill some information about the ride
+                            </h4>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-2">
+                        <div className="d-flex align-items-center">
+                          <div>
+                            <Badge
+                                className="badge-circle mr-3"
+                                color="default"
+                            >
+                              4
+                            </Badge>
+                          </div>
+                          <div>
+                            <h4 className="mb-0">
+                              Price will automatically calculated
+                            </h4>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="py-2">
+                        <div className="d-flex align-items-center">
+                          <div>
+                            <Badge
+                                className="badge-circle mr-3"
+                                color="danger"
+                            >
+                              5
+                            </Badge>
+                          </div>
+                          <div>
+                            <h4 className="mb-0">
+                              Start your ride
+                            </h4>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
           <section className="py-6 pb-9 bg-default">
             <Container fluid>
               <Row className="justify-content-center text-center">
@@ -156,7 +262,7 @@ class Index extends React.Component {
                             Sender
                           </h4>
                           <p className="description mt-3">
-                            send your parcel.<br/>
+                            Ride at any time.<br/>
 
                             Find Riders around you!
                           </p>
@@ -209,113 +315,7 @@ class Index extends React.Component {
             </Container>
           </section>
 
-          <section className="py-6">
-            <Container>
-              <Row className="row-grid align-items-center">
-                <Col className="order-md-2" md="6">
-                  <img
-                    alt="..."
-                    className="img-fluid"
-                    src={require("assets/img/theme/estimate-29c0685b0ebd05767ffed4f3233b0248.svg")}
-                  />
-                </Col>
-                <Col className="order-md-1" md="6">
-                  <div className="pr-md-5">
-                    <h1>Where to ?</h1>
-                    <p>
 
-                      How much does carpool cost in your city? Calculate a fare estimate for your next trip.Simply enter a pickup location and destination to get started..
-                    </p>
-                    <ul className="list-unstyled mt-5">
-                      <li className="py-2">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <Badge
-                              className="badge-circle mr-3"
-                              color="warning"
-                            >
-                              1
-                            </Badge>
-                          </div>
-                          <div>
-                            <h4 className="mb-0">
-                            Select your start location (A)
-                            </h4>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="py-2">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <Badge
-                              className="badge-circle mr-3"
-                              color="info"
-                            >
-                              2
-                            </Badge>
-                          </div>
-                          <div>
-                            <h4 className="mb-0">Select your destination (B)</h4>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="py-2">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <Badge
-                              className="badge-circle mr-3"
-                              color="success"
-                            >
-                              3
-                            </Badge>
-                          </div>
-                          <div>
-                            <h4 className="mb-0">
-                              Fill some information about the ride
-                            </h4>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="py-2">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <Badge
-                                className="badge-circle mr-3"
-                                color="default"
-                            >
-                              4
-                            </Badge>
-                          </div>
-                          <div>
-                            <h4 className="mb-0">
-                              Price will automatically calculated
-                            </h4>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="py-2">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <Badge
-                                className="badge-circle mr-3"
-                                color="danger"
-                            >
-                              5
-                            </Badge>
-                          </div>
-                          <div>
-                            <h4 className="mb-0">
-                              Start your ride
-                            </h4>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          </section>
           <section className="py-7 section-nucleo-icons bg-white overflow-hidden">
             <Container>
               <Row className="justify-content-center">

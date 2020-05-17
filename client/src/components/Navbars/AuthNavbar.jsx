@@ -232,12 +232,12 @@ class AdminNavbar extends React.Component {
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href={`/front/parcels/all/`}>
-                                                        <i className="ni ni-single-02"/>
+                                                        <i className="fa fa-boxes"/>
                                                         <span>Parcels lists</span>
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href={`/front/myParcels/`}>
-                                                        <i className="ni ni-single-02"/>
+                                                        <i className="fa fa-box-open"/>
                                                         <span>My Parcels</span>
                                                     </DropdownItem>
                                                     <DropdownItem divider/>
@@ -247,7 +247,7 @@ class AdminNavbar extends React.Component {
                                                     </DropdownItem>
                                                     <DropdownItem
                                                         href={`/front/parcels/driverReq/`}>
-                                                        <i className="ni ni-single-02"/>
+                                                        <i className="fa fa-paper-plane"/>
                                                         <span>My Request</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
@@ -274,7 +274,7 @@ class AdminNavbar extends React.Component {
                                                 <DropdownMenu>
                                                     <DropdownItem
                                                         href={`/front/claims/new`}>
-                                                        <i className="ni ni-single-02"/>
+                                                        <i className="fa fa-pen"/>
                                                         <span>Add new claim</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
@@ -288,8 +288,15 @@ class AdminNavbar extends React.Component {
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="a">
                                                     <Media className="align-items-center">
                                                         <span className="avatar avatar-sm rounded-circle">
-                                                        <img alt="..."
-                                                             src={require("assets/img/theme/team-4.jpg")}/></span>
+
+
+                                                                    {user.avatar != null
+                                                                        ? <img alt="..." src={require('D:/covoiturageImages/uploads/users/' + user.avatar)}/>
+                                                                        : <img alt="..." src={require("assets/img/theme/team-1.jpg")}/>
+                                                                    }
+
+
+                                                        </span>
                                                         <Media className="ml-2 d-none d-lg-block">
                                                         <span className="mb-0 text-sm font-weight-bold">
                                                           {user.username}
@@ -310,20 +317,6 @@ class AdminNavbar extends React.Component {
                                                         href={`/admin/profile/`}>
                                                         <i className="ni ni-single-02"/>
                                                         <span>My profile</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-settings-gear-65"/>
-                                                        <span>Settings</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-support-16"/>
-                                                        <span>Support</span>
                                                     </DropdownItem>
                                                     <DropdownItem divider/>
                                                     <DropdownItem

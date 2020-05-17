@@ -33,7 +33,7 @@ import PackageDetails from "./FrontOffice/Parcels/PackageDetails/PackageDetails"
 import MyProfile from "./BackOffice/MyProfile.jsx";
 import Packages from "./FrontOffice/Parcels/Packages";
 import PostNew from "./FrontOffice/Blog/post_new";
-import PostMine from "./FrontOffice/Blog/post_mine";
+import PostMine from "./BackOffice/Blog/post_mine";
 import Rides from "./BackOffice/Ride/Rides";
 
 const routes = [

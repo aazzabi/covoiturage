@@ -4,11 +4,11 @@ const serverUrl = "http://127.0.0.1:8887/";
 
 class PostBody extends Component {
 
-  renderTags(tags) {
-    return tags.map(tag => {
-      return <span className="badge badge-info span-with-margin" key={tag}>{tag}</span>;
-    });
-  }
+  //renderTags(tags) {
+   // return tags.map(tag => {
+     // return <span className="badge badge-info span-with-margin" key={tag}>{tag}</span>;
+    //});
+ // }
 
   render() {
 
@@ -17,7 +17,9 @@ class PostBody extends Component {
     return (
       <div>
         <h3>{post.title}</h3>
-        {this.renderTags(post.categories)}
+
+
+         {/*this.renderTags(post.categories)*/}
 
         <span className="span-with-margin"> • </span>
 

@@ -19,6 +19,7 @@ import {
   InputGroupAddon, InputGroupText,
   Row
 } from "reactstrap";
+import {Link} from "react-router-dom";
 const serverUrl = "http://127.0.0.1:8887/";
 
 class PostDetail extends Component {
@@ -26,11 +27,12 @@ class PostDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {  // component state: being read or being edited
-            beingEdit: false
+            beingEdit: false,
+            poste:{},
         };
     }
 
-    componentDidMount() {
+   async componentDidMount() {
 
         this.setState({
             beingEdit: false
@@ -38,9 +40,9 @@ class PostDetail extends Component {
 
         const {id} = this.props.match.params;
 
-        if (!this.props.post) {
-            this.props.fetchPost(id);
-        }
+
+           await this.props.fetchPost(id);
+
 
     }
 
@@ -94,7 +96,9 @@ class PostDetail extends Component {
     renderUpdateAndDeleteButton() {
             return (
                 <div>
+                    <Link to={`/front/Post_edit/${this.props.match.params.id}`}>
                     <button className="btn btn-primary mr-1" onClick={this.onEditClick.bind(this)}>Edit</button>
+                    </Link>
                 </div>
             );
 
@@ -102,7 +106,7 @@ class PostDetail extends Component {
 
     render() {
 
-        if (!this.props.post) {
+        if (!this.props.poste) {
             return "nothing";
         }
 
@@ -125,7 +129,7 @@ class PostDetail extends Component {
                         <Card>
                             <div className="post">
                               <CardBody>
-                                <PostBody post={this.props.post}/>
+                                <PostBody post={this.props.poste}/>
                                 {this.renderUpdateAndDeleteButton()}
                               </CardBody>
                               <CardFooter>
@@ -148,10 +152,10 @@ class PostDetail extends Component {
     }
 }
 
-function mapStateToProps({posts, auth}, ownProps) {
+function mapStateToProps(state) {
     return {
-        post: posts[ownProps.match.params.id],
-        allowChange: auth.allowChange,
+        poste: state.posts.poste,
+        //allowChange: auth.allowChange,
     };
 }
 

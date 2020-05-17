@@ -13,9 +13,6 @@ import MyRides from "./FrontOffice/Ride/MyRides";
 import RideSearch from "./FrontOffice/Ride/RideSearch";
 import DetailRide from "./FrontOffice/Ride/DetailRide";
 
-import PostDetail from "./FrontOffice/Blog/post_detail";
-import PostNew from "./FrontOffice/Blog/post_new";
-import PostMine from "./BackOffice/Blog/post_mine";
 import BecomeDriver from "./FrontOffice/Drivers/BecomeDriver";
 import MyTravellers from "./FrontOffice/Ride/MyTravellers";
 import JoinedRides from "./FrontOffice/Ride/JoinedRides";
@@ -33,6 +30,7 @@ import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 import requests from "./FrontOffice/Parcels/myparcels/requests";
 import BlogDetails from "./FrontOffice/Blog/post_detail/index";
 import UserProfile from "./FrontOffice/UserProfile";
+import post_edit from "./FrontOffice/Blog/post_detail/post_edit";
 
 const routesFront = [
     {
@@ -159,7 +157,14 @@ const routesFront = [
         name: "Blogs",
         component: PostList,
         layout: "/front"
-    },   {
+    },
+    {
+        path: "/Post_edit/:id",
+        name: "Post_edit",
+        component: post_edit,
+        layout: "/front"
+    },
+    {
         path: "/BlogDetails/:id",
         name: "Blogs",
         component: BlogDetails,

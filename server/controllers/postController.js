@@ -138,11 +138,7 @@ exports.updatePost = function (req, res, next) {
         // Make sure the user ID is equal to the author ID (Cause only the author can edit the post)
         // console.log(user._id);
         // console.log(post.authorId);
-        if (!user._id.equals(post.authorId)) {
-            return res.status(422).json({
-                message: 'Error! You have no authority to modify this post.'
-            });
-        }
+
 
         // Make sure title, categories and content are not empty
         const title = req.body.title;
@@ -157,7 +153,7 @@ exports.updatePost = function (req, res, next) {
 
         // Update user
         post.title = title;
-        post.categories = _.uniq(categories.split(',').map((item) => item.trim())),  // remove leading and trailing spaces, remove duplicate categories;
+        post.categories = categories  // remove leading and trailing spaces, remove duplicate categories;
             post.content = content;
 
         // Save user

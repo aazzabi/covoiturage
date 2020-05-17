@@ -8,8 +8,9 @@ import {
     UPDATE_POST,
     DELETE_POST,
     CREATE_COMMENT,
-    FETCH_COMMENTS,
+    FETCH_COMMENTS, GET_ERRORS,
 } from '../types';
+import {GET_RIDE} from "../../services/Rides/RideTypes";
 
 const ROOT_URL = 'http://localhost:3000/posts';
 
@@ -54,24 +55,24 @@ export function createPost({ title, categories, content,files,user }, historyPus
     }
 }
 
-export function fetchPost(id) {
 
-    return function(dispatch) {
-        axios.get(`${ROOT_URL}/posts/${id}`).then(response => {
-            // console.log(response);
-            dispatch({
-                type: FETCH_POST,
-                payload: response.data,
-            });
-        });
+export const fetchPost = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await axios.get(`http://localhost:3000/posts/posts/` + id);
+            console.log(result);
+
+            dispatch({type: FETCH_POST, payload: result.data})
+        } catch (error) {
+            dispatch({type: GET_ERRORS, error})
+        }
     }
-}
+};
 
 export function updatePost({ _id, title, categories, content }, onEditSuccess, historyReplace) {
-
+ console.log(_id, title, categories, content)
     return function(dispatch) {
         axios.put(`${ROOT_URL}/posts/${_id}`, {
-            _id,
             title,
             categories,
             content,
