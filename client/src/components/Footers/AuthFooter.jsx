@@ -32,10 +32,10 @@ class Login extends React.Component {
                   © {new Date().getFullYear()}{" "}
                   <a
                     className="font-weight-bold ml-1"
-                    href="https://www.creative-tim.com?ref=adpr-auth-footer"
+                    href="#"
                     target="_blank"
                   >
-                    Creative Tim
+                    by angry nerds
                   </a>
                 </div>
               </Col>
@@ -43,34 +43,50 @@ class Login extends React.Component {
                 <Nav className="nav-footer justify-content-center justify-content-xl-end">
                   <NavItem>
                     <NavLink
-                      href="https://www.creative-tim.com?ref=adpr-auth-footer"
+                      href="https://www.esprit.tn"
                       target="_blank"
                     >
-                      Creative Tim
+                      Esprit.tn
                     </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="https://www.creative-tim.com/presentation?ref=adpr-auth-footer"
+                      href="front/ride/search"
                       target="_blank"
                     >
-                      About Us
+                      Rides
                     </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="http://blog.creative-tim.com?ref=adpr-auth-footer"
+                      href="front/parcels/all/"
                       target="_blank"
                     >
-                      Blog
+                      Parcels
                     </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="https://www.creative-tim.com/license?ref=adpr-auth-footer"
+                      href="front/claims/new"
                       target="_blank"
                     >
-                      License
+                      Claim
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                        href="front/register"
+                        target="_blank"
+                    >
+                      Register
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                        href="front/login"
+                        target="_blank"
+                    >
+                      Login
                     </NavLink>
                   </NavItem>
                 </Nav>

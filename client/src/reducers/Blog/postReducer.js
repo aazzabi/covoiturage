@@ -7,7 +7,12 @@ import {
     DELETE_POST,
 } from '../../actions/types';
 
-export default function(state = {posts: []}, action) {
+const initialState = {
+
+    posts: [],
+    poste: {},
+};
+export default function(state = initialState, action) {
     switch(action.type) {
         case FETCH_POSTS:
             return {
@@ -17,7 +22,7 @@ export default function(state = {posts: []}, action) {
             case CREATE_POST:
             return { ...state, [action.payload._id]: action.payload };
         case FETCH_POST:
-            return { ...state, [action.payload._id]: action.payload };
+            return { ...state, poste: action.payload };
         case UPDATE_POST:
             return { ...state, [action.payload._id]: action.payload };
         case DELETE_POST:

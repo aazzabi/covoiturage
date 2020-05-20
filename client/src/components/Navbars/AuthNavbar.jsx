@@ -223,57 +223,43 @@ class AdminNavbar extends React.Component {
                                             <UncontrolledDropdown nav>
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="span">
                                                     <a style={{color: "white"}} href="#">
-                          <span className="nav-link-inner--text">
-                           Parcels
-                        </span>
+                                                        <span className="nav-link-inner--text">Parcels</span>
                                                     </a>
-
-
                                                 </DropdownToggle>
                                                 <DropdownMenu>
                                                     <DropdownItem className="noti-title" header tag="div">
-                                                        <h6 className="text-overflow m-0">Welcome!</h6>
+                                                        <h6 className="text-overflow m-0">Request Parcel</h6>
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        href={`/admin/`}>
-                                                        <i className="ni ni-single-02"/>
-                                                        <span>My Dashboard</span>
+                                                        href={`/front/parcels/all/`}>
+                                                        <i className="fa fa-boxes"/>
+                                                        <span>Parcels lists</span>
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        href={`/admin/profile/`}>
-                                                        <i className="ni ni-single-02"/>
-                                                        <span>My profile</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-settings-gear-65"/>
-                                                        <span>Settings</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-calendar-grid-58"/>
-                                                        <span>Activity</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-support-16"/>
-                                                        <span>Support</span>
+                                                        href={`/front/myParcels/`}>
+                                                        <i className="fa fa-box-open"/>
+                                                        <span>My Parcels</span>
                                                     </DropdownItem>
                                                     <DropdownItem divider/>
+
+                                                    <DropdownItem className="noti-title" header tag="div">
+                                                        <h6 className="text-overflow m-0">For Drivers</h6>
+                                                    </DropdownItem>
                                                     <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={this.onLogoutClick.bind(this)}
-                                                    >
-                                                        <i className="ni ni-user-run"/>
-                                                        <span>Logout</span>
+                                                        href={`/front/parcels/driverReq/`}>
+                                                        <i className="fa fa-paper-plane"/>
+                                                        <span>My Request</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
+                                            </UncontrolledDropdown>
+                                        </Nav>
+                                        <Nav>
+                                            <UncontrolledDropdown nav>
+                                                <DropdownToggle className="nav-link pr-0" color="" tag="span">
+                                                    <a style={{color: "white"}}   href={`/front/posts/`}>
+                                                        <span className="nav-link-inner--text">Actualite</span>
+                                                    </a>
+                                                </DropdownToggle>
                                             </UncontrolledDropdown>
                                         </Nav>
 
@@ -281,17 +267,14 @@ class AdminNavbar extends React.Component {
                                             <UncontrolledDropdown nav>
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="span">
                                                     <a style={{color: "white"}} href="#">
-                          <span className="nav-link-inner--text">
-                           claims
-                        </span>
-                                                    </a>
-
-
+                                      <span className="nav-link-inner--text">
+                                        claims
+                                      </span> </a>
                                                 </DropdownToggle>
                                                 <DropdownMenu>
                                                     <DropdownItem
                                                         href={`/front/claims/new`}>
-                                                        <i className="ni ni-single-02"/>
+                                                        <i className="fa fa-pen"/>
                                                         <span>Add new claim</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
@@ -305,7 +288,15 @@ class AdminNavbar extends React.Component {
                                                 <DropdownToggle className="nav-link pr-0" color="" tag="a">
                                                     <Media className="align-items-center">
                                                         <span className="avatar avatar-sm rounded-circle">
-                                                        <img alt="..." src={require("assets/img/theme/team-4.jpg")}/></span>
+
+
+                                                                    {user.avatar != null
+                                                                        ? <img alt="..." src={require('D:/covoiturageImages/uploads/users/' + user.avatar)}/>
+                                                                        : <img alt="..." src={require("assets/img/theme/team-1.jpg")}/>
+                                                                    }
+
+
+                                                        </span>
                                                         <Media className="ml-2 d-none d-lg-block">
                                                         <span className="mb-0 text-sm font-weight-bold">
                                                           {user.username}
@@ -326,20 +317,6 @@ class AdminNavbar extends React.Component {
                                                         href={`/admin/profile/`}>
                                                         <i className="ni ni-single-02"/>
                                                         <span>My profile</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-settings-gear-65"/>
-                                                        <span>Settings</span>
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="ni ni-support-16"/>
-                                                        <span>Support</span>
                                                     </DropdownItem>
                                                     <DropdownItem divider/>
                                                     <DropdownItem

@@ -33,26 +33,32 @@ class IndexHeader extends React.Component {
                     <h1 className="display-2 text-white font-weight-bold mb-0">
                       Covoiturage
                     </h1>
-                    <p className="text-white mt-4">
-                      Argon perfectly combines reusable HTML and modular CSS
-                      with a modern styling and beautiful markup throughout each
-                      HTML template in the pack.
-                    </p>
+                    <h2 className="text-white mt-4">
+                      Get to where you want to be.<br/>
+                      It's in your hand.
+                    </h2>
                     <div className="mt-5">
                       <Button
                         className="btn-neutral my-2"
                         color="default"
-                        to="/admin/dashboard"
+                        to="/front/becomeDriver"
                         tag={Link}
                       >
-                        Explore Dashboard
+                        Became a Driver
                       </Button>
                       <Button
                         className="my-2"
                         color="default"
-                        href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-auth-navbar"
+                        href="/front/ride/search"
                       >
-                        Purchase now
+                        Join Rides
+                      </Button>
+                      <Button
+                          className="my-2"
+                          color="default"
+                          href="/front/parcels/all/"
+                      >
+                        Find parcels
                       </Button>
                     </div>
                   </div>
@@ -63,23 +69,22 @@ class IndexHeader extends React.Component {
                       <Card>
                         <CardBody>
                           <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow mb-4">
-                            <i className="ni ni-active-40" />
+                            <i className="fa fa-car" />
                           </div>
-                          <h5 className="h3">Components</h5>
+                          <h5 className="h3">Rides</h5>
                           <p>
-                            Argon comes with over 70 handcrafted components.
+                            24/7 Available rides you can join with simple clicks
                           </p>
                         </CardBody>
                       </Card>
                       <Card>
                         <CardBody>
                           <div className="icon icon-shape bg-gradient-info text-white rounded-circle shadow mb-4">
-                            <i className="ni ni-active-40" />
+                            <i className="fa fa-box-open" />
                           </div>
-                          <h5 className="h3">Plugins</h5>
+                          <h5 className="h3">Parcels</h5>
                           <p>
-                            Fully integrated and extendable third-party plugins
-                            that you will love.
+                            You can send and receive parcels
                           </p>
                         </CardBody>
                       </Card>
@@ -88,23 +93,22 @@ class IndexHeader extends React.Component {
                       <Card className="mb-4">
                         <CardBody>
                           <div className="icon icon-shape bg-gradient-success text-white rounded-circle shadow mb-4">
-                            <i className="ni ni-active-40" />
+                            <i className="fa fa-users" />
                           </div>
-                          <h5 className="h3">Pages</h5>
+                          <h5 className="h3">Support</h5>
                           <p>
-                            From simple to complex, you get a beautiful set of
-                            15+ page examples.
+                            24/7 active support to replay to your claims
                           </p>
                         </CardBody>
                       </Card>
                       <Card className="mb-4">
                         <CardBody>
                           <div className="icon icon-shape bg-gradient-warning text-white rounded-circle shadow mb-4">
-                            <i className="ni ni-active-40" />
+                            <i className="fa fa-comment" />
                           </div>
-                          <h5 className="h3">Documentation</h5>
+                          <h5 className="h3">Chat</h5>
                           <p>
-                            You will love how easy is to to work with Argon.
+                            You can chat with other users
                           </p>
                         </CardBody>
                       </Card>

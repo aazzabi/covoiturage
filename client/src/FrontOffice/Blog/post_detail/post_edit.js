@@ -1,41 +1,93 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { updatePost } from '../../../actions/Blog/BlogAction';
+import {fetchPost, updatePost} from '../../../actions/Blog/BlogAction';
 import AuthHeader from "../../../components/Headers/AuthHeader";
-import {Card, CardBody, Container} from "reactstrap";
+import {Button, Card, CardBody, Container, FormGroup, Input, Row} from "reactstrap";
+import {getCurrentUser} from "../../../actions/authActions";
 
 class PostEdit extends Component {
 
-  componentDidMount() {
-    const { content } = this.props.post;
-    document.querySelector("trix-editor").value = content;
+  constructor(props) {
+    super(props);
+    this.state = {
+
+      title:"",
+      categories:"",
+      content:"",
+      currentUser: {},
+      poste:{}
+
+    };
+
   }
 
-  handleFormSubmit({ title, categories, content }) {
 
-    const _id = this.props.post._id;
-    categories = categories.toString();
+  async componentWillMount() {
 
-    this.props.updatePost({ _id, title, categories, content },
-        this.props.onEditSuccess, (path, state) => {
-      this.props.history.replace(path, state);
-    });
+    await this.props.getCurrentUser();
+
+
+    if (this.props.currentUser._id === undefined){
+      this.props.history.push('/front/login');
+    }else {
+      await this.props.fetchPost(this.props.match.params.id);
+
+
+
+      //if (this.props.currentUser._id !== this.props.ride.driver){
+
+      //  this.props.history.push('/front/ride/search');
+
+     // }
+     // else{
+
+        console.log(this.props, 'props');
+        this.setState({
+          title: this.props.poste.title,
+          categories: this.props.poste.categories,
+          content: this.props.poste.content,
+
+        })
+
+      console.log(this.props.poste)
+
+      //}
+
+    }
+
+
   }
 
-  renderInput = (field) => (
-    <fieldset className="form-group">
-      <label>{field.label}</label>
-      <input
-        className="form-control"
-        {...field.input}
-        type={field.type}
-        placeholder={field.placeholder}
-        required={field.required? 'required' : ''}
-        disabled={field.disabled? 'disabled' : ''}
-      />
-    </fieldset>
-  );
+
+
+  confirme(e) {
+    e.preventDefault();
+
+
+        this.props.updatePost({
+          _id: this.props.match.params.id,
+          title: this.state.title,
+          categories: this.state.categories,
+          content: this.state.content,
+
+        }, (path) => {  // callback 1: history push
+          this.props.history.push(path);
+        }, (path, state) => {
+          this.props.history.replace(path, state);
+        });
+        console.log('done jsx');
+       // this.props.history.push('/front/login');
+
+
+
+
+  }
+
+  handleChange = (name, value) => {
+    this.setState({[name]: value});
+  };
+
 
   renderTextEditor = (field) => (
     <fieldset className="form-group">
@@ -64,7 +116,8 @@ class PostEdit extends Component {
     const { handleSubmit } = this.props;
 
     return (
-        <div>               <AuthHeader title="edit post" lead=""/>
+        <div>
+          <AuthHeader title="edit post" lead=""/>
           <Container className="mt--8 pb-5">
             <Card>
               <div className="post">
@@ -72,11 +125,55 @@ class PostEdit extends Component {
                   <div className="post">
                     {this.renderAlert()}
                     <h2 className="mb-5">Edit Your Post</h2>
-                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                      <Field name="title" component={this.renderInput} type="text" label="Title:" placeholder="Enter your title" required={true} />
-                      <Field name="categories" component={this.renderInput} type="text" label="Categories:" placeholder="Enter your categories, use ',' to separate them" required={true} />
-                      <Field name="content" component={this.renderTextEditor} label="Content:" />
-                      <button action="submit" className="btn btn-primary">Publish</button>
+                    <form>
+                      <label
+                          className="form-control-label"
+                          htmlFor="exampleFormControlTextarea1"
+                      >
+                        title
+                      </label>
+                      <Input
+                          placeholder="{this.props.ride.description}"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          type="text"
+                          value={this.state.title}
+                          onChange={event => this.handleChange('title', event.target.value)}
+                      />
+                      <label
+                          className="form-control-label"
+                          htmlFor="exampleFormControlTextarea1"
+                      >
+                        categories
+                      </label>
+                      <Input
+                          placeholder="{this.props.ride.description}"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          type="text"
+                          value={this.state.categories}
+                          onChange={event => this.handleChange('categories', event.target.value)}
+                      />
+
+                      <label
+                          className="form-control-label"
+                          htmlFor="exampleFormControlTextarea1"
+                      >
+                        content
+                      </label>
+                      <Input
+                          placeholder="{this.props.ride.description}"
+                          component={this.renderTextEditor}
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          type="textarea"
+                          value={this.state.content}
+                          onChange={event => this.handleChange('content', event.target.value)}
+                      />
+
+                      <Button type="submit" className="btn btn-primary" onClick={e => this.confirme(e)}>
+                        Publish
+                      </Button>
                     </form>
                   </div></CardBody></div></Card></Container>
                 </div>
@@ -89,8 +186,12 @@ PostEdit = reduxForm({
   form: 'post_edit',  // name of the form
 })(PostEdit);
 
-function mapStateToProps(state, ownProps) {
-  return { initialValues: ownProps.post };
+function mapStateToProps(state) {
+  return {
+          poste: state.posts.poste,
+          currentUser: state.auth.currentUser,
+
+  };
 }
 
-export default connect(mapStateToProps, { updatePost })(PostEdit);
+export default connect(mapStateToProps, { updatePost,fetchPost,getCurrentUser })(PostEdit);

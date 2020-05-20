@@ -66,7 +66,6 @@ class PackagesDetails extends Component {
         this.props.getCurrentUser();
 
     }
-
     handleHide = (event) => {
         const {showing} = this.state;
         if (this.myDivToFocus.current) {
@@ -135,12 +134,12 @@ class PackagesDetails extends Component {
             parcelId: id,
             user: this.props.currentUser._id,
         };
-        console.log("request",request)
+        console.log("request", request)
 
         this.notify("success")
         Axios.post('http://localhost:3000/packages/addrequest', request)
             .then(res => {
-                this.props.history.push("/front/parcels/" + id);
+                this.props.history.push("/front/parcels/details/" + id);
 
             })
             .catch(err => console.log(err));
@@ -211,7 +210,7 @@ class PackagesDetails extends Component {
                     <div className="col">
                         <Card className="border-0"><
                             Map className="map-canvas" origin={this.state.destinationInfo}
-                                                        destination={this.state.originInfo}>
+                                destination={this.state.originInfo}>
                         </Map></Card></div>
 
                     : null

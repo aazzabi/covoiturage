@@ -407,10 +407,11 @@ class AdminNavbar extends React.Component {
                   <DropdownToggle className="nav-link pr-0" color="" tag="a">
                     <Media className="align-items-center">
                       <span className="avatar avatar-sm rounded-circle">
-                        <img
-                          alt="..."
-                          src={require("assets/img/theme/team-4.jpg")}
-                        />
+
+                        {user.avatar != null
+                            ? <img alt="..." src={require('D:/covoiturageImages/uploads/users/' + user.avatar)}/>
+                            : <img alt="..." src={require("assets/img/theme/team-1.jpg")}/>
+                        }
                       </span>
                       <Media className="ml-2 d-none d-lg-block">
                         <span className="mb-0 text-sm font-weight-bold">
@@ -428,27 +429,7 @@ class AdminNavbar extends React.Component {
                     <i className="ni ni-single-02" />
                       <span>My profile</span>
                     </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-settings-gear-65" />
-                      <span>Settings</span>
-                    </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-calendar-grid-58" />
-                      <span>Activity</span>
-                    </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-support-16" />
-                      <span>Support</span>
-                    </DropdownItem>
+
                     <DropdownItem divider />
                     <DropdownItem
                       href="#pablo"

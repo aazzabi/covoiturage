@@ -17,12 +17,12 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import Input from "reactstrap/es/Input";
-import PackagesTable from "./RidesTable";
+import RideTable from "./RidesTable";
 import searchRide from "./searchFunction";
 import ReactDatetime from "react-datetime";
 
 
-class Packages extends Component {
+class RideSearch extends Component {
 
     state = {
         pageSize: 10,
@@ -140,9 +140,9 @@ class Packages extends Component {
 
                                             {!!filteredRides
                                                 ?
-                                                <PackagesTable pageSize={pageSize} currentPage={currentPage}
+                                                <RideTable pageSize={pageSize} currentPage={currentPage}
                                                                all={filteredRides}/>
-                                                : <h1 className='text-white'>No Packages</h1>}
+                                                : <h1 className='text-white'>No Rides</h1>}
 
 
 
@@ -183,4 +183,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Packages);
+export default connect(mapStateToProps, mapDispatchToProps)(RideSearch);

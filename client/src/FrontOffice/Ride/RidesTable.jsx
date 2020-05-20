@@ -8,9 +8,8 @@ import Moment from "moment";
 import {Link} from "react-router-dom";
 import _ from 'lodash';
 
-const PackagesTable = ({all, currentPage, pageSize}) => {
+const RideTable = ({all, currentPage, pageSize}) => {
     const currentPackages = all.slice((currentPage - 1) * pageSize, pageSize * currentPage);
-    const serverUrl = "http://127.0.0.1:8887/";
 
     return (
 
@@ -70,6 +69,6 @@ const PackagesTable = ({all, currentPage, pageSize}) => {
     )
 }
 
-export default PackagesTable;
+export default RideTable;
 
 

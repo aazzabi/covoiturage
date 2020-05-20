@@ -151,6 +151,7 @@ export const userInRide = (idUser,idRide) => {
 };
 
 export const deleteRide = id => dispatch => {
+    console.log(id)
     Axios.delete(`http://localhost:3000/ride/delete/${id}`).then(res => {
             dispatch({
                 type: DELETE_RIDE,
