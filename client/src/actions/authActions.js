@@ -21,6 +21,7 @@ export const loginUser = (userData,  historyPush, historyReplace ) => dispatch =
             const decoded = jwt_decode(token);
             // Set current user
             dispatch(setCurrentUser(decoded));
+            historyReplace('/admin/profile');
         })
         .catch(({response}) => {  // If create post failed, alert failure message
             console.log(response, 'error');

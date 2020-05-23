@@ -22,6 +22,7 @@ class Agents extends React.Component {
         this.state = {
             pageSize: 5,
             currentPage: 1,
+            tabs: 1,
             error: null,
             all: [],
             users: [],

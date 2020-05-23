@@ -5,7 +5,6 @@ import Google from "./views/pages/maps/Google";
 import Vector from "./views/pages/maps/Vector";
 
 import chat from "./components/chats/chat/chat";
-import {Route} from "react-router-dom";
 import React from "react";
 import RideAdd from "./FrontOffice/Ride/RideAdd";
 import RideEdit from "./FrontOffice/Ride/RideEdit";
@@ -30,7 +29,6 @@ import DriverRequest from "./FrontOffice/Parcels/DriverRequest";
 import requests from "./FrontOffice/Parcels/myparcels/requests";
 import BlogDetails from "./FrontOffice/Blog/post_detail/index";
 import UserProfile from "./FrontOffice/UserProfile";
-import ChatBox from "./components/chats/chatbox/chatbox";
 import post_edit from "./FrontOffice/Blog/post_detail/post_edit";
 
 const routesFront = [

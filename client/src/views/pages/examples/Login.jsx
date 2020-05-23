@@ -54,7 +54,7 @@ class Login extends React.Component {
 
         this.props.loginUser(userData,
             (path) => {  // callback 1: history push
-                this.props.history.push(path);
+                this.props.history.push('/admin/profile');
             }, (path, state) => {
                 console.log(path, 'path JSX');
                 console.log(state, 'state JSX');
