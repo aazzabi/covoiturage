@@ -35,6 +35,7 @@ import Packages from "./FrontOffice/Parcels/Packages";
 import PostNew from "./FrontOffice/Blog/post_new";
 import PostMine from "./BackOffice/Blog/post_mine";
 import Rides from "./BackOffice/Ride/Rides";
+import post_edit from "./FrontOffice/Blog/post_detail/post_edit";
 
 const routes = [
     {
@@ -44,6 +45,7 @@ const routes = [
         state: "dashboardsCollapse",
         rolesAllowed: ['ADMIN'],
         views: [
+
             {
                 path: "/users",
                 name: "All",
@@ -86,6 +88,7 @@ const routes = [
         name: "Posts",
         icon: "fas fa-dharmachakra text-primary",
         state: "postsCollapse",
+        rolesAllowed: ['ADMIN'],
         views: [
             {
                 path: "/posts/new",
@@ -97,6 +100,12 @@ const routes = [
                 path: "/posts/my_posts",
                 name: "My posts",
                 component: PostMine,
+                layout: "/admin"
+            },
+            {
+                path: "/Post_edit/:id",
+                name: "",
+                component: post_edit,
                 layout: "/admin"
             },
         ]

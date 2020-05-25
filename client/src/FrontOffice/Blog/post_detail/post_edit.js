@@ -116,67 +116,69 @@ class PostEdit extends Component {
     const { handleSubmit } = this.props;
 
     return (
-        <div>
-          <AuthHeader title="edit post" lead=""/>
-          <Container className="mt--8 pb-5">
-            <Card>
-              <div className="post">
-                <CardBody>
+          <div style={{padding:25}}>
+
+
+                <Card>
                   <div className="post">
-                    {this.renderAlert()}
-                    <h2 className="mb-5">Edit Your Post</h2>
-                    <form>
-                      <label
-                          className="form-control-label"
-                          htmlFor="exampleFormControlTextarea1"
-                      >
-                        title
-                      </label>
-                      <Input
-                          placeholder="{this.props.ride.description}"
-                          id="exampleFormControlTextarea1"
-                          rows="3"
-                          type="text"
-                          value={this.state.title}
-                          onChange={event => this.handleChange('title', event.target.value)}
-                      />
-                      <label
-                          className="form-control-label"
-                          htmlFor="exampleFormControlTextarea1"
-                      >
-                        categories
-                      </label>
-                      <Input
-                          placeholder="{this.props.ride.description}"
-                          id="exampleFormControlTextarea1"
-                          rows="3"
-                          type="text"
-                          value={this.state.categories}
-                          onChange={event => this.handleChange('categories', event.target.value)}
-                      />
+                    <CardBody>
+                      <div className="post">
+                        {this.renderAlert()}
+                        <h2 className="mb-5">Edit Your Post</h2>
+                        <form>
+                          <label
+                              className="form-control-label"
+                              htmlFor="exampleFormControlTextarea1"
+                          >
+                            title
+                          </label>
+                          <Input
+                              placeholder="{this.props.ride.description}"
+                              id="exampleFormControlTextarea1"
+                              rows="3"
+                              type="text"
+                              value={this.state.title}
+                              onChange={event => this.handleChange('title', event.target.value)}
+                          />
+                          <label
+                              className="form-control-label"
+                              htmlFor="exampleFormControlTextarea1"
+                          >
+                            categories
+                          </label>
+                          <Input
+                              placeholder="{this.props.ride.description}"
+                              id="exampleFormControlTextarea1"
+                              rows="3"
+                              type="text"
+                              value={this.state.categories}
+                              onChange={event => this.handleChange('categories', event.target.value)}
+                          />
 
-                      <label
-                          className="form-control-label"
-                          htmlFor="exampleFormControlTextarea1"
-                      >
-                        content
-                      </label>
-                      <Input
-                          placeholder="{this.props.ride.description}"
-                          component={this.renderTextEditor}
-                          id="exampleFormControlTextarea1"
-                          rows="3"
-                          type="textarea"
-                          value={this.state.content}
-                          onChange={event => this.handleChange('content', event.target.value)}
-                      />
+                          <label
+                              className="form-control-label"
+                              htmlFor="exampleFormControlTextarea1"
+                          >
+                            content
+                          </label>
+                          <Input
+                              placeholder="{this.props.ride.description}"
+                              component={this.renderTextEditor}
+                              id="exampleFormControlTextarea1"
+                              rows="3"
+                              type="textarea"
+                              value={this.state.content}
+                              onChange={event => this.handleChange('content', event.target.value)}
+                          />
 
-                      <Button type="submit" className="btn btn-primary" onClick={e => this.confirme(e)}>
-                        Publish
-                      </Button>
-                    </form>
-                  </div></CardBody></div></Card></Container>
-                </div>
+                          <Button type="submit" className="btn btn-primary" onClick={e => this.confirme(e)}>
+                            Publish
+                          </Button>
+                        </form>
+                      </div></CardBody></div></Card>
+          </div>
+
+
 
     );
   }

@@ -96,9 +96,7 @@ class PostDetail extends Component {
     renderUpdateAndDeleteButton() {
             return (
                 <div>
-                    <Link to={`/front/Post_edit/${this.props.match.params.id}`}>
-                    <button className="btn btn-primary mr-1" onClick={this.onEditClick.bind(this)}>Edit</button>
-                    </Link>
+
                 </div>
             );
 

@@ -119,8 +119,7 @@ class PostMine extends Component {
                                                                 </DropdownToggle>
                                                                 <DropdownMenu className="dropdown-menu-arrow" right>
                                                                     <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={e => e.preventDefault()}
+                                                                        href={`/admin/Post_edit/${post._id}`}
                                                                     >
                                                                         Edit
                                                                     </DropdownItem>
