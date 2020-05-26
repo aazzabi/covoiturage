@@ -229,21 +229,18 @@ exports.confrimRecivingParcel = async (req, res, next) => {
 };
 
 
-exports.deletePackage = function (req, res, next) {
-    Package.delete({_id: req.params.id}, function (err, parcels) {
-        if (err) {
-            const err = new Error('Package not found');
-            err.name = 'NotFoundError';
-
-            res.json({
-                error: err
-            })
-        }
-        res.json({
-            message: "package deleted successfully"
+exports.deletePackage = (req, res, next) => {
+    Package.deleteOne({"_id": req.params.id})
+        .then(() => {
+            res.set('Content-Type', 'text/html');
+            res.status(202).send("The Package Was Deleted Successfully !");
         })
-    })
-}
+        .catch(error => {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+        });
+};
+
 
 function makeid(length) {
     var result = '';

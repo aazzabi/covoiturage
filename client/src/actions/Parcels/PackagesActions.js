@@ -1,5 +1,6 @@
 import Axios from "axios";
-import {GET_ERRORS} from "../types";
+import {DELETE_POST, GET_ERRORS} from "../types";
+import {DELETE_RIDE} from "../../services/Rides/RideTypes";
 
 export const GET_PACKAGES_SUCCESS = "GET_PACKAGES_SUCCESS";
 export const GET_PARCEL = "GET_PARCEL";
@@ -11,6 +12,7 @@ export const GET_fetchPackagesByUserId = "GET_fetchPackagesByUserId";
 export const GET_fetch_Request = "GET_fetch_Request";
 export const Add_Parcel = "Add_Parcel";
 export const DELETE_REQUEST = "DELETE_REQUEST";
+export const DELETE_Parcel = "DELETE_Parcel";
 
 export function addParcel({titleC, typeC, priority, description, userId}, historyPush, historyReplace) {
     return function (dispatch) {
@@ -119,6 +121,25 @@ export function EditPackage({title, type, price, weight, size, description, depa
                 // });
             });
     }
+}
+
+export const deleteParcel= id => dispatch => {
+
+    console.log("hnaaa",id)
+
+    Axios.delete(`http://localhost:3000/packages/delete/${id}`).then(res => {
+            dispatch({
+                type: DELETE_Parcel,
+                payload: id
+            });
+        }
+    ).catch(err =>
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    );
+
 }
 
 

@@ -95,8 +95,8 @@ class UserProfile extends React.Component {
         console.log('done jsx');
     }
 
-    verifRole = () => {
-        if (this.state.user.role =="DRIVER")
+    verifRole = (user) => {
+        if (user.role =="DRIVER")
         {
             return(
                 <CardBody className="pt-0">
@@ -286,7 +286,7 @@ class UserProfile extends React.Component {
                     </Row>
                 </Container>
 
-                {this.verifRole()}
+                {this.verifRole(user)}
 
                 {user !== undefined &&
                 <div className="container">

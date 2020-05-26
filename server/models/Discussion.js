@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema=mongoose.Schema;
 var DiscSchema = mongoose.Schema({
-    title:String,
+    title:{type: String, required: true},
     lastMsg:String,
     created_at:Date,
     type: {type: String, required: true, enum: ["2PersonChat", "ChatRoom"], default: "2PersonChat"},

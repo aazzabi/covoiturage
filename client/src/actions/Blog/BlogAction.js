@@ -85,10 +85,10 @@ export function updatePost({ _id, title, categories, content }, onEditSuccess, h
                     payload: response.data,
                 });
                 onEditSuccess();  // set beingEdit to false
-                historyReplace(`/posts/${_id}`, null);
+                historyReplace(`/admin/posts/my_posts`, null);
             })
             .catch(({response}) => {
-                historyReplace(`/posts/${_id}`, {
+                historyReplace(`/admin/posts/my_posts`, {
                     time: new Date().toLocaleString(),
                     message: response.data.message,
                 });

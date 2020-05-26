@@ -72,6 +72,7 @@ class Modals extends React.Component {
                     tag="a"
                 >
                     {discc.title}
+                    {console.log("dic",discc)}
                 </ListGroupItem>
         );
     }

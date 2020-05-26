@@ -158,12 +158,6 @@ const routesFront = [
         layout: "/front"
     },
     {
-        path: "/Post_edit/:id",
-        name: "Post_edit",
-        component: post_edit,
-        layout: "/front"
-    },
-    {
         path: "/BlogDetails/:id",
         name: "Blogs",
         component: BlogDetails,

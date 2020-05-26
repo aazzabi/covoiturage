@@ -42,6 +42,7 @@ exports.addDisc =  (req, res )  => {
     var now = new Date();
 
     var m = new discussion({
+        title: req.body.title,
         type: req.body.type,
         created_at: now,
         owner: ObjectId(req.params.id)

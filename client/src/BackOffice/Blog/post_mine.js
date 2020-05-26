@@ -17,6 +17,7 @@ import PaginationsComp from "../../FrontOffice/Parcels/Pagination";
 import PostsTableBack from "./PostsTableBack";
 import Cards from "../../views/pages/components/Cards";
 import CardBody from "reactstrap/es/CardBody";
+import {Link} from "react-router-dom";
 
 class PostMine extends Component {
     state = {
@@ -117,13 +118,15 @@ class PostMine extends Component {
                                                                 >
                                                                     <i className="fas fa-ellipsis-v"/>
                                                                 </DropdownToggle>
+
                                                                 <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                    <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={e => e.preventDefault()}
-                                                                    >
-                                                                        Edit
-                                                                    </DropdownItem>
+                                                                    <Link to={`/admin/Post_edit/${post._id}`}>
+                                                                        <DropdownItem
+                                                                        >
+                                                                            Edit
+                                                                        </DropdownItem>
+                                                                    </Link>
+
                                                                     <DropdownItem
                                                                         onClick={e => this.deleteHandler(e, post._id)}
                                                                     >

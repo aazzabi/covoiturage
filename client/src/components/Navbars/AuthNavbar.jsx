@@ -231,12 +231,17 @@ class AdminNavbar extends React.Component {
                                                         <h6 className="text-overflow m-0">Request Parcel</h6>
                                                     </DropdownItem>
                                                     <DropdownItem
+                                                        href={`/front/parcels/add/`}>
+                                                        <i className="fa fa-plus"/>
+                                                        <span>Create Parcel</span>
+                                                    </DropdownItem>
+                                                    <DropdownItem
                                                         href={`/front/parcels/all/`}>
                                                         <i className="fa fa-boxes"/>
                                                         <span>Parcels lists</span>
                                                     </DropdownItem>
                                                     <DropdownItem
-                                                        href={`/front/myParcels/`}>
+                                                        href={`/front/myParcelsReq/`}>
                                                         <i className="fa fa-box-open"/>
                                                         <span>My Parcels</span>
                                                     </DropdownItem>
@@ -250,6 +255,25 @@ class AdminNavbar extends React.Component {
                                                         <i className="fa fa-paper-plane"/>
                                                         <span>My Request</span>
                                                     </DropdownItem>
+                                                </DropdownMenu>
+                                            </UncontrolledDropdown>
+                                        </Nav>
+
+                                        <Nav>
+                                            <UncontrolledDropdown nav>
+                                                <DropdownToggle className="nav-link pr-0" color="" tag="span">
+                                                    <a style={{color: "white"}} href="#">
+                                                        <span className="nav-link-inner--text">Discussion</span>
+                                                    </a>
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+
+                                                    <DropdownItem
+                                                        href={`/front/chat`}>
+                                                        <i className="fa fa-mail-bulk"/>
+                                                        <span>Messagerie</span>
+                                                    </DropdownItem>
+
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
                                         </Nav>

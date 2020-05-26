@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {AddRequest, fetchPackagesByUserId, fetchPostById} from '../../../actions/Parcels/PackagesActions';
+import {AddRequest, deleteParcel, fetchPackagesByUserId, fetchPostById} from '../../../actions/Parcels/PackagesActions';
 import {getCurrentUser} from "../../../actions/authActions";
 import AuthHeader from "../../../components/Headers/AuthHeader";
-import {Col, Container, Row} from "reactstrap";
+import {Button, Col, Container, Row} from "reactstrap";
 
 class MyParcel extends Component {
     constructor(props) {
@@ -30,6 +30,11 @@ class MyParcel extends Component {
         this.props.fetchPackagesByUserId(this.props.currentUser._id);
     }
 
+   async deleteHandler(e, elementId) {
+        console.log("hnaa")
+       // e.preventDefault();
+       await this.props.deleteParcel(elementId);
+    }
 
     renderPostSummary(post) {
         const serverUrl = "http://127.0.0.1:8887/";
@@ -51,11 +56,16 @@ class MyParcel extends Component {
                                 className="h4 font-weight-light text-muted">{post.type}</small></h5>
                             <h5 className="h3 title"><small
                                 className="h4 font-weight-light text-muted">{post.size}</small></h5>
-                            <div className="mt-4"><a href="#pablo"
-                                                     className="btn-icon-only rounded-circle btn btn-twitter">edit</a>
-                                <a href="#pablo"
-                                   className="btn-icon-only rounded-circle btn btn-dribbble"><i
-                                    className="fa fa-trash"></i></a>
+                            <div className="mt-4">
+                                <Link to={`/front/parcels/edit/${post._id}`}>
+
+                                <button className="btn-icon-only rounded-circle btn btn-twitter">edit</button>
+                                </Link>
+                                <button
+                                    onClick={e => this.deleteHandler(e, post._id)}
+                                    className="btn-icon-only rounded-circle btn btn-dribbble">
+                                    <i className="fa fa-trash"/>
+                                </button>
 
                             </div>
                             <br></br>
@@ -123,12 +133,6 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchPackagesByUserId: id => dispatch(fetchPackagesByUserId(id)),
-        AddRequest,
-        getCurrentUser
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyParcel);
+
+export default connect(mapStateToProps,{deleteParcel,getCurrentUser,fetchPackagesByUserId})(MyParcel);

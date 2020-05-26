@@ -2,9 +2,10 @@ import {
     ADD_Request_Package, DELETE_REQUEST, GET_fetch_Request, GET_fetchPackagesByUserId,
     GET_fetchPost_SUCCESS,
     GET_PACKAGES_ERROR,
-    GET_PACKAGES_SUCCESS, GET_PARCEL, PACKAGES_EDIT
+    GET_PACKAGES_SUCCESS, GET_PARCEL, PACKAGES_EDIT , DELETE_Parcel
 } from "../actions/Parcels/PackagesActions";
 import {GET_fetch_Map} from "../actions/Parcels/RequestsParcelActions";
+import {DELETE_RIDE} from "../services/Rides/RideTypes";
 
 const initialState = {
     add: {},
@@ -19,6 +20,9 @@ const initialState = {
 export default function packages(state = initialState, action) {
 
     switch (action.type) {
+
+        case DELETE_Parcel:
+            return {...state, myparcels: state.myparcels.filter(u => u._id !== action.payload)};
 
         case DELETE_REQUEST:
             return {...state, request: state.request.filter(u => u._id !== action.payload)};
