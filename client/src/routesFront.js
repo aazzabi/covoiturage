@@ -30,6 +30,8 @@ import requests from "./FrontOffice/Parcels/myparcels/requests";
 import BlogDetails from "./FrontOffice/Blog/post_detail/index";
 import UserProfile from "./FrontOffice/UserProfile";
 import post_edit from "./FrontOffice/Blog/post_detail/post_edit";
+import Forecast from "./components/Weather API/Forecast/Forecast";
+import Weather from "./components/Weather API/weather";
 
 const routesFront = [
     {
@@ -138,7 +140,13 @@ const routesFront = [
         name: "Chat",
         component: chat ,
         layout: "/front"
-     },
+    },
+    {
+        path: "/weather",
+        name: "Chat",
+        component: Weather ,
+        layout: "/front"
+    },
     {
         path: "/becomeDriver",
         name: "Become Driver",
