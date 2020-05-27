@@ -3,6 +3,7 @@ var router = express.Router();
 var feedBackController = require('../controllers/FeedBackController');
 //-------------------------------------------------------------------Comments--------------------------------------------------------------------
 router.get('/comments/:profileOwnerId', feedBackController.allComments);
+router.get('/', feedBackController.allCommentsInDaWebSite);
 router.post('/comments/:idOwner/:profileOwnerId', feedBackController.addComment);
 router.put('/comments/:userId/:commId/:type', feedBackController.addUpDownVoteComment);
 router.delete('/comments/:id', feedBackController.deleteComment);

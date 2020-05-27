@@ -13,25 +13,35 @@ exports.allComments = (req,res) => {
         .catch(err => res.status(500).send('Error' + err));
 };
 
+exports.allCommentsInDaWebSite = (req,res) => {
+    comment.find()
+        .populate('owner')
+        .sort({'createdAt':-1})
+        .then(comments => res.send(comments))
+        .catch(err => res.status(500).send('Error' + err));
+};
+
 exports.addComment = (req,res) => {
 
     var now = new Date();
-    var comm = new comment({
+    useeer.findOne({_id: req.params.idOwner}).then(ress => {
+        var comm = new comment({
+            ownerUsername: ress.username,
+            owner : ObjectId(req.params.idOwner),
+            userProfile :  ObjectId(req.params.profileOwnerId),
+            content : req.body.content,
+            created_at: now,
 
-        owner : ObjectId(req.params.idOwner),
-        userProfile :  ObjectId(req.params.profileOwnerId),
-        content : req.body.content,
-        created_at: now,
-
-    });
-    comm.save().then (()=> {
-        res.status(202).send("comment has been added ");
-    })
-        .catch(error =>
-        {
-            res.set('Content-Type', 'text/html');
-            res.status(500).send(error);
         });
+        comm.save().then (()=> {
+            res.status(202).send(comm);
+        })
+            .catch(error =>
+            {
+                res.set('Content-Type', 'text/html');
+                res.status(500).send(error);
+            });
+    })
 };
 
 exports.addUpDownVoteComment = async (req,res) => {

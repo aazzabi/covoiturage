@@ -18,6 +18,9 @@ export async function addEmptyDisc(idCurrentUser,idUser) {
 export async function addUserInChatRoom(idDisc,idUser) {
     return await http.put(`${serviceEndpoint}/user/add/${idDisc}/${idUser}`).catch(err => console.log(err));
 }
+export async function verifIfUserInDisc(discId,userId) {
+    return await http.get(`${serviceEndpoint}/user/verif/${discId}/${userId}`).catch(err => console.log(err));
+}
 export async function listDiscussionsUser(id) {
     return await http.get(`${serviceEndpoint}/user/${id}`).catch(err => console.log(err));
 }
@@ -27,9 +30,18 @@ export async function listOwnChatroomUser(id) {
 export async function listMsgsDisc(id,idUser) {
     return await http.get(`${serviceEndpoint}/disc/${id}`).catch(err => console.log(err));
 }
+export async function listAllMsgs() {
+    return await http.get(`${serviceEndpoint}/`).catch(err => console.log(err));
+}
 export async function getChannelId(currUser,user) {
     return await http.get(`${serviceEndpoint}/channelId/${currUser}/${user}`).catch(err => console.log(err));
 }
 export async function listChatRoomUsers(id) {
     return await http.get(`${serviceEndpoint}/user/list/${id}`).catch(err => console.log(err));
+}
+export async function getChatRoomOwner(id) {
+    return await http.get(`${serviceEndpoint}/user/owner/${id}`).catch(err => console.log(err));
+}
+export async function RemoveUserInChatRoom(discId,userId) {
+    return await http.delete(`${serviceEndpoint}/user/${discId}/${userId}`).catch(err => console.log(err));
 }

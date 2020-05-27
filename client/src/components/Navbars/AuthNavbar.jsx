@@ -261,6 +261,13 @@ class AdminNavbar extends React.Component {
                                                     </a>
                                                 </DropdownToggle>
                                             </UncontrolledDropdown>
+                                            <UncontrolledDropdown nav>
+                                                <DropdownToggle className="nav-link pr-0" color="" tag="span">
+                                                    <a style={{color: "white"}}   href={`/front/chat/`}>
+                                                        <span className="nav-link-inner--text">Messagerie</span>
+                                                    </a>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
                                         </Nav>
 
                                         <Nav>

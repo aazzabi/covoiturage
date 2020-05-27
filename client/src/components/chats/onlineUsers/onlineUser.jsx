@@ -10,33 +10,56 @@ const Status = styled.i`
 `;
 
 const OnlineUser = ({ user, currUser, handleChannelOpen }) => {
-  return (
-    <ContainerItem>
-      <ReactTooltip place="left" effect="solid" />
-      <div>
-        <Status
-          className="fas fa-circle"
-          isOnline={Boolean(user.status)}
-          onClick={() => handleChannelOpen(currUser, user)}
-        />{" "}
-        <b>{user.username}</b>
-      </div>
+    console.log(user);
+    console.log(currUser);
+    if (user._id == currUser.data._id)
+    {
+        return (
+            <ContainerItem>
+                <ReactTooltip place="left" effect="solid" />
+                <div>
+                    <Status
+                        className="fas fa-circle"
+                        isOnline={Boolean(user.status)}
+                        onClick={() => handleChannelOpen(currUser, user)}
+                    />{" "}
+                    <b>{user.username}</b>
+                </div>
 
-      <div>
-        <i
-          className="fas fa-info-circle"
-          data-tip={user.username === currUser.username ? "You" : user.bio}
-        />{" "}
-        <i
-          className="fas fa-comment"
-          onClick={() => handleChannelOpen(currUser, user)}
-        />{" "}
+            </ContainerItem>
+        );
+    }
+    else
+    {
+        return (
+            <ContainerItem>
+                <ReactTooltip place="left" effect="solid" />
+                <div>
+                    <Status
+                        className="fas fa-circle"
+                        isOnline={Boolean(user.status)}
+                        onClick={() => handleChannelOpen(currUser, user)}
+                    />{" "}
+                    <b>{user.username}</b>
+                </div>
 
-          <Modals currentUser={ jwt_decode(localStorage.getItem("jwtToken"))._id } user={user._id}  > </Modals>
+                <div>
+                    <i
+                        className="fas fa-info-circle"
+                        data-tip={user.username === currUser.data.username ? "You" : user.bio}
+                    />{" "}
+                    <i
+                        className="fas fa-comment"
+                        onClick={() => handleChannelOpen(currUser, user)}
+                    />{" "}
 
-      </div>
-    </ContainerItem>
-  );
+                    <Modals currentUser={ jwt_decode(localStorage.getItem("jwtToken"))._id } user={user._id}  > </Modals>
+
+                </div>
+            </ContainerItem>
+        );
+    }
+
 };
 
 export default OnlineUser;

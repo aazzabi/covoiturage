@@ -64,7 +64,7 @@ class Comment extends Component {
 
     }
 
-    handleUpvoteDownvote(e){
+   async handleUpvoteDownvote(e){
       console.log(e.target.name);
       console.log(this.props);
       const json = { type: e.target.name };
@@ -94,10 +94,12 @@ class Comment extends Component {
             /*  this.setState({newNbDownVotes : this.state.newNbDownVotes-1});
              var a = this.state.newNbDownVotes ;
              this.setState({nbDownVotes : a});*/
-            RemoveUserUpDownVoteComment(this.props.comment._id ,idUser,"downVote").then(r =>  this.setState({downvoted : false}));
+            await RemoveUserUpDownVoteComment(this.props.comment._id ,idUser,"downVote").then(r =>  this.setState({downvoted : false}));
+            await countUpDownVoteComment(this.props.comment._id,"downVote").then(r => this.setState({nbDownVotes : r.data}));
           }
 
-          addUserUpDownVoteComment(this.props.comment._id ,idUser,"upVote").then(r => this.setState({upvoted : true}) );
+         await addUserUpDownVoteComment(this.props.comment._id ,idUser,"upVote").then(r => this.setState({upvoted : true}) );
+          await countUpDownVoteComment(this.props.comment._id,"upVote").then(r => this.setState({nbUpVotes : r.data}));
           console.log(this.state.upvoted);
 
         }
@@ -110,12 +112,13 @@ class Comment extends Component {
              var c = this.state.newNbUpVotes;
              this.setState({nbUpVotes : c}); */
             console.log("downVote upvoted");
-            RemoveUserUpDownVoteComment(this.props.comment._id ,idUser,"upVote").then(r =>  this.setState({upvoted : false}));
+            await RemoveUserUpDownVoteComment(this.props.comment._id ,idUser,"upVote").then(r =>  this.setState({upvoted : false}));
+            await countUpDownVoteComment(this.props.comment._id,"upVote").then(r => this.setState({nbUpVotes : r.data}));
 
           }
           console.log("downvote add");
-          addUserUpDownVoteComment(this.props.comment._id ,idUser,"downVote").then(r => this.setState({downvoted : true}) );
-
+         await addUserUpDownVoteComment(this.props.comment._id ,idUser,"downVote").then(r => this.setState({downvoted : true}) );
+         await countUpDownVoteComment(this.props.comment._id,"downVote").then(r => this.setState({nbDownVotes : r.data}));
         }
         //this.props.socket.send(JSON.stringify(json));
         }
@@ -131,7 +134,7 @@ class Comment extends Component {
           <div className="row">
             <div className="col-md-10 px-3">
               <div className="card-block px-3">
-                <h5 className="card-title text-dark" style={{marginTop: '10px', 'fontWeight':'bolder'}}>{this.props.comment.owner.username} </h5>
+                <h5 className="card-title text-dark" style={{marginTop: '10px', 'fontWeight':'bolder'}}>{this.props.comment.ownerUsername} </h5>
                 <p className="card-text" style={{fontSize: '16px'}}>{this.props.comment.content }</p>
                 <p className="text-muted" style={{fontSize: '13px'}}><img src={process.env.PUBLIC_URL + '/logos/clock.png'} style={{width: '13px', height: '13px'}} />&nbsp;&nbsp;{moment(Date.parse(this.props.comment.createdAt)).fromNow()}</p>
               </div>
@@ -158,6 +161,7 @@ export default class ListComments extends Component {
     this.state = { comments: [] };
 
     this.props.actions.on("new-comment", chat => {
+      console.log("sockeet te9rat"+ chat);
       let currentcomments = this.state.comments;
       currentcomments.push(chat);
       this.setState({

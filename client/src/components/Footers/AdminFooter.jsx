@@ -76,6 +76,14 @@ class Calendar extends React.Component {
                     </NavItem>
                     <NavItem>
                       <NavLink
+                          href="front/chat"
+                          target="_blank"
+                      >
+                        Messagerie
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
                           href="front/register"
                           target="_blank"
                       >

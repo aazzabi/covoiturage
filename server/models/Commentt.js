@@ -7,6 +7,7 @@ const CommentSchema = new Schema(
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     userProfile : { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     content: { type: String, required: true, trim: true },
+    ownerUsername: { type: String, required: true},
     upVotes:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}] ,
     downVotes:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}] ,
     createdAt: { type: Date, default: Date.now() },

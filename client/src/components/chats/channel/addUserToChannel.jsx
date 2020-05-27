@@ -20,7 +20,7 @@ import {
     Modal,
 
 } from "reactstrap";
-import {listOwnChatroomUser , addUserInChatRoom} from "../../../services/Chat/ChatServices";
+import {listOwnChatroomUser, addUserInChatRoom, verifIfUserInDisc} from "../../../services/Chat/ChatServices";
 import OnlineUser from "../onlineUsers/onlineUser";
 import cogoToast from "cogo-toast";
 
@@ -57,7 +57,30 @@ class Modals extends React.Component {
                 discussions: res.data
             }));
     };
-    onSubmitt= (discc) => {  addUserInChatRoom(discc,this.props.user).then(res => cogoToast.success(`User have been added!`, { hideAfter : 5 })) ; this.toggleModal("exampleModal")};
+    onSubmitt=async (discc) => {const dataa = await verifIfUserInDisc(discc, this.props.user)
+        /*.then(r =>
+    {
+        console.log(r);
+        if (r.data == false)
+        {
+            console.log("okk");
+             addUserInChatRoom(discc,this.props.user).then(res => {console.log("mrigl");cogoToast.success(`User have been added!`, { hideAfter : 5 }) ; this.toggleModal("exampleModal")})
+        }
+        else if (r.data == true)
+        {
+            cogoToast.error(`User is already added in this discussion!`, { hideAfter : 5 });
+        }
+    })*/
+        if (dataa.data == false)
+        {
+            console.log("okk");
+            await addUserInChatRoom(discc,this.props.user).then(res => {console.log("mrigl");cogoToast.success(`User have been added!`, { hideAfter : 5 }) ; this.toggleModal("exampleModal")})
+        }
+        else if (dataa.data == true)
+        {
+            cogoToast.error(`User is already added in this discussion!`, { hideAfter : 5 });
+        }
+    }
     populateDiscussion() {
       //  if (!users) return <Badge>you have no chatroom...</Badge>;
 

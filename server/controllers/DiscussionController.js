@@ -4,7 +4,7 @@ var UserSender = require('../models/User');
 var UserReceiver = require('../models/User');
 var msg = require('../models/Message');
 var discussion = require('../models/Discussion');
-var user = require('../models/User');
+var userrr = require('../models/User');
 var app = express();
 
 ObjectId = require('mongodb').ObjectID;
@@ -42,6 +42,7 @@ exports.addDisc =  (req, res )  => {
     var now = new Date();
 
     var m = new discussion({
+        title: req.body.title,
         type: req.body.type,
         created_at: now,
         owner: ObjectId(req.params.id)
@@ -204,6 +205,17 @@ exports.listMsgsDisc = async (req, res) => {
 
 
 };
+//list all msgs
+exports.listAllMsgs = async (req, res) => {
+    var msggg;
+    msg.find()
+        .populate('discussion')
+        .sort({'created_at':-1})
+        .then(msgs => res.send(msgs))
+        .catch(err => res.status(500).send('Error' + err));
+
+
+};
 // delete  disc
 
 exports.deleteDiscussion = async (req, res)  => {
@@ -248,12 +260,57 @@ exports.listChatRoomUsers = async (req, res)  => {
 
 
 };
+//get owner of disc
+
+exports.getChatRoomOwner = async (req, res)  => {
+    console.log("aaaaaaaaa");
+    var disc = await discussion.findOne({ _id : req.params.id }).populate('owner')
+        .then((discc) =>
+        {
+            console.log(discc.owner);
+            res.send(discc.owner);
+            //res.status(202).send("users has been sent ");
+        })
+        .catch(error =>
+        {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+        });
+
+
+};
+
+//verif if user in discussion
+exports.verifIfUserInDisc = async (req,res) => {
+    var i = false;
+    console.log(i);
+    await discussion.findOne({_id: req.params.discId})
+        .then((disc) => {
+
+                for (user of disc.users) {
+                    if (user == req.params.userId)
+                    {
+                        i = true ;
+                    }
+                    console.log(i);
+                }
+
+            res.set('Content-Type', 'text/html');
+            res.status(202).send(i);
+        })
+        .catch(error =>
+        {
+            res.set('Content-Type', 'text/html');
+            res.status(500).send(error);
+        });
+};
+
 //add user to chatroom
 exports.addUserInChatRoom = async (req, res)  => {
 
     var disc = await discussion.findOne({_id: req.params.id});
     console.log(disc);
-    var userr = await user.findOne({_id: req.params.userId});
+    var userr = await userrr.findOne({_id: req.params.userId});
     disc.users.push(userr);
     disc.save().then(() => {
         res.status(202).send("user has been added ");

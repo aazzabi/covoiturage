@@ -10,31 +10,66 @@ import MyProfile from "./BackOffice/MyProfile.jsx";
 import PostNew from "./FrontOffice/Blog/post_new";
 import PostMine from "./BackOffice/Blog/post_mine";
 import Rides from "./BackOffice/Ride/Rides";
+import AllComments from "./components/FeedBack/Admin/allComment";
+import AllMessages from "./components/chats/Admin/allMessages";
 
 const routes = [
     {
+
         collapse: true,
-        name: "Users",
-        icon: "ni ni-shop text-primary",
+        name: "FeedBack",
+        icon: "fa fa-comments text-primary",
         state: "dashboardsCollapse",
-        rolesAllowed: ['ADMIN'],
+
         views: [
             {
-                path: "/users",
-                name: "All",
-                component: AllUsers,
+                path: "/comments",
+                name: "All Comment",
+                component: AllComments,
                 layout: "/admin",
-                rolesAllowed: ['ADMIN'],
-            },
-            {
-                path: "/agents",
-                name: "Agents",
-                component: Agents,
-                layout: "/admin",
-                rolesAllowed: ['ADMIN'],
             }
         ]
     },
+    {
+
+        collapse: true,
+        name: "Chat",
+        icon: "fa fa-paper-plane text-primary",
+        state: "dashboardsCollapse",
+
+        views: [
+            {
+                path: "/messages",
+                name: "All Messages",
+                component: AllMessages,
+                layout: "/admin",
+            }
+        ]
+    },
+    {
+
+        collapse: true,
+    name: "Users",
+    icon: "ni ni-shop text-primary",
+    state: "dashboardsCollapse",
+    rolesAllowed: ['ADMIN'],
+    views: [
+    {
+        path: "/users",
+        name: "All",
+        component: AllUsers,
+        layout: "/admin",
+        rolesAllowed: ['ADMIN'],
+    },
+    {
+        path: "/agents",
+        name: "Agents",
+        component: Agents,
+        layout: "/admin",
+        rolesAllowed: ['ADMIN'],
+    }
+]
+},
     {
         collapse: true,
         name: "Drivers",

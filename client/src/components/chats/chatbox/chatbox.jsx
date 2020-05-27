@@ -8,12 +8,14 @@ import Axios from "axios";
 import Badge from "../badge";
 import jwt_decode from 'jwt-decode'
 import ListUsers from "../channel/listUserChannel";
+import {getChatRoomOwner, listChatRoomOwner} from "../../../services/Chat/ChatServices";
 
 
 
 
 const ChatBox = ({ socket, user, match, handleChannelOpen }) => {
   const [chats, setChats] = useState([]);
+  const [chatOwner,setChatOwner]= useState([]);
   const channel = match.params.channel;
   const isSecret = channel !== "global";
   const limit = isSecret ? 10 : 100;
@@ -39,6 +41,20 @@ const ChatBox = ({ socket, user, match, handleChannelOpen }) => {
     };
 
     getChannelChats();
+
+    const getChannelOwner = async () => {
+      try {
+        console.log(channel);
+        //const { data: channelChats } = await listMsgsDisc(jwt_decode(localStorage.getItem("jwtToken")));
+        const data = await getChatRoomOwner( channel );
+        console.log(data.data);
+        setChatOwner(data.data);
+      } catch (error) {
+        if (Axios.isCancel(error)) console.log("Caught Cancel");
+        else throw error;
+      }
+    };
+    getChannelOwner();
 
     return () => {
       console.log("Cleaning...");
@@ -120,7 +136,7 @@ const ChatBox = ({ socket, user, match, handleChannelOpen }) => {
 
   return (
     <React.Fragment>
-      <ListUsers idDisc={channel} >  </ListUsers>
+      <ListUsers idDisc={channel} ownerId={chatOwner._id} ownerUsername={chatOwner.username} >  </ListUsers>
       <Container id="chatbox">{populateChatBox()}</Container>
 
       <ChatForm submitMessage={submitMessage} />

@@ -20,8 +20,10 @@ import {
     Modal,
 
 } from "reactstrap";
-import { listChatRoomUsers} from "../../../services/Chat/ChatServices";
+import {listChatRoomUsers, RemoveUserInChatRoom} from "../../../services/Chat/ChatServices";
 import OnlineUser from "../onlineUsers/onlineUser";
+import jwt_decode from "jwt-decode";
+import cogoToast from "cogo-toast";
 
 class ListUsers extends React.Component {
     constructor(props) {
@@ -32,7 +34,7 @@ class ListUsers extends React.Component {
     componentDidMount()
     {
         this.listUsers();
-        this.listOwner();
+
     }
 
 
@@ -41,8 +43,7 @@ class ListUsers extends React.Component {
         users: [
             {
             }
-            ],
-        owner : ""
+            ]
     };
 
     listUsers = () => {
@@ -52,47 +53,106 @@ class ListUsers extends React.Component {
             }));
 
     };
-    listOwner = () => {
-        listChatRoomUsers(this.props.idDisc)
-            .then(res => this.setState({
-                owner: res.data[0].owner
-            }));
-
+    removeUser = (e,userr) => {
+        RemoveUserInChatRoom(this.props.idDisc,userr._id).then(res => {cogoToast.success(`User have been removed!`, { hideAfter : 5 }) ; this.toggleModal("exampleModal")} )
     };
 
     verifIfUserOnline = (userr) => {
-        if (userr.status !== "")
+        const idUser = jwt_decode(localStorage.getItem("jwtToken"))._id;
+        if ((userr.status !== "")&&(this.props.ownerId == idUser ))
         {
-            return  (<div className="col ml--2">
-                <h4 className="mb-0">
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                        {userr.username}
-                    </a>
-                </h4>
+            return  (
+                <div className="col ml--2">
+                <div className="d-flex justify-content-between align-items-center">
+                    <h4 className="mb-0">
+                        <a href="#pablo" onClick={e => e.preventDefault()}>
+                            {userr.username}
+                        </a>
+                    </h4>
+                    <div className="text-right text-muted">
+                        <Button className="btn-icon btn-3" color="danger" type="button" onClick={e => this.removeUser(e,userr)}>
+                          <span className="btn-inner--icon">
+                            <i className="ni ni-fat-remove" />
+                          </span>
+                            <span className="btn-inner--text">Remove User</span>
+                        </Button>
+                    </div>
+                </div>
                 <span className="text-success">●</span>
                 <small>Online</small>
             </div> )
         }
-        else
+        else  if ((userr.status == "")&&(this.props.ownerId == idUser ))
         {
             return (
             <div className="col ml--2">
+                <div className="d-flex justify-content-between align-items-center">
                 <h4 className="mb-0">
                     <a href="#pablo" onClick={e => e.preventDefault()}>
                         {userr.username}
                     </a>
                 </h4>
+                    <div className="text-right text-muted">
+                        <Button className="btn-icon btn-3" color="danger" type="button" onClick={e => this.removeUser(e,userr)}>
+                          <span className="btn-inner--icon">
+                            <i className="ni ni-fat-remove" />
+                          </span>
+                            <span className="btn-inner--text">Remove User</span>
+                        </Button>
+                    </div>
+                </div>
+
                 <span className="text-warning">●</span>
+
+
                 <small>offline</small>
+
             </div>
+
             )
         }
-    }
+        else  if ((userr.status == "")&&(this.props.ownerId !== idUser ))
+        {
+            return (
+                <div className="col ml--2">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h4 className="mb-0">
+                            <a href="#pablo" onClick={e => e.preventDefault()}>
+                                {userr.username}
+                            </a>
+                        </h4>
+
+                    </div>
+
+                    <span className="text-warning">●</span>
+
+
+                    <small>offline</small>
+
+                </div>
+
+            )
+        }
+        else
+        {
+            return  (
+                <div className="col ml--2">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h4 className="mb-0">
+                            <a href="#pablo" onClick={e => e.preventDefault()}>
+                                {userr.username}
+                            </a>
+                        </h4>
+                    </div>
+                    <span className="text-success">●</span>
+                    <small>Online</small>
+                </div> )
+        }
+    };
 
     listUsersChatroom() {
       //  if (!users) return <Badge>you have no chatroom...</Badge>;
-        console.log(JSON.stringify(this.state.owner,["username"]));
-        console.log(this.state.owner[0]);
+
         return this.state.users.map(
             userr =>
                 <ListGroupItem className="px-0">
@@ -110,6 +170,7 @@ class ListUsers extends React.Component {
                                 />
                             </a>
                         </Col>
+
                         {this.verifIfUserOnline(userr)}
 
                     </Row>
@@ -134,6 +195,8 @@ class ListUsers extends React.Component {
                     />
                 </a>
             </Col>
+
+
             {this.verifIfUserOnline(this.stats.owner)}
         </Row>
     </ListGroupItem>)
@@ -179,7 +242,34 @@ class ListUsers extends React.Component {
                     </div>
                     <div className="modal-body">
                         <ListGroup>
+                            <ListGroupItem className="px-0">
+                                <Row className="align-items-center">
+                                    <Col className="col-auto">
 
+                                        <a
+                                            className="avatar rounded-circle"
+                                            href="#pablo"
+                                            onClick={e => e.preventDefault()}
+                                        >
+                                            <img
+                                                alt="..."
+                                                src={require("../../../assets/img/theme/team-1.jpg")}
+                                            />
+                                        </a>
+                                    </Col>
+                                    <div className="col ml--2">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <h4 className="mb-0">
+                                                <a href="#pablo" onClick={e => e.preventDefault()}>
+                                                    {this.props.ownerUsername}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <span className="text-success">●</span>
+                                        <small>Online</small>
+                                    </div>
+                                </Row>
+                            </ListGroupItem>
 
                             {this.listUsersChatroom()}
 

@@ -208,7 +208,7 @@ io.on('connection', (socket) => {
     });
     socket.on("broadcast-comment", async comm => {
         console.log("broadcast-comment: ", comm);
-        socket.broadcast.emit("new-comment", comm);
+        io.sockets.emit("new-comment", comm);
     });
 });
 

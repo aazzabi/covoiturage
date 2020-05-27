@@ -161,12 +161,14 @@ class Sidebar extends React.Component {
               {prop.icon ? <i className={prop.icon} /> : null}
               <span className="nav-link-text">{prop.name}</span>
             </NavLink>
+
             <Collapse isOpen={this.state[prop.state]}>
               <Nav className="nav-sm flex-column">
                 {this.createLinks(prop.views)}
               </Nav>
             </Collapse>
           </NavItem>
+
         );
       }
       return (

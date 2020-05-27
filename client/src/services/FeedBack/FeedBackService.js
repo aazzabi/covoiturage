@@ -15,6 +15,9 @@ export async function RemoveUserUpDownVoteComment(commId,userId,type) {
 export async function allComments(profileOwnerId) {
     return await http.get(`${serviceEndpoint}/comments/${profileOwnerId}`).catch(err => console.log(err));
 }
+export async function theEntierAppComments() {
+    return await http.get(`${serviceEndpoint}/`).catch(err => console.log(err));
+}
 export async function verifIfUserUpDownVoteComment(commId,userId,typee) {
     return await http.get(`${serviceEndpoint}/comments/UpDownVotes/verif/${commId}/${userId}/${typee}`).catch(err => console.log(err));
 }
