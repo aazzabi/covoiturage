@@ -12,7 +12,7 @@
     "@hapi/joi": "^17.1.0",
     "@tensorflow/tfjs": "^1.0.4",
     "actions-on-google": "^2.2.0",
-    "async": "^2.6.2",
+    "async": "^2.6.4",
     "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
