@@ -57,7 +57,7 @@
     "pug": "2.0.0-beta11",
     "random": "^2.1.1",
     "recaptcha-v2": "^0.1.3",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.5.0",
     "string-hash": "^1.1.3",
     "time-convert": "0.0.2",
     "twig": "^1.13.2",
